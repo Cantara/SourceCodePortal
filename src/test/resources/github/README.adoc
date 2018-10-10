@@ -1,0 +1,17 @@
+// Ascidoc Cheat Sheet: https://github.com/powerman/asciidoc-cheatsheet
+
+//:toc:
+//:toc-placement: preamble
+//:toclevels: 2
+
+ifdef::env-github[]
+:TIP-caption: :bulb:
+endif::[]
+
+
+Readme Asciidoc
+=================
+
+____
+This documentation is a quoted text
+____

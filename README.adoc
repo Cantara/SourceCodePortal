@@ -1,0 +1,18 @@
+= Organizational SourceCode Dashboard Portal
+
+Groups documentation from GitHub repositories.
+
+== Pre-requisites
+
+An access-token must be generated before you can use this software. Please configure `security.properties` according to `security.properties.sample` and run the test case `ObtainGitHubAccessTokenTestTool`. Configure `security.properties` with `github.client.accessToken=ACCESS_TOKEN`. `ChromeDriver` is required in order to run the test case.
+
+Ubuntu installation:
+
+`apt-get install chromedriver`
+
+MacOS installation:
+
+`brew install chromedriver`
+
+
+

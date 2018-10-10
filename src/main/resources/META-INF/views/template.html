@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Descoped</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <!--<a class="navbar-brand" th:href="@{/pages/site/home}">Descoped</a>-->
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <!--<a class="nav-link" th:classappend="${activePage == 'home' ? 'active' : null}" th:href="@{/pages/site/home}">What <span class="sr-only">(current)</span></a>-->
+                    </li>
+                    <li class="nav-item dropdown">
+                        <!--<a class="nav-link dropdown-toggle" th:classappend="${activePage == 'docs' ? 'active' : null}" th:href="@{/pages/docs/descoped-container}" id="dropdown01" data-toggle="dropdown"-->
+                           aria-haspopup="true" aria-expanded="true">Docs</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <!--<a class="dropdown-item"  th:each="githubProject : ${githubProjects}" th:href="|@{/pages/docs/}${githubProject.id}|" th:text="${githubProject.name}">GitHub Page</a>-->
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <!--<a class="nav-link" th:classappend="${activePage == 'examples' ? 'active' : null}" th:href="@{/pages/site/examples}">How</a>-->
+                    </li>
+                    <li class="nav-item">
+                        <!--<a class="nav-link" th:classappend="${activePage == 'guidelines' ? 'active' : null}" th:href="@{/pages/site/guidelines}">Stuff</a>-->
+                    </li>
+                    <li class="nav-item">
+                        <!--<a class="nav-link" th:classappend="${activePage == 'participate' ? 'active' : null}" th:href="@{/pages/site/participate}">Participate</a>-->
+                    </li>
+                    <li class="nav-item">
+                        <!--<a class="nav-link" th:classappend="${activePage == 'log' ? 'active' : null}" th:href="@{/pages/log/commits}">Log</a>-->
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0" action="https://google.com/search" method="get">
+                    <input type="hidden" name="sitesearch" value="descoped.io" />
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <nav class="clearfix" style="margin-top: -1.5em !important;">
+            <ul style="background-color: lightgray">
+                <li style="display: inline;" th:each="trail,iterStat : ${trails}"><a th:href="${trail.path}">[[${trail.name}]]</a><span th:remove="${iterStat.index == iterStat.size-1 ? 'all' : null}">&nbsp;&nbsp;&#8594;&nbsp;</span></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--<p><span id="forkongithub">-->
+      <!--<a href="https://github.com/mockito/mockito" class="bg-green">-->
+        <!--Work in progress-->
+      <!--</a>-->
+    <!--</span></p>-->
+
+
+    <section layout:fragment="custom-content"></section>
+
+    <footer></footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+</body>
+
+</html>

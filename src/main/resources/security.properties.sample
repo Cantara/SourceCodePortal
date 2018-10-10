@@ -1,0 +1,6 @@
+github.oauth2.client.clientId=(auth client id)
+github.oauth2.client.clientSecret=(auth client id)github.client.accessToken=(run test case: GithubAccessTokenTest)
+github.username=(username used in GithubAccessTokenTest)
+github.password=(password used in GithubAccessTokenTest)
+github.client.accessToken=(run ObtainGitHubAccessTokenTestTool)
+github.webhook.securityAccessToken=(ruby -rsecurerandom -e 'puts SecureRandom.hex(20)')
