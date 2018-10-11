@@ -7,6 +7,7 @@ RUN apk add --update \
     python-dev \
     py-pip \
     bash \
+    unzip \
   && pip install awscli boto3 \
   && pip install --upgrade awscli \
   && rm -rf /var/cache/apk/*
@@ -20,6 +21,12 @@ ARG DOCKER_TAG=latest
 
 COPY config_override/* $HOME/config_override/
 COPY toRoot/* $HOME/
+
+ADD https://chromedriver.storage.googleapis.com/2.42/chromedriver_linux64.zip /tmp
+RUN unzip /tmp/chromedriver_linux64.zip
+RUN mv chromedriver /usr/bin/chromedriver
+RUN chmod +x /usr/bin/chromedriver
+
 
 ADD https://raw.githubusercontent.com/Cantara/devops/master/scripted_deploy/update-service.sh $HOME/
 RUN chmod 755 $HOME/update-service.sh
