@@ -11,6 +11,12 @@
     <description>Organizational SourceCode Dashboard Portal</description>
     <inceptionYear>2018</inceptionYear>
 
+    <parent>
+        <groupId>no.cantara.emi</groupId>
+        <artifactId>parent</artifactId>
+        <version>6</version>
+    </parent>
+
     <distributionManagement>
         <repository>
             <id>cantara-releases</id>
