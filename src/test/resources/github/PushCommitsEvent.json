@@ -15,9 +15,9 @@
       "message": "Update README.md",
       "tree": {
         "sha": "1b34135e8fc391e78af2590fe3c142f29507337c",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/1b34135e8fc391e78af2590fe3c142f29507337c"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/1b34135e8fc391e78af2590fe3c142f29507337c"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/d25465584c5b49aa2f4dee2aedb9e9c720504661",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/d25465584c5b49aa2f4dee2aedb9e9c720504661",
       "comment_count": 0,
       "verification": {
         "verified": true,
@@ -26,9 +26,9 @@
         "payload": "tree 1b34135e8fc391e78af2590fe3c142f29507337c\nparent 0456d13752052ae4cb2d992170195dc374f15ab0\nauthor Ove Ranheim <oranheim@gmail.com> 1509183174 +0200\ncommitter GitHub <noreply@github.com> 1509183174 +0200\n\nUpdate README.md"
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/d25465584c5b49aa2f4dee2aedb9e9c720504661",
-    "html_url": "https://github.com/descoped/descoped-container/commit/d25465584c5b49aa2f4dee2aedb9e9c720504661",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/d25465584c5b49aa2f4dee2aedb9e9c720504661/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/d25465584c5b49aa2f4dee2aedb9e9c720504661",
+    "html_url": "https://github.com/Cantara/some-project/commit/d25465584c5b49aa2f4dee2aedb9e9c720504661",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/d25465584c5b49aa2f4dee2aedb9e9c720504661/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -70,8 +70,8 @@
     "parents": [
       {
         "sha": "0456d13752052ae4cb2d992170195dc374f15ab0",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/0456d13752052ae4cb2d992170195dc374f15ab0",
-        "html_url": "https://github.com/descoped/descoped-container/commit/0456d13752052ae4cb2d992170195dc374f15ab0"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/0456d13752052ae4cb2d992170195dc374f15ab0",
+        "html_url": "https://github.com/Cantara/some-project/commit/0456d13752052ae4cb2d992170195dc374f15ab0"
       }
     ]
   },
@@ -91,9 +91,9 @@
       "message": "Update README.md",
       "tree": {
         "sha": "4acbbd49be76ff8f694669828692718e36083221",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/4acbbd49be76ff8f694669828692718e36083221"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/4acbbd49be76ff8f694669828692718e36083221"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/0456d13752052ae4cb2d992170195dc374f15ab0",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/0456d13752052ae4cb2d992170195dc374f15ab0",
       "comment_count": 0,
       "verification": {
         "verified": true,
@@ -102,9 +102,9 @@
         "payload": "tree 4acbbd49be76ff8f694669828692718e36083221\nparent 014f2d0ef3f690c9e88d523e50b619af7ed285ec\nauthor Ove Ranheim <oranheim@gmail.com> 1509143835 +0200\ncommitter GitHub <noreply@github.com> 1509143835 +0200\n\nUpdate README.md"
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/0456d13752052ae4cb2d992170195dc374f15ab0",
-    "html_url": "https://github.com/descoped/descoped-container/commit/0456d13752052ae4cb2d992170195dc374f15ab0",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/0456d13752052ae4cb2d992170195dc374f15ab0/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/0456d13752052ae4cb2d992170195dc374f15ab0",
+    "html_url": "https://github.com/Cantara/some-project/commit/0456d13752052ae4cb2d992170195dc374f15ab0",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/0456d13752052ae4cb2d992170195dc374f15ab0/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -146,8 +146,8 @@
     "parents": [
       {
         "sha": "014f2d0ef3f690c9e88d523e50b619af7ed285ec",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/014f2d0ef3f690c9e88d523e50b619af7ed285ec",
-        "html_url": "https://github.com/descoped/descoped-container/commit/014f2d0ef3f690c9e88d523e50b619af7ed285ec"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/014f2d0ef3f690c9e88d523e50b619af7ed285ec",
+        "html_url": "https://github.com/Cantara/some-project/commit/014f2d0ef3f690c9e88d523e50b619af7ed285ec"
       }
     ]
   },
@@ -167,9 +167,9 @@
       "message": "Update README.md",
       "tree": {
         "sha": "6e4593c8bcd3884128ff76251b8d1a4e65f97469",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/6e4593c8bcd3884128ff76251b8d1a4e65f97469"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/6e4593c8bcd3884128ff76251b8d1a4e65f97469"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/014f2d0ef3f690c9e88d523e50b619af7ed285ec",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/014f2d0ef3f690c9e88d523e50b619af7ed285ec",
       "comment_count": 0,
       "verification": {
         "verified": true,
@@ -178,9 +178,9 @@
         "payload": "tree 6e4593c8bcd3884128ff76251b8d1a4e65f97469\nparent f414244f8b0d936e9ff010458358f14e47dbfc81\nauthor Ove Ranheim <oranheim@gmail.com> 1509143793 +0200\ncommitter GitHub <noreply@github.com> 1509143793 +0200\n\nUpdate README.md"
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/014f2d0ef3f690c9e88d523e50b619af7ed285ec",
-    "html_url": "https://github.com/descoped/descoped-container/commit/014f2d0ef3f690c9e88d523e50b619af7ed285ec",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/014f2d0ef3f690c9e88d523e50b619af7ed285ec/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/014f2d0ef3f690c9e88d523e50b619af7ed285ec",
+    "html_url": "https://github.com/Cantara/some-project/commit/014f2d0ef3f690c9e88d523e50b619af7ed285ec",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/014f2d0ef3f690c9e88d523e50b619af7ed285ec/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -222,8 +222,8 @@
     "parents": [
       {
         "sha": "f414244f8b0d936e9ff010458358f14e47dbfc81",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/f414244f8b0d936e9ff010458358f14e47dbfc81",
-        "html_url": "https://github.com/descoped/descoped-container/commit/f414244f8b0d936e9ff010458358f14e47dbfc81"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/f414244f8b0d936e9ff010458358f14e47dbfc81",
+        "html_url": "https://github.com/Cantara/some-project/commit/f414244f8b0d936e9ff010458358f14e47dbfc81"
       }
     ]
   },
@@ -243,9 +243,9 @@
       "message": "Update README.md",
       "tree": {
         "sha": "1b34135e8fc391e78af2590fe3c142f29507337c",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/1b34135e8fc391e78af2590fe3c142f29507337c"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/1b34135e8fc391e78af2590fe3c142f29507337c"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/f414244f8b0d936e9ff010458358f14e47dbfc81",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/f414244f8b0d936e9ff010458358f14e47dbfc81",
       "comment_count": 0,
       "verification": {
         "verified": true,
@@ -254,9 +254,9 @@
         "payload": "tree 1b34135e8fc391e78af2590fe3c142f29507337c\nparent 6fd9976df5ca211e21592b42a3e3b6c08d07bc5f\nauthor Ove Ranheim <oranheim@gmail.com> 1509143742 +0200\ncommitter GitHub <noreply@github.com> 1509143742 +0200\n\nUpdate README.md"
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/f414244f8b0d936e9ff010458358f14e47dbfc81",
-    "html_url": "https://github.com/descoped/descoped-container/commit/f414244f8b0d936e9ff010458358f14e47dbfc81",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/f414244f8b0d936e9ff010458358f14e47dbfc81/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/f414244f8b0d936e9ff010458358f14e47dbfc81",
+    "html_url": "https://github.com/Cantara/some-project/commit/f414244f8b0d936e9ff010458358f14e47dbfc81",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/f414244f8b0d936e9ff010458358f14e47dbfc81/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -298,8 +298,8 @@
     "parents": [
       {
         "sha": "6fd9976df5ca211e21592b42a3e3b6c08d07bc5f",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f",
-        "html_url": "https://github.com/descoped/descoped-container/commit/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f",
+        "html_url": "https://github.com/Cantara/some-project/commit/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f"
       }
     ]
   },
@@ -319,9 +319,9 @@
       "message": "Create README.md",
       "tree": {
         "sha": "50e64cc3d52e05606fe52ddbfc4e4984c422c3f0",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/50e64cc3d52e05606fe52ddbfc4e4984c422c3f0"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/50e64cc3d52e05606fe52ddbfc4e4984c422c3f0"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -330,9 +330,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f",
-    "html_url": "https://github.com/descoped/descoped-container/commit/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f",
+    "html_url": "https://github.com/Cantara/some-project/commit/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/6fd9976df5ca211e21592b42a3e3b6c08d07bc5f/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -374,8 +374,8 @@
     "parents": [
       {
         "sha": "4f548f859840bd1a7eeff63fcd62578f36968393",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/4f548f859840bd1a7eeff63fcd62578f36968393",
-        "html_url": "https://github.com/descoped/descoped-container/commit/4f548f859840bd1a7eeff63fcd62578f36968393"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/4f548f859840bd1a7eeff63fcd62578f36968393",
+        "html_url": "https://github.com/Cantara/some-project/commit/4f548f859840bd1a7eeff63fcd62578f36968393"
       }
     ]
   },
@@ -395,9 +395,9 @@
       "message": "updated badge",
       "tree": {
         "sha": "c4b8fdd5bb347f5b6ddec58d3d0a868ead7909b7",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/c4b8fdd5bb347f5b6ddec58d3d0a868ead7909b7"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/c4b8fdd5bb347f5b6ddec58d3d0a868ead7909b7"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/4f548f859840bd1a7eeff63fcd62578f36968393",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/4f548f859840bd1a7eeff63fcd62578f36968393",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -406,9 +406,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/4f548f859840bd1a7eeff63fcd62578f36968393",
-    "html_url": "https://github.com/descoped/descoped-container/commit/4f548f859840bd1a7eeff63fcd62578f36968393",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/4f548f859840bd1a7eeff63fcd62578f36968393/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/4f548f859840bd1a7eeff63fcd62578f36968393",
+    "html_url": "https://github.com/Cantara/some-project/commit/4f548f859840bd1a7eeff63fcd62578f36968393",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/4f548f859840bd1a7eeff63fcd62578f36968393/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -450,8 +450,8 @@
     "parents": [
       {
         "sha": "5687145295a48fc783b93862ad4987aaacb64911",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/5687145295a48fc783b93862ad4987aaacb64911",
-        "html_url": "https://github.com/descoped/descoped-container/commit/5687145295a48fc783b93862ad4987aaacb64911"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/5687145295a48fc783b93862ad4987aaacb64911",
+        "html_url": "https://github.com/Cantara/some-project/commit/5687145295a48fc783b93862ad4987aaacb64911"
       }
     ]
   },
@@ -471,9 +471,9 @@
       "message": "DI-2: sonar code review",
       "tree": {
         "sha": "d2359daa801a6a72e23002fad5fb899511f2950c",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/d2359daa801a6a72e23002fad5fb899511f2950c"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/d2359daa801a6a72e23002fad5fb899511f2950c"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/5687145295a48fc783b93862ad4987aaacb64911",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/5687145295a48fc783b93862ad4987aaacb64911",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -482,9 +482,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/5687145295a48fc783b93862ad4987aaacb64911",
-    "html_url": "https://github.com/descoped/descoped-container/commit/5687145295a48fc783b93862ad4987aaacb64911",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/5687145295a48fc783b93862ad4987aaacb64911/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/5687145295a48fc783b93862ad4987aaacb64911",
+    "html_url": "https://github.com/Cantara/some-project/commit/5687145295a48fc783b93862ad4987aaacb64911",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/5687145295a48fc783b93862ad4987aaacb64911/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -526,8 +526,8 @@
     "parents": [
       {
         "sha": "b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9",
-        "html_url": "https://github.com/descoped/descoped-container/commit/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9",
+        "html_url": "https://github.com/Cantara/some-project/commit/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9"
       }
     ]
   },
@@ -547,9 +547,9 @@
       "message": "reconfigured sonar",
       "tree": {
         "sha": "f9591398145dc4fca5fa9699bc0dc7a54453f70e",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/f9591398145dc4fca5fa9699bc0dc7a54453f70e"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/f9591398145dc4fca5fa9699bc0dc7a54453f70e"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -558,9 +558,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9",
-    "html_url": "https://github.com/descoped/descoped-container/commit/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9",
+    "html_url": "https://github.com/Cantara/some-project/commit/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/b88bddf320c8a74c81b80f3ff4f6a30f8fe34ee9/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -602,8 +602,8 @@
     "parents": [
       {
         "sha": "b14471c39722d00a6d4187a34730a4275f7ff9b4",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/b14471c39722d00a6d4187a34730a4275f7ff9b4",
-        "html_url": "https://github.com/descoped/descoped-container/commit/b14471c39722d00a6d4187a34730a4275f7ff9b4"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/b14471c39722d00a6d4187a34730a4275f7ff9b4",
+        "html_url": "https://github.com/Cantara/some-project/commit/b14471c39722d00a6d4187a34730a4275f7ff9b4"
       }
     ]
   },
@@ -623,9 +623,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "8d65226dd5275fc0c4e19bd52eca702985b7616b",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/8d65226dd5275fc0c4e19bd52eca702985b7616b"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/8d65226dd5275fc0c4e19bd52eca702985b7616b"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/b14471c39722d00a6d4187a34730a4275f7ff9b4",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/b14471c39722d00a6d4187a34730a4275f7ff9b4",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -634,9 +634,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/b14471c39722d00a6d4187a34730a4275f7ff9b4",
-    "html_url": "https://github.com/descoped/descoped-container/commit/b14471c39722d00a6d4187a34730a4275f7ff9b4",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/b14471c39722d00a6d4187a34730a4275f7ff9b4/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/b14471c39722d00a6d4187a34730a4275f7ff9b4",
+    "html_url": "https://github.com/Cantara/some-project/commit/b14471c39722d00a6d4187a34730a4275f7ff9b4",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/b14471c39722d00a6d4187a34730a4275f7ff9b4/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -678,8 +678,8 @@
     "parents": [
       {
         "sha": "445b0871101913842436d41c0daf0fb1cf4b2707",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/445b0871101913842436d41c0daf0fb1cf4b2707",
-        "html_url": "https://github.com/descoped/descoped-container/commit/445b0871101913842436d41c0daf0fb1cf4b2707"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/445b0871101913842436d41c0daf0fb1cf4b2707",
+        "html_url": "https://github.com/Cantara/some-project/commit/445b0871101913842436d41c0daf0fb1cf4b2707"
       }
     ]
   },
@@ -699,9 +699,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "7d8233b7206e781ca17172b9b15a579b55b1df58",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/7d8233b7206e781ca17172b9b15a579b55b1df58"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/7d8233b7206e781ca17172b9b15a579b55b1df58"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/445b0871101913842436d41c0daf0fb1cf4b2707",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/445b0871101913842436d41c0daf0fb1cf4b2707",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -710,9 +710,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/445b0871101913842436d41c0daf0fb1cf4b2707",
-    "html_url": "https://github.com/descoped/descoped-container/commit/445b0871101913842436d41c0daf0fb1cf4b2707",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/445b0871101913842436d41c0daf0fb1cf4b2707/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/445b0871101913842436d41c0daf0fb1cf4b2707",
+    "html_url": "https://github.com/Cantara/some-project/commit/445b0871101913842436d41c0daf0fb1cf4b2707",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/445b0871101913842436d41c0daf0fb1cf4b2707/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -754,8 +754,8 @@
     "parents": [
       {
         "sha": "06e177bd7434dd0f920f27a675f0b916e0cece1e",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/06e177bd7434dd0f920f27a675f0b916e0cece1e",
-        "html_url": "https://github.com/descoped/descoped-container/commit/06e177bd7434dd0f920f27a675f0b916e0cece1e"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/06e177bd7434dd0f920f27a675f0b916e0cece1e",
+        "html_url": "https://github.com/Cantara/some-project/commit/06e177bd7434dd0f920f27a675f0b916e0cece1e"
       }
     ]
   },
@@ -775,9 +775,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "5fde87cc1073202ccaa4453c7ffab46f6f7140d2",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/5fde87cc1073202ccaa4453c7ffab46f6f7140d2"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/5fde87cc1073202ccaa4453c7ffab46f6f7140d2"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/06e177bd7434dd0f920f27a675f0b916e0cece1e",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/06e177bd7434dd0f920f27a675f0b916e0cece1e",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -786,9 +786,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/06e177bd7434dd0f920f27a675f0b916e0cece1e",
-    "html_url": "https://github.com/descoped/descoped-container/commit/06e177bd7434dd0f920f27a675f0b916e0cece1e",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/06e177bd7434dd0f920f27a675f0b916e0cece1e/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/06e177bd7434dd0f920f27a675f0b916e0cece1e",
+    "html_url": "https://github.com/Cantara/some-project/commit/06e177bd7434dd0f920f27a675f0b916e0cece1e",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/06e177bd7434dd0f920f27a675f0b916e0cece1e/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -830,8 +830,8 @@
     "parents": [
       {
         "sha": "103b6b16cca2770f12cfe134e0179242d1f36e27",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/103b6b16cca2770f12cfe134e0179242d1f36e27",
-        "html_url": "https://github.com/descoped/descoped-container/commit/103b6b16cca2770f12cfe134e0179242d1f36e27"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/103b6b16cca2770f12cfe134e0179242d1f36e27",
+        "html_url": "https://github.com/Cantara/some-project/commit/103b6b16cca2770f12cfe134e0179242d1f36e27"
       }
     ]
   },
@@ -851,9 +851,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "8847f5185a2ee822dfeeb0d911673e428e7a3632",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/8847f5185a2ee822dfeeb0d911673e428e7a3632"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/8847f5185a2ee822dfeeb0d911673e428e7a3632"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/103b6b16cca2770f12cfe134e0179242d1f36e27",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/103b6b16cca2770f12cfe134e0179242d1f36e27",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -862,9 +862,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/103b6b16cca2770f12cfe134e0179242d1f36e27",
-    "html_url": "https://github.com/descoped/descoped-container/commit/103b6b16cca2770f12cfe134e0179242d1f36e27",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/103b6b16cca2770f12cfe134e0179242d1f36e27/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/103b6b16cca2770f12cfe134e0179242d1f36e27",
+    "html_url": "https://github.com/Cantara/some-project/commit/103b6b16cca2770f12cfe134e0179242d1f36e27",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/103b6b16cca2770f12cfe134e0179242d1f36e27/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -906,8 +906,8 @@
     "parents": [
       {
         "sha": "5ee28c0580280cc35769a40826367ee5fa87c790",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/5ee28c0580280cc35769a40826367ee5fa87c790",
-        "html_url": "https://github.com/descoped/descoped-container/commit/5ee28c0580280cc35769a40826367ee5fa87c790"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/5ee28c0580280cc35769a40826367ee5fa87c790",
+        "html_url": "https://github.com/Cantara/some-project/commit/5ee28c0580280cc35769a40826367ee5fa87c790"
       }
     ]
   },
@@ -927,9 +927,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "533431be0db6477555a8d6458b5b7296d26e961b",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/533431be0db6477555a8d6458b5b7296d26e961b"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/533431be0db6477555a8d6458b5b7296d26e961b"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/5ee28c0580280cc35769a40826367ee5fa87c790",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/5ee28c0580280cc35769a40826367ee5fa87c790",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -938,9 +938,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/5ee28c0580280cc35769a40826367ee5fa87c790",
-    "html_url": "https://github.com/descoped/descoped-container/commit/5ee28c0580280cc35769a40826367ee5fa87c790",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/5ee28c0580280cc35769a40826367ee5fa87c790/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/5ee28c0580280cc35769a40826367ee5fa87c790",
+    "html_url": "https://github.com/Cantara/some-project/commit/5ee28c0580280cc35769a40826367ee5fa87c790",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/5ee28c0580280cc35769a40826367ee5fa87c790/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -982,8 +982,8 @@
     "parents": [
       {
         "sha": "d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f",
-        "html_url": "https://github.com/descoped/descoped-container/commit/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f",
+        "html_url": "https://github.com/Cantara/some-project/commit/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f"
       }
     ]
   },
@@ -1003,9 +1003,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "e6394c2b336b8ffa410581c26d223b775ab5d867",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/e6394c2b336b8ffa410581c26d223b775ab5d867"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/e6394c2b336b8ffa410581c26d223b775ab5d867"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1014,9 +1014,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f",
-    "html_url": "https://github.com/descoped/descoped-container/commit/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f",
+    "html_url": "https://github.com/Cantara/some-project/commit/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/d8c8a6747275bc7ff5ee82c43d5fa4b5c3023f6f/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1058,8 +1058,8 @@
     "parents": [
       {
         "sha": "90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0",
-        "html_url": "https://github.com/descoped/descoped-container/commit/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0",
+        "html_url": "https://github.com/Cantara/some-project/commit/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0"
       }
     ]
   },
@@ -1079,9 +1079,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "bc5f872c08f771504a1bab567215fb62eeb2f477",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/bc5f872c08f771504a1bab567215fb62eeb2f477"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/bc5f872c08f771504a1bab567215fb62eeb2f477"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1090,9 +1090,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0",
-    "html_url": "https://github.com/descoped/descoped-container/commit/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0",
+    "html_url": "https://github.com/Cantara/some-project/commit/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/90ac052d69fb352cd6fde9e7ace3df7de3bdc7a0/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1134,8 +1134,8 @@
     "parents": [
       {
         "sha": "63d07837df99717e559c38e0c0ff037a4d6fa2b2",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/63d07837df99717e559c38e0c0ff037a4d6fa2b2",
-        "html_url": "https://github.com/descoped/descoped-container/commit/63d07837df99717e559c38e0c0ff037a4d6fa2b2"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/63d07837df99717e559c38e0c0ff037a4d6fa2b2",
+        "html_url": "https://github.com/Cantara/some-project/commit/63d07837df99717e559c38e0c0ff037a4d6fa2b2"
       }
     ]
   },
@@ -1155,9 +1155,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "5feb938bf6f077abf635cd6b916051aa8048f8c0",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/5feb938bf6f077abf635cd6b916051aa8048f8c0"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/5feb938bf6f077abf635cd6b916051aa8048f8c0"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/63d07837df99717e559c38e0c0ff037a4d6fa2b2",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/63d07837df99717e559c38e0c0ff037a4d6fa2b2",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1166,9 +1166,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/63d07837df99717e559c38e0c0ff037a4d6fa2b2",
-    "html_url": "https://github.com/descoped/descoped-container/commit/63d07837df99717e559c38e0c0ff037a4d6fa2b2",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/63d07837df99717e559c38e0c0ff037a4d6fa2b2/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/63d07837df99717e559c38e0c0ff037a4d6fa2b2",
+    "html_url": "https://github.com/Cantara/some-project/commit/63d07837df99717e559c38e0c0ff037a4d6fa2b2",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/63d07837df99717e559c38e0c0ff037a4d6fa2b2/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1210,8 +1210,8 @@
     "parents": [
       {
         "sha": "ba6ea494128850a4eb3222b52ee6ccbdc61f9552",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/ba6ea494128850a4eb3222b52ee6ccbdc61f9552",
-        "html_url": "https://github.com/descoped/descoped-container/commit/ba6ea494128850a4eb3222b52ee6ccbdc61f9552"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/ba6ea494128850a4eb3222b52ee6ccbdc61f9552",
+        "html_url": "https://github.com/Cantara/some-project/commit/ba6ea494128850a4eb3222b52ee6ccbdc61f9552"
       }
     ]
   },
@@ -1231,9 +1231,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "c9e65fca5faed17a66c467799f9117c152203378",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/c9e65fca5faed17a66c467799f9117c152203378"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/c9e65fca5faed17a66c467799f9117c152203378"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/ba6ea494128850a4eb3222b52ee6ccbdc61f9552",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/ba6ea494128850a4eb3222b52ee6ccbdc61f9552",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1242,9 +1242,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/ba6ea494128850a4eb3222b52ee6ccbdc61f9552",
-    "html_url": "https://github.com/descoped/descoped-container/commit/ba6ea494128850a4eb3222b52ee6ccbdc61f9552",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/ba6ea494128850a4eb3222b52ee6ccbdc61f9552/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/ba6ea494128850a4eb3222b52ee6ccbdc61f9552",
+    "html_url": "https://github.com/Cantara/some-project/commit/ba6ea494128850a4eb3222b52ee6ccbdc61f9552",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/ba6ea494128850a4eb3222b52ee6ccbdc61f9552/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1286,8 +1286,8 @@
     "parents": [
       {
         "sha": "a9ce168ff91f89ef49d4ea7724803e0e8a66ea13",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13",
-        "html_url": "https://github.com/descoped/descoped-container/commit/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13",
+        "html_url": "https://github.com/Cantara/some-project/commit/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13"
       }
     ]
   },
@@ -1307,9 +1307,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "ae7bdab93bf497997bbbb5e735ecce7c5dfc2e50",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/ae7bdab93bf497997bbbb5e735ecce7c5dfc2e50"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/ae7bdab93bf497997bbbb5e735ecce7c5dfc2e50"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1318,9 +1318,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13",
-    "html_url": "https://github.com/descoped/descoped-container/commit/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13",
+    "html_url": "https://github.com/Cantara/some-project/commit/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/a9ce168ff91f89ef49d4ea7724803e0e8a66ea13/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1362,8 +1362,8 @@
     "parents": [
       {
         "sha": "7a0b0a4b75bac635d7a8682ac331eacae609a40a",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/7a0b0a4b75bac635d7a8682ac331eacae609a40a",
-        "html_url": "https://github.com/descoped/descoped-container/commit/7a0b0a4b75bac635d7a8682ac331eacae609a40a"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/7a0b0a4b75bac635d7a8682ac331eacae609a40a",
+        "html_url": "https://github.com/Cantara/some-project/commit/7a0b0a4b75bac635d7a8682ac331eacae609a40a"
       }
     ]
   },
@@ -1383,9 +1383,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "da67443b9532cf0845ec9ee0fd5c2370f18f74f8",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/da67443b9532cf0845ec9ee0fd5c2370f18f74f8"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/da67443b9532cf0845ec9ee0fd5c2370f18f74f8"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/7a0b0a4b75bac635d7a8682ac331eacae609a40a",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/7a0b0a4b75bac635d7a8682ac331eacae609a40a",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1394,9 +1394,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/7a0b0a4b75bac635d7a8682ac331eacae609a40a",
-    "html_url": "https://github.com/descoped/descoped-container/commit/7a0b0a4b75bac635d7a8682ac331eacae609a40a",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/7a0b0a4b75bac635d7a8682ac331eacae609a40a/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/7a0b0a4b75bac635d7a8682ac331eacae609a40a",
+    "html_url": "https://github.com/Cantara/some-project/commit/7a0b0a4b75bac635d7a8682ac331eacae609a40a",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/7a0b0a4b75bac635d7a8682ac331eacae609a40a/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1438,8 +1438,8 @@
     "parents": [
       {
         "sha": "9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6",
-        "html_url": "https://github.com/descoped/descoped-container/commit/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6",
+        "html_url": "https://github.com/Cantara/some-project/commit/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6"
       }
     ]
   },
@@ -1459,9 +1459,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "1435a2260a2bc41d1fb6766316f739172006e358",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/1435a2260a2bc41d1fb6766316f739172006e358"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/1435a2260a2bc41d1fb6766316f739172006e358"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1470,9 +1470,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6",
-    "html_url": "https://github.com/descoped/descoped-container/commit/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6",
+    "html_url": "https://github.com/Cantara/some-project/commit/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/9d3507c782d1975f4c2ebd45ef2e33a0ea8f3ad6/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1514,8 +1514,8 @@
     "parents": [
       {
         "sha": "5ff3742fad708ec179ee1343f2d177c0ef01aaf1",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/5ff3742fad708ec179ee1343f2d177c0ef01aaf1",
-        "html_url": "https://github.com/descoped/descoped-container/commit/5ff3742fad708ec179ee1343f2d177c0ef01aaf1"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/5ff3742fad708ec179ee1343f2d177c0ef01aaf1",
+        "html_url": "https://github.com/Cantara/some-project/commit/5ff3742fad708ec179ee1343f2d177c0ef01aaf1"
       }
     ]
   },
@@ -1535,9 +1535,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "74344046fd5a57d1eadada95950d08fba0653fb4",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/74344046fd5a57d1eadada95950d08fba0653fb4"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/74344046fd5a57d1eadada95950d08fba0653fb4"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/5ff3742fad708ec179ee1343f2d177c0ef01aaf1",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/5ff3742fad708ec179ee1343f2d177c0ef01aaf1",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1546,9 +1546,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/5ff3742fad708ec179ee1343f2d177c0ef01aaf1",
-    "html_url": "https://github.com/descoped/descoped-container/commit/5ff3742fad708ec179ee1343f2d177c0ef01aaf1",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/5ff3742fad708ec179ee1343f2d177c0ef01aaf1/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/5ff3742fad708ec179ee1343f2d177c0ef01aaf1",
+    "html_url": "https://github.com/Cantara/some-project/commit/5ff3742fad708ec179ee1343f2d177c0ef01aaf1",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/5ff3742fad708ec179ee1343f2d177c0ef01aaf1/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1590,8 +1590,8 @@
     "parents": [
       {
         "sha": "aff8612b817103fff4771939a6d3d7c4677e7c09",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/aff8612b817103fff4771939a6d3d7c4677e7c09",
-        "html_url": "https://github.com/descoped/descoped-container/commit/aff8612b817103fff4771939a6d3d7c4677e7c09"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/aff8612b817103fff4771939a6d3d7c4677e7c09",
+        "html_url": "https://github.com/Cantara/some-project/commit/aff8612b817103fff4771939a6d3d7c4677e7c09"
       }
     ]
   },
@@ -1611,9 +1611,9 @@
       "message": "sonar stuff",
       "tree": {
         "sha": "c347a93800461f3bc714d0419101486e7062cf37",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/c347a93800461f3bc714d0419101486e7062cf37"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/c347a93800461f3bc714d0419101486e7062cf37"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/aff8612b817103fff4771939a6d3d7c4677e7c09",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/aff8612b817103fff4771939a6d3d7c4677e7c09",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1622,9 +1622,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/aff8612b817103fff4771939a6d3d7c4677e7c09",
-    "html_url": "https://github.com/descoped/descoped-container/commit/aff8612b817103fff4771939a6d3d7c4677e7c09",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/aff8612b817103fff4771939a6d3d7c4677e7c09/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/aff8612b817103fff4771939a6d3d7c4677e7c09",
+    "html_url": "https://github.com/Cantara/some-project/commit/aff8612b817103fff4771939a6d3d7c4677e7c09",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/aff8612b817103fff4771939a6d3d7c4677e7c09/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1666,8 +1666,8 @@
     "parents": [
       {
         "sha": "3c04c40c18a4058af9cca9e9f196b6fc1433f510",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/3c04c40c18a4058af9cca9e9f196b6fc1433f510",
-        "html_url": "https://github.com/descoped/descoped-container/commit/3c04c40c18a4058af9cca9e9f196b6fc1433f510"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/3c04c40c18a4058af9cca9e9f196b6fc1433f510",
+        "html_url": "https://github.com/Cantara/some-project/commit/3c04c40c18a4058af9cca9e9f196b6fc1433f510"
       }
     ]
   },
@@ -1687,9 +1687,9 @@
       "message": "added sonar",
       "tree": {
         "sha": "4d940c49aacce74eb3831f7700fbcf8dbf588774",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/4d940c49aacce74eb3831f7700fbcf8dbf588774"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/4d940c49aacce74eb3831f7700fbcf8dbf588774"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/3c04c40c18a4058af9cca9e9f196b6fc1433f510",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/3c04c40c18a4058af9cca9e9f196b6fc1433f510",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1698,9 +1698,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/3c04c40c18a4058af9cca9e9f196b6fc1433f510",
-    "html_url": "https://github.com/descoped/descoped-container/commit/3c04c40c18a4058af9cca9e9f196b6fc1433f510",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/3c04c40c18a4058af9cca9e9f196b6fc1433f510/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/3c04c40c18a4058af9cca9e9f196b6fc1433f510",
+    "html_url": "https://github.com/Cantara/some-project/commit/3c04c40c18a4058af9cca9e9f196b6fc1433f510",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/3c04c40c18a4058af9cca9e9f196b6fc1433f510/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1742,8 +1742,8 @@
     "parents": [
       {
         "sha": "37915a5ecfc92c57b50d0f191f5bd635baa7bf65",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/37915a5ecfc92c57b50d0f191f5bd635baa7bf65",
-        "html_url": "https://github.com/descoped/descoped-container/commit/37915a5ecfc92c57b50d0f191f5bd635baa7bf65"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/37915a5ecfc92c57b50d0f191f5bd635baa7bf65",
+        "html_url": "https://github.com/Cantara/some-project/commit/37915a5ecfc92c57b50d0f191f5bd635baa7bf65"
       }
     ]
   },
@@ -1763,9 +1763,9 @@
       "message": "fixed typo",
       "tree": {
         "sha": "3a9aace0cf2087e04f159047cc327a73cafa7a72",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/3a9aace0cf2087e04f159047cc327a73cafa7a72"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/3a9aace0cf2087e04f159047cc327a73cafa7a72"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/37915a5ecfc92c57b50d0f191f5bd635baa7bf65",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/37915a5ecfc92c57b50d0f191f5bd635baa7bf65",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1774,9 +1774,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/37915a5ecfc92c57b50d0f191f5bd635baa7bf65",
-    "html_url": "https://github.com/descoped/descoped-container/commit/37915a5ecfc92c57b50d0f191f5bd635baa7bf65",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/37915a5ecfc92c57b50d0f191f5bd635baa7bf65/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/37915a5ecfc92c57b50d0f191f5bd635baa7bf65",
+    "html_url": "https://github.com/Cantara/some-project/commit/37915a5ecfc92c57b50d0f191f5bd635baa7bf65",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/37915a5ecfc92c57b50d0f191f5bd635baa7bf65/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1818,8 +1818,8 @@
     "parents": [
       {
         "sha": "7d096d94d6db9cd149f87c8736aba73bd1779c6b",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/7d096d94d6db9cd149f87c8736aba73bd1779c6b",
-        "html_url": "https://github.com/descoped/descoped-container/commit/7d096d94d6db9cd149f87c8736aba73bd1779c6b"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/7d096d94d6db9cd149f87c8736aba73bd1779c6b",
+        "html_url": "https://github.com/Cantara/some-project/commit/7d096d94d6db9cd149f87c8736aba73bd1779c6b"
       }
     ]
   },
@@ -1839,9 +1839,9 @@
       "message": "[maven-release-plugin] prepare for next development iteration",
       "tree": {
         "sha": "fe47b37a652c214c1a0abfa2379e57cdec6e7ba9",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/fe47b37a652c214c1a0abfa2379e57cdec6e7ba9"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/fe47b37a652c214c1a0abfa2379e57cdec6e7ba9"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/7d096d94d6db9cd149f87c8736aba73bd1779c6b",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/7d096d94d6db9cd149f87c8736aba73bd1779c6b",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1850,9 +1850,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/7d096d94d6db9cd149f87c8736aba73bd1779c6b",
-    "html_url": "https://github.com/descoped/descoped-container/commit/7d096d94d6db9cd149f87c8736aba73bd1779c6b",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/7d096d94d6db9cd149f87c8736aba73bd1779c6b/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/7d096d94d6db9cd149f87c8736aba73bd1779c6b",
+    "html_url": "https://github.com/Cantara/some-project/commit/7d096d94d6db9cd149f87c8736aba73bd1779c6b",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/7d096d94d6db9cd149f87c8736aba73bd1779c6b/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1894,8 +1894,8 @@
     "parents": [
       {
         "sha": "e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810",
-        "html_url": "https://github.com/descoped/descoped-container/commit/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810",
+        "html_url": "https://github.com/Cantara/some-project/commit/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810"
       }
     ]
   },
@@ -1915,9 +1915,9 @@
       "message": "[maven-release-plugin] prepare release v1.0.5",
       "tree": {
         "sha": "836fe1f6840e041007f77d5b2686967694ca23ca",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/836fe1f6840e041007f77d5b2686967694ca23ca"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/836fe1f6840e041007f77d5b2686967694ca23ca"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -1926,9 +1926,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810",
-    "html_url": "https://github.com/descoped/descoped-container/commit/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810",
+    "html_url": "https://github.com/Cantara/some-project/commit/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/e1f6e3f79b3dfa40bb21bbb9c353fb6ac8539810/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -1970,8 +1970,8 @@
     "parents": [
       {
         "sha": "b903fbb17575c6614105d2926646423083390f0c",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/b903fbb17575c6614105d2926646423083390f0c",
-        "html_url": "https://github.com/descoped/descoped-container/commit/b903fbb17575c6614105d2926646423083390f0c"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/b903fbb17575c6614105d2926646423083390f0c",
+        "html_url": "https://github.com/Cantara/some-project/commit/b903fbb17575c6614105d2926646423083390f0c"
       }
     ]
   },
@@ -1988,12 +1988,12 @@
         "email": "oranheim@gmail.com",
         "date": "2017-03-16T16:17:11Z"
       },
-      "message": "force use of descoped repo",
+      "message": "force use of Cantara repo",
       "tree": {
         "sha": "e80b22cb25dbf0a7a31ba454513e3ee90e6272eb",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/e80b22cb25dbf0a7a31ba454513e3ee90e6272eb"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/e80b22cb25dbf0a7a31ba454513e3ee90e6272eb"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/b903fbb17575c6614105d2926646423083390f0c",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/b903fbb17575c6614105d2926646423083390f0c",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -2002,9 +2002,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/b903fbb17575c6614105d2926646423083390f0c",
-    "html_url": "https://github.com/descoped/descoped-container/commit/b903fbb17575c6614105d2926646423083390f0c",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/b903fbb17575c6614105d2926646423083390f0c/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/b903fbb17575c6614105d2926646423083390f0c",
+    "html_url": "https://github.com/Cantara/some-project/commit/b903fbb17575c6614105d2926646423083390f0c",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/b903fbb17575c6614105d2926646423083390f0c/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -2046,8 +2046,8 @@
     "parents": [
       {
         "sha": "c5e84e25c28ec4a107500e19f7ceffc26984e916",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/c5e84e25c28ec4a107500e19f7ceffc26984e916",
-        "html_url": "https://github.com/descoped/descoped-container/commit/c5e84e25c28ec4a107500e19f7ceffc26984e916"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/c5e84e25c28ec4a107500e19f7ceffc26984e916",
+        "html_url": "https://github.com/Cantara/some-project/commit/c5e84e25c28ec4a107500e19f7ceffc26984e916"
       }
     ]
   },
@@ -2067,9 +2067,9 @@
       "message": "[maven-release-plugin] prepare for next development iteration",
       "tree": {
         "sha": "d82af757037af23db6615ce361439fc8741b73e7",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/d82af757037af23db6615ce361439fc8741b73e7"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/d82af757037af23db6615ce361439fc8741b73e7"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/c5e84e25c28ec4a107500e19f7ceffc26984e916",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/c5e84e25c28ec4a107500e19f7ceffc26984e916",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -2078,9 +2078,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/c5e84e25c28ec4a107500e19f7ceffc26984e916",
-    "html_url": "https://github.com/descoped/descoped-container/commit/c5e84e25c28ec4a107500e19f7ceffc26984e916",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/c5e84e25c28ec4a107500e19f7ceffc26984e916/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/c5e84e25c28ec4a107500e19f7ceffc26984e916",
+    "html_url": "https://github.com/Cantara/some-project/commit/c5e84e25c28ec4a107500e19f7ceffc26984e916",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/c5e84e25c28ec4a107500e19f7ceffc26984e916/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -2122,8 +2122,8 @@
     "parents": [
       {
         "sha": "c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd",
-        "html_url": "https://github.com/descoped/descoped-container/commit/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd",
+        "html_url": "https://github.com/Cantara/some-project/commit/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd"
       }
     ]
   },
@@ -2143,9 +2143,9 @@
       "message": "[maven-release-plugin] prepare release v1.0.4",
       "tree": {
         "sha": "bf97fe8afd8f41cf681f94956792749982124b28",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/bf97fe8afd8f41cf681f94956792749982124b28"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/bf97fe8afd8f41cf681f94956792749982124b28"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -2154,9 +2154,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd",
-    "html_url": "https://github.com/descoped/descoped-container/commit/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd",
+    "html_url": "https://github.com/Cantara/some-project/commit/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/c3bb3a5e63971ec89bf06c266dbff5ac28d5aacd/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -2198,8 +2198,8 @@
     "parents": [
       {
         "sha": "1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69",
-        "html_url": "https://github.com/descoped/descoped-container/commit/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69",
+        "html_url": "https://github.com/Cantara/some-project/commit/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69"
       }
     ]
   },
@@ -2219,9 +2219,9 @@
       "message": "jmx exploration testing",
       "tree": {
         "sha": "76ddecdb12a530719ef0a7caf17a6515e85d1c28",
-        "url": "https://api.github.com/repos/descoped/descoped-container/git/trees/76ddecdb12a530719ef0a7caf17a6515e85d1c28"
+        "url": "https://api.github.com/repos/Cantara/some-project/git/trees/76ddecdb12a530719ef0a7caf17a6515e85d1c28"
       },
-      "url": "https://api.github.com/repos/descoped/descoped-container/git/commits/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69",
+      "url": "https://api.github.com/repos/Cantara/some-project/git/commits/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69",
       "comment_count": 0,
       "verification": {
         "verified": false,
@@ -2230,9 +2230,9 @@
         "payload": null
       }
     },
-    "url": "https://api.github.com/repos/descoped/descoped-container/commits/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69",
-    "html_url": "https://github.com/descoped/descoped-container/commit/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69",
-    "comments_url": "https://api.github.com/repos/descoped/descoped-container/commits/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69/comments",
+    "url": "https://api.github.com/repos/Cantara/some-project/commits/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69",
+    "html_url": "https://github.com/Cantara/some-project/commit/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69",
+    "comments_url": "https://api.github.com/repos/Cantara/some-project/commits/1d1ba6fde73528b557f6fdefc188e4d8fa9c9a69/comments",
     "author": {
       "login": "oranheim",
       "id": 461628,
@@ -2274,8 +2274,8 @@
     "parents": [
       {
         "sha": "630c12cb0c8d56e6b0601e60f2ba52e00e9665b0",
-        "url": "https://api.github.com/repos/descoped/descoped-container/commits/630c12cb0c8d56e6b0601e60f2ba52e00e9665b0",
-        "html_url": "https://github.com/descoped/descoped-container/commit/630c12cb0c8d56e6b0601e60f2ba52e00e9665b0"
+        "url": "https://api.github.com/repos/Cantara/some-project/commits/630c12cb0c8d56e6b0601e60f2ba52e00e9665b0",
+        "html_url": "https://github.com/Cantara/some-project/commit/630c12cb0c8d56e6b0601e60f2ba52e00e9665b0"
       }
     ]
   }
