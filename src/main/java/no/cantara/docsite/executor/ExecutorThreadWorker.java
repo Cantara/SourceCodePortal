@@ -19,7 +19,6 @@ public class ExecutorThreadWorker {
     private final BlockingQueue internalEventsQueue;
     private ThreadPoolExecutor executorThreadPool;
     private boolean isRunning;
-    private ExecutorThreadCallback<Boolean> callback;
 
     public ExecutorThreadWorker() {
         this.internalEventsQueue = new ArrayBlockingQueue(BLOCKING_QUEUE_SIZE);
@@ -35,7 +34,7 @@ public class ExecutorThreadWorker {
         }
 
         executorThreadPool = new ThreadPoolExecutor(
-                10, // core size
+                8, // core size
                 50, // max size
                 10 * 60, // idle timeout
                 TimeUnit.SECONDS,
@@ -47,11 +46,9 @@ public class ExecutorThreadWorker {
                     isRunning = true;
                     while (!executorThreadPool.isTerminated()) {
                         try {
-                            WorkerTask<?> event = (WorkerTask<?>) internalEventsQueue.take();
-                            if (callback.call(event)) {
-                                isRunning = false;
-                                break;
-                            }
+                            Runnable event = (Runnable) internalEventsQueue.take();
+                            executorThreadPool.execute(event);
+
                         } catch (InterruptedException e) {
                             LOG.trace("Exiting thread: {}", Thread.currentThread());
                         } catch (Exception e) {
@@ -86,10 +83,6 @@ public class ExecutorThreadWorker {
         }
     }
 
-    public void callback(ExecutorThreadCallback<Boolean> callback) {
-        this.callback = callback;
-    }
-
     public void waitForWorkerCompletion() throws InterruptedException {
         while (isRunning()) {
             try {
@@ -100,7 +93,7 @@ public class ExecutorThreadWorker {
         }
     }
 
-    public void queue(WorkerTask<?> workerTask) {
+    public void queue(Runnable workerTask) {
         internalEventsQueue.add(workerTask);
     }
 
