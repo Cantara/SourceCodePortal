@@ -3,6 +3,7 @@ package no.cantara.docsite.test.server;
 import no.cantara.docsite.Main;
 import no.ssb.config.DynamicConfiguration;
 
+import javax.cache.CacheManager;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -32,6 +33,10 @@ public class TestServer implements TestUriResolver {
 
     public int getTestServerServicePort() {
         return testServerServicePort;
+    }
+
+    public CacheManager getCacheManager() {
+        return application.getCacheManager();
     }
 
     @Override

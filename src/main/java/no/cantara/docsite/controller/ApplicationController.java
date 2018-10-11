@@ -4,18 +4,22 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 
+import javax.cache.CacheManager;
+
 public class ApplicationController implements HttpHandler {
 
     private String corsAllowOrigin;
     private String corsAllowHeaders;
     private boolean corsAllowOriginTest;
     private int undertowPort;
+    private CacheManager cacheManager;
 
-    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort) {
+    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, CacheManager cacheManager) {
         this.corsAllowOrigin = corsAllowOrigin;
         this.corsAllowHeaders = corsAllowHeaders;
         this.corsAllowOriginTest = corsAllowOriginTest;
         this.undertowPort = undertowPort;
+        this.cacheManager = cacheManager;
     }
 
     @Override

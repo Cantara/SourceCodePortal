@@ -5,6 +5,7 @@ import ch.qos.logback.core.joran.util.ConfigurationWatchListUtil;
 import com.netflix.hystrix.HystrixCommandProperties;
 import com.netflix.hystrix.HystrixThreadPoolProperties;
 import io.undertow.Undertow;
+import no.cantara.docsite.cache.CacheInitializer;
 import no.cantara.docsite.controller.ApplicationController;
 import no.cantara.docsite.executor.ExecutorThreadPool;
 import no.cantara.docsite.util.JavaUtilLoggerBridge;
@@ -13,6 +14,7 @@ import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.cache.CacheManager;
 import java.net.URL;
 import java.util.logging.Level;
 
@@ -25,6 +27,7 @@ public class Main {
     private final String host;
     private final int port;
     private ExecutorThreadPool worker;
+    private CacheManager cacheManager;
 
     public Main(DynamicConfiguration configuration, String host, int port) {
         LOG.info("Starting SourceCodePortal server");
@@ -51,6 +54,7 @@ public class Main {
 
     public synchronized void start() {
         if (server == null) {
+            cacheManager = CacheInitializer.initialize(configuration);
             worker = new ExecutorThreadPool();
             worker.start();
 
@@ -58,7 +62,8 @@ public class Main {
                     configuration.evaluateToString("http.cors.allow.origin"),
                     configuration.evaluateToString("http.cors.allow.header"),
                     configuration.evaluateToBoolean("http.cors.allow.origin.test"),
-                    port
+                    port,
+                    cacheManager
             );
 
             server = Undertow.builder()
@@ -76,9 +81,14 @@ public class Main {
         if (server != null) {
             worker.shutdown();
             server.stop();
+            cacheManager.close();
             server = null;
             LOG.info("Leaving.. Bye!");
         }
+    }
+
+    public CacheManager getCacheManager() {
+        return cacheManager;
     }
 
     public synchronized Undertow getUndertowServer() {
