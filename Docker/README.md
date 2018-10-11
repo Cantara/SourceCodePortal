@@ -30,5 +30,7 @@ Alternatively, the properties can be overridden by passing them one by one.
 E.g:
 ```
 -e github.oauth2.client.clientId=clientId -e github.oauth2.client.clientSecret=clientSecret
+
+sudo docker run -e SCP_github.oauth2.client.clientId=clientId -e SCP_github.oauth2.client.clientSecret=clientSecret  -it --rm -p 80:9090 cantara/sourcecodeportal
 ```
 

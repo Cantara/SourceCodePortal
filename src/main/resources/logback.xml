@@ -10,9 +10,9 @@
     </appender>
 
     <logger name="no.cantara.docsite" level="INFO"/>
-    <logger name="com.netflix" level="INFO"/>
+    <logger name="com.netflix" level="TRACE"/>
 
-    <root level="INFO">
+    <root level="TRACE">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
