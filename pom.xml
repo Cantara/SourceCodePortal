@@ -4,7 +4,7 @@
 
     <groupId>no.cantara.docsite</groupId>
     <artifactId>source-code-portal</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Source Code Portal</name>
@@ -16,6 +16,21 @@
         <artifactId>parent</artifactId>
         <version>6</version>
     </parent>
+
+    <repositories>
+        <!-- Needed for parent  -->
+        <repository>
+            <id>cantara-releases</id>
+            <name>Cantara Release Repository</name>
+            <url>http://mvnrepo.cantara.no/content/repositories/releases/</url>
+        </repository>
+        <!-- Needed for SDK snapshots  -->
+        <repository>
+            <id>cantara-snapshots</id>
+            <name>Cantara Snapshot Repository</name>
+            <url>http://mvnrepo.cantara.no/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
 
     <distributionManagement>
         <repository>
