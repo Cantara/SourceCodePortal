@@ -4,7 +4,13 @@ Groups documentation from GitHub repositories.
 
 == Pre-requisites
 
-An access-token must be generated before you can use this software. Please configure `security.properties` according to `security.properties.sample` and run the test case `ObtainGitHubAccessTokenTestTool`. Configure `security.properties` with `github.client.accessToken=ACCESS_TOKEN`. `ChromeDriver` is required in order to run the test case.
+Requires JDK 11.
+
+_ChromeDriver_ is required for obtaining GitHub access token.
+
+An _OAuth2 App_ must be created for your ogranization on https://github.com/organizations/YOUR_ORGANIZATION/settings/applications. This is where you find your ClientId and ClientSecret.
+
+An access-token must be generated before you can use this software. Please configure `security.properties` according to `security.properties.sample` and run the test case `ObtainGitHubAccessTokenTestTool`. Configure `security.properties` with `github.client.accessToken=ACCESS_TOKEN`.
 
 Ubuntu installation:
 
@@ -13,6 +19,4 @@ Ubuntu installation:
 MacOS installation:
 
 `brew install chromedriver`
-
-
 
