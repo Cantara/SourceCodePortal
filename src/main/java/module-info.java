@@ -21,4 +21,11 @@ module cantara.docsite {
     requires org.commonmark.ext.gfm.tables;
     requires asciidoctorj;
     requires no.ssb.config;
+
+    exports no.cantara.docsite;
+    exports no.cantara.docsite.controller;
+    exports no.cantara.docsite.executor;
+    exports no.cantara.docsite.github;
+    exports no.cantara.docsite.util;
+    exports no.cantara.docsite.web;
 }
