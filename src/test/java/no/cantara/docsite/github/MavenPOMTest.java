@@ -20,7 +20,7 @@ public class MavenPOMTest {
 
     @Test
     public void testName() throws JAXBException, ParserConfigurationException, SAXException {
-        HttpResponse<String> response = HttpRequests.get("https://raw.githubusercontent.com/Cantara/SourceCodePortal/master/pom.xml");
+        HttpResponse<String> response = HttpRequests.get("https://raw.githubusercontent.com/statisticsnorway/distributed-saga/master/pom.xml");
 
         SAXParserFactory sax = SAXParserFactory.newInstance();
         sax.setNamespaceAware(false);
