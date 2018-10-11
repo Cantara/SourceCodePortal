@@ -17,7 +17,11 @@ public class GitHubClient {
     }
 
     public HttpResponse<String> get(String uri) {
-        return HttpRequests.get("https://api.github.com" + uri, getGitHubAuthHeader(configuration));
+        String[] authToken = null;
+        if (configuration.evaluateToString("github.client.accessToken") != null) {
+            authToken = getGitHubAuthHeader(configuration);
+        }
+        return HttpRequests.get("https://api.github.com" + uri, authToken);
     }
 
 }
