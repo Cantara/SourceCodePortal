@@ -18,7 +18,7 @@ public class GetGitHubRepositoriesTest {
     @Inject
     TestServer server;
 
-    @Test
+    @Test(enabled = false)
     public void findOrgGitHubRepos() {
         GetGitHubRepositories repos = new GetGitHubRepositories(server.getConfiguration());
         List<GitHubRepository> result = repos.getOrganizationRepos();
