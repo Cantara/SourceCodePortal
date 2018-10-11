@@ -12,6 +12,7 @@ module cantara.docsite {
     requires java.json.bind;
     requires cache.api;
     requires org.jsoup;
+    requires hystrix.core;
     requires undertow.core;
     requires thymeleaf;
     requires thymeleaf.layout.dialect;

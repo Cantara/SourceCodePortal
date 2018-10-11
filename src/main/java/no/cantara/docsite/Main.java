@@ -2,9 +2,11 @@ package no.cantara.docsite;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.joran.util.ConfigurationWatchListUtil;
+import com.netflix.hystrix.HystrixCommandProperties;
+import com.netflix.hystrix.HystrixThreadPoolProperties;
 import io.undertow.Undertow;
 import no.cantara.docsite.controller.ApplicationController;
-import no.cantara.docsite.executor.ExecutorThreadWorker;
+import no.cantara.docsite.executor.ExecutorThreadPool;
 import no.cantara.docsite.util.JavaUtilLoggerBridge;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
@@ -22,13 +24,20 @@ public class Main {
     private Undertow server;
     private final String host;
     private final int port;
-    private ExecutorThreadWorker worker;
+    private ExecutorThreadPool worker;
 
     public Main(DynamicConfiguration configuration, String host, int port) {
         LOG.info("Starting OSS server");
         this.configuration = configuration;
         this.host = host;
         this.port = port;
+        HystrixCommandProperties.Setter()
+                .withExecutionTimeoutInMilliseconds(2500)
+                .withExecutionIsolationSemaphoreMaxConcurrentRequests(25);
+        HystrixThreadPoolProperties.Setter()
+                .withMaxQueueSize(100)
+                .withQueueSizeRejectionThreshold(100)
+                .withCoreSize(4);
     }
 
     public String getHost() {
@@ -41,7 +50,7 @@ public class Main {
 
     public synchronized void start() {
         if (server == null) {
-            worker = new ExecutorThreadWorker();
+            worker = new ExecutorThreadPool();
             worker.start();
 
             ApplicationController handler = new ApplicationController(

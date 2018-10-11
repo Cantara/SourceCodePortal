@@ -1,28 +1,31 @@
 package no.cantara.docsite.executor;
 
-import java.lang.annotation.Annotation;
+import no.ssb.config.DynamicConfiguration;
 
-/**
- * The worker task is a wrapper class that wraps the event data object
- *
- * @param <T> Wrapped data
- */
-public class WorkerTask<T> {
+import java.util.concurrent.atomic.AtomicInteger;
 
-    private Class<Annotation> eventType;
-    private T source;
+abstract public class WorkerTask implements Task {
 
-    public WorkerTask(Class<Annotation> eventType, T source) {
-        this.eventType = eventType;
-        this.source = source;
+    private final AtomicInteger retryCount = new AtomicInteger(-1);
+    private final DynamicConfiguration configuration;
+    private final ExecutorThreadPool executor;
+
+    public WorkerTask(DynamicConfiguration configuration, ExecutorThreadPool executor) {
+        this.configuration = configuration;
+        this.executor = executor;
     }
 
-    public Class<Annotation> getEventType() {
-        return eventType;
+    public DynamicConfiguration getConfiguration() {
+        return configuration;
     }
 
-    public T getSource() {
-        return source;
+    public ExecutorThreadPool getExecutor() {
+        return executor;
     }
+
+    public int incrementCount() {
+       return retryCount.incrementAndGet();
+    }
+
 
 }

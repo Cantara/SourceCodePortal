@@ -6,21 +6,23 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class ExecutorThreadWorker {
+public class ExecutorThreadPool {
 
+    static final int MAX_RETRIES = 3;
     static int BLOCKING_QUEUE_SIZE = 250;
     static long WAIT_FOR_THREAD_POOL = 50;
     static long WAIT_FOR_TERMINATION = 100;
     static long SLEEP_INTERVAL = 100;
-    private static Logger LOG = LoggerFactory.getLogger(ExecutorThreadWorker.class);
+    private static Logger LOG = LoggerFactory.getLogger(ExecutorThreadPool.class);
     private final BlockingQueue internalEventsQueue;
     private ThreadPoolExecutor executorThreadPool;
     private boolean isRunning;
 
-    public ExecutorThreadWorker() {
+    public ExecutorThreadPool() {
         this.internalEventsQueue = new ArrayBlockingQueue(BLOCKING_QUEUE_SIZE);
     }
 
@@ -38,25 +40,33 @@ public class ExecutorThreadWorker {
                 50, // max size
                 10 * 60, // idle timeout
                 TimeUnit.SECONDS,
-                new ArrayBlockingQueue<Runnable>(BLOCKING_QUEUE_SIZE)); // queue with a size;
+                new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE)); // queue with a size;
 
         try {
-            executorThreadPool.execute(new Runnable() {
-                public void run() {
-                    isRunning = true;
-                    while (!executorThreadPool.isTerminated()) {
-                        try {
-                            Runnable event = (Runnable) internalEventsQueue.take();
-                            executorThreadPool.execute(event);
-
-                        } catch (InterruptedException e) {
-                            LOG.trace("Exiting thread: {}", Thread.currentThread());
-                        } catch (Exception e) {
-                            LOG.error("Error or interrupted:", e);
-                        }
-                    }
-                    LOG.trace("Exiting thread: {}", Thread.currentThread());
+            executorThreadPool.setRejectedExecutionHandler(new RejectedExecutionHandler() {
+                @Override
+                public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+                    LOG.trace("Rejected: {}", r.getClass().getName());
                 }
+            });
+            executorThreadPool.execute(() -> {
+                isRunning = true;
+                while (!executorThreadPool.isTerminated()) {
+                    try {
+                        WorkerTask workerTask = (WorkerTask) internalEventsQueue.take();
+                        int retryCount = workerTask.incrementCount();
+                        if (retryCount < MAX_RETRIES) {
+                            if (retryCount > 0) LOG.warn("RetryCount: {} for {}", retryCount, workerTask.getClass().getName());
+                            executorThreadPool.execute(new Worker(workerTask));
+                        }
+
+                    } catch (InterruptedException e) {
+                        LOG.trace("Exiting thread: {}", Thread.currentThread());
+                    } catch (Exception e) {
+                        LOG.error("Error or interrupted:", e);
+                    }
+                }
+                LOG.trace("Exiting thread: {}", Thread.currentThread());
             });
             TimeUnit.MILLISECONDS.sleep(WAIT_FOR_THREAD_POOL);
 
@@ -84,7 +94,8 @@ public class ExecutorThreadWorker {
     }
 
     public void waitForWorkerCompletion() throws InterruptedException {
-        while (isRunning()) {
+        LOG.trace("thradCOunt: {}", countActiveThreads());
+        while (countActiveThreads() > 1) {
             try {
                 TimeUnit.MILLISECONDS.sleep(SLEEP_INTERVAL);
             } catch (Exception e) {
@@ -93,7 +104,7 @@ public class ExecutorThreadWorker {
         }
     }
 
-    public void queue(Runnable workerTask) {
+    public void queue(WorkerTask workerTask) {
         internalEventsQueue.add(workerTask);
     }
 

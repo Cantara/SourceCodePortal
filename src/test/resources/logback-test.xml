@@ -13,6 +13,7 @@
     <logger name="io.undertow" level="INFO"/>
     <logger name="org.xnio" level="INFO"/>
     <logger name="org.thymeleaf" level="INFO"/>
+    <logger name="com.netflix" level="INFO"/>
 
     <root level="TRACE">
         <appender-ref ref="STDOUT"/>
