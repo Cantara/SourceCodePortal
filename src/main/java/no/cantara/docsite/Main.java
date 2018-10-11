@@ -27,9 +27,8 @@ public class Main {
     private ExecutorThreadPool worker;
 
     public Main(DynamicConfiguration configuration, String host, int port) {
-        LOG.info("Starting SCP server");
-        LOG.info("- github.oauth2.client.clientId:{}", configuration.evaluateToString("github.oauth2.client.clientId"));
-        LOG.info("- github.oauth2.client.clientSecret:{}", configuration.evaluateToString("github.oauth2.client.clientSecret"));
+        LOG.info("Starting SourceCodePortal server");
+        LOG.info("  Configuration: {}", configuration.asMap().toString().replaceAll(", ", ",\n     ").replace("{", "{\n     "));
         this.configuration = configuration;
         this.host = host;
         this.port = port;

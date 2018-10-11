@@ -12,7 +12,7 @@
     <logger name="no.cantara.docsite" level="INFO"/>
     <logger name="com.netflix" level="TRACE"/>
 
-    <root level="TRACE">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
