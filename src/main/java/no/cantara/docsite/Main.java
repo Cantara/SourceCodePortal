@@ -16,10 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.cache.CacheManager;
 import java.net.URL;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -34,11 +32,12 @@ public class Main {
 
     public Main(DynamicConfiguration configuration, String host, int port) {
         LOG.info("Starting SourceCodePortal server");
-        LOG.info("  Configuration: {\n{}\n}", configuration.asMap().entrySet().stream()
-                .filter(p -> !"github.username".equals(p.getKey()))
-                .filter(p -> !"github.password".equals(p.getKey()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (k,v) -> k, LinkedHashMap::new)).toString()
-                .replaceAll(", ", ",\n     ").replace("{", "{\n     "));;
+        Map<String, String> configMap = configuration.asMap();
+        configMap.put("github.password", "*****");
+        configMap.put("github.oauth2.client.clientSecret", "*****");
+        LOG.info("  Configuration: \n{}", configMap.toString().replaceAll(", ", ",\n     ")
+                .replace("{", "{\n     ")
+                .replace("}", "\n}"));
         this.configuration = configuration;
         this.host = host;
         this.port = port;
