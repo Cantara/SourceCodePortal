@@ -19,7 +19,7 @@ import java.net.http.HttpResponse;
 public class MavenPOMTest {
 
     @Test
-    public void testName() throws JAXBException, ParserConfigurationException, SAXException {
+    public void testMavenPOM() throws JAXBException, ParserConfigurationException, SAXException {
         HttpResponse<String> response = HttpRequests.get("https://raw.githubusercontent.com/statisticsnorway/distributed-saga/master/pom.xml");
 
         SAXParserFactory sax = SAXParserFactory.newInstance();

@@ -18,7 +18,7 @@ public class GithubWebhookTest {
     @Inject TestClient client;
 
     @Test
-    public void testName() throws IOException {
+    public void testGithubWebhook() throws IOException {
         try (InputStream is = ClassLoader.getSystemResourceAsStream("github/PushEventPage.json")) {
             String json = new BufferedReader(new InputStreamReader(is)).lines().collect(Collectors.joining("\n"));
             // X-GitHub-Event
