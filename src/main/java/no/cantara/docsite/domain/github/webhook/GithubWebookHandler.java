@@ -1,4 +1,4 @@
-package no.cantara.docsite.services;
+package no.cantara.docsite.domain.github.webhook;
 
 import io.undertow.server.HttpServerExchange;
 

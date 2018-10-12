@@ -1,4 +1,4 @@
-package no.cantara.docsite.services;
+package no.cantara.docsite.domain.github.webhook;
 
 import no.cantara.docsite.test.client.TestClient;
 import no.cantara.docsite.test.server.TestServerListener;

@@ -1,4 +1,4 @@
-package no.cantara.docsite.services;
+package no.cantara.docsite.domain.github.repos;
 
 import no.cantara.docsite.client.GitHubClient;
 import no.cantara.docsite.model.github.pull.GitHubRepository;
