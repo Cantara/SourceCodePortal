@@ -45,7 +45,6 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
         return HttpRequests.get("https://api.github.com" + uri, bodyHandler, authToken);
     }
 
-
     @Override
     protected HttpResponse<R> run() throws Exception {
         HttpResponse<R> response = get(uri);
