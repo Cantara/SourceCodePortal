@@ -1,4 +1,4 @@
-package no.cantara.docsite.github;
+package no.cantara.docsite.services;
 
 import io.undertow.server.HttpServerExchange;
 

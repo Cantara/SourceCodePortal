@@ -1,6 +1,7 @@
-package no.cantara.docsite.github;
+package no.cantara.docsite.services;
 
 import no.cantara.docsite.client.GitHubClient;
+import no.cantara.docsite.model.github.pull.GitHubRepository;
 import no.ssb.config.DynamicConfiguration;
 
 import javax.json.bind.JsonbBuilder;

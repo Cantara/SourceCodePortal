@@ -26,7 +26,10 @@ module cantara.docsite {
     exports no.cantara.docsite;
     exports no.cantara.docsite.controller;
     exports no.cantara.docsite.executor;
-    exports no.cantara.docsite.github;
+    exports no.cantara.docsite.services;
+    exports no.cantara.docsite.model.maven;
+    exports no.cantara.docsite.model.github.pull;
+    exports no.cantara.docsite.model.github.push;
     exports no.cantara.docsite.util;
     exports no.cantara.docsite.web;
 }

@@ -1,6 +1,7 @@
-package no.cantara.docsite.github;
+package no.cantara.docsite.services;
 
 import no.cantara.docsite.commands.GetGitHubCommand;
+import no.cantara.docsite.model.github.pull.GitHubRepository;
 import no.cantara.docsite.test.server.TestServer;
 import no.cantara.docsite.test.server.TestServerListener;
 import no.cantara.docsite.util.JsonUtil;

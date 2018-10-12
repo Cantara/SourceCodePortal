@@ -1,4 +1,4 @@
-package no.cantara.docsite.github;
+package no.cantara.docsite.model.github.push;
 
 
 //List<Map<String, Map<String, Map<String, String>>>> elementList = ctx.read("$.[*]");

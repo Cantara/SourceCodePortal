@@ -1,4 +1,4 @@
-package no.cantara.docsite.github;
+package no.cantara.docsite.model.maven;
 
 import no.cantara.docsite.util.JsonUtil;
 

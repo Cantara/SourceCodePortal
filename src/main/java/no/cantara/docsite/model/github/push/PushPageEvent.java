@@ -1,4 +1,4 @@
-package no.cantara.docsite.github;
+package no.cantara.docsite.model.github.push;
 
 import no.cantara.docsite.util.JsonUtil;
 

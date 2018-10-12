@@ -1,4 +1,4 @@
-package no.cantara.docsite.github;
+package no.cantara.docsite.model.github.pull;
 
 import org.asciidoctor.Asciidoctor;
 
