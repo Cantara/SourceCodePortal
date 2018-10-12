@@ -36,7 +36,7 @@ public class GetGitHubRepositoriesTest {
     @Test
     public void findOrgGitHubRepos() {
         DynamicConfiguration configuration = configuration();
-        GetGitHubRepositories repos = new GetGitHubRepositories(configuration);
+        GetGitHubRepositories repos = new GetGitHubRepositories(configuration, "Cantara");
         List<GitHubRepository> result = repos.getOrganizationRepos();
         LOG.trace("repos: {}", result);
     }

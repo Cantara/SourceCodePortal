@@ -19,13 +19,15 @@ public class GetGitHubRepositories {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetGitHubRepositories.class);
     private final DynamicConfiguration configuration;
+    private final String organization;
 
-    public GetGitHubRepositories(DynamicConfiguration configuration) {
+    public GetGitHubRepositories(DynamicConfiguration configuration, String organization) {
         this.configuration = configuration;
+        this.organization = organization;
     }
 
     public List<GitHubRepository> getOrganizationRepos() {
-        GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration, Optional.empty(), "/orgs/Cantara/repos", HttpResponse.BodyHandlers.ofString());
+        GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration, Optional.empty(), String.format("/orgs/%s/repos?type=public&per_page=500", organization), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = command.execute();
         if (response.statusCode() == HTTP_OK) {
             return Arrays.asList(JsonbBuilder.create().fromJson(response.body(), GitHubRepository[].class));
