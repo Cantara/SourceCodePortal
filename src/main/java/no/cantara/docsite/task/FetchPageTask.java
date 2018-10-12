@@ -7,6 +7,9 @@ import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.http.HttpResponse;
+import java.util.Optional;
+
 public class FetchPageTask extends WorkerTask {
 
     private static final Logger LOG = LoggerFactory.getLogger(FetchPageTask.class);
@@ -17,8 +20,8 @@ public class FetchPageTask extends WorkerTask {
 
     @Override
     public void execute() {
-        GetGitHubCommand<String> cmd = new GetGitHubCommand<>(getConfiguration(), this);
-        String result = cmd.execute();
+        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubRateLimit", getConfiguration(), Optional.of(this), "/rate_limit", HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> result = cmd.execute();
         LOG.trace("result: {}", result);
     }
 }

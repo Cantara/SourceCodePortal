@@ -1,46 +1,57 @@
 package no.cantara.docsite.commands;
 
-import com.netflix.hystrix.HystrixCommand;
-import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
-import no.cantara.docsite.client.GitHubClient;
+import no.cantara.docsite.client.HttpRequests;
 import no.cantara.docsite.executor.WorkerTask;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
-import static java.net.HttpURLConnection.HTTP_OK;
-
-public class GetGitHubCommand<R> extends HystrixCommand<R> {
+public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetGitHubCommand.class);
 
     private final DynamicConfiguration configuration;
-    private final WorkerTask worker;
+    private Optional<WorkerTask> worker;
+    private String uri;
+    private HttpResponse.BodyHandler<R> bodyHandler;
 
-    public GetGitHubCommand(DynamicConfiguration configuration, WorkerTask worker) {
-        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("GitHubGroup")));
+    public GetGitHubCommand(String groupKey, DynamicConfiguration configuration, Optional<WorkerTask> worker, String uri, HttpResponse.BodyHandler<R> bodyHandler) {
+        super(groupKey);
         this.configuration = configuration;
         this.worker = worker;
+        this.uri = uri;
+        this.bodyHandler = bodyHandler;
         HystrixRequestContext.initializeContext();
     }
 
-    @Override
-    protected R run() throws Exception {
-        GitHubClient client = new GitHubClient(configuration);
-        HttpResponse<String> response = client.get("/rate_limit");
-        if (response.statusCode() == HTTP_OK) {
-            return (R) response.body();
-        } else {
-            return null;
+    private String[] getGitHubAuthHeader(DynamicConfiguration configuration) {
+        return new String[]{"Authorization", String.format("token %s", configuration.evaluateToString("github.client.accessToken"))};
+    }
+
+    private HttpResponse<R> get(String uri) {
+        String[] authToken = null;
+        if (configuration.evaluateToString("github.client.accessToken") != null) {
+            authToken = getGitHubAuthHeader(configuration);
         }
+        return HttpRequests.get("https://api.github.com" + uri, bodyHandler, authToken);
+    }
+
+
+    @Override
+    protected HttpResponse<R> run() throws Exception {
+        HttpResponse<R> response = get(uri);
+        return response;
     }
 
     @Override
-    protected R getFallback() {
-        worker.getExecutor().queue(worker);
+    protected HttpResponse<R> getFallback() {
+        if (worker.isPresent()) {
+            worker.get().getExecutor().queue(worker.get());
+        }
         return null;
     }
 }

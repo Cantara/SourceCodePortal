@@ -1,12 +1,11 @@
 package no.cantara.docsite.github;
 
-import no.cantara.docsite.client.GitHubClient;
+import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.test.server.TestServer;
 import no.cantara.docsite.test.server.TestServerListener;
 import no.cantara.docsite.util.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -22,10 +21,11 @@ public class GetGitHubRepositoriesTest {
     @Inject
     TestServer server;
 
-    @Ignore
+//    @Ignore
     @Test
     public void testGitHubApiLimit() {
-        HttpResponse<String> response = new GitHubClient(server.getConfiguration()).get("/rate_limit");
+        HttpResponse<String> response = new GetGitHubCommand<>("githubRateLimit", server.getConfiguration(), null, "/rate_limit", HttpResponse.BodyHandlers.ofString()).execute();
+
         LOG.trace("GitHub API Limit: {}", JsonUtil.prettyPrint(JsonUtil.asJsonObject(response.body())));
     }
 
