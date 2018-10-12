@@ -2,37 +2,40 @@ package no.cantara.docsite.services;
 
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.model.github.pull.GitHubRepository;
-import no.cantara.docsite.test.server.TestServer;
-import no.cantara.docsite.test.server.TestServerListener;
 import no.cantara.docsite.util.JsonUtil;
+import no.ssb.config.DynamicConfiguration;
+import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import javax.inject.Inject;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Optional;
 
-@Listeners(TestServerListener.class)
 public class GetGitHubRepositoriesTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetGitHubRepositoriesTest.class);
 
-    @Inject
-    TestServer server;
+    static DynamicConfiguration configuration() {
+        DynamicConfiguration configuration = new StoreBasedDynamicConfiguration.Builder()
+                .propertiesResource("security.properties")
+                .build();
+        return configuration;
+    }
 
 //    @Ignore
     @Test
     public void testGitHubApiLimit() {
-        HttpResponse<String> response = new GetGitHubCommand<>("githubRateLimit", server.getConfiguration(), null, "/rate_limit", HttpResponse.BodyHandlers.ofString()).execute();
-
+        DynamicConfiguration configuration = configuration();
+        HttpResponse<String> response = new GetGitHubCommand<>("githubRateLimit", configuration, Optional.empty(), "/rate_limit", HttpResponse.BodyHandlers.ofString()).execute();
         LOG.trace("GitHub API Limit: {}", JsonUtil.prettyPrint(JsonUtil.asJsonObject(response.body())));
     }
 
     @Test
     public void findOrgGitHubRepos() {
-        GetGitHubRepositories repos = new GetGitHubRepositories(server.getConfiguration());
+        DynamicConfiguration configuration = configuration();
+        GetGitHubRepositories repos = new GetGitHubRepositories(configuration);
         List<GitHubRepository> result = repos.getOrganizationRepos();
         LOG.trace("repos: {}", result);
     }
