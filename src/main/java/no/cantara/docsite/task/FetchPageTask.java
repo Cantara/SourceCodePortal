@@ -21,7 +21,11 @@ public class FetchPageTask extends WorkerTask {
     @Override
     public void execute() {
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubRateLimit", getConfiguration(), Optional.of(this), "/rate_limit", HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> result = cmd.execute();
-        LOG.trace("result: {}", result);
+        HttpResponse<String> response = cmd.execute();
+        if (GetGitHubCommand.anyOf(response, 200)) {
+            LOG.trace("result: {}", response.body());
+        } else {
+            LOG.error("Received empty payload ({})", response.statusCode());
+        }
     }
 }

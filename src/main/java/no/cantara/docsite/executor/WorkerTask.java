@@ -27,5 +27,4 @@ abstract public class WorkerTask implements Task {
        return retryCount.incrementAndGet();
     }
 
-
 }
