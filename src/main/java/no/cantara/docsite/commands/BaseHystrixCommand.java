@@ -13,12 +13,12 @@ abstract public class BaseHystrixCommand<R> extends HystrixCommand<R> {
         super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey))
                 .andCommandPropertiesDefaults(
                         HystrixCommandProperties.Setter()
-                                .withExecutionTimeoutInMilliseconds(2500)
+                                .withExecutionTimeoutInMilliseconds(5000)
                                 .withExecutionIsolationSemaphoreMaxConcurrentRequests(25))
                 .andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
                         .withMaxQueueSize(100)
-                        .withQueueSizeRejectionThreshold(100)
-                        .withCoreSize(4))
+                        .withQueueSizeRejectionThreshold(2500)
+                        .withCoreSize(8))
         );
     }
 
