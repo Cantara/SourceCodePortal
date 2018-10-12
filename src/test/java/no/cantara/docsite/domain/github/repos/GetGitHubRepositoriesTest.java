@@ -7,6 +7,7 @@ import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.net.http.HttpResponse;
@@ -24,7 +25,7 @@ public class GetGitHubRepositoriesTest {
         return configuration;
     }
 
-//    @Ignore
+    @Ignore
     @Test
     public void testGitHubApiLimit() {
         DynamicConfiguration configuration = configuration();
