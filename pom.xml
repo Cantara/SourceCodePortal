@@ -473,7 +473,7 @@
                 <!-- workaround for: https://issues.jboss.org/browse/UNDERTOW-1355 -->
                 <configuration>
                     <argLine>
-                        --illegal-access=permit
+                        --illegal-access=deny
                         -Xmx1500m
                     </argLine>
                 </configuration>
@@ -485,7 +485,7 @@
                 <version>2.22.0</version>
                 <configuration>
                     <argLine>
-                        --illegal-access=permit
+                        --illegal-access=deny
                     </argLine>
                 </configuration>
             </plugin>

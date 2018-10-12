@@ -52,6 +52,7 @@ public class RepositoryConfigLoader {
                 String repoName = repo.name;
                 Matcher matcher = pattern.matcher(repoName);
                 if (matcher.find()) {
+                    // TODO test for MD or ADOC and scan through all relative links. Or make a rawProjectRootURL to be used by WorkerTask to determine content. Probably the best!
                     String readmeURL = String.format("https://raw.githubusercontent.com/%s/%s/%s/%s", repositoryConfig.gitHub.organization, repoName, repoConfig.branch, "README.md");
                     group.add(repoName, new Repository(repoName, repo.htmlUrl, readmeURL));
                 }

@@ -17,7 +17,7 @@ public class ServerTest {
 
     @Test
     public void thatTestServerStartsMainWithRunningUndertowListener() {
-        List<Undertow.ListenerInfo> listenerInfo = server.application.getUndertowServer().getListenerInfo();
+        List<Undertow.ListenerInfo> listenerInfo = server.application.getServer().getListenerInfo();
         Undertow.ListenerInfo info = listenerInfo.iterator().next();
         assertEquals(info.getProtcol(), "http");
     }

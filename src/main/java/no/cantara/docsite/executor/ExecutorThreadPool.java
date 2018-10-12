@@ -50,6 +50,7 @@ public class ExecutorThreadPool {
                 }
             });
             executorThreadPool.execute(() -> {
+                LOG.info("Starting ExecutorService..");
                 isRunning = true;
                 while (!executorThreadPool.isTerminated()) {
                     try {
@@ -81,15 +82,17 @@ public class ExecutorThreadPool {
     }
 
     public void shutdown() {
+        if (!isRunning) return;;
+
         executorThreadPool.shutdown();
         try {
             if (!executorThreadPool.awaitTermination(WAIT_FOR_TERMINATION, TimeUnit.MILLISECONDS)) {
                 executorThreadPool.shutdownNow();
                 isRunning = false;
             }
-            LOG.info("shutdown success");
+            LOG.info("ExecutorService shutdown success");
         } catch (InterruptedException e) {
-            LOG.error("shutdown failed", e);
+            LOG.error("ExecutorService shutdown failed", e);
         }
     }
 
