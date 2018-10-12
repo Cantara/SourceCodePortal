@@ -2,13 +2,24 @@ package no.cantara.docsite.commands;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandProperties;
+import com.netflix.hystrix.HystrixThreadPoolProperties;
 
 import java.net.http.HttpResponse;
 
 abstract public class BaseHystrixCommand<R> extends HystrixCommand<R> {
 
     protected BaseHystrixCommand(String groupKey) {
-        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey)));
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey))
+                .andCommandPropertiesDefaults(
+                        HystrixCommandProperties.Setter()
+                                .withExecutionTimeoutInMilliseconds(2500)
+                                .withExecutionIsolationSemaphoreMaxConcurrentRequests(25))
+                .andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
+                        .withMaxQueueSize(100)
+                        .withQueueSizeRejectionThreshold(100)
+                        .withCoreSize(4))
+        );
     }
 
     public static <R> boolean anyOf(HttpResponse<R> response, int... anyOf) {
