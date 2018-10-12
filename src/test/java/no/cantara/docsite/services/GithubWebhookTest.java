@@ -1,4 +1,4 @@
-package no.cantara.docsite.web;
+package no.cantara.docsite.services;
 
 import no.cantara.docsite.test.client.TestClient;
 import no.cantara.docsite.test.server.TestServerListener;
