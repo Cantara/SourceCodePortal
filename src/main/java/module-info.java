@@ -34,8 +34,10 @@ module cantara.docsite {
     opens no.cantara.docsite.domain.maven;
 
     exports no.cantara.docsite;
+    exports no.cantara.docsite.cache;
+    exports no.cantara.docsite.client;
+    exports no.cantara.docsite.commands;
     exports no.cantara.docsite.controller;
-    exports no.cantara.docsite.executor;
     exports no.cantara.docsite.domain.config;
     exports no.cantara.docsite.domain.github.commits;
     exports no.cantara.docsite.domain.github.contents;
@@ -43,6 +45,8 @@ module cantara.docsite {
     exports no.cantara.docsite.domain.github.releases;
     exports no.cantara.docsite.domain.github.repos;
     exports no.cantara.docsite.domain.github.webhook;
+    exports no.cantara.docsite.executor;
+    exports no.cantara.docsite.health;
     exports no.cantara.docsite.util;
     exports no.cantara.docsite.web;
 }

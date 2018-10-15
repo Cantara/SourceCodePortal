@@ -5,14 +5,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class ExecutorThreadPool {
 
     static final int MAX_RETRIES = 3;
-    static int BLOCKING_QUEUE_SIZE = 250;
+    static int BLOCKING_QUEUE_SIZE = 500;
     static long WAIT_FOR_THREAD_POOL = 50;
     static long WAIT_FOR_TERMINATION = 100;
     static long SLEEP_INTERVAL = 100;
@@ -33,12 +32,12 @@ public class ExecutorThreadPool {
                 new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE)); // queue with a size;
 
         try {
-            executorThreadPool.setRejectedExecutionHandler(new RejectedExecutionHandler() {
-                @Override
-                public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-                    LOG.trace("Rejected: {}", r.getClass().getName());
-                }
-            });
+//            executorThreadPool.setRejectedExecutionHandler(new RejectedExecutionHandler() {
+//                @Override
+//                public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+//                    LOG.trace("Rejected: {}", r.getClass().getName());
+//                }
+//            });
             executorThreadPool.execute(() -> {
                 LOG.info("Starting ExecutorService..");
                 while (!executorThreadPool.isTerminated()) {
