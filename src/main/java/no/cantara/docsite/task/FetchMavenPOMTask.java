@@ -41,7 +41,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
             MavenPOM mavenPOM = parser.parse(mavenPOMContents.getDecodedContent());
             cacheStore.getProjects().put(repository.repoName, mavenPOM);
         } else {
-            LOG.error("Received empty payload ({})", response.statusCode());
+            LOG.error("Resource not found: {} ({})", response.uri(), response.statusCode());
         }
     }
 

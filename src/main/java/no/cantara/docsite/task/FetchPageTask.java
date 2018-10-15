@@ -34,7 +34,7 @@ public class FetchPageTask extends WorkerTask {
             RepositoryContents readmeContents = JsonbBuilder.create().fromJson(response.body(), RepositoryContents.class);
             cacheStore.getPages().put(repository.repoName, readmeContents);
         } else {
-            LOG.error("Received empty payload ({})", response.statusCode());
+            LOG.error("Resource not found: {} ({})", response.uri(), response.statusCode());
         }
     }
 }

@@ -13,6 +13,7 @@ import java.util.Properties;
 public class HealthResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(HealthResource.class);
+    private static final String DEFAULT_VERSION = "(DEV VERSION)";
 
     private static final class HealthHolder {
         private static final HealthResource instance = new HealthResource();
@@ -39,7 +40,11 @@ public class HealthResource {
                 LOG.warn("Problem reading version resource from classpath: ", e);
             }
         }
-        return "(DEV VERSION)";
+        return DEFAULT_VERSION;
+    }
+
+    public boolean isDevelopment() {
+        return DEFAULT_VERSION.equalsIgnoreCase(getVersion());
     }
 
 }

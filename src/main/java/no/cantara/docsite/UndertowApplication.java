@@ -9,6 +9,7 @@ import no.cantara.docsite.controller.ApplicationController;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.github.contents.PreFetchRepositoryContents;
 import no.cantara.docsite.executor.ExecutorThreadPool;
+import no.cantara.docsite.health.HealthResource;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +26,15 @@ public class UndertowApplication {
 
     public static UndertowApplication initializeUndertowApplication(DynamicConfiguration configuration) {
         LOG.info("Starting SourceCodePortal server");
-        Map<String, String> configMap = configuration.asMap();
-        configMap.put("github.password", "*****");
-        configMap.put("github.oauth2.client.clientSecret", "*****");
-        LOG.info("  Configuration: \n{}", configMap.toString().replaceAll(", ", ",\n     ")
-                .replace("{", "{\n     ")
-                .replace("}", "\n}"));
+        if (!HealthResource.instance().isDevelopment()) {
+            Map<String, String> configMap = configuration.asMap();
+            configMap.put("github.password", "*****");
+            configMap.put("github.oauth2.client.clientSecret", "*****");
+            configMap.put("github.client.accessToken", "*****");
+            LOG.info("  Configuration: \n{}", configMap.toString().replaceAll(", ", ",\n     ")
+                    .replace("{", "{\n     ")
+                    .replace("}", "\n}"));
+        }
         int port = configuration.evaluateToInt("http.port");
         return initializeUndertowApplication(configuration, port);
     }
@@ -101,8 +105,10 @@ public class UndertowApplication {
         if (repoConfig == null) {
             enableConfigLoader();
         }
-        PreFetchRepositoryContents preFetchRepositoryContents = new PreFetchRepositoryContents(configuration, repoConfig, executorService, cacheStore);
-        preFetchRepositoryContents.fetch();
+        if (configuration.evaluateToBoolean("cache.prefetch")) {
+            PreFetchRepositoryContents preFetchRepositoryContents = new PreFetchRepositoryContents(configuration, repoConfig, executorService, cacheStore);
+            preFetchRepositoryContents.fetch();
+        }
     }
 
     public String getHost() {

@@ -41,7 +41,7 @@ public class FetchCommitRevisionTask extends WorkerTask {
                 cacheStore.getCommits().put(repository.repoName, commitRevision[n]);
             }
         } else {
-            LOG.error("Received empty payload ({})", response.statusCode());
+            LOG.error("Resource not found: {} ({})", response.uri(), response.statusCode());
         }
     }
 }
