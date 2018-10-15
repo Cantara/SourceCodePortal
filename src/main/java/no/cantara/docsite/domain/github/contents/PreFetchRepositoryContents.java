@@ -4,6 +4,8 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.executor.ExecutorThreadPool;
 import no.cantara.docsite.task.FetchCommitRevisionTask;
+import no.cantara.docsite.task.FetchMavenPOMTask;
+import no.cantara.docsite.task.FetchPageTask;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +32,8 @@ public class PreFetchRepositoryContents {
             LOG.trace("group: {}", g.groupId);
             g.getRepositories().values().forEach(r -> {
                 LOG.trace("  repo: {} - {} - {} - {} - {}", r.repoName, r.repoURL, r.rawRepoURL, r.readmeURL, r.contentsURL);
-//                executorService.queue(new FetchMavenPOMTask(configuration, executorService, cacheStore, r));
-//                executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, r));
+                executorService.queue(new FetchMavenPOMTask(configuration, executorService, cacheStore, r));
+                executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, r));
                 executorService.queue(new FetchCommitRevisionTask(configuration, executorService, cacheStore, g.organization, r));
             });
         });

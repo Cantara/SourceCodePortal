@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -20,21 +19,12 @@ public class ExecutorThreadPool {
     private static Logger LOG = LoggerFactory.getLogger(ExecutorThreadPool.class);
     private final BlockingQueue internalEventsQueue;
     private ThreadPoolExecutor executorThreadPool;
-    private boolean isRunning;
 
     public ExecutorThreadPool() {
         this.internalEventsQueue = new ArrayBlockingQueue(BLOCKING_QUEUE_SIZE);
     }
 
-    public boolean isRunning() {
-        return isRunning;
-    }
-
     public void start() {
-        if (isRunning) {
-            return;
-        }
-
         executorThreadPool = new ThreadPoolExecutor(
                 8, // core size
                 50, // max size
@@ -51,7 +41,6 @@ public class ExecutorThreadPool {
             });
             executorThreadPool.execute(() -> {
                 LOG.info("Starting ExecutorService..");
-                isRunning = true;
                 while (!executorThreadPool.isTerminated()) {
                     try {
                         WorkerTask workerTask = (WorkerTask) internalEventsQueue.take();
@@ -73,22 +62,14 @@ public class ExecutorThreadPool {
 
         } catch (InterruptedException e) {
             LOG.error("Error or interrupted:", e);
-            isRunning = false;
         }
     }
 
-    public ExecutorService getThreadPool() {
-        return executorThreadPool;
-    }
-
     public void shutdown() {
-        if (!isRunning) return;;
-
         executorThreadPool.shutdown();
         try {
             if (!executorThreadPool.awaitTermination(WAIT_FOR_TERMINATION, TimeUnit.MILLISECONDS)) {
                 executorThreadPool.shutdownNow();
-                isRunning = false;
             }
             LOG.info("ExecutorService shutdown success");
         } catch (InterruptedException e) {

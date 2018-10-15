@@ -52,6 +52,11 @@ public class ApplicationController implements HttpHandler {
             return;
         }
 
+        if (requestPath.startsWith("/health")) {
+            new HealthController(cacheStore).handleRequest(exchange);
+            return;
+        }
+
         if (requestPath.startsWith("/dump")) {
             new DumpController().handleRequest(exchange);
             return;

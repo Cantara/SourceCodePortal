@@ -3,20 +3,21 @@ module cantara.docsite {
     requires java.base;
     requires java.logging;
     requires java.xml.bind;
+    requires com.sun.xml.fastinfoset;
+    requires com.sun.xml.bind;
     requires java.net.http;
+    requires java.json;
+    requires java.json.bind;
+    requires cache.api;
+    requires org.jsoup;
     requires org.slf4j;
     requires jul_to_slf4j;
     requires log4j;
-//    requires org.apache.commons.logging;
     requires commons.configuration;
     requires commons.logging;
     requires org.jboss.logging;
     requires ch.qos.logback.classic;
     requires ch.qos.logback.core;
-    requires java.json;
-    requires java.json.bind;
-    requires cache.api;
-    requires org.jsoup;
     requires hystrix.core;
     requires undertow.core;
     requires thymeleaf;
@@ -29,7 +30,7 @@ module cantara.docsite {
     requires no.ssb.config;
 
     opens config;
-
+    opens no.cantara.docsite.model.maven;
 
     exports no.cantara.docsite;
     exports no.cantara.docsite.controller;

@@ -36,7 +36,7 @@ public class RepositoryConfigLoaderTest {
                 server.getExecutorService().queue(new FetchCommitRevisionTask(server.getConfiguration(), server.getExecutorService(), server.getCacheStore(), config.gitHub.organization, r));
             });
         });
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         server.getCacheStore().getPages().forEach(repo -> {
 //            LOG.trace("{} => {}", repo.getKey(), repo.getValue().getDecodedContent());
             LOG.trace("{} => {}", repo.getKey());

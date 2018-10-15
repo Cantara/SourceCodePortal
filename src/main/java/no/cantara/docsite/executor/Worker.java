@@ -10,7 +10,11 @@ public class Worker implements Runnable {
 
     @Override
     public void run() {
-        task.execute();
+        try {
+            task.execute();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
