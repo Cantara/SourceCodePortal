@@ -32,7 +32,7 @@ public class GetGitHubRepositories {
 
     public List<GitHubRepository> getOrganizationRepos(RepositoryVisibility visibility) {
         GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration, Optional.empty(),
-                String.format("https://api.github.com/orgs/%s/repos?type=%s&per_page=500&client_id=%s&client_secret=%s",
+                String.format("https://api.github.com/orgs/%s/repos?client_id=%s&client_secret=%s&type=%s&per_page=500",
                         organization,
                         configuration.evaluateToString("github.oauth2.client.clientId"),
                         configuration.evaluateToString("github.oauth2.client.clientSecret"),
