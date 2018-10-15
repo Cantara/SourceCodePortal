@@ -49,6 +49,10 @@ public class Server {
 
             application.enableExecutorService();
 
+            application.enableConfigLoader();
+
+            application.enablePreFetch();
+
             application.start();
 
             long time = System.currentTimeMillis() - now;

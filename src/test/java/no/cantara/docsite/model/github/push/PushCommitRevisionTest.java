@@ -22,8 +22,8 @@ public class PushCommitRevisionTest {
         try (InputStream json = ClassLoader.getSystemResourceAsStream("github/PushCommitsEvent.json")) {
             JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             Jsonb jsonb = JsonbBuilder.create(config);
-            PushCommitRevision[] event = jsonb.fromJson(json, PushCommitRevision[].class);
-            LOG.trace("event: {}", Arrays.stream(event).map(PushCommitRevision::toString).collect(Collectors.joining("\n")));
+            CommitRevision[] event = jsonb.fromJson(json, CommitRevision[].class);
+            LOG.trace("event: {}", Arrays.stream(event).map(CommitRevision::toString).collect(Collectors.joining("\n")));
         }
 
     }

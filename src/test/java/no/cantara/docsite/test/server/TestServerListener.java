@@ -1,5 +1,6 @@
 package no.cantara.docsite.test.server;
 
+import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.test.ConfigurationOverride;
 import no.cantara.docsite.test.ConfigurationProfile;
 import no.cantara.docsite.test.client.TestClient;
@@ -227,6 +228,17 @@ public class TestServerListener implements ITestListener, IInvokedMethodListener
                     field.setAccessible(true);
                     if (field.get(test) == null || injectableTestClassFieldsInvalidated) {
                         field.set(test, TestClient.newClient(startOrGetServer(configuration)));
+                    }
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            // cache store
+            if (field.isAnnotationPresent(Inject.class) && CacheStore.class.isAssignableFrom(field.getType())) {
+                try {
+                    field.setAccessible(true);
+                    if (field.get(test) == null || injectableTestClassFieldsInvalidated) {
+                        field.set(test, startOrGetServer(configuration).getCacheStore());
                     }
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException(e);

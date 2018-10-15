@@ -6,12 +6,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "project")
-public class MavenPom {
+public class MavenPOM implements Serializable {
 
     public Parent parent;
     public String artifactId;
@@ -27,13 +28,13 @@ public class MavenPom {
         return JsonUtil.asString(this);
     }
 
-    public static class Parent {
+    public static class Parent implements Serializable {
         public String artifactId;
         public String groupId;
         public String version;
     }
 
-    public static class Modules {
+    public static class Modules implements Serializable {
         public @XmlElement(name = "module") List<String> moduleList = new ArrayList<>();
     }
 

@@ -4,7 +4,7 @@ import no.cantara.docsite.util.JsonUtil;
 
 import javax.json.bind.annotation.JsonbProperty;
 
-public class PushCreatedTagEvent {
+public class CreatedTagEvent {
 
     public String ref;
     public @JsonbProperty("ref_type") String refType;

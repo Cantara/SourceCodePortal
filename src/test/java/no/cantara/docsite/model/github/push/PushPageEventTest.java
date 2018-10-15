@@ -20,7 +20,7 @@ public class PushPageEventTest {
         try (InputStream json = ClassLoader.getSystemResourceAsStream("github/PushEventPage.json")) {
             JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             Jsonb jsonb = JsonbBuilder.create(config);
-            PushPageEvent event = jsonb.fromJson(json, PushPageEvent.class);
+            PageEvent event = jsonb.fromJson(json, PageEvent.class);
             LOG.trace("event: {}", event);
         }
     }

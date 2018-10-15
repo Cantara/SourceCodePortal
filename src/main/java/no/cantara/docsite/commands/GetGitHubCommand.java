@@ -21,14 +21,14 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
 
     private final DynamicConfiguration configuration;
     private Optional<WorkerTask> worker;
-    private String uri;
+    private String url;
     private HttpResponse.BodyHandler<R> bodyHandler;
 
-    public GetGitHubCommand(String groupKey, DynamicConfiguration configuration, Optional<WorkerTask> worker, String uri, HttpResponse.BodyHandler<R> bodyHandler) {
+    public GetGitHubCommand(String groupKey, DynamicConfiguration configuration, Optional<WorkerTask> worker, String url, HttpResponse.BodyHandler<R> bodyHandler) {
         super(groupKey);
         this.configuration = configuration;
         this.worker = worker;
-        this.uri = uri;
+        this.url = url;
         this.bodyHandler = bodyHandler;
         HystrixRequestContext.initializeContext();
     }
@@ -37,17 +37,17 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
         return new String[]{"Authorization", String.format("token %s", configuration.evaluateToString("github.client.accessToken"))};
     }
 
-    private HttpResponse<R> get(String uri) {
+    private HttpResponse<R> get(String url) {
         String[] authToken = null;
         if (configuration.evaluateToString("github.client.accessToken") != null) {
             authToken = getGitHubAuthHeader(configuration);
         }
-        return HttpRequests.get("https://api.github.com" + uri, bodyHandler, authToken);
+        return HttpRequests.get(url, bodyHandler, authToken);
     }
 
     @Override
     protected HttpResponse<R> run() throws Exception {
-        HttpResponse<R> response = get(uri);
+        HttpResponse<R> response = get(url);
         return response;
     }
 

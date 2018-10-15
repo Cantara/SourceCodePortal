@@ -16,6 +16,10 @@ import java.util.Map;
 
 public class JsonUtil {
 
+    public static String prettyPrint(String json) {
+        return jsonFormat(JsonUtil.asJsonObject(json), JsonGenerator.PRETTY_PRINTING);
+    }
+
     public static String prettyPrint(JsonStructure json) {
         return jsonFormat(json, JsonGenerator.PRETTY_PRINTING);
     }
@@ -57,7 +61,7 @@ public class JsonUtil {
 
     public static String asString(Object jsonObject) {
         String json = JsonbBuilder.create().toJson(jsonObject);
-        return prettyPrint(asJsonObject(json));
+        return prettyPrint(json);
     }
 
 }

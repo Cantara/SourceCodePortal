@@ -3,8 +3,8 @@ package no.cantara.docsite.controller;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
-
-import javax.cache.CacheManager;
+import no.cantara.docsite.cache.CacheStore;
+import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 
 public class ApplicationController implements HttpHandler {
 
@@ -12,14 +12,14 @@ public class ApplicationController implements HttpHandler {
     private String corsAllowHeaders;
     private boolean corsAllowOriginTest;
     private int undertowPort;
-    private CacheManager cacheManager;
+    private CacheStore cacheStore;
 
-    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, CacheManager cacheManager) {
+    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, CacheStore cacheStore, RepositoryConfigLoader configLoader) {
         this.corsAllowOrigin = corsAllowOrigin;
         this.corsAllowHeaders = corsAllowHeaders;
         this.corsAllowOriginTest = corsAllowOriginTest;
         this.undertowPort = undertowPort;
-        this.cacheManager = cacheManager;
+        this.cacheStore = cacheStore;
     }
 
     @Override

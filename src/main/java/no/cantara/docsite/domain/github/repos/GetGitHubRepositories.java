@@ -32,7 +32,7 @@ public class GetGitHubRepositories {
 
     public List<GitHubRepository> getOrganizationRepos(RepositoryVisibility visibility) {
         GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration, Optional.empty(),
-                String.format("/orgs/%s/repos?type=%s&per_page=500", organization, visibility.value()), HttpResponse.BodyHandlers.ofString());
+                String.format("https://api.github.com/orgs/%s/repos?type=%s&per_page=500", organization, visibility.value()), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = command.execute();
         if (response.statusCode() == HTTP_OK) {
             return Arrays.asList(JsonbBuilder.create().fromJson(response.body(), GitHubRepository[].class));
@@ -40,4 +40,5 @@ public class GetGitHubRepositories {
         LOG.error("Error: {}", response.statusCode());
         return Collections.emptyList();
     }
+
 }

@@ -7,7 +7,7 @@ import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import java.util.List;
 
-public class PushPageEvent {
+public class PageEvent {
 
     public @JsonbProperty("after") String afterRevision;
     public Repository repository;

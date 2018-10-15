@@ -1,9 +1,10 @@
 package no.cantara.docsite.test.server;
 
 import no.cantara.docsite.UndertowApplication;
+import no.cantara.docsite.cache.CacheStore;
+import no.cantara.docsite.executor.ExecutorThreadPool;
 import no.ssb.config.DynamicConfiguration;
 
-import javax.cache.CacheManager;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -35,8 +36,16 @@ public class TestServer implements TestUriResolver {
         return testServerServicePort;
     }
 
-    public CacheManager getCacheManager() {
-        return application.getCacheManager();
+    public CacheStore getCacheStore() {
+        return application.getCacheStore();
+    }
+
+    public ExecutorThreadPool getExecutorService() {
+        return application.getExecutorService();
+    }
+
+    public UndertowApplication getApplication() {
+        return application;
     }
 
     @Override

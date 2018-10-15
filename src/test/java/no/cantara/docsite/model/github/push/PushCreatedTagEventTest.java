@@ -20,7 +20,7 @@ public class PushCreatedTagEventTest {
         try (InputStream json = ClassLoader.getSystemResourceAsStream("github/PushCreatedTagEvent.json")) {
             JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             Jsonb jsonb = JsonbBuilder.create(config);
-            PushCreatedTagEvent event = jsonb.fromJson(json, PushCreatedTagEvent.class);
+            CreatedTagEvent event = jsonb.fromJson(json, CreatedTagEvent.class);
             LOG.trace("event: {}", event);
         }
 

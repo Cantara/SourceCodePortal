@@ -1,7 +1,7 @@
-package no.cantara.docsite.domain.config;
+package no.cantara.docsite.domain.page;
 
-import no.cantara.docsite.model.config.RepositoryConfig;
-import no.cantara.docsite.task.FetchMavenPOMTask;
+import no.cantara.docsite.domain.config.RepositoryConfigLoader;
+import no.cantara.docsite.domain.config.RepositoryConfigLoaderTest;
 import no.cantara.docsite.task.FetchPageTask;
 import no.cantara.docsite.test.server.TestServer;
 import no.cantara.docsite.test.server.TestServerListener;
@@ -14,31 +14,23 @@ import javax.inject.Inject;
 import java.util.Map;
 
 @Listeners(TestServerListener.class)
-public class RepositoryConfigLoaderTest {
+public class GitHubPageServiceTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RepositoryConfigLoaderTest.class);
 
-    @Inject
-    TestServer server;
+    @Inject TestServer server;
 
     @Test
-    public void testRepositoryConfig() throws Exception {
+    public void testName() {
         server.getApplication().enableExecutorService();
         RepositoryConfigLoader service = new RepositoryConfigLoader(server.getConfiguration());
-        RepositoryConfig config = service.repositoryConfig;
-        LOG.trace("Repo-Config: {}", config);
         Map<String, RepositoryConfigLoader.Group> discoveredRepositoryGroups = service.build();
         discoveredRepositoryGroups.values().forEach(g -> {
             LOG.trace("group: {}", g.groupId);
             g.getRepositories().values().forEach(r -> {
-                LOG.trace("  repo: {} - {} - {} - {} - {}", r.repoName, r.repoURL, r.rawRepoURL, r.readmeURL, r.contentsURL);
-                server.getExecutorService().queue(new FetchMavenPOMTask(server.getConfiguration(), server.getExecutorService(), server.getCacheStore(), r));
                 server.getExecutorService().queue(new FetchPageTask(server.getConfiguration(), server.getExecutorService(), server.getCacheStore(), r));
+                LOG.trace("  repo: {} - {} - {} - {} - {}", r.repoName, r.repoURL, r.rawRepoURL, r.readmeURL, r.contentsURL);
             });
-        });
-        Thread.sleep(2000);
-        server.getCacheStore().getPages().forEach(repo -> {
-            LOG.trace("{} => {}", repo.getValue().getDecodedContent());
         });
     }
 }

@@ -36,7 +36,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
-public class PushCommitRevision {
+public class CommitRevision {
 
     public String sha;
     public Commit commit;

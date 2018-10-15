@@ -1,6 +1,5 @@
 package no.cantara.docsite.executor;
 
-import no.cantara.docsite.task.FetchPageTask;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.testng.annotations.Test;
@@ -9,7 +8,7 @@ public class ExecutorThreadPoolTest {
 
     static DynamicConfiguration configuration() {
         DynamicConfiguration configuration = new StoreBasedDynamicConfiguration.Builder()
-                .values()
+                .propertiesResource("security.properties")
                 .build();
         return configuration;
     }
@@ -33,7 +32,7 @@ public class ExecutorThreadPoolTest {
         executorThreadPool.queue(new DummyTask(configuration, executorThreadPool));
         executorThreadPool.queue(new DummyTask(configuration, executorThreadPool));
         executorThreadPool.queue(new DummyTask(configuration, executorThreadPool));
-        executorThreadPool.queue(new FetchPageTask(configuration, executorThreadPool));
+//        executorThreadPool.queue(new FetchPageTask(configuration, executorThreadPool, "https://api.github.com/repos/Cantara/SourceCodePortal/readme?ref=master"));
         Thread.sleep(5000);
         executorThreadPool.shutdown();
         executorThreadPool.waitForWorkerCompletion();
