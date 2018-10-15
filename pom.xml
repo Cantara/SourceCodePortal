@@ -1,16 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>no.cantara.docsite</groupId>
     <artifactId>source-code-portal</artifactId>
-    <version>0.1.8-SNAPSHOT</version>
+    <version>0.2.9-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Source Code Portal</name>
     <description>Organizational SourceCode Dashboard Portal</description>
     <inceptionYear>2018</inceptionYear>
-
 
     <repositories>
         <!-- Needed for parent  -->
@@ -48,18 +45,14 @@
         <java.version>11</java.version>
         <module.build.sourceEncoding>UTF-8</module.build.sourceEncoding>
         <maven.javadoc.skip>true</maven.javadoc.skip>
-
         <docker.image>scp</docker.image>
-
         <undertow.io.version>2.0.13.Final</undertow.io.version>
         <xnio.version>3.6.5.Final</xnio.version>
         <jboss-threads.version>2.3.2.Final</jboss-threads.version>
         <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
         <commonmark.version>0.11.0</commonmark.version>
-
         <slf4j.version>1.8.0-beta2</slf4j.version>
         <logback.version>1.3.0-alpha4</logback.version>
-
         <testng.version>6.14.3</testng.version>
     </properties>
 
@@ -86,7 +79,7 @@
         <connection>scm:git:git://github.com/Cantara/SourceCodePortal.git</connection>
         <developerConnection>scm:git:git@github.com:Cantara/SourceCodePortal.git</developerConnection>
         <url>https://wiki.cantara.no/</url>
-        <tag>source-code-portal-0.1</tag>
+        <tag>source-code-portal-0.2.0</tag>
     </scm>
 
     <dependencies>
@@ -135,10 +128,10 @@
             <artifactId>hystrix-core</artifactId>
             <version>1.5.12</version>
             <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>commons-logging</groupId>-->
-                    <!--<artifactId>commons-logging</artifactId>-->
-                <!--</exclusion>-->
+            <!--<exclusion>-->
+            <!--<groupId>commons-logging</groupId>-->
+            <!--<artifactId>commons-logging</artifactId>-->
+            <!--</exclusion>-->
             <!--</exclusions>-->
         </dependency>
 
@@ -281,10 +274,10 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>jcl-over-slf4j</artifactId>-->
-            <!--<version>${slf4j.version}</version>-->
-            <!--<scope>compile</scope>-->
+        <!--<groupId>org.slf4j</groupId>-->
+        <!--<artifactId>jcl-over-slf4j</artifactId>-->
+        <!--<version>${slf4j.version}</version>-->
+        <!--<scope>compile</scope>-->
         <!--</dependency>-->
 
         <dependency>

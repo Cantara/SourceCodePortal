@@ -4,12 +4,12 @@
     "organization": "Cantara",
     "repos": [
       {
-        "groupId": "SourceCodePortal",
+        "groupId": "SourceCodePortal-t",
         "repo": "SourceCodePortal",
         "branch": "master"
       },
       {
-        "groupId": "Whydah",
+        "groupId": "Whydah-t",
         "repo": "Whydah-*",
         "branch": "master"
       }

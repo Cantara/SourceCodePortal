@@ -49,7 +49,14 @@ public class GetGitHubRepositoriesTest {
 
     RepositoryContents getMavenPOM(String repoName, String fileNamePath, String branch) {
         GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration(), Optional.empty(),
-                String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", "Cantara", repoName, fileNamePath, branch), HttpResponse.BodyHandlers.ofString());
+                String.format("https://api.github.com/repos/%s/%s/contents/%s?client_id=%s&client_secret=%s&ref=%s",
+                        "Cantara",
+                        repoName,
+                        fileNamePath,
+                        configuration().evaluateToString("github.oauth2.client.clientId"),
+                        configuration().evaluateToString("github.oauth2.client.clientSecret"),
+                        branch),
+                HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = command.execute();
         if (response.statusCode() == HTTP_OK) {
             JsonbConfig config = new JsonbConfig();
@@ -59,7 +66,7 @@ public class GetGitHubRepositoriesTest {
         return null;
     }
 
-    @Test
+    @Test(enabled = false)
     public void getMavenPOM() {
         DynamicConfiguration configuration = configuration();
         RepositoryContents repositoryContents = getMavenPOM("SourceCodePortal", "pom.xml", "master");

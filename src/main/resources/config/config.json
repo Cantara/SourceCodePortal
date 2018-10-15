@@ -12,6 +12,21 @@
         "groupId": "Whydah",
         "repo": "Whydah-*",
         "branch": "master"
+      },
+      {
+        "groupId": "ConfigService",
+        "repo": "/\\b(?:ConfigService|JAU|Java-Auto-Update)\\b/gi",
+        "branch": "master"
+      },
+      {
+        "groupId": "BaselineProjects",
+        "repo": "[^\\s]*aseline",
+        "branch": "master"
+      },
+      {
+        "groupId": "Cantara-All-t",
+        "repo": "[^\\s]*",
+        "branch": "master"
       }
     ]
   }
