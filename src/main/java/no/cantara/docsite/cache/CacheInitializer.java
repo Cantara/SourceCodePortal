@@ -17,7 +17,7 @@ public class CacheInitializer {
         LOG.info("Initializing JCache..");
         CachingProvider cachingProvider = Caching.getCachingProvider();
         CacheManager cacheManager = cachingProvider.getCacheManager();
-        CacheStore cacheStore = new CacheStore(cacheManager);
+        CacheStore cacheStore = new CacheStore(configuration, cacheManager);
         cacheStore.initialize();
         return cacheStore;
     }

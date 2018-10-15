@@ -4,6 +4,7 @@ import no.cantara.docsite.model.github.pull.RepositoryContents;
 import no.cantara.docsite.model.github.push.CommitRevision;
 import no.cantara.docsite.model.github.push.CreatedTagEvent;
 import no.cantara.docsite.model.maven.MavenPOM;
+import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,35 +16,49 @@ public class CacheStore {
 
     static final Logger LOG = LoggerFactory.getLogger(CacheStore.class);
 
+    private DynamicConfiguration configuration;
     final CacheManager cacheManager;
     Cache<String, MavenPOM> projects;
     Cache<String, RepositoryContents> pages;
     Cache<String, CommitRevision> commits;
     Cache<String, CreatedTagEvent> releases;
 
-    CacheStore(CacheManager cacheManager) {
+    CacheStore(DynamicConfiguration configuration, CacheManager cacheManager) {
+        this.configuration = configuration;
         this.cacheManager = cacheManager;
     }
 
     void initialize() {
         if (cacheManager.getCache("project") == null) {
             LOG.info("Creating Project cache");
-            projects = cacheManager.createCache("project", new MutableConfiguration<>());
+            MutableConfiguration<String, MavenPOM> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            projects = cacheManager.createCache("project", cacheConfig);
         }
 
         if (cacheManager.getCache("page") == null) {
             LOG.info("Creating Page cache");
-            pages = cacheManager.createCache("page", new MutableConfiguration<>());
+            MutableConfiguration<String, RepositoryContents> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            pages = cacheManager.createCache("page", cacheConfig);
         }
 
         if (cacheManager.getCache("commit") == null) {
             LOG.info("Creating Commit cache");
-            commits = cacheManager.createCache("commit", new MutableConfiguration<>());
+            MutableConfiguration<String, CommitRevision> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            commits = cacheManager.createCache("commit", cacheConfig);
         }
 
         if (cacheManager.getCache("release") == null) {
             LOG.info("Creating Release cache");
-            releases = cacheManager.createCache("release", new MutableConfiguration<>());
+            MutableConfiguration<String, CreatedTagEvent> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            releases = cacheManager.createCache("release", cacheConfig);
         }
     }
 
