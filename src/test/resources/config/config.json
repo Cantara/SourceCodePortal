@@ -22,6 +22,11 @@
         "groupId": "Baseline-Projects-t",
         "repo": "[^\\s]*aseline",
         "branch": "master"
+      },
+      {
+        "groupId": "Cantara-All-t",
+        "repo": "[^\\s]*",
+        "branch": "master"
       }
     ]
   }
