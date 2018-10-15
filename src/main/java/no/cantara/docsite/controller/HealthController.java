@@ -35,6 +35,7 @@ public class HealthController implements HttpHandler {
         }
 
         JsonObjectBuilder cacheBuilder = Json.createObjectBuilder();
+
         {
             AtomicInteger count = new AtomicInteger(0);
             cacheStore.getProjects().iterator().forEachRemaining(a -> count.incrementAndGet());
@@ -42,7 +43,6 @@ public class HealthController implements HttpHandler {
         }
 
         {
-
             AtomicInteger count = new AtomicInteger(0);
             cacheStore.getPages().iterator().forEachRemaining(a -> count.incrementAndGet());
             cacheBuilder.add("pages", count.get());
