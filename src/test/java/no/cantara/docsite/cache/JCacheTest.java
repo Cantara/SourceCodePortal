@@ -1,6 +1,6 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.model.github.pull.RepositoryContents;
+import no.cantara.docsite.domain.github.pages.RepositoryContents;
 import no.cantara.docsite.test.server.TestServerListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;

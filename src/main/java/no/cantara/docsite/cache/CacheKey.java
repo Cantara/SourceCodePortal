@@ -13,7 +13,7 @@ public class CacheKey implements Serializable {
     public final String repoName;
     public final String branch;
 
-    public CacheKey(String organization, String repoName, String branch) {
+    CacheKey(String organization, String repoName, String branch) {
         this.organization = organization;
         this.repoName = repoName;
         this.branch = branch;

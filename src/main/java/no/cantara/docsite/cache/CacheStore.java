@@ -1,9 +1,9 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.model.github.pull.RepositoryContents;
-import no.cantara.docsite.model.github.push.CommitRevision;
-import no.cantara.docsite.model.github.push.CreatedTagEvent;
-import no.cantara.docsite.model.maven.MavenPOM;
+import no.cantara.docsite.domain.github.commits.CommitRevision;
+import no.cantara.docsite.domain.github.pages.RepositoryContents;
+import no.cantara.docsite.domain.github.releases.CreatedTagEvent;
+import no.cantara.docsite.domain.maven.MavenPOM;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,5 @@
 package no.cantara.docsite.domain.maven;
 
-import no.cantara.docsite.model.maven.MavenPOM;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;

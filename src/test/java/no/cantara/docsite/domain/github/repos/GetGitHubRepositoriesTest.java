@@ -1,10 +1,9 @@
 package no.cantara.docsite.domain.github.repos;
 
 import no.cantara.docsite.commands.GetGitHubCommand;
+import no.cantara.docsite.domain.github.pages.RepositoryContents;
+import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.maven.MavenPOMParser;
-import no.cantara.docsite.model.github.pull.GitHubRepository;
-import no.cantara.docsite.model.github.pull.RepositoryContents;
-import no.cantara.docsite.model.maven.MavenPOM;
 import no.cantara.docsite.util.JsonUtil;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;

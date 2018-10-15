@@ -1,8 +1,7 @@
 package no.cantara.docsite.domain.config;
 
 import no.cantara.docsite.domain.github.repos.GetGitHubRepositories;
-import no.cantara.docsite.model.config.RepositoryConfig;
-import no.cantara.docsite.model.github.pull.GitHubRepository;
+import no.cantara.docsite.domain.github.repos.GitHubRepository;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

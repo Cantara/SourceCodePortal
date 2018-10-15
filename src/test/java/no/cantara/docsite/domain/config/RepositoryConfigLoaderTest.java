@@ -1,10 +1,9 @@
 package no.cantara.docsite.domain.config;
 
 import no.cantara.docsite.cache.CacheKey;
-import no.cantara.docsite.model.config.RepositoryConfig;
-import no.cantara.docsite.task.FetchCommitRevisionTask;
-import no.cantara.docsite.task.FetchMavenPOMTask;
-import no.cantara.docsite.task.FetchPageTask;
+import no.cantara.docsite.domain.github.commits.FetchCommitRevisionTask;
+import no.cantara.docsite.domain.github.pages.FetchPageTask;
+import no.cantara.docsite.domain.maven.FetchMavenPOMTask;
 import no.cantara.docsite.test.server.TestServer;
 import no.cantara.docsite.test.server.TestServerListener;
 import org.slf4j.Logger;
@@ -43,7 +42,7 @@ public class RepositoryConfigLoaderTest {
         Thread.sleep(5000);
         server.getCacheStore().getPages().forEach(repo -> {
 //            LOG.trace("{} => {}", repo.getKey(), repo.getValue().getDecodedContent());
-            LOG.trace("{} => {}", repo.getKey());
+            LOG.trace("CacheKey: {}", repo.getKey());
         });
     }
 }

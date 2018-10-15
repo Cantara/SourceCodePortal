@@ -31,20 +31,18 @@ module cantara.docsite {
     requires no.ssb.config;
 
     opens config;
-    opens no.cantara.docsite.model.maven;
+    opens no.cantara.docsite.domain.maven;
 
     exports no.cantara.docsite;
     exports no.cantara.docsite.controller;
     exports no.cantara.docsite.executor;
     exports no.cantara.docsite.domain.config;
-    exports no.cantara.docsite.domain.github.repos;
+    exports no.cantara.docsite.domain.github.commits;
     exports no.cantara.docsite.domain.github.contents;
+    exports no.cantara.docsite.domain.github.pages;
+    exports no.cantara.docsite.domain.github.releases;
+    exports no.cantara.docsite.domain.github.repos;
     exports no.cantara.docsite.domain.github.webhook;
-    exports no.cantara.docsite.model.config;
-    exports no.cantara.docsite.model.github.pull;
-    exports no.cantara.docsite.model.github.push;
-    exports no.cantara.docsite.model.maven;
-    exports no.cantara.docsite.task;
     exports no.cantara.docsite.util;
     exports no.cantara.docsite.web;
 }

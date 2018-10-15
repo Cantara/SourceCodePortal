@@ -1,7 +1,6 @@
 package no.cantara.docsite.domain.github.repos;
 
 import no.cantara.docsite.commands.GetGitHubCommand;
-import no.cantara.docsite.model.github.pull.GitHubRepository;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

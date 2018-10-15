@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.logging.Level;
 
 /**
- * This is the main entrypoint for starting the application
  * TODO refactor the webapp to its own web project after project split between core, thymeleaf web, etc.
  */
 public class Server {
