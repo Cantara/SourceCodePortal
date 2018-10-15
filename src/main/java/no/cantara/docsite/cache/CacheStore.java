@@ -18,6 +18,7 @@ public class CacheStore {
 
     private DynamicConfiguration configuration;
     final CacheManager cacheManager;
+    //CacheStore<RepositoryConfigLoader.Group, CacheKey> groups; // TODO group cacheKeys for fast lookups
     Cache<CacheKey, MavenPOM> projects;
     Cache<CacheKey, RepositoryContents> pages;
     Cache<CacheKey, CommitRevision> commits;
