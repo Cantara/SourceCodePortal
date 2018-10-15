@@ -4,22 +4,22 @@
     "organization": "Cantara",
     "repos": [
       {
-        "groupId": "SourceCodePortal",
+        "groupId": "SourceCodePortal-t",
         "repo": "SourceCodePortal",
         "branch": "master"
       },
       {
-        "groupId": "Whydah",
+        "groupId": "Whydah-t",
         "repo": "Whydah-*",
         "branch": "master"
       },
       {
-        "groupId": "ConfigService",
-        "repo": "/\b(?:ConfigService|JAU|Java-Auto-Update)\b/gi",
+        "groupId": "ConfigService-t",
+        "repo": "/\\b(?:ConfigService|JAU|Java-Auto-Update)\\b/gi",
         "branch": "master"
       },
       {
-        "groupId": "Baseline Projects",
+        "groupId": "Baseline-Projects-t",
         "repo": "[^\\s]*aseline",
         "branch": "master"
       }

@@ -41,6 +41,7 @@ public class HealthController implements HttpHandler {
         }
 
         {
+
             AtomicInteger count = new AtomicInteger(0);
             cacheStore.getPages().iterator().forEachRemaining(a -> count.incrementAndGet());
             cacheBuilder.add("pages", count.get());

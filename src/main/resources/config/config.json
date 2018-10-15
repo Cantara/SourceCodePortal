@@ -15,11 +15,11 @@
       },
       {
         "groupId": "ConfigService",
-        "repo": "/\b(?:ConfigService|JAU|Java-Auto-Update)\b/gi",
+        "repo": "/\\b(?:ConfigService|JAU|Java-Auto-Update)\\b/gi",
         "branch": "master"
       },
       {
-        "groupId": "Baseline Projects",
+        "groupId": "BaselineProjects",
         "repo": "[^\\s]*aseline",
         "branch": "master"
       }
