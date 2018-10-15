@@ -2,6 +2,7 @@ module cantara.docsite {
     requires jdk.unsupported;
     requires java.base;
     requires java.logging;
+    requires java.management;
     requires java.xml.bind;
     requires com.sun.xml.fastinfoset;
     requires com.sun.xml.bind;

@@ -4,10 +4,12 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
+import no.cantara.docsite.health.HealthResource;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.json.bind.JsonbBuilder;
+import java.time.Instant;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -23,8 +25,15 @@ public class HealthController implements HttpHandler {
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         JsonObjectBuilder builder = Json.createObjectBuilder();
-        JsonObjectBuilder cacheBuilder = Json.createObjectBuilder();
 
+        {
+            builder.add("status", "OK");
+            builder.add("version", HealthResource.instance().getVersion());
+            builder.add("now", Instant.now().toString());
+            builder.add("since", HealthResource.instance().getRunningSince());
+        }
+
+        JsonObjectBuilder cacheBuilder = Json.createObjectBuilder();
         {
             AtomicInteger count = new AtomicInteger(0);
             cacheStore.getProjects().iterator().forEachRemaining(a -> count.incrementAndGet());
