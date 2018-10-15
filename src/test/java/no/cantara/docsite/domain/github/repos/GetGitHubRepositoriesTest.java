@@ -53,9 +53,9 @@ public class GetGitHubRepositoriesTest {
                 String.format("https://api.github.com/repos/%s/%s/contents/%s?client_id=%s&client_secret=%s&ref=%s",
                         "Cantara",
                         repoName,
+                        fileNamePath,
                         configuration().evaluateToString("github.oauth2.client.clientId"),
                         configuration().evaluateToString("github.oauth2.client.clientSecret"),
-                        fileNamePath,
                         branch),
                 HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = command.execute();
