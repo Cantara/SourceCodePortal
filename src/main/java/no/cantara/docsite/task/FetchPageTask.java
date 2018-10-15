@@ -28,13 +28,17 @@ public class FetchPageTask extends WorkerTask {
 
     @Override
     public void execute() {
-        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), repository.readmeURL, HttpResponse.BodyHandlers.ofString());
+        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this),
+                repository.readmeURL + "&client_id=" + getConfiguration().evaluateToString("github.oauth2.client.clientId") +
+                        "&client_secret=" + getConfiguration().evaluateToString("github.oauth2.client.clientSecret"),
+                HttpResponse.BodyHandlers.ofString());
+
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
             RepositoryContents readmeContents = JsonbBuilder.create().fromJson(response.body(), RepositoryContents.class);
             cacheStore.getPages().put(repository.repoName, readmeContents);
         } else {
-            LOG.error("Received empty payload ({})", response.statusCode());
+            LOG.error("Received empty payload (HTTP:{} - {})", response.statusCode(), response.body());
         }
     }
 }

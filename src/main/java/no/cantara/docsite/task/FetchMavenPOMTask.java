@@ -19,7 +19,7 @@ import java.util.Optional;
 
 public class FetchMavenPOMTask extends WorkerTask  {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FetchPageTask.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FetchMavenPOMTask.class);
     private final CacheStore cacheStore;
     private final RepositoryConfigLoader.Repository repository;
 
@@ -32,7 +32,10 @@ public class FetchMavenPOMTask extends WorkerTask  {
     @Override
     public void execute() {
         LOG.trace("----> {}", String.format(repository.contentsURL, "pom.xml"));
-        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), String.format(repository.contentsURL, "pom.xml"), HttpResponse.BodyHandlers.ofString());
+        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this),
+                String.format(repository.contentsURL, "pom.xml") + "&client_id=" + getConfiguration().evaluateToString("github.oauth2.client.clientId") +
+                        "&client_secret=" + getConfiguration().evaluateToString("github.oauth2.client.clientSecret"),
+                HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
             JsonbConfig config = new JsonbConfig();
@@ -41,7 +44,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
             MavenPOM mavenPOM = parser.parse(mavenPOMContents.getDecodedContent());
             cacheStore.getProjects().put(repository.repoName, mavenPOM);
         } else {
-            LOG.error("Received empty payload ({})", response.statusCode());
+            LOG.error("Received empty payload (HTTP:{} - {})", response.statusCode(), response.body());
         }
     }
 

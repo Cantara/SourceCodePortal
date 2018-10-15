@@ -23,6 +23,7 @@ public class FetchCommitRevisionTask extends WorkerTask {
 
     public FetchCommitRevisionTask(DynamicConfiguration configuration, ExecutorThreadPool executor, CacheStore cacheStore, String organization, RepositoryConfigLoader.Repository repository) {
         super(configuration, executor);
+
         this.cacheStore = cacheStore;
         this.organization = organization;
         this.repository = repository;
@@ -30,7 +31,12 @@ public class FetchCommitRevisionTask extends WorkerTask {
 
     @Override
     public void execute() {
-        String url = String.format("https://api.github.com/repos/%s/%s/commits", organization, repository.repoName);
+        String url = String.format("https://api.github.com/repos/%s/%s/commits?client_id=%s&client_secret=%s",
+                organization,
+                repository.repoName,
+                getConfiguration().evaluateToString("github.oauth2.client.clientId"),
+                getConfiguration().evaluateToString("github.oauth2.client.clientSecret")
+        );
         LOG.trace("URL: {}", url);
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), url, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
@@ -41,7 +47,7 @@ public class FetchCommitRevisionTask extends WorkerTask {
                 cacheStore.getCommits().put(repository.repoName, commitRevision[n]);
             }
         } else {
-            LOG.error("Received empty payload ({})", response.statusCode());
+            LOG.error("Received empty payload (http:{} - {})", response.statusCode(), response.body());
         }
     }
 }
