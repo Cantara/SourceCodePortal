@@ -31,6 +31,7 @@ public class HealthController implements HttpHandler {
             builder.add("version", HealthResource.instance().getVersion());
             builder.add("now", Instant.now().toString());
             builder.add("since", HealthResource.instance().getRunningSince());
+            builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());
         }
 
         JsonObjectBuilder cacheBuilder = Json.createObjectBuilder();
