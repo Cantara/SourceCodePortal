@@ -31,12 +31,13 @@ import no.cantara.docsite.util.JsonUtil;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
-public class CommitRevision {
+public class CommitRevision implements Serializable {
 
     public String sha;
     public Commit commit;
@@ -60,22 +61,22 @@ public class CommitRevision {
         return JsonUtil.asString(this);
     }
 
-    public static class Commit {
+    public static class Commit implements Serializable {
         public @JsonbProperty("author") CommitAuthor commitAuthor;
         public String message;
     }
 
-    public static class CommitAuthor {
+    public static class CommitAuthor implements Serializable {
         public String name;
         public String email;
         public Date date;
     }
 
-    public static class Author {
+    public static class Author implements Serializable {
         public @JsonbProperty("avatar_url") String avatarUrl;
     }
 
-    public static class Parent {
+    public static class Parent implements Serializable {
         public String sha;
         public String url;
         public @JsonbProperty("html_url") String htmlUrl;

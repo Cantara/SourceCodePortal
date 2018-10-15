@@ -129,12 +129,12 @@
             <groupId>com.netflix.hystrix</groupId>
             <artifactId>hystrix-core</artifactId>
             <version>1.5.12</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>commons-logging</groupId>-->
+                    <!--<artifactId>commons-logging</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
         </dependency>
 
         <dependency>
@@ -261,12 +261,12 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>compile</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.slf4j</groupId>-->
+            <!--<artifactId>jcl-over-slf4j</artifactId>-->
+            <!--<version>${slf4j.version}</version>-->
+            <!--<scope>compile</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -314,6 +314,12 @@
             <artifactId>selenium-chrome-driver</artifactId>
             <version>3.14.0</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

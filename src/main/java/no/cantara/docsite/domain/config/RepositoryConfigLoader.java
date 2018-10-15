@@ -46,7 +46,7 @@ public class RepositoryConfigLoader {
         List<GitHubRepository> result = repos.getOrganizationRepos();
         Builder builder = new Builder();
         for(RepositoryConfig.Repo repoConfig : repositoryConfig.gitHub.repos) {
-            Group group = builder.add(repoConfig.groupId);
+            Group group = builder.add(repoConfig.groupId, repositoryConfig.gitHub.organization);
             Pattern pattern = Pattern.compile(repoConfig.repo);
             for (GitHubRepository repo : result) {
                 String repoName = repo.name;
@@ -65,8 +65,8 @@ public class RepositoryConfigLoader {
     public static class Builder {
         private final Map<String,Group> groupMap = new LinkedHashMap<>();
 
-        public Group add(String groupId) {
-            Group group = new Group(this, groupId);
+        public Group add(String groupId, String organization) {
+            Group group = new Group(this, groupId, organization);
             groupMap.put(groupId, group);
             return group;
         }
@@ -80,10 +80,12 @@ public class RepositoryConfigLoader {
         private final Builder builder;
         private final Map<String,Repository> repositoryMap = new LinkedHashMap<>();
         public final String groupId;
+        public final String organization;
 
-        public Group(Builder builder, String groupId) {
+        public Group(Builder builder, String groupId, String organization) {
             this.builder = builder;
             this.groupId = groupId;
+            this.organization = organization;
         }
 
         public Group add(String repoName, Repository repository) {
