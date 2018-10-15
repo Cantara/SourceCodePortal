@@ -39,6 +39,8 @@ import java.util.List;
 
 public class CommitRevision implements Serializable {
 
+    private static final long serialVersionUID = -5773578164096532597L;
+
     public String sha;
     public Commit commit;
     public @JsonbProperty("html_url") String htmlUrl;
@@ -62,21 +64,33 @@ public class CommitRevision implements Serializable {
     }
 
     public static class Commit implements Serializable {
+
+        private static final long serialVersionUID = 5045291959738847188L;
+
         public @JsonbProperty("author") CommitAuthor commitAuthor;
         public String message;
     }
 
     public static class CommitAuthor implements Serializable {
+
+        private static final long serialVersionUID = -2525412735629228593L;
+
         public String name;
         public String email;
         public Date date;
     }
 
     public static class Author implements Serializable {
+
+        private static final long serialVersionUID = -8018559961277889833L;
+
         public @JsonbProperty("avatar_url") String avatarUrl;
     }
 
     public static class Parent implements Serializable {
+
+        private static final long serialVersionUID = -3518347737753544401L;
+
         public String sha;
         public String url;
         public @JsonbProperty("html_url") String htmlUrl;

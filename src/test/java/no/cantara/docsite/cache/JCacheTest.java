@@ -16,7 +16,7 @@ public class JCacheTest {
 
     @Test
     public void testRICacheProvider() {
-        Cache<String, RepositoryContents> cache = cacheStore.getPages();
+        Cache<CacheKey, RepositoryContents> cache = cacheStore.getPages();
 //        cache.put("key1", "value1");
 //        cache.put("key2", "value2");
     }

@@ -18,10 +18,10 @@ public class CacheStore {
 
     private DynamicConfiguration configuration;
     final CacheManager cacheManager;
-    Cache<String, MavenPOM> projects;
-    Cache<String, RepositoryContents> pages;
-    Cache<String, CommitRevision> commits;
-    Cache<String, CreatedTagEvent> releases;
+    Cache<CacheKey, MavenPOM> projects;
+    Cache<CacheKey, RepositoryContents> pages;
+    Cache<CacheKey, CommitRevision> commits;
+    Cache<CacheKey, CreatedTagEvent> releases;
 
     CacheStore(DynamicConfiguration configuration, CacheManager cacheManager) {
         this.configuration = configuration;
@@ -31,7 +31,7 @@ public class CacheStore {
     void initialize() {
         if (cacheManager.getCache("project") == null) {
             LOG.info("Creating Project cache");
-            MutableConfiguration<String, MavenPOM> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, MavenPOM> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             projects = cacheManager.createCache("project", cacheConfig);
@@ -39,7 +39,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("page") == null) {
             LOG.info("Creating Page cache");
-            MutableConfiguration<String, RepositoryContents> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, RepositoryContents> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             pages = cacheManager.createCache("page", cacheConfig);
@@ -47,7 +47,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("commit") == null) {
             LOG.info("Creating Commit cache");
-            MutableConfiguration<String, CommitRevision> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, CommitRevision> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             commits = cacheManager.createCache("commit", cacheConfig);
@@ -55,7 +55,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("release") == null) {
             LOG.info("Creating Release cache");
-            MutableConfiguration<String, CreatedTagEvent> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, CreatedTagEvent> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             releases = cacheManager.createCache("release", cacheConfig);
@@ -66,19 +66,19 @@ public class CacheStore {
         return cacheManager;
     }
 
-    public Cache<String, MavenPOM> getProjects() {
+    public Cache<CacheKey, MavenPOM> getProjects() {
         return projects;
     }
 
-    public Cache<String, RepositoryContents> getPages() {
+    public Cache<CacheKey, RepositoryContents> getPages() {
         return pages;
     }
 
-    public Cache<String, CommitRevision> getCommits() {
+    public Cache<CacheKey, CommitRevision> getCommits() {
         return commits;
     }
 
-    public Cache<String, CreatedTagEvent> getReleases() {
+    public Cache<CacheKey, CreatedTagEvent> getReleases() {
         return releases;
     }
 }

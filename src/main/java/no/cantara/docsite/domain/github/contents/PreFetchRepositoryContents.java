@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.github.contents;
 
+import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.executor.ExecutorThreadPool;
@@ -28,13 +29,13 @@ public class PreFetchRepositoryContents {
     }
 
     public void fetch() {
+        LOG.info("Pre-fetch data..");
         repoConfig.values().forEach(g -> {
-            LOG.trace("group: {}", g.groupId);
             g.getRepositories().values().forEach(r -> {
-                LOG.trace("  repo: {} - {} - {} - {} - {}", r.repoName, r.repoURL, r.rawRepoURL, r.readmeURL, r.contentsURL);
-                executorService.queue(new FetchMavenPOMTask(configuration, executorService, cacheStore, r));
-                executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, r));
-                executorService.queue(new FetchCommitRevisionTask(configuration, executorService, cacheStore, g.organization, r));
+                CacheKey cacheKey = CacheKey.of(g.organization, r.repoName, r.branch);
+                executorService.queue(new FetchMavenPOMTask(configuration, executorService, cacheStore, cacheKey, r.contentsURL));
+                executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, cacheKey, r.readmeURL));
+                executorService.queue(new FetchCommitRevisionTask(configuration, executorService, cacheStore, cacheKey));
             });
         });
     }

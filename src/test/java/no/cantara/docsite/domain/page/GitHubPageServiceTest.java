@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.page;
 
+import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.config.RepositoryConfigLoaderTest;
 import no.cantara.docsite.task.FetchPageTask;
@@ -28,7 +29,7 @@ public class GitHubPageServiceTest {
         discoveredRepositoryGroups.values().forEach(g -> {
             LOG.trace("group: {}", g.groupId);
             g.getRepositories().values().forEach(r -> {
-                server.getExecutorService().queue(new FetchPageTask(server.getConfiguration(), server.getExecutorService(), server.getCacheStore(), r));
+                server.getExecutorService().queue(new FetchPageTask(server.getConfiguration(), server.getExecutorService(), server.getCacheStore(), CacheKey.of(g.organization, r.repoName, r.branch), r.readmeURL));
                 LOG.trace("  repo: {} - {} - {} - {} - {}", r.repoName, r.repoURL, r.rawRepoURL, r.readmeURL, r.contentsURL);
             });
         });

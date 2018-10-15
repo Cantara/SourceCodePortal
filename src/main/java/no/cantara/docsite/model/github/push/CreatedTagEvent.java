@@ -3,8 +3,11 @@ package no.cantara.docsite.model.github.push;
 import no.cantara.docsite.util.JsonUtil;
 
 import javax.json.bind.annotation.JsonbProperty;
+import java.io.Serializable;
 
-public class CreatedTagEvent {
+public class CreatedTagEvent implements Serializable {
+
+    private static final long serialVersionUID = 6663626423947864453L;
 
     public String ref;
     public @JsonbProperty("ref_type") String refType;
@@ -24,7 +27,9 @@ public class CreatedTagEvent {
         return JsonUtil.asString(this);
     }
 
-    public static class Repository {
+    public static class Repository implements Serializable {
+        private static final long serialVersionUID = 5915280836603198738L;
+
         public String name;
     }
 }

@@ -10,6 +10,8 @@ import java.util.Base64;
 
 public class RepositoryContents implements Serializable {
 
+    private static final long serialVersionUID = 3900913417928771858L;
+
     public String type;
     public String encoding;
     public int size;
@@ -37,6 +39,9 @@ public class RepositoryContents implements Serializable {
     }
 
     public static class Links implements Serializable {
+
+        private static final long serialVersionUID = 1084824923791038625L;
+
         public String git;
         public String self;
         public String html;
