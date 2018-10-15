@@ -1,7 +1,7 @@
 package no.cantara.docsite.domain.github.repos;
 
 import no.cantara.docsite.commands.GetGitHubCommand;
-import no.cantara.docsite.domain.github.pages.RepositoryContents;
+import no.cantara.docsite.domain.github.contents.RepositoryContents;
 import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.maven.MavenPOMParser;
 import no.cantara.docsite.util.JsonUtil;

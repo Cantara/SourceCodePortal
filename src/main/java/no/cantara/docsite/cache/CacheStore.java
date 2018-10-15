@@ -1,7 +1,7 @@
 package no.cantara.docsite.cache;
 
 import no.cantara.docsite.domain.github.commits.CommitRevision;
-import no.cantara.docsite.domain.github.pages.RepositoryContents;
+import no.cantara.docsite.domain.github.contents.RepositoryContents;
 import no.cantara.docsite.domain.github.releases.CreatedTagEvent;
 import no.cantara.docsite.domain.maven.MavenPOM;
 import no.ssb.config.DynamicConfiguration;

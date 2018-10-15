@@ -3,7 +3,7 @@ package no.cantara.docsite.domain.maven;
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
-import no.cantara.docsite.domain.github.pages.RepositoryContents;
+import no.cantara.docsite.domain.github.contents.RepositoryContents;
 import no.cantara.docsite.executor.ExecutorThreadPool;
 import no.cantara.docsite.executor.WorkerTask;
 import no.ssb.config.DynamicConfiguration;

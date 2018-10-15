@@ -1,6 +1,5 @@
 package no.cantara.docsite.domain.github.contents;
 
-import no.cantara.docsite.domain.github.pages.RepositoryContents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
