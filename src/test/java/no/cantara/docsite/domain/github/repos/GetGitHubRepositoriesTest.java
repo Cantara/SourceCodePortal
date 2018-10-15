@@ -67,7 +67,7 @@ public class GetGitHubRepositoriesTest {
         return null;
     }
 
-    @Test
+    @Test(enabled = false)
     public void getMavenPOM() {
         DynamicConfiguration configuration = configuration();
         RepositoryContents repositoryContents = getMavenPOM("SourceCodePortal", "pom.xml", "master");
