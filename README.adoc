@@ -1,5 +1,10 @@
 = Organizational SourceCode Dashboard Portal
 
+##### Status
+![Build Status](https://jenkins.capraconsulting.no/buildStatus/icon?job=Cantara-HTTPLoadTest-baseline) -
+[![Project Status: Active – The project has not yet reached a stable, usable state but is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)    [![Known Vulnerabilities](https://snyk.io/test/github/Cantara/HTTPLoadTest-baseline/badge.svg)](https://snyk.io/test/github/Cantara/SourceCodePortal)
+
+
 Groups documentation from GitHub repositories.
 
 == Pre-requisites
