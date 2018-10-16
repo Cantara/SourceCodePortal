@@ -41,7 +41,13 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
         String[] authToken = null;
         if (configuration.evaluateToString("github.client.accessToken") != null) {
             authToken = getGitHubAuthHeader(configuration);
+        } else {
+            String clientIdAndSecret = String.format("client_id=%s&client_secret=%s",
+                    configuration.evaluateToString("github.oauth2.client.clientId"),
+                    configuration.evaluateToString("github.oauth2.client.clientSecret"));
+            url = (url.contains("?") ? url + "&" + clientIdAndSecret : url + "?" + clientIdAndSecret);
         }
+        LOG.trace("url: {}", url);
         return HttpRequests.get(url, bodyHandler, authToken);
     }
 
