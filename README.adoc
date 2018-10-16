@@ -12,6 +12,9 @@ An _OAuth2 App_ must be created for your organization on https://github.com/orga
 
 An access-token must be generated before you can use this software. Please configure `security.properties` according to `security.properties.sample` and run the test case `ObtainGitHubAccessTokenTestTool`. Configure `security.properties` with `github.client.accessToken=ACCESS_TOKEN`.
 
+[WARNING]
+The `ObtainGitHubAccessTokenTestTool` doesn't work for Multi-Factor-Auth, in which prohibits use of `github.client.accessToken`. If access token is not configured; the client_id and client_secret will be applied on all GitHub requests. This is a workaround until oauth is handled by the website redirect.
+
 Ubuntu installation:
 
 `apt-get install chromedriver`
