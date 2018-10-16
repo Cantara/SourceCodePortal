@@ -47,29 +47,18 @@ public class GetGitHubRepositoriesTest {
         LOG.trace("repos: {}\nsize:{}", result, result.size());
     }
 
-    RepositoryContents getMavenPOM(String repoName, String fileNamePath, String branch) {
+    @Test
+    public void getMavenPOM() {
         GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration(), Optional.empty(),
-                String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s",
-                        "Cantara",
-                        repoName,
-                        fileNamePath,
-                        branch),
+                String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", "Cantara", "SourceCodePortal", "pom.xml", "master"),
                 HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = command.execute();
         if (response.statusCode() == HTTP_OK) {
             JsonbConfig config = new JsonbConfig();
-            return JsonbBuilder.create(config).fromJson(response.body(), RepositoryContents.class);
+            RepositoryContents repositoryContents = JsonbBuilder.create(config).fromJson(response.body(), RepositoryContents.class);
+            MavenPOM mavenPom = new MavenPOMParser().parse(repositoryContents.getDecodedContent());
+            LOG.trace("pom: {}\n{}", repositoryContents, mavenPom);
         }
-        LOG.error("Error: {}", response.statusCode());
-        return null;
-    }
-
-    @Test(enabled = false)
-    public void getMavenPOM() {
-        DynamicConfiguration configuration = configuration();
-        RepositoryContents repositoryContents = getMavenPOM("SourceCodePortal", "pom.xml", "master");
-        MavenPOM mavenPom = new MavenPOMParser().parse(repositoryContents.getDecodedContent());
-        LOG.trace("pom: {}\n{}", repositoryContents, mavenPom);
     }
 
 }
