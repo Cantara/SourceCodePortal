@@ -1,0 +1,758 @@
+[
+  {
+    "sha": "192b654e439e9f520b18563366fa29583fab1c6c",
+    "commit": {
+      "author": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-09-06T05:43:29Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2017-09-06T05:43:29Z"
+      },
+      "message": "upgrade minor 9",
+      "tree": {
+        "sha": "4a972d19bd6d2262addb2c36b393ac495446204f",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/git/trees/4a972d19bd6d2262addb2c36b393ac495446204f"
+      },
+      "url": "https://api.github.com/repos/Cantara/some-other-project/git/commits/192b654e439e9f520b18563366fa29583fab1c6c",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/Cantara/some-other-project/commits/192b654e439e9f520b18563366fa29583fab1c6c",
+    "html_url": "https://github.com/Cantara/some-other-project/commit/192b654e439e9f520b18563366fa29583fab1c6c",
+    "comments_url": "https://api.github.com/repos/Cantara/some-other-project/commits/192b654e439e9f520b18563366fa29583fab1c6c/comments",
+    "author": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "avatar_url": "https://avatars3.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "0dbc019692babfc18b76915996b653dd72542e84",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/commits/0dbc019692babfc18b76915996b653dd72542e84",
+        "html_url": "https://github.com/Cantara/some-other-project/commit/0dbc019692babfc18b76915996b653dd72542e84"
+      }
+    ]
+  },
+  {
+    "sha": "0dbc019692babfc18b76915996b653dd72542e84",
+    "commit": {
+      "author": {
+        "name": "oranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T16:35:58Z"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T16:35:58Z"
+      },
+      "message": "stuff",
+      "tree": {
+        "sha": "3de4e88c91db9f19a563e71cf1b19adfb978ebf2",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/git/trees/3de4e88c91db9f19a563e71cf1b19adfb978ebf2"
+      },
+      "url": "https://api.github.com/repos/Cantara/some-other-project/git/commits/0dbc019692babfc18b76915996b653dd72542e84",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/Cantara/some-other-project/commits/0dbc019692babfc18b76915996b653dd72542e84",
+    "html_url": "https://github.com/Cantara/some-other-project/commit/0dbc019692babfc18b76915996b653dd72542e84",
+    "comments_url": "https://api.github.com/repos/Cantara/some-other-project/commits/0dbc019692babfc18b76915996b653dd72542e84/comments",
+    "author": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "ccd12890cda00ee85485d47166777233cab0f956",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/commits/ccd12890cda00ee85485d47166777233cab0f956",
+        "html_url": "https://github.com/Cantara/some-other-project/commit/ccd12890cda00ee85485d47166777233cab0f956"
+      }
+    ]
+  },
+  {
+    "sha": "ccd12890cda00ee85485d47166777233cab0f956",
+    "commit": {
+      "author": {
+        "name": "oranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T14:46:17Z"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T14:46:17Z"
+      },
+      "message": "stuff",
+      "tree": {
+        "sha": "e25cf8f0e9a17433cf3ffc2715092296045e51d1",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/git/trees/e25cf8f0e9a17433cf3ffc2715092296045e51d1"
+      },
+      "url": "https://api.github.com/repos/Cantara/some-other-project/git/commits/ccd12890cda00ee85485d47166777233cab0f956",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/Cantara/some-other-project/commits/ccd12890cda00ee85485d47166777233cab0f956",
+    "html_url": "https://github.com/Cantara/some-other-project/commit/ccd12890cda00ee85485d47166777233cab0f956",
+    "comments_url": "https://api.github.com/repos/Cantara/some-other-project/commits/ccd12890cda00ee85485d47166777233cab0f956/comments",
+    "author": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "623b8ba30f0d104f8b257bb892874df98d67ff08",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/commits/623b8ba30f0d104f8b257bb892874df98d67ff08",
+        "html_url": "https://github.com/Cantara/some-other-project/commit/623b8ba30f0d104f8b257bb892874df98d67ff08"
+      }
+    ]
+  },
+  {
+    "sha": "623b8ba30f0d104f8b257bb892874df98d67ff08",
+    "commit": {
+      "author": {
+        "name": "oranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T13:29:47Z"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T13:29:47Z"
+      },
+      "message": "remove work dir before build",
+      "tree": {
+        "sha": "69f89345f912962e4b52c3f3fbe3caea0935bfad",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/git/trees/69f89345f912962e4b52c3f3fbe3caea0935bfad"
+      },
+      "url": "https://api.github.com/repos/Cantara/some-other-project/git/commits/623b8ba30f0d104f8b257bb892874df98d67ff08",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/Cantara/some-other-project/commits/623b8ba30f0d104f8b257bb892874df98d67ff08",
+    "html_url": "https://github.com/Cantara/some-other-project/commit/623b8ba30f0d104f8b257bb892874df98d67ff08",
+    "comments_url": "https://api.github.com/repos/Cantara/some-other-project/commits/623b8ba30f0d104f8b257bb892874df98d67ff08/comments",
+    "author": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "f2a27a4881a55d56c4e0b1c219d8b6ac1eec1c28",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/commits/f2a27a4881a55d56c4e0b1c219d8b6ac1eec1c28",
+        "html_url": "https://github.com/Cantara/some-other-project/commit/f2a27a4881a55d56c4e0b1c219d8b6ac1eec1c28"
+      }
+    ]
+  },
+  {
+    "sha": "f2a27a4881a55d56c4e0b1c219d8b6ac1eec1c28",
+    "commit": {
+      "author": {
+        "name": "oranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T13:23:59Z"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T13:23:59Z"
+      },
+      "message": "try compile product",
+      "tree": {
+        "sha": "51e9a993beaf7c3ce36506bd48487087073ef865",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/git/trees/51e9a993beaf7c3ce36506bd48487087073ef865"
+      },
+      "url": "https://api.github.com/repos/Cantara/some-other-project/git/commits/f2a27a4881a55d56c4e0b1c219d8b6ac1eec1c28",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/Cantara/some-other-project/commits/f2a27a4881a55d56c4e0b1c219d8b6ac1eec1c28",
+    "html_url": "https://github.com/Cantara/some-other-project/commit/f2a27a4881a55d56c4e0b1c219d8b6ac1eec1c28",
+    "comments_url": "https://api.github.com/repos/Cantara/some-other-project/commits/f2a27a4881a55d56c4e0b1c219d8b6ac1eec1c28/comments",
+    "author": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "d49f8424e88791cbc8ef85afecd9f74a46261a09",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/commits/d49f8424e88791cbc8ef85afecd9f74a46261a09",
+        "html_url": "https://github.com/Cantara/some-other-project/commit/d49f8424e88791cbc8ef85afecd9f74a46261a09"
+      }
+    ]
+  },
+  {
+    "sha": "d49f8424e88791cbc8ef85afecd9f74a46261a09",
+    "commit": {
+      "author": {
+        "name": "oranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T13:04:33Z"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T13:04:33Z"
+      },
+      "message": "print javac version",
+      "tree": {
+        "sha": "88ac86f3f1d36a4f49082a1bebd9ff18113431d3",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/git/trees/88ac86f3f1d36a4f49082a1bebd9ff18113431d3"
+      },
+      "url": "https://api.github.com/repos/Cantara/some-other-project/git/commits/d49f8424e88791cbc8ef85afecd9f74a46261a09",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/Cantara/some-other-project/commits/d49f8424e88791cbc8ef85afecd9f74a46261a09",
+    "html_url": "https://github.com/Cantara/some-other-project/commit/d49f8424e88791cbc8ef85afecd9f74a46261a09",
+    "comments_url": "https://api.github.com/repos/Cantara/some-other-project/commits/d49f8424e88791cbc8ef85afecd9f74a46261a09/comments",
+    "author": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "8c41037b6e0cb0f733dbae8ab66d4e1db0608e18",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/commits/8c41037b6e0cb0f733dbae8ab66d4e1db0608e18",
+        "html_url": "https://github.com/Cantara/some-other-project/commit/8c41037b6e0cb0f733dbae8ab66d4e1db0608e18"
+      }
+    ]
+  },
+  {
+    "sha": "8c41037b6e0cb0f733dbae8ab66d4e1db0608e18",
+    "commit": {
+      "author": {
+        "name": "oranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T13:03:44Z"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T13:03:44Z"
+      },
+      "message": "minor",
+      "tree": {
+        "sha": "cfce6c94e3004d4363499e39cbc726163221b9e7",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/git/trees/cfce6c94e3004d4363499e39cbc726163221b9e7"
+      },
+      "url": "https://api.github.com/repos/Cantara/some-other-project/git/commits/8c41037b6e0cb0f733dbae8ab66d4e1db0608e18",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/Cantara/some-other-project/commits/8c41037b6e0cb0f733dbae8ab66d4e1db0608e18",
+    "html_url": "https://github.com/Cantara/some-other-project/commit/8c41037b6e0cb0f733dbae8ab66d4e1db0608e18",
+    "comments_url": "https://api.github.com/repos/Cantara/some-other-project/commits/8c41037b6e0cb0f733dbae8ab66d4e1db0608e18/comments",
+    "author": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "e63fac3777b1e13a0a111e1f39e6b6c23dbdc8be",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/commits/e63fac3777b1e13a0a111e1f39e6b6c23dbdc8be",
+        "html_url": "https://github.com/Cantara/some-other-project/commit/e63fac3777b1e13a0a111e1f39e6b6c23dbdc8be"
+      }
+    ]
+  },
+  {
+    "sha": "e63fac3777b1e13a0a111e1f39e6b6c23dbdc8be",
+    "commit": {
+      "author": {
+        "name": "oranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T12:56:52Z"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T12:56:52Z"
+      },
+      "message": "fixed wrong paths",
+      "tree": {
+        "sha": "be24ab155970a3cd3ade205c424d55adea58b1c5",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/git/trees/be24ab155970a3cd3ade205c424d55adea58b1c5"
+      },
+      "url": "https://api.github.com/repos/Cantara/some-other-project/git/commits/e63fac3777b1e13a0a111e1f39e6b6c23dbdc8be",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/Cantara/some-other-project/commits/e63fac3777b1e13a0a111e1f39e6b6c23dbdc8be",
+    "html_url": "https://github.com/Cantara/some-other-project/commit/e63fac3777b1e13a0a111e1f39e6b6c23dbdc8be",
+    "comments_url": "https://api.github.com/repos/Cantara/some-other-project/commits/e63fac3777b1e13a0a111e1f39e6b6c23dbdc8be/comments",
+    "author": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "f7cd1069e3dfc9bf3183c7971651cae1404eeffa",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/commits/f7cd1069e3dfc9bf3183c7971651cae1404eeffa",
+        "html_url": "https://github.com/Cantara/some-other-project/commit/f7cd1069e3dfc9bf3183c7971651cae1404eeffa"
+      }
+    ]
+  },
+  {
+    "sha": "f7cd1069e3dfc9bf3183c7971651cae1404eeffa",
+    "commit": {
+      "author": {
+        "name": "oranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T12:34:23Z"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T12:34:23Z"
+      },
+      "message": "Travis build for DCEVM and Zulu OpenJDK8 on Mac",
+      "tree": {
+        "sha": "9b4d21550a0bfc2eb6c646819a8cb640ee11c514",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/git/trees/9b4d21550a0bfc2eb6c646819a8cb640ee11c514"
+      },
+      "url": "https://api.github.com/repos/Cantara/some-other-project/git/commits/f7cd1069e3dfc9bf3183c7971651cae1404eeffa",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/Cantara/some-other-project/commits/f7cd1069e3dfc9bf3183c7971651cae1404eeffa",
+    "html_url": "https://github.com/Cantara/some-other-project/commit/f7cd1069e3dfc9bf3183c7971651cae1404eeffa",
+    "comments_url": "https://api.github.com/repos/Cantara/some-other-project/commits/f7cd1069e3dfc9bf3183c7971651cae1404eeffa/comments",
+    "author": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "b5f3fff0d5f8532ce8666c85265bd0f81c3d851e",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/commits/b5f3fff0d5f8532ce8666c85265bd0f81c3d851e",
+        "html_url": "https://github.com/Cantara/some-other-project/commit/b5f3fff0d5f8532ce8666c85265bd0f81c3d851e"
+      }
+    ]
+  },
+  {
+    "sha": "b5f3fff0d5f8532ce8666c85265bd0f81c3d851e",
+    "commit": {
+      "author": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T12:17:33Z"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "date": "2017-01-11T12:17:33Z"
+      },
+      "message": "Initial commit",
+      "tree": {
+        "sha": "b0adb8c2051e53f51dd23ab9e2c355c0c32078ce",
+        "url": "https://api.github.com/repos/Cantara/some-other-project/git/trees/b0adb8c2051e53f51dd23ab9e2c355c0c32078ce"
+      },
+      "url": "https://api.github.com/repos/Cantara/some-other-project/git/commits/b5f3fff0d5f8532ce8666c85265bd0f81c3d851e",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/Cantara/some-other-project/commits/b5f3fff0d5f8532ce8666c85265bd0f81c3d851e",
+    "html_url": "https://github.com/Cantara/some-other-project/commit/b5f3fff0d5f8532ce8666c85265bd0f81c3d851e",
+    "comments_url": "https://api.github.com/repos/Cantara/some-other-project/commits/b5f3fff0d5f8532ce8666c85265bd0f81c3d851e/comments",
+    "author": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "oranheim",
+      "id": 461628,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/461628?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/oranheim",
+      "html_url": "https://github.com/oranheim",
+      "followers_url": "https://api.github.com/users/oranheim/followers",
+      "following_url": "https://api.github.com/users/oranheim/following{/other_user}",
+      "gists_url": "https://api.github.com/users/oranheim/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/oranheim/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/oranheim/subscriptions",
+      "organizations_url": "https://api.github.com/users/oranheim/orgs",
+      "repos_url": "https://api.github.com/users/oranheim/repos",
+      "events_url": "https://api.github.com/users/oranheim/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/oranheim/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+
+    ]
+  }
+]

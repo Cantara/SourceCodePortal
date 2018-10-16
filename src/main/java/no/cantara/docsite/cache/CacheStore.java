@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.configuration.MutableConfiguration;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CacheStore {
 
@@ -18,11 +19,11 @@ public class CacheStore {
 
     private DynamicConfiguration configuration;
     final CacheManager cacheManager;
-    //CacheStore<RepositoryConfigLoader.Group, CacheKey> groups; // TODO group cacheKeys for fast lookups
+//    CacheStore<RepositoryConfigLoader.Group, CacheKey> groups; // TODO group cacheKeys for fast lookups
     Cache<CacheKey, MavenPOM> projects;
     Cache<CacheKey, RepositoryContents> pages;
-    Cache<CacheKey, CommitRevision> commits;
-    Cache<CacheKey, CreatedTagEvent> releases;
+    Cache<CacheShaKey, CommitRevision> commits; // TODO use a revision key
+    Cache<CacheKey, ConcurrentHashMap<String,CreatedTagEvent>> releases;
 
     CacheStore(DynamicConfiguration configuration, CacheManager cacheManager) {
         this.configuration = configuration;
@@ -48,7 +49,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("commit") == null) {
             LOG.info("Creating Commit cache");
-            MutableConfiguration<CacheKey, CommitRevision> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheShaKey, CommitRevision> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             commits = cacheManager.createCache("commit", cacheConfig);
@@ -56,7 +57,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("release") == null) {
             LOG.info("Creating Release cache");
-            MutableConfiguration<CacheKey, CreatedTagEvent> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, ConcurrentHashMap<String,CreatedTagEvent>> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             releases = cacheManager.createCache("release", cacheConfig);
@@ -75,11 +76,11 @@ public class CacheStore {
         return pages;
     }
 
-    public Cache<CacheKey, CommitRevision> getCommits() {
+    public Cache<CacheShaKey, CommitRevision> getCommits() {
         return commits;
     }
 
-    public Cache<CacheKey, CreatedTagEvent> getReleases() {
+    public Cache<CacheKey, ConcurrentHashMap<String,CreatedTagEvent>> getReleases() {
         return releases;
     }
 }

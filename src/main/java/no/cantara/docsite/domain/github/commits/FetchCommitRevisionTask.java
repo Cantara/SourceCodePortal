@@ -1,6 +1,7 @@
 package no.cantara.docsite.domain.github.commits;
 
 import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.executor.ExecutorThreadPool;
@@ -33,7 +34,8 @@ public class FetchCommitRevisionTask extends WorkerTask {
         if (GetGitHubCommand.anyOf(response, 200)) {
             CommitRevision[] commitRevision = JsonbBuilder.create().fromJson(response.body(), CommitRevision[].class);
             for (int n = 0; n < commitRevision.length; n++) {
-                cacheStore.getCommits().put(cacheKey, commitRevision[n]);
+                CacheShaKey cacheShaKey = CacheShaKey.of(cacheKey, commitRevision[n].sha);
+                cacheStore.getCommits().put(cacheShaKey, commitRevision[n]);
             }
         } else {
             LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());
