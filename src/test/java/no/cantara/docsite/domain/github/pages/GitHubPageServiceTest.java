@@ -1,36 +1,47 @@
 package no.cantara.docsite.domain.github.pages;
 
-import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheInitializer;
+import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.config.RepositoryConfigLoaderTest;
-import no.cantara.docsite.test.server.TestServer;
-import no.cantara.docsite.test.server.TestServerListener;
+import no.cantara.docsite.executor.ExecutorThreadPool;
+import no.ssb.config.DynamicConfiguration;
+import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import javax.inject.Inject;
-import java.util.Map;
-
-@Listeners(TestServerListener.class)
 public class GitHubPageServiceTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RepositoryConfigLoaderTest.class);
 
-    @Inject TestServer server;
+    static DynamicConfiguration configuration() {
+        return new StoreBasedDynamicConfiguration.Builder()
+                .propertiesResource("application-defaults.properties")
+                .propertiesResource("security.properties")
+                .propertiesResource("application.properties")
+                .build();
+    }
 
-    @Test
+    static CacheStore cacheStore(DynamicConfiguration configuration) {
+        return CacheInitializer.initialize(configuration);
+    }
+
+    @Test(enabled = false)
     public void testName() {
-        server.getApplication().enableExecutorService();
-        RepositoryConfigLoader service = new RepositoryConfigLoader(server.getConfiguration());
-        Map<String, RepositoryConfigLoader.Group> discoveredRepositoryGroups = service.build();
-        discoveredRepositoryGroups.values().forEach(g -> {
-            LOG.trace("group: {}", g.groupId);
-            g.getRepositories().values().forEach(r -> {
-                server.getExecutorService().queue(new FetchPageTask(server.getConfiguration(), server.getExecutorService(), server.getCacheStore(), CacheKey.of(g.organization, r.repoName, r.branch), r.readmeURL));
-                LOG.trace("  repo: {} - {} - {} - {} - {}", r.repoName, r.repoURL, r.rawRepoURL, r.readmeURL, r.contentsURL);
-            });
+        ExecutorThreadPool executorService = new ExecutorThreadPool();
+        executorService.start();
+        DynamicConfiguration configuration = configuration();
+        CacheStore cacheStore = cacheStore(configuration);
+
+        RepositoryConfigLoader service = new RepositoryConfigLoader(configuration, cacheStore);
+        service.build();
+
+        cacheStore.getRepositoryGroups().forEach(rg -> {
+            executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey(), rg.getValue().readmeURL));
         });
+
+        cacheStore.getCacheManager().close();
+        executorService.shutdown();
     }
 }

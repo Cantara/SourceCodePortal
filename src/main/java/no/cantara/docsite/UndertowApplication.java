@@ -46,7 +46,7 @@ public class UndertowApplication {
 
         ExecutorThreadPool executorThreadPool = new ExecutorThreadPool();
 
-        RepositoryConfigLoader configLoader = new RepositoryConfigLoader(configuration);
+        RepositoryConfigLoader configLoader = new RepositoryConfigLoader(configuration, cacheStore);
 
         ApplicationController applicationController = new ApplicationController(
                 configuration.evaluateToString("http.cors.allow.origin"),
@@ -68,7 +68,6 @@ public class UndertowApplication {
     private final CacheStore cacheStore;
     private final RepositoryConfigLoader configLoader;
     private final Undertow server;
-    private Map<String, RepositoryConfigLoader.Group> repoConfig;
 
     public UndertowApplication(DynamicConfiguration configuration, String host, int port, ExecutorThreadPool executorService, CacheStore cacheStore, RepositoryConfigLoader configLoader, ApplicationController applicationController) {
         this.configuration = configuration;
@@ -99,15 +98,15 @@ public class UndertowApplication {
     }
 
     public void enableConfigLoader() {
-        repoConfig = configLoader.build();
+        configLoader.build();
     }
 
     public void enablePreFetch() {
-        if (repoConfig == null) {
+        if (!cacheStore.getRepositoryGroups().iterator().hasNext()) {
             enableConfigLoader();
         }
         if (configuration.evaluateToBoolean("cache.prefetch")) {
-            PreFetchRepositoryContents preFetchRepositoryContents = new PreFetchRepositoryContents(configuration, repoConfig, executorService, cacheStore);
+            PreFetchRepositoryContents preFetchRepositoryContents = new PreFetchRepositoryContents(configuration, executorService, cacheStore);
             preFetchRepositoryContents.fetch();
         }
     }

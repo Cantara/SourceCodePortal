@@ -1,5 +1,6 @@
 package no.cantara.docsite.cache;
 
+import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.github.commits.CommitRevision;
 import no.cantara.docsite.domain.github.contents.RepositoryContents;
 import no.cantara.docsite.domain.github.releases.CreatedTagEvent;
@@ -17,9 +18,10 @@ public class CacheStore {
 
     static final Logger LOG = LoggerFactory.getLogger(CacheStore.class);
 
-    private DynamicConfiguration configuration;
+    final DynamicConfiguration configuration;
     final CacheManager cacheManager;
-//    CacheStore<RepositoryConfigLoader.Group, CacheKey> groups; // TODO group cacheKeys for fast lookups
+
+    Cache<CacheGroupKey, Repository> repositoryGroups;
     Cache<CacheKey, MavenPOM> projects;
     Cache<CacheKey, RepositoryContents> pages;
     Cache<CacheShaKey, CommitRevision> commits; // TODO use a revision key
@@ -31,6 +33,14 @@ public class CacheStore {
     }
 
     void initialize() {
+        if (cacheManager.getCache("repostioryGroup") == null) {
+            LOG.info("Creating Grouped repositories cache");
+            MutableConfiguration<CacheGroupKey, Repository> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            repositoryGroups = cacheManager.createCache("repostioryGroup", cacheConfig);
+        }
+
         if (cacheManager.getCache("project") == null) {
             LOG.info("Creating Project cache");
             MutableConfiguration<CacheKey, MavenPOM> cacheConfig = new MutableConfiguration<>();
@@ -66,6 +76,10 @@ public class CacheStore {
 
     public CacheManager getCacheManager() {
         return cacheManager;
+    }
+
+    public Cache<CacheGroupKey, Repository> getRepositoryGroups() {
+        return repositoryGroups;
     }
 
     public Cache<CacheKey, MavenPOM> getProjects() {
