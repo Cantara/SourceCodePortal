@@ -39,7 +39,7 @@ public class GetGitHubRepositoriesTest {
         LOG.trace("GitHub API Limit: {}", JsonUtil.prettyPrint(response.body()));
     }
 
-    @Test
+    @Test(enabled = false)
     public void findOrgGitHubRepos() {
         DynamicConfiguration configuration = configuration();
         GetGitHubRepositories repos = new GetGitHubRepositories(configuration, "Cantara");
@@ -47,7 +47,7 @@ public class GetGitHubRepositoriesTest {
         LOG.trace("repos: {}\nsize:{}", result, result.size());
     }
 
-    @Test
+    @Test(enabled = false)
     public void getMavenPOM() {
         GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration(), Optional.empty(),
                 String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", "Cantara", "SourceCodePortal", "pom.xml", "master"),

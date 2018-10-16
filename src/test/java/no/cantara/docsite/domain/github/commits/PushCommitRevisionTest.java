@@ -34,7 +34,7 @@ public class PushCommitRevisionTest {
         return CacheInitializer.initialize(configuration());
     }
 
-    @Test
+    @Test(enabled = false)
     public void thatCommitRevisionCacheCanGroupData() throws IOException {
         CacheStore cacheStore = cacheStore();
         String dummyCommits1 = null;

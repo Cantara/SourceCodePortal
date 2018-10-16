@@ -22,7 +22,7 @@ public class RepositoryConfigLoaderTest {
     @Inject
     TestServer server;
 
-    @Test
+    @Test(enabled = false)
     public void testRepositoryConfig() throws Exception {
         server.getApplication().enableExecutorService();
         RepositoryConfigLoader service = new RepositoryConfigLoader(server.getConfiguration());
