@@ -21,7 +21,7 @@ public class RepositoryConfigTest {
             JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             Jsonb jsonb = JsonbBuilder.create(config);
             RepositoryConfig repositoryConfig = jsonb.fromJson(json, RepositoryConfig.class);
-            LOG.trace("RepositoryConfig: {}", repositoryConfig);
+//            LOG.trace("RepositoryConfig: {}", repositoryConfig);
         }
     }
 

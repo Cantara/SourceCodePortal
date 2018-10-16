@@ -2,6 +2,7 @@ package no.cantara.docsite.executor;
 
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 public class ExecutorThreadPoolTest {
@@ -24,6 +25,7 @@ public class ExecutorThreadPoolTest {
         }
     }
 
+    @Ignore
     @Test
     public void testName() throws Exception {
         DynamicConfiguration configuration = configuration();

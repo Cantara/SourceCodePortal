@@ -1,6 +1,7 @@
 package no.cantara.docsite.cache;
 
 import no.cantara.docsite.domain.config.Repository;
+import no.cantara.docsite.domain.config.RepositoryConfig;
 import no.cantara.docsite.domain.github.commits.CommitRevision;
 import no.cantara.docsite.domain.github.contents.RepositoryContents;
 import no.cantara.docsite.domain.github.releases.CreatedTagEvent;
@@ -12,7 +13,12 @@ import org.slf4j.LoggerFactory;
 import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.configuration.MutableConfiguration;
-import java.util.concurrent.ConcurrentHashMap;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
+import javax.json.bind.config.PropertyNamingStrategy;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class CacheStore {
 
@@ -20,25 +26,37 @@ public class CacheStore {
 
     final DynamicConfiguration configuration;
     final CacheManager cacheManager;
+    final RepositoryConfig repositoryConfig;
 
     Cache<CacheGroupKey, Repository> repositoryGroups;
     Cache<CacheKey, MavenPOM> projects;
     Cache<CacheKey, RepositoryContents> pages;
-    Cache<CacheShaKey, CommitRevision> commits; // TODO use a revision key
-    Cache<CacheKey, ConcurrentHashMap<String,CreatedTagEvent>> releases;
+    Cache<CacheShaKey, CommitRevision> commits;
+    Cache<CacheKey, CreatedTagEvent> releases;
 
     CacheStore(DynamicConfiguration configuration, CacheManager cacheManager) {
         this.configuration = configuration;
         this.cacheManager = cacheManager;
+        this.repositoryConfig = load();
+    }
+
+    private RepositoryConfig load() {
+        try (InputStream json = ClassLoader.getSystemResourceAsStream("config/config.json")) {
+            JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
+            Jsonb jsonb = JsonbBuilder.create(config);
+            return jsonb.fromJson(json, RepositoryConfig.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     void initialize() {
-        if (cacheManager.getCache("repostioryGroup") == null) {
+        if (cacheManager.getCache("repositoryGroup") == null) {
             LOG.info("Creating Grouped repositories cache");
             MutableConfiguration<CacheGroupKey, Repository> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            repositoryGroups = cacheManager.createCache("repostioryGroup", cacheConfig);
+            repositoryGroups = cacheManager.createCache("repositoryGroup", cacheConfig);
         }
 
         if (cacheManager.getCache("project") == null) {
@@ -67,7 +85,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("release") == null) {
             LOG.info("Creating Release cache");
-            MutableConfiguration<CacheKey, ConcurrentHashMap<String,CreatedTagEvent>> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, CreatedTagEvent> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             releases = cacheManager.createCache("release", cacheConfig);
@@ -76,6 +94,10 @@ public class CacheStore {
 
     public CacheManager getCacheManager() {
         return cacheManager;
+    }
+
+    public RepositoryConfig getRepositoryConfig() {
+        return repositoryConfig;
     }
 
     public Cache<CacheGroupKey, Repository> getRepositoryGroups() {
@@ -94,7 +116,7 @@ public class CacheStore {
         return commits;
     }
 
-    public Cache<CacheKey, ConcurrentHashMap<String,CreatedTagEvent>> getReleases() {
+    public Cache<CacheKey, CreatedTagEvent> getReleases() {
         return releases;
     }
 }

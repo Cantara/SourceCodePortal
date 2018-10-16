@@ -35,13 +35,13 @@ public class GitHubPageServiceTest {
         CacheStore cacheStore = cacheStore(configuration);
 
         RepositoryConfigLoader service = new RepositoryConfigLoader(configuration, cacheStore);
-        service.build();
+        service.load();
 
         cacheStore.getRepositoryGroups().forEach(rg -> {
             executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey(), rg.getValue().readmeURL));
         });
 
-        cacheStore.getCacheManager().close();
+//        cacheStore.getCacheManager().close();
         executorService.shutdown();
     }
 }

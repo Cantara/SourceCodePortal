@@ -51,12 +51,12 @@ public class ThymeleafViewEngineProcessor {
 
             LOG.info("viewId: {}", viewId);
 
-            LOG.trace("Process MVC Template: {} => {} ", viewId, (viewId != null && !"".equals(viewId) ? resolveTemplate(viewId).getFile() : null));
+//            LOG.trace("Process MVC Template: {} => {} ", viewId, (viewId != null && !"".equals(viewId) ? resolveTemplate(viewId).getFile() : null));
 
             try (OutputStream out = CommonUtil.newOutputStream()) {
                 InputStream file = ClassLoader.getSystemResourceAsStream(viewId);
                 CommonUtil.writeInputToOutputStream(file, out);
-                LOG.trace("Template:\n{}", out);
+//                LOG.trace("Template:\n{}", out);
             }
 
             StringWriter writer = new StringWriter();

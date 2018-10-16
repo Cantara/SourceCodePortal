@@ -25,24 +25,20 @@ public class RepositoryConfigLoaderTest {
         return CacheInitializer.initialize(configuration);
     }
 
-    @Test(enabled = false)
+    @Test //(enabled = false)
     public void testRepositoryConfig() throws Exception {
         ExecutorThreadPool executorService = new ExecutorThreadPool();
         executorService.start();
         DynamicConfiguration configuration = configuration();
         CacheStore cacheStore = cacheStore(configuration);
 
+        LOG.trace("------------_> configuration: {} -- cacheStore: {}", configuration, cacheStore);
         RepositoryConfigLoader service = new RepositoryConfigLoader(configuration, cacheStore);
-        RepositoryConfig config = service.repositoryConfig;
-
-        LOG.trace("Repo-Config: {}", config);
-
-        service.build();
+        service.load();
 
         cacheStore.getPages().forEach(repo -> {
 //            LOG.trace("{} => {}", repo.getKey(), repo.getValue().getDecodedContent());
             LOG.trace("CacheKey: {}", repo.getKey());
         });
-        cacheStore.getCacheManager().close();
     }
 }

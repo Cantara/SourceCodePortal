@@ -1,19 +1,18 @@
 package no.cantara.docsite.cache;
 
 import no.cantara.docsite.domain.github.contents.RepositoryContents;
-import no.cantara.docsite.test.server.TestServerListener;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import javax.cache.Cache;
-import javax.inject.Inject;
 
-@Listeners(TestServerListener.class)
+//@Listeners(TestServerListener.class)
 public class JCacheTest {
 
-    @Inject
+//    @Inject
     CacheStore cacheStore;
 
+    @Ignore
     @Test
     public void testRICacheProvider() {
         Cache<CacheKey, RepositoryContents> cache = cacheStore.getPages();

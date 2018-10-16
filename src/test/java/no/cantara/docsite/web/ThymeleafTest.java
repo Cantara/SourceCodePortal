@@ -28,7 +28,7 @@ public class ThymeleafTest {
     @Test
     public void testThymeleafViewEngine() {
         ResponseHelper<String> response = client.get("/docs/home");
-        LOG.trace("html:\n{}", response.expect200Ok().body());
+//        LOG.trace("html:\n{}", response.expect200Ok().body());
 
     }
 }

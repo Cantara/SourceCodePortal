@@ -38,7 +38,7 @@ public class PullContentsTest {
         JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
         Jsonb jsonb = JsonbBuilder.create(config);
         RepositoryContents contents = jsonb.fromJson(CONTENTS_JSON, RepositoryContents.class);
-        LOG.trace("contents: {}\ncontents: {}", contents, contents.getDecodedContent());
+//        LOG.trace("contents: {}\ncontents: {}", contents, contents.getDecodedContent());
     }
 
 }

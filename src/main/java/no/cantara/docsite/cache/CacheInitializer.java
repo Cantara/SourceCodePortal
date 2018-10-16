@@ -12,7 +12,6 @@ public class CacheInitializer {
 
     private static final Logger LOG = LoggerFactory.getLogger(CacheInitializer.class);
 
-    // TODO: evaluate configuration for hazelcast provider
     public static CacheStore initialize(DynamicConfiguration configuration) {
         LOG.info("Initializing JCache..");
         CachingProvider cachingProvider = Caching.getCachingProvider();

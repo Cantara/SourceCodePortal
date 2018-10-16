@@ -15,7 +15,7 @@ public class ReadmeAsciidocWikiTest {
         try (InputStream is = ClassLoader.getSystemResourceAsStream("github/README.adoc")) {
             String adoc = new BufferedReader(new InputStreamReader(is)).lines().collect(Collectors.joining("\n"));
             ReadmeAsciidocWiki doic = new ReadmeAsciidocWiki(adoc);
-            System.out.println("adoc: " + doic);
+//            System.out.println("adoc: " + doic);
         }
     }
 }

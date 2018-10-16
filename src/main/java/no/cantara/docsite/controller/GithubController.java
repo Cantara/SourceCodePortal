@@ -27,7 +27,7 @@ class GithubController implements HttpHandler {
             StringBuilder payload = new StringBuilder();
             exchange.getRequestReceiver().receiveFullString((exchangeReceiver, message) -> payload.append(message));
 
-            LOG.trace("Event: {} -> Payload: {}", xHubEvent, payload);
+//            LOG.trace("Event: {} -> Payload: {}", xHubEvent, payload);
 
             if ("push".equals(xHubEvent)) {
 

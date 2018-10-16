@@ -57,7 +57,7 @@ public class ReadmeMarkdownWikiTest {
         Node document = parser.parse(ReadmeBadgeMDFixture.BADGE_MARKDOWN);
         PrintVisitor visitor = new PrintVisitor();
         // look for listItem -> para -> image: Image{destination ~ jenkins).. We need a url list match badge images..
-        document.accept(visitor);
+//        document.accept(visitor);
 
     }
 

@@ -79,7 +79,7 @@ public class PushCommitRevisionTest {
 
 
         LOG.trace("Cache-size: {} -- {} -- {}", count.get(), countDymmy1.get(), countDymmy2.get());
-        cacheStore.getCacheManager().close();
+//        cacheStore.getCacheManager().close();
 
     }
 }

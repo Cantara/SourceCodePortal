@@ -17,7 +17,7 @@ public class MavenPOMTest {
         MavenPOMParser parser = new MavenPOMParser();
         MavenPOM mavenPom = parser.parse(response.body());
 
-        System.out.println("mavenPOM: " + mavenPom);
+//        System.out.println("mavenPOM: " + mavenPom);
     }
 
 }

@@ -21,7 +21,7 @@ public class PushPageEventTest {
             JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             Jsonb jsonb = JsonbBuilder.create(config);
             PageEvent event = jsonb.fromJson(json, PageEvent.class);
-            LOG.trace("event: {}", event);
+//            LOG.trace("event: {}", event);
         }
     }
 

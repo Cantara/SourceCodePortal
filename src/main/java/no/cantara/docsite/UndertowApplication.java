@@ -98,7 +98,7 @@ public class UndertowApplication {
     }
 
     public void enableConfigLoader() {
-        configLoader.build();
+        configLoader.load();
     }
 
     public void enablePreFetch() {
@@ -140,7 +140,7 @@ public class UndertowApplication {
     public void stop() {
         executorService.shutdown();
         server.stop();
-        cacheStore.getCacheManager().close();
+        if (!configuration.evaluateToBoolean("cache.shutdownOnClose")) cacheStore.getCacheManager().close();
         LOG.info("Leaving.. Bye!");
     }
 
