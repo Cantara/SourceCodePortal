@@ -5,6 +5,7 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
+import no.cantara.docsite.executor.ExecutorThreadPool;
 
 public class ApplicationController implements HttpHandler {
 
@@ -12,14 +13,18 @@ public class ApplicationController implements HttpHandler {
     private String corsAllowHeaders;
     private boolean corsAllowOriginTest;
     private int undertowPort;
+    private final ExecutorThreadPool executorService;
     private CacheStore cacheStore;
+    private final RepositoryConfigLoader configLoader;
 
-    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, CacheStore cacheStore, RepositoryConfigLoader configLoader) {
+    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, ExecutorThreadPool executorService, CacheStore cacheStore, RepositoryConfigLoader configLoader) {
         this.corsAllowOrigin = corsAllowOrigin;
         this.corsAllowHeaders = corsAllowHeaders;
         this.corsAllowOriginTest = corsAllowOriginTest;
         this.undertowPort = undertowPort;
+        this.executorService = executorService;
         this.cacheStore = cacheStore;
+        this.configLoader = configLoader;
     }
 
     @Override
@@ -53,7 +58,7 @@ public class ApplicationController implements HttpHandler {
         }
 
         if (requestPath.startsWith("/health")) {
-            new HealthController(cacheStore).handleRequest(exchange);
+            new HealthController(executorService, cacheStore).handleRequest(exchange);
             return;
         }
 

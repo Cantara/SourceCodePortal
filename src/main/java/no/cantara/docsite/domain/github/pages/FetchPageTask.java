@@ -36,7 +36,7 @@ public class FetchPageTask extends WorkerTask {
             RepositoryContents readmeContents = JsonbBuilder.create().fromJson(response.body(), RepositoryContents.class);
             cacheStore.getPages().put(cacheKey, readmeContents);
         } else {
-            LOG.error("Resource not found: {} ({})", response.uri(), response.statusCode());
+            LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());
         }
     }
 }

@@ -53,6 +53,7 @@ public class UndertowApplication {
                 configuration.evaluateToString("http.cors.allow.header"),
                 configuration.evaluateToBoolean("http.cors.allow.origin.test"),
                 port,
+                executorThreadPool,
                 cacheStore,
                 configLoader
         );

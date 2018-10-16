@@ -36,7 +36,7 @@ public class FetchCommitRevisionTask extends WorkerTask {
                 cacheStore.getCommits().put(cacheKey, commitRevision[n]);
             }
         } else {
-            LOG.error("Resource not found: {} ({})", response.uri(), response.statusCode());
+            LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());
         }
     }
 }

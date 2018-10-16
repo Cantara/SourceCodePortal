@@ -4,6 +4,7 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
+import no.cantara.docsite.executor.ExecutorThreadPool;
 import no.cantara.docsite.health.HealthResource;
 
 import javax.json.Json;
@@ -16,9 +17,11 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 public class HealthController implements HttpHandler {
 
+    private final ExecutorThreadPool executorService;
     private final CacheStore cacheStore;
 
-    public HealthController(CacheStore cacheStore) {
+    public HealthController(ExecutorThreadPool executorService, CacheStore cacheStore) {
+        this.executorService = executorService;
         this.cacheStore = cacheStore;
     }
 
@@ -33,6 +36,23 @@ public class HealthController implements HttpHandler {
             builder.add("since", HealthResource.instance().getRunningSince());
             builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());
         }
+
+
+        JsonObjectBuilder executorServiceBuilder = Json.createObjectBuilder();
+
+        {
+            executorServiceBuilder.add("core-pool-size", executorService.getThreadPool().getCorePoolSize());
+            executorServiceBuilder.add("pool-size", executorService.getThreadPool().getPoolSize());
+            executorServiceBuilder.add("task-count", executorService.getThreadPool().getTaskCount());
+            executorServiceBuilder.add("completed-task-count", executorService.getThreadPool().getCompletedTaskCount());
+            executorServiceBuilder.add("active-count", executorService.getThreadPool().getActiveCount());
+            executorServiceBuilder.add("maximum-pool-size", executorService.getThreadPool().getMaximumPoolSize());
+            executorServiceBuilder.add("largest-pool-size", executorService.getThreadPool().getLargestPoolSize());
+            executorServiceBuilder.add("blocking-queue-size", executorService.getThreadPool().getQueue().size());
+        }
+
+        builder.add("thread-pool", executorServiceBuilder);
+
 
         JsonObjectBuilder cacheBuilder = Json.createObjectBuilder();
 
@@ -60,6 +80,7 @@ public class HealthController implements HttpHandler {
             cacheBuilder.add("releases", count.get());
         }
 
+        builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());
         builder.add("cache", cacheBuilder);
 
         exchange.setStatusCode(HTTP_OK);

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class ExecutorThreadPool {
 
     static final int MAX_RETRIES = 3;
-    static int BLOCKING_QUEUE_SIZE = 500;
+    static int BLOCKING_QUEUE_SIZE = 5000;
     static long WAIT_FOR_THREAD_POOL = 50;
     static long WAIT_FOR_TERMINATION = 100;
     static long SLEEP_INTERVAL = 100;
@@ -89,6 +89,10 @@ public class ExecutorThreadPool {
 
     public void queue(WorkerTask workerTask) {
         internalEventsQueue.add(workerTask);
+    }
+
+    public ThreadPoolExecutor getThreadPool() {
+        return executorThreadPool;
     }
 
     public int queued() {
