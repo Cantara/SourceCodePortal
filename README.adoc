@@ -2,7 +2,7 @@
 
 ##### Status
 image:https://jenkins.capraconsulting.no/buildStatus/icon?job=Cantara-SourceCodePortal[Build Status]
-image:http://www.repostatus.org/badges/latest/active.svg[Project Status: Active – The project has not yet reached a stable, usable state but is being actively developed.]
+image:https://www.repostatus.org/badges/latest/active.svg[Project Status: Active – The project has not yet reached a stable, usable state but is being actively developed.]
 image:https://snyk.io/test/github/Cantara/HTTPLoadTest-baseline/badge.svg[Known Vulnerabilities]
 
 
