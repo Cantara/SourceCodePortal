@@ -10,8 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ExecutorThreadPool {
 
-    static final int MAX_RETRIES = 3;
-    static int BLOCKING_QUEUE_SIZE = 5000;
+    public static final int MAX_RETRIES = 3;
+    public static int BLOCKING_QUEUE_SIZE = 5000;
     static long WAIT_FOR_THREAD_POOL = 50;
     static long WAIT_FOR_TERMINATION = 100;
     static long SLEEP_INTERVAL = 100;
