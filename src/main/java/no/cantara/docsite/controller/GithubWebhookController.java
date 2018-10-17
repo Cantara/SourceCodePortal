@@ -102,8 +102,6 @@ class GithubWebhookController implements HttpHandler {
                         Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
                         String commitId = pushCommitEvent.headCommit.id;
                         for(String modifiedFile : pushCommitEvent.headCommit.modifiedList) {
-                            // TODO use new FetchContents with
-                            // https://api.github.com/repos/Cantara/SourceCodePortal-testdata/contents/README.md?ref=749a62681530a8dd87f638030633625d8e35b466
                             executorService.queue(new FetchContentsTask(configuration, executorService, cacheStore, cacheKey, repository.contentsURL, modifiedFile, commitId));
                         }
                     }
