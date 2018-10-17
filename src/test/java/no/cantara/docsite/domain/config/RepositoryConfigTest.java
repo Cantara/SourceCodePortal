@@ -19,7 +19,7 @@ public class RepositoryConfigTest {
 
     @Test
     public void testJson() throws IOException {
-        try (InputStream json = ClassLoader.getSystemResourceAsStream("config/config.json")) {
+        try (InputStream json = ClassLoader.getSystemResourceAsStream("conf/config.json")) {
             JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             Jsonb jsonb = JsonbBuilder.create(config);
             RepositoryConfig repositoryConfig = jsonb.fromJson(json, RepositoryConfig.class);

@@ -68,7 +68,7 @@ public class ApplicationController implements HttpHandler {
         }
 
         if (requestPath.startsWith("/github")) {
-            new GithubController().handleRequest(exchange);
+            new GithubWebhookController().handleRequest(exchange);
             return;
         }
 

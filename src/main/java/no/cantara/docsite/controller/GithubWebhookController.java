@@ -6,11 +6,11 @@ import io.undertow.util.Headers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class GithubController implements HttpHandler {
+class GithubWebhookController implements HttpHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GithubController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GithubWebhookController.class);
 
-    GithubController() {
+    GithubWebhookController() {
     }
 
     @Override

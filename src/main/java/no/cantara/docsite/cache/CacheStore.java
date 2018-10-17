@@ -37,7 +37,7 @@ public class CacheStore {
     }
 
     RepositoryConfig load() {
-        try (InputStream json = ClassLoader.getSystemResourceAsStream("config/config.json")) {
+        try (InputStream json = ClassLoader.getSystemResourceAsStream("conf/config.json")) {
             JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             Jsonb jsonb = JsonbBuilder.create(config);
             return jsonb.fromJson(json, RepositoryConfig.class);
