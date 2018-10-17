@@ -76,17 +76,18 @@ class GithubWebhookController implements HttpHandler {
                 if ("push".equals(xHubEvent)) {
                     LOG.debug("Received Push Event!");
 
+                    PushCommitEvent pushCommitEvent = JsonbBuilder.create().fromJson(payload, PushCommitEvent.class);
+
                     // ------------------------------------------------------------------------------------------------------
                     // Github Commit Event
                     // ------------------------------------------------------------------------------------------------------
-                    PushCommitEvent pushCommitEvent = JsonbBuilder.create().fromJson(payload, PushCommitEvent.class);
                     if (pushCommitEvent.isCodeCommit()) {
                         CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name);
                         executorService.queue(new FetchCommitRevisionTask(configuration, executorService, cacheStore, cacheKey, pushCommitEvent.headCommit.id));
                     }
 
                     // ------------------------------------------------------------------------------------------------------
-                    // Github Commit Event
+                    // Github Page Commit Event
                     // ------------------------------------------------------------------------------------------------------
                     if (pushCommitEvent.isPageCommit()) {
                         CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name, pushCommitEvent.getBranch());
