@@ -56,6 +56,28 @@ MacOS installation:
 
 `brew install chromedriver`
 
+
+=== ngrok (https proxy to developmnet/localhost)
+
+[source,bash]
+-----------------
+# Open a terminal and change into the /opt directory.
+$ cd /opt
+# Use wget to download the ngrok application.
+$ sudo wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+# Extract the downloaded file.
+$ sudo unzip ngrok-stable-linux-amd64.zip
+# Move the file into the /usr/local/bin directory to make it easily executable.
+$ sudo mv ngrok /usr/local/bin
+# Note the hex-id when you start ngrok
+$ ngrok http 9090
+# test that ngrok is happy
+curl -I https://<hex-uid-from-running ngrok>.ngrok.io/ping
+-----------------
+
+* https://github.com/organizations/Cantara/settings/hooks/ [Set up/find github webhook]
+** use https://<hex-uid-from-running ngrok>.ngrok.io/github/webhook
+
 == Configuration
 
 === GitHub Webhook
