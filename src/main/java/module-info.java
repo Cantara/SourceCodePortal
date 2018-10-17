@@ -44,7 +44,6 @@ module cantara.docsite {
     exports no.cantara.docsite.domain.github.pages;
     exports no.cantara.docsite.domain.github.releases;
     exports no.cantara.docsite.domain.github.repos;
-    exports no.cantara.docsite.domain.github.webhook;
     exports no.cantara.docsite.executor;
     exports no.cantara.docsite.health;
     exports no.cantara.docsite.util;
