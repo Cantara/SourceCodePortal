@@ -26,7 +26,7 @@ public class Server {
         LOG.info("Logback used '{}' as the configuration file.", mainURL);
 
         DynamicConfiguration configuration = new StoreBasedDynamicConfiguration.Builder()
-                .propertiesResource(UndertowApplication.getDefaultConfigurationResourcePath())
+                .propertiesResource(Application.getDefaultConfigurationResourcePath())
                 .propertiesResource("application.properties")
                 .propertiesResource("security.properties")
                 .propertiesResource("application_override.properties")
@@ -36,7 +36,7 @@ public class Server {
 
         JavaUtilLoggerBridge.installJavaUtilLoggerBridgeHandler(Level.INFO);
 
-        UndertowApplication application = UndertowApplication.initializeUndertowApplication(configuration);
+        Application application = Application.initializeUndertowApplication(configuration);
 
         try {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {

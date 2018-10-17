@@ -1,6 +1,6 @@
 package no.cantara.docsite.test.server;
 
-import no.cantara.docsite.UndertowApplication;
+import no.cantara.docsite.Application;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.executor.ExecutorService;
 import no.ssb.config.DynamicConfiguration;
@@ -11,13 +11,13 @@ import java.net.URL;
 public class TestServer implements TestUriResolver {
 
     final DynamicConfiguration configuration;
-    final UndertowApplication application;
+    final Application application;
     private final int testServerServicePort;
 
     public TestServer(DynamicConfiguration configuration, int testServerServicePort) {
         this.configuration = configuration;
         this.testServerServicePort = testServerServicePort;
-        application = UndertowApplication.initializeUndertowApplication(configuration, testServerServicePort);
+        application = Application.initializeUndertowApplication(configuration, testServerServicePort);
     }
 
     public void start() {
@@ -44,7 +44,7 @@ public class TestServer implements TestUriResolver {
         return application.getExecutorService();
     }
 
-    public UndertowApplication getApplication() {
+    public Application getApplication() {
         return application;
     }
 

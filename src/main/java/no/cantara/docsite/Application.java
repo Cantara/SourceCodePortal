@@ -17,15 +17,15 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class UndertowApplication {
+public class Application {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UndertowApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Application.class);
 
     public static String getDefaultConfigurationResourcePath() {
         return "application-defaults.properties";
     }
 
-    public static UndertowApplication initializeUndertowApplication(DynamicConfiguration configuration) {
+    public static Application initializeUndertowApplication(DynamicConfiguration configuration) {
         LOG.info("Starting SourceCodePortal server");
         if (!HealthResource.instance().isDevelopment()) {
             Map<String, String> configMap = configuration.asMap();
@@ -40,7 +40,7 @@ public class UndertowApplication {
         return initializeUndertowApplication(configuration, port);
     }
 
-    public static UndertowApplication initializeUndertowApplication(DynamicConfiguration configuration, int port) {
+    public static Application initializeUndertowApplication(DynamicConfiguration configuration, int port) {
         String host = configuration.evaluateToString("http.host");
 
         CacheStore cacheStore = CacheInitializer.initialize(configuration);
@@ -60,7 +60,7 @@ public class UndertowApplication {
                 configLoader
         );
 
-        return new UndertowApplication(configuration, host, port, executorService, cacheStore, configLoader, applicationController);
+        return new Application(configuration, host, port, executorService, cacheStore, configLoader, applicationController);
     }
 
     private final DynamicConfiguration configuration;
@@ -71,7 +71,7 @@ public class UndertowApplication {
     private final RepositoryConfigLoader configLoader;
     private final Undertow server;
 
-    public UndertowApplication(DynamicConfiguration configuration, String host, int port, ExecutorService executorService, CacheStore cacheStore, RepositoryConfigLoader configLoader, ApplicationController applicationController) {
+    public Application(DynamicConfiguration configuration, String host, int port, ExecutorService executorService, CacheStore cacheStore, RepositoryConfigLoader configLoader, ApplicationController applicationController) {
         this.configuration = configuration;
         this.host = host;
         this.port = port;
