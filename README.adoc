@@ -57,7 +57,7 @@ MacOS installation:
 `brew install chromedriver`
 
 
-=== ngrok (https proxy to developmnet/localhost)
+=== ngrok (how to set up support for github hooks via a https proxy on developmnet/localhost)
 
 [source,bash]
 -----------------
