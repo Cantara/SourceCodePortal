@@ -22,10 +22,10 @@ abstract public class BaseHystrixCommand<R> extends HystrixCommand<R> {
         );
     }
 
-    public static <R> boolean anyOf(HttpResponse<R> response, int... anyOf) {
+    public static <R> boolean anyOf(HttpResponse<R> response, int... statusCode) {
         if (response == null) return false;
         int matchingStatusCode = -1;
-        for (int statusCode : anyOf) {
+        for (int statusCode : statusCode) {
             if (response.statusCode() == statusCode) {
                 matchingStatusCode = statusCode;
             }
