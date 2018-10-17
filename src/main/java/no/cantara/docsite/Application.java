@@ -56,8 +56,7 @@ public class Application {
                 port,
                 configuration,
                 executorService,
-                cacheStore,
-                configLoader
+                cacheStore
         );
 
         return new Application(configuration, host, port, executorService, cacheStore, configLoader, applicationController);
