@@ -17,7 +17,7 @@ public class TestServer implements TestUriResolver {
     public TestServer(DynamicConfiguration configuration, int testServerServicePort) {
         this.configuration = configuration;
         this.testServerServicePort = testServerServicePort;
-        application = Application.initializeUndertowApplication(configuration, testServerServicePort);
+        application = Application.initialize(configuration, testServerServicePort);
     }
 
     public void start() {

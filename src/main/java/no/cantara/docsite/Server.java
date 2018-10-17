@@ -36,7 +36,7 @@ public class Server {
 
         JavaUtilLoggerBridge.installJavaUtilLoggerBridgeHandler(Level.INFO);
 
-        Application application = Application.initializeUndertowApplication(configuration);
+        Application application = Application.initialize(configuration);
 
         try {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {

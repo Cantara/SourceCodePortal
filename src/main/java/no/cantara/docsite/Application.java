@@ -25,7 +25,7 @@ public class Application {
         return "application-defaults.properties";
     }
 
-    public static Application initializeUndertowApplication(DynamicConfiguration configuration) {
+    public static Application initialize(DynamicConfiguration configuration) {
         LOG.info("Starting SourceCodePortal server");
         if (!HealthResource.instance().isDevelopment()) {
             Map<String, String> configMap = configuration.asMap();
@@ -37,10 +37,10 @@ public class Application {
                     .replace("}", "\n}"));
         }
         int port = configuration.evaluateToInt("http.port");
-        return initializeUndertowApplication(configuration, port);
+        return initialize(configuration, port);
     }
 
-    public static Application initializeUndertowApplication(DynamicConfiguration configuration, int port) {
+    public static Application initialize(DynamicConfiguration configuration, int port) {
         String host = configuration.evaluateToString("http.host");
 
         CacheStore cacheStore = CacheInitializer.initialize(configuration);
