@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class RepositoryConfigLoaderTest {
@@ -38,7 +37,7 @@ public class RepositoryConfigLoaderTest {
         RepositoryConfigLoader service = new RepositoryConfigLoader(configuration, cacheStore);
         service.load();
 
-        assertEquals(cacheStore.getRepositoryGroupsByGroupId("SourceCodePortal-t").size(), 1);
+        assertTrue(cacheStore.getRepositoryGroupsByGroupId("SourceCodePortal-t").size() > 1);
         assertTrue(cacheStore.getRepositoryGroupsByGroupId("Whydah-t").size() > 15);
     }
 }
