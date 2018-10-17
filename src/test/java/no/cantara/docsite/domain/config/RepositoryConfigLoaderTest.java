@@ -3,6 +3,7 @@ package no.cantara.docsite.domain.config;
 import no.cantara.docsite.cache.CacheInitializer;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.executor.ExecutorThreadPool;
+import no.cantara.docsite.util.JsonUtil;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
@@ -39,5 +40,7 @@ public class RepositoryConfigLoaderTest {
 
         assertTrue(cacheStore.getRepositoryGroupsByGroupId("SourceCodePortal-t").size() > 1);
         assertTrue(cacheStore.getRepositoryGroupsByGroupId("Whydah-t").size() > 15);
+
+        LOG.trace(JsonUtil.prettyPrint(cacheStore.getConfiguredRepositories()));
     }
 }

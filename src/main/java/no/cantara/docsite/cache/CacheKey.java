@@ -19,6 +19,10 @@ public class CacheKey implements Serializable {
         this.branch = branch;
     }
 
+    public String asIdentifier() {
+        return String.format("%s/%s/%s", organization, repoName, branch);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,4 +50,5 @@ public class CacheKey implements Serializable {
     public static CacheKey of(String organization, String repoName, String branch) {
         return new CacheKey(organization, repoName, branch);
     }
+
 }

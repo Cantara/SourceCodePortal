@@ -23,6 +23,9 @@ public class GitHubWebhookUtility {
     };
 
     public static boolean verifySignature(String payload, String signature, String secret) {
+        if (payload == null || signature == null || secret == null) {
+            return false;
+        }
         boolean isValid;
         try {
             Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);

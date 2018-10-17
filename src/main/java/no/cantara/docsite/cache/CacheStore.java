@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.configuration.MutableConfiguration;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
@@ -48,7 +51,7 @@ public class CacheStore {
 
     void initialize() {
         if (cacheManager.getCache("cacheKeys") == null) {
-            LOG.info("Creating Grouped repositories cache");
+            LOG.info("Creating CacheKeys cache");
             MutableConfiguration<CacheKey, CacheGroupKey> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
@@ -95,6 +98,20 @@ public class CacheStore {
             cacheManager.createCache("release", cacheConfig);
         }
     }
+
+    public String getConfiguredRepositories() {
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        for(String grouopId : getGroups()) {
+            JsonArrayBuilder groupBuilder = Json.createArrayBuilder();
+            List<Repository> repositories = getRepositoryGroupsByGroupId(grouopId);
+            for(Repository repository : repositories) {
+                groupBuilder.add(repository.cacheKey.asIdentifier());
+            }
+            builder.add(grouopId, groupBuilder);
+        }
+        return JsonbBuilder.create().toJson(builder.build());
+    }
+
 
     public CacheManager getCacheManager() {
         return cacheManager;

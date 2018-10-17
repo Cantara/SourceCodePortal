@@ -6,22 +6,25 @@ import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.executor.ExecutorThreadPool;
+import no.ssb.config.DynamicConfiguration;
 
 public class ApplicationController implements HttpHandler {
 
-    private String corsAllowOrigin;
-    private String corsAllowHeaders;
-    private boolean corsAllowOriginTest;
-    private int undertowPort;
+    private final String corsAllowOrigin;
+    private final String corsAllowHeaders;
+    private final boolean corsAllowOriginTest;
+    private final int undertowPort;
+    private final DynamicConfiguration configuration;
     private final ExecutorThreadPool executorService;
-    private CacheStore cacheStore;
+    private final CacheStore cacheStore;
     private final RepositoryConfigLoader configLoader;
 
-    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, ExecutorThreadPool executorService, CacheStore cacheStore, RepositoryConfigLoader configLoader) {
+    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, DynamicConfiguration configuration, ExecutorThreadPool executorService, CacheStore cacheStore, RepositoryConfigLoader configLoader) {
         this.corsAllowOrigin = corsAllowOrigin;
         this.corsAllowHeaders = corsAllowHeaders;
         this.corsAllowOriginTest = corsAllowOriginTest;
         this.undertowPort = undertowPort;
+        this.configuration = configuration;
         this.executorService = executorService;
         this.cacheStore = cacheStore;
         this.configLoader = configLoader;
@@ -68,7 +71,7 @@ public class ApplicationController implements HttpHandler {
         }
 
         if (requestPath.startsWith("/github")) {
-            new GithubWebhookController().handleRequest(exchange);
+            new GithubWebhookController(configuration).handleRequest(exchange);
             return;
         }
 
