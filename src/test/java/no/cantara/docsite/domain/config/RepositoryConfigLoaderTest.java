@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.config;
 
 import no.cantara.docsite.cache.CacheInitializer;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.executor.ExecutorThreadPool;
+import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.util.JsonUtil;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
@@ -30,7 +30,7 @@ public class RepositoryConfigLoaderTest {
 
     @Test
     public void testRepositoryConfig() throws Exception {
-        ExecutorThreadPool executorService = new ExecutorThreadPool();
+        ExecutorService executorService = ExecutorService.create();
         executorService.start();
         DynamicConfiguration configuration = configuration();
         CacheStore cacheStore = cacheStore(configuration);

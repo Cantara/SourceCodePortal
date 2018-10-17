@@ -4,7 +4,7 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.executor.ExecutorThreadPool;
+import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.health.HealthResource;
 
 import javax.json.Json;
@@ -17,10 +17,10 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 public class HealthController implements HttpHandler {
 
-    private final ExecutorThreadPool executorService;
+    private final ExecutorService executorService;
     private final CacheStore cacheStore;
 
-    public HealthController(ExecutorThreadPool executorService, CacheStore cacheStore) {
+    public HealthController(ExecutorService executorService, CacheStore cacheStore) {
         this.executorService = executorService;
         this.cacheStore = cacheStore;
     }
@@ -49,8 +49,8 @@ public class HealthController implements HttpHandler {
             executorServiceBuilder.add("maximum-pool-size", executorService.getThreadPool().getMaximumPoolSize());
             executorServiceBuilder.add("largest-pool-size", executorService.getThreadPool().getLargestPoolSize());
             executorServiceBuilder.add("blocking-queue-size", executorService.getThreadPool().getQueue().size());
-            executorServiceBuilder.add("max-blocking-queue-size", ExecutorThreadPool.BLOCKING_QUEUE_SIZE);
-            executorServiceBuilder.add("max-worker-retries", ExecutorThreadPool.MAX_RETRIES);
+            executorServiceBuilder.add("max-blocking-queue-size", ExecutorService.BLOCKING_QUEUE_SIZE);
+            executorServiceBuilder.add("max-worker-retries", ExecutorService.MAX_RETRIES);
         }
 
         builder.add("thread-pool", executorServiceBuilder);

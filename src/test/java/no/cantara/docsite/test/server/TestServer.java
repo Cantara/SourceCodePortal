@@ -2,7 +2,7 @@ package no.cantara.docsite.test.server;
 
 import no.cantara.docsite.UndertowApplication;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.executor.ExecutorThreadPool;
+import no.cantara.docsite.executor.ExecutorService;
 import no.ssb.config.DynamicConfiguration;
 
 import java.net.MalformedURLException;
@@ -40,7 +40,7 @@ public class TestServer implements TestUriResolver {
         return application.getCacheStore();
     }
 
-    public ExecutorThreadPool getExecutorService() {
+    public ExecutorService getExecutorService() {
         return application.getExecutorService();
     }
 

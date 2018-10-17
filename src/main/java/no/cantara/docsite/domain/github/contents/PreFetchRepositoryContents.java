@@ -5,7 +5,7 @@ import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.github.commits.FetchCommitRevisionsTask;
 import no.cantara.docsite.domain.github.pages.FetchPageTask;
 import no.cantara.docsite.domain.maven.FetchMavenPOMTask;
-import no.cantara.docsite.executor.ExecutorThreadPool;
+import no.cantara.docsite.executor.ExecutorService;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +14,10 @@ public class PreFetchRepositoryContents {
 
     private static final Logger LOG = LoggerFactory.getLogger(RepositoryConfigLoader.class);
     private final DynamicConfiguration configuration;
-    private final ExecutorThreadPool executorService;
+    private final ExecutorService executorService;
     private final CacheStore cacheStore;
 
-    public PreFetchRepositoryContents(DynamicConfiguration configuration, ExecutorThreadPool executorService, CacheStore cacheStore) {
+    public PreFetchRepositoryContents(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore) {
         this.configuration = configuration;
         this.executorService = executorService;
         this.cacheStore = cacheStore;

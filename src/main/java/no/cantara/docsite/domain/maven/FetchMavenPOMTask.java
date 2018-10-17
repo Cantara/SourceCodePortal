@@ -4,7 +4,7 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.contents.RepositoryContents;
-import no.cantara.docsite.executor.ExecutorThreadPool;
+import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
     private final CacheKey cacheKey;
     private final String repoContentsURL;
 
-    public FetchMavenPOMTask(DynamicConfiguration configuration, ExecutorThreadPool executor, CacheStore cacheStore, CacheKey cacheKey, String repoContentsURL) {
+    public FetchMavenPOMTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey, String repoContentsURL) {
         super(configuration, executor);
         this.cacheStore = cacheStore;
         this.cacheKey = cacheKey;

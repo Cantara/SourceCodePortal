@@ -8,9 +8,9 @@ abstract public class WorkerTask implements Task {
 
     private final AtomicInteger retryCount = new AtomicInteger(-1);
     private final DynamicConfiguration configuration;
-    private final ExecutorThreadPool executor;
+    private final ExecutorService executor;
 
-    public WorkerTask(DynamicConfiguration configuration, ExecutorThreadPool executor) {
+    public WorkerTask(DynamicConfiguration configuration, ExecutorService executor) {
         this.configuration = configuration;
         this.executor = executor;
     }
@@ -19,7 +19,7 @@ abstract public class WorkerTask implements Task {
         return configuration;
     }
 
-    public ExecutorThreadPool getExecutor() {
+    public ExecutorService getExecutor() {
         return executor;
     }
 

@@ -8,7 +8,7 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.controller.ApplicationController;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.github.contents.PreFetchRepositoryContents;
-import no.cantara.docsite.executor.ExecutorThreadPool;
+import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.util.JsonUtil;
 import no.ssb.config.DynamicConfiguration;
@@ -45,7 +45,7 @@ public class UndertowApplication {
 
         CacheStore cacheStore = CacheInitializer.initialize(configuration);
 
-        ExecutorThreadPool executorThreadPool = new ExecutorThreadPool();
+        ExecutorService executorService = ExecutorService.create();
 
         RepositoryConfigLoader configLoader = new RepositoryConfigLoader(configuration, cacheStore);
 
@@ -55,23 +55,23 @@ public class UndertowApplication {
                 configuration.evaluateToBoolean("http.cors.allow.origin.test"),
                 port,
                 configuration,
-                executorThreadPool,
+                executorService,
                 cacheStore,
                 configLoader
         );
 
-        return new UndertowApplication(configuration, host, port, executorThreadPool, cacheStore, configLoader, applicationController);
+        return new UndertowApplication(configuration, host, port, executorService, cacheStore, configLoader, applicationController);
     }
 
     private final DynamicConfiguration configuration;
     private final String host;
     private final int port;
-    private final ExecutorThreadPool executorService;
+    private final ExecutorService executorService;
     private final CacheStore cacheStore;
     private final RepositoryConfigLoader configLoader;
     private final Undertow server;
 
-    public UndertowApplication(DynamicConfiguration configuration, String host, int port, ExecutorThreadPool executorService, CacheStore cacheStore, RepositoryConfigLoader configLoader, ApplicationController applicationController) {
+    public UndertowApplication(DynamicConfiguration configuration, String host, int port, ExecutorService executorService, CacheStore cacheStore, RepositoryConfigLoader configLoader, ApplicationController applicationController) {
         this.configuration = configuration;
         this.host = host;
         this.port = port;
@@ -101,7 +101,7 @@ public class UndertowApplication {
 
     public void enableConfigLoader() {
         configLoader.load();
-        LOG.info("Configured repositories:\n{}", JsonUtil.prettyPrint(cacheStore.getConfiguredRepositories()));
+        LOG.info("Configured repositories:{}", JsonUtil.prettyPrint(cacheStore.getConfiguredRepositories()));
     }
 
     public void enablePreFetch() {
@@ -122,7 +122,7 @@ public class UndertowApplication {
         return port;
     }
 
-    public ExecutorThreadPool getExecutorService() {
+    public ExecutorService getExecutorService() {
         return executorService;
     }
 

@@ -8,21 +8,17 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class ExecutorThreadPool {
+public class ExecutorThreadPool implements ExecutorService {
 
-    public static final int MAX_RETRIES = 3;
-    public static int BLOCKING_QUEUE_SIZE = 5000;
-    static long WAIT_FOR_THREAD_POOL = 50;
-    static long WAIT_FOR_TERMINATION = 100;
-    static long SLEEP_INTERVAL = 100;
-    private static Logger LOG = LoggerFactory.getLogger(ExecutorThreadPool.class);
+    private static Logger LOG = LoggerFactory.getLogger(ExecutorService.class);
     private final BlockingQueue internalEventsQueue;
     private ThreadPoolExecutor executorThreadPool;
 
-    public ExecutorThreadPool() {
+    ExecutorThreadPool() {
         this.internalEventsQueue = new ArrayBlockingQueue(BLOCKING_QUEUE_SIZE);
     }
 
+    @Override
     public void start() {
         executorThreadPool = new ThreadPoolExecutor(
                 8, // core size
@@ -64,6 +60,7 @@ public class ExecutorThreadPool {
         }
     }
 
+    @Override
     public void shutdown() {
         executorThreadPool.shutdown();
         try {
@@ -76,6 +73,7 @@ public class ExecutorThreadPool {
         }
     }
 
+    @Override
     public void waitForWorkerCompletion() throws InterruptedException {
         LOG.trace("thradCOunt: {}", countActiveThreads());
         while (countActiveThreads() > 1) {
@@ -87,18 +85,22 @@ public class ExecutorThreadPool {
         }
     }
 
+    @Override
     public void queue(WorkerTask workerTask) {
         internalEventsQueue.add(workerTask);
     }
 
+    @Override
     public ThreadPoolExecutor getThreadPool() {
         return executorThreadPool;
     }
 
+    @Override
     public int queued() {
         return internalEventsQueue.size();
     }
 
+    @Override
     public int countActiveThreads() {
         return executorThreadPool.getActiveCount();
     }
