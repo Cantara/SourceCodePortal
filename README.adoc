@@ -81,6 +81,9 @@ curl -I https://<hex-uid-from-running ngrok>.ngrok.io/ping
 ** Let me select individual events. select: Branch or tag creation, Pushes and Releases
 ** Upon save, you will see _POST /github/webhook           200 OK _ in the ngrok window
 * Update github.webhook.securityAccessToken_ in security.properties with the secret value from the github webhook registration
+* Do a commit/push and observe something like this in the scp log
+** 21:20:21.373 [XNIO-1 task-1] DEBUG n.c.docsite.controller.GithubWebhookController - GitHub WebHook is authorized..
+** 21:20:21.373 [XNIO-1 task-1] DEBUG n.c.docsite.controller.GithubWebhookController - Received Push Event!
 
 == Configuration
 
