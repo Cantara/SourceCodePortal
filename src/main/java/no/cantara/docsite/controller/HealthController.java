@@ -6,6 +6,7 @@ import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.health.HealthResource;
+import no.cantara.docsite.util.JsonUtil;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -103,6 +104,6 @@ public class HealthController implements HttpHandler {
 
         exchange.setStatusCode(HTTP_OK);
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
-        exchange.getResponseSender().send(JsonbBuilder.create().toJson(builder.build()));
+        exchange.getResponseSender().send(JsonUtil.prettyPrint(JsonbBuilder.create().toJson(builder.build())));
     }
 }
