@@ -12,7 +12,7 @@ import javax.json.JsonObjectBuilder;
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class DumpController implements HttpHandler {
+public class EchoController implements HttpHandler {
 
     private static final String ACCESS_TOKEN = "AccessTokenTest";
     private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";

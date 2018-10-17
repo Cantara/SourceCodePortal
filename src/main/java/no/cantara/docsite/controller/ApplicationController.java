@@ -62,8 +62,8 @@ public class ApplicationController implements HttpHandler {
             return;
         }
 
-        if (requestPath.startsWith("/dump")) {
-            new DumpController().handleRequest(exchange);
+        if (requestPath.startsWith("/echo")) {
+            new EchoController().handleRequest(exchange);
             return;
         }
 
