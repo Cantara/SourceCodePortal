@@ -30,7 +30,7 @@ module cantara.docsite {
     requires asciidoctorj;
     requires no.ssb.config;
 
-    opens config;
+    opens conf;
     opens no.cantara.docsite.domain.maven;
 
     exports no.cantara.docsite;
