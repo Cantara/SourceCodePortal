@@ -8,17 +8,8 @@ image:https://snyk.io/test/github/Cantara/SourceCodePortal/badge.svg[Known Vulne
 
 Groups documentation from GitHub repositories.
 
-== Pre-requisites
 
-Requires JDK 11.
-
-=== Some SourceCode Dashboard URLS when running from source on localhost
-
-* http://localhost:9090/health [Health/status]
-* http://localhost:9090/docs [SourceCode Documentation Portal site]
-* http://localhost:9090/dump [Test of requests]
-
-=== Getting started (running as docker image)
+=== Getting started (running as SourceCode Dashboard Portal docker image)
 
 [source,bash]
 -----------------
@@ -34,6 +25,16 @@ $ sudo cp config.json /var/lib/docker/aufs/mnt/**d8e703d7e3039a6df6d01bd7fb58d18
 $ wget http://localhost/health
 $ wget http://localhost/docs
 -----------------
+
+== Pre-requisites
+
+Requires JDK 11.
+
+=== Some SourceCode Dashboard URLS when running from source on localhost
+
+* http://localhost:9090/health [Health/status]
+* http://localhost:9090/docs [SourceCode Documentation Portal site]
+* http://localhost:9090/dump [Test of requests]
 
 
 === ChromeDriver
