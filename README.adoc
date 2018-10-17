@@ -77,6 +77,10 @@ curl -I https://<hex-uid-from-running ngrok>.ngrok.io/ping
 
 * https://github.com/organizations/Cantara/settings/hooks/ [Set up/find github webhook]
 ** use https://<hex-uid-from-running ngrok>.ngrok.io/github/webhook
+** select and set a secret  (same as _github.webhook.securityAccessToken_ in security.properties)
+** Let me select individual events. select: Branch or tag creation, Pushes and Releases
+** Upon save, you will see _POST /github/webhook           200 OK _ in the ngrok window
+* Update github.webhook.securityAccessToken_ in security.properties with the secret value from the github webhook registration
 
 == Configuration
 
