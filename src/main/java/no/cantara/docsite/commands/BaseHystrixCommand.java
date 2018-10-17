@@ -25,9 +25,9 @@ abstract public class BaseHystrixCommand<R> extends HystrixCommand<R> {
     public static <R> boolean anyOf(HttpResponse<R> response, int... statusCode) {
         if (response == null) return false;
         int matchingStatusCode = -1;
-        for (int statusCode : statusCode) {
-            if (response.statusCode() == statusCode) {
-                matchingStatusCode = statusCode;
+        for (int sc : statusCode) {
+            if (response.statusCode() == sc) {
+                matchingStatusCode = sc;
             }
         }
         return (matchingStatusCode != -1);
