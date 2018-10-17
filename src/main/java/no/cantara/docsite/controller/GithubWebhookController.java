@@ -11,13 +11,16 @@ import no.cantara.docsite.domain.github.commits.FetchCommitRevisionTask;
 import no.cantara.docsite.domain.github.contents.FetchContentsTask;
 import no.cantara.docsite.domain.github.pages.PushCommitEvent;
 import no.cantara.docsite.executor.ExecutorService;
-import no.cantara.docsite.util.GitHubWebhookUtility;
 import no.cantara.docsite.util.JsonUtil;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.json.bind.JsonbBuilder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
@@ -25,6 +28,11 @@ import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
 class GithubWebhookController implements HttpHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(GithubWebhookController.class);
+    private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
+    private static final char[] HEX = {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+    };
+
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
     private final CacheStore cacheStore;
@@ -33,6 +41,36 @@ class GithubWebhookController implements HttpHandler {
         this.configuration = configuration;
         this.executorService = executorService;
         this.cacheStore = cacheStore;
+    }
+
+    static boolean verifySignature(String payload, String signature, String secret) {
+        if (payload == null || signature == null || secret == null) {
+            return false;
+        }
+        boolean isValid;
+        try {
+            Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);
+            SecretKeySpec signingKey = new SecretKeySpec(secret.getBytes(), HMAC_SHA1_ALGORITHM);
+            mac.init(signingKey);
+            byte[] rawHmac = mac.doFinal(payload.getBytes());
+            String expected = signature.substring(5);
+            String actual = new String(encode(rawHmac));
+            isValid = expected.equals(actual);
+        } catch (NoSuchAlgorithmException | InvalidKeyException | IllegalStateException ex) {
+            throw new RuntimeException(ex.getLocalizedMessage());
+        }
+        return isValid;
+    }
+
+    static char[] encode(byte[] bytes) {
+        final int amount = bytes.length;
+        char[] result = new char[2 * amount];
+        int j = 0;
+        for (int i = 0; i < amount; i++) {
+            result[j++] = HEX[(0xF0 & bytes[i]) >>> 4];
+            result[j++] = HEX[(0x0F & bytes[i])];
+        }
+        return result;
     }
 
     @Override
@@ -54,7 +92,7 @@ class GithubWebhookController implements HttpHandler {
 
                 LOG.trace("Event -- xHubSignature: {} -- xHubEvent: {} -> Payload:\n{}", xHubSignature, xHubEvent, JsonUtil.prettyPrint(payload));
 
-                if (!GitHubWebhookUtility.verifySignature(payload, xHubSignature, configuration.evaluateToString("github.webhook.securityAccessToken"))) {
+                if (!verifySignature(payload, xHubSignature, configuration.evaluateToString("github.webhook.securityAccessToken"))) {
                     LOG.error("GitHub WebHook authorization failed!");
                     exchange.setStatusCode(HTTP_FORBIDDEN);
                     return;
@@ -95,7 +133,7 @@ class GithubWebhookController implements HttpHandler {
                         CacheGroupKey cacheGroupKey = cacheStore.getCacheKeys().get(cacheKey);
                         Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
                         String commitId = pushCommitEvent.headCommit.id;
-                        for(String modifiedFile : pushCommitEvent.headCommit.modifiedList) {
+                        for (String modifiedFile : pushCommitEvent.headCommit.modifiedList) {
                             executorService.queue(new FetchContentsTask(configuration, executorService, cacheStore, cacheKey, repository.contentsURL, modifiedFile, commitId));
                         }
                     }
