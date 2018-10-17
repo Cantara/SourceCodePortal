@@ -4,7 +4,6 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.executor.ExecutorService;
 import no.ssb.config.DynamicConfiguration;
 
@@ -17,9 +16,8 @@ public class ApplicationController implements HttpHandler {
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
     private final CacheStore cacheStore;
-    private final RepositoryConfigLoader configLoader;
 
-    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore, RepositoryConfigLoader configLoader) {
+    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore) {
         this.corsAllowOrigin = corsAllowOrigin;
         this.corsAllowHeaders = corsAllowHeaders;
         this.corsAllowOriginTest = corsAllowOriginTest;
@@ -27,7 +25,6 @@ public class ApplicationController implements HttpHandler {
         this.configuration = configuration;
         this.executorService = executorService;
         this.cacheStore = cacheStore;
-        this.configLoader = configLoader;
     }
 
     @Override
