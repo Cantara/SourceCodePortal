@@ -73,14 +73,6 @@ class GithubWebhookController implements HttpHandler {
                 // Github Module update Event
                 // ------------------------------------------------------------------------------------------------------
 
-                //
-                // compare module update with current module
-                //   new sub-modules (sjekk om id finnes i internalMap. sjekk også om en id er tatt bort fra en module.
-                //   lag en ny map hvor id-er legges til for en new-module og sammenlikn med gammel module
-                //   name changes
-                // fetch new page if there are changes
-                // 5144b64a-cc59-11e7-9b70-737fe2f2f4fa
-
                 if ("push".equals(xHubEvent)) {
                     LOG.debug("Received Push Event!");
 
