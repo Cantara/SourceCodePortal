@@ -12,6 +12,8 @@ Groups documentation from GitHub repositories.
 
 Requires JDK 11.
 
+=== ChromeDriver
+
 _ChromeDriver_ is required for obtaining GitHub access token.
 
 An _OAuth2 App_ must be created for your organization on https://github.com/organizations/YOUR_ORGANIZATION/settings/applications. This is where you find your ClientId and ClientSecret.
@@ -29,3 +31,14 @@ MacOS installation:
 
 `brew install chromedriver`
 
+== Configuration
+
+=== GitHub Webhook
+
+The Source Code Portal is lisenting on push messages from GitHub. This is
+
+
+= Notes
+
+* Push CommitEvents arrives as single objects.
+* Pull CommitEvents arrives as arrays.

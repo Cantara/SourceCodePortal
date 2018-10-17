@@ -35,15 +35,15 @@ public class PushCommitRevisionTest {
         return CacheInitializer.initialize(configuration());
     }
 
-    @Test(enabled = false)
+    @Test
     public void thatCommitRevisionCacheCanGroupData() throws IOException {
         CacheStore cacheStore = cacheStore();
         String dummyCommits1 = null;
         String dummyCommits2 = null;
-        try (InputStream json = ClassLoader.getSystemResourceAsStream("github/PushCommitsEvent.json")) {
+        try (InputStream json = ClassLoader.getSystemResourceAsStream("github/PullCommitsEvent.json")) {
             dummyCommits1 = CommonUtil.writeInputToOutputStream(json).toString();
         }
-        try (InputStream json = ClassLoader.getSystemResourceAsStream("github/PushCommitsEvent2.json")) {
+        try (InputStream json = ClassLoader.getSystemResourceAsStream("github/PullCommitsEvent2.json")) {
             dummyCommits2 = CommonUtil.writeInputToOutputStream(json).toString();
         }
 

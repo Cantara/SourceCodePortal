@@ -23,7 +23,7 @@ public class PushCreatedTagEventTest {
             JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             Jsonb jsonb = JsonbBuilder.create(config);
             CreatedTagEvent event = jsonb.fromJson(json, CreatedTagEvent.class);
-            assertEquals(event.ref, "v0.9.0");
+            assertEquals(event.ref, "v0.0.1");
         }
     }
 

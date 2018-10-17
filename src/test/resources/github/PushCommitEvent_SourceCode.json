@@ -1,9 +1,89 @@
 {
-  "ref": "v0.0.1",
-  "ref_type": "tag",
-  "master_branch": "master",
-  "description": "Source code portal Test data",
-  "pusher_type": "user",
+  "ref": "refs/heads/master",
+  "before": "68650185ee3bfd637f4d7e46ce50c7c658e64fc6",
+  "after": "502a67d53394ea3f9c6875b32cc7f367c7737839",
+  "created": false,
+  "deleted": false,
+  "forced": false,
+  "base_ref": null,
+  "compare": "https://github.com/Cantara/SourceCodePortal-testdata/compare/68650185ee3b...502a67d53394",
+  "commits": [
+    {
+      "id": "d14f3785323958613b3418017f49ddd00044060f",
+      "tree_id": "082a937a18325e9116df60e4c14b6217ddac3491",
+      "distinct": true,
+      "message": "Testing a commit to trigger a github commit push event",
+      "timestamp": "2018-10-17T11:20:22+02:00",
+      "url": "https://github.com/Cantara/SourceCodePortal-testdata/commit/d14f3785323958613b3418017f49ddd00044060f",
+      "author": {
+        "name": "oranheim",
+        "email": "oranheim@gmail.com",
+        "username": "oranheim"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "username": "oranheim"
+      },
+      "added": [
+        "module1/src/main/java/no/cantara/docsite/module1/Foo.java"
+      ],
+      "removed": [
+      ],
+      "modified": [
+      ]
+    },
+    {
+      "id": "502a67d53394ea3f9c6875b32cc7f367c7737839",
+      "tree_id": "88bae3d48f10683339754e40cccf4e492bdd9fea",
+      "distinct": true,
+      "message": "Merge remote-tracking branch 'origin/master'",
+      "timestamp": "2018-10-17T11:20:36+02:00",
+      "url": "https://github.com/Cantara/SourceCodePortal-testdata/commit/502a67d53394ea3f9c6875b32cc7f367c7737839",
+      "author": {
+        "name": "oranheim",
+        "email": "oranheim@gmail.com",
+        "username": "oranheim"
+      },
+      "committer": {
+        "name": "Ove Ranheim",
+        "email": "oranheim@gmail.com",
+        "username": "oranheim"
+      },
+      "added": [
+      ],
+      "removed": [
+      ],
+      "modified": [
+        "README.md"
+      ]
+    }
+  ],
+  "head_commit": {
+    "id": "502a67d53394ea3f9c6875b32cc7f367c7737839",
+    "tree_id": "88bae3d48f10683339754e40cccf4e492bdd9fea",
+    "distinct": true,
+    "message": "Merge remote-tracking branch 'origin/master'",
+    "timestamp": "2018-10-17T11:20:36+02:00",
+    "url": "https://github.com/Cantara/SourceCodePortal-testdata/commit/502a67d53394ea3f9c6875b32cc7f367c7737839",
+    "author": {
+      "name": "oranheim",
+      "email": "oranheim@gmail.com",
+      "username": "oranheim"
+    },
+    "committer": {
+      "name": "Ove Ranheim",
+      "email": "oranheim@gmail.com",
+      "username": "oranheim"
+    },
+    "added": [
+    ],
+    "removed": [
+    ],
+    "modified": [
+      "README.md"
+    ]
+  },
   "repository": {
     "id": 153410485,
     "node_id": "MDEwOlJlcG9zaXRvcnkxNTM0MTA0ODU=",
@@ -11,6 +91,8 @@
     "full_name": "Cantara/SourceCodePortal-testdata",
     "private": false,
     "owner": {
+      "name": "Cantara",
+      "email": "",
       "login": "Cantara",
       "id": 1122494,
       "node_id": "MDEyOk9yZ2FuaXphdGlvbjExMjI0OTQ=",
@@ -33,7 +115,7 @@
     "html_url": "https://github.com/Cantara/SourceCodePortal-testdata",
     "description": "Source code portal Test data",
     "fork": false,
-    "url": "https://api.github.com/repos/Cantara/SourceCodePortal-testdata",
+    "url": "https://github.com/Cantara/SourceCodePortal-testdata",
     "forks_url": "https://api.github.com/repos/Cantara/SourceCodePortal-testdata/forks",
     "keys_url": "https://api.github.com/repos/Cantara/SourceCodePortal-testdata/keys{/key_id}",
     "collaborators_url": "https://api.github.com/repos/Cantara/SourceCodePortal-testdata/collaborators{/collaborator}",
@@ -70,18 +152,18 @@
     "labels_url": "https://api.github.com/repos/Cantara/SourceCodePortal-testdata/labels{/name}",
     "releases_url": "https://api.github.com/repos/Cantara/SourceCodePortal-testdata/releases{/id}",
     "deployments_url": "https://api.github.com/repos/Cantara/SourceCodePortal-testdata/deployments",
-    "created_at": "2018-10-17T07:01:36Z",
-    "updated_at": "2018-10-17T09:20:43Z",
-    "pushed_at": "2018-10-17T10:23:05Z",
+    "created_at": 1539759696,
+    "updated_at": "2018-10-17T09:15:01Z",
+    "pushed_at": 1539768041,
     "git_url": "git://github.com/Cantara/SourceCodePortal-testdata.git",
     "ssh_url": "git@github.com:Cantara/SourceCodePortal-testdata.git",
     "clone_url": "https://github.com/Cantara/SourceCodePortal-testdata.git",
     "svn_url": "https://github.com/Cantara/SourceCodePortal-testdata",
     "homepage": null,
-    "size": 10,
+    "size": 7,
     "stargazers_count": 0,
     "watchers_count": 0,
-    "language": "Java",
+    "language": null,
     "has_issues": true,
     "has_projects": true,
     "has_downloads": true,
@@ -101,7 +183,14 @@
     "forks": 0,
     "open_issues": 0,
     "watchers": 0,
-    "default_branch": "master"
+    "default_branch": "master",
+    "stargazers": 0,
+    "master_branch": "master",
+    "organization": "Cantara"
+  },
+  "pusher": {
+    "name": "oranheim",
+    "email": "oranheim@gmail.com"
   },
   "organization": {
     "login": "Cantara",

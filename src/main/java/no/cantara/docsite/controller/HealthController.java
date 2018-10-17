@@ -60,8 +60,24 @@ public class HealthController implements HttpHandler {
 
         {
             AtomicInteger count = new AtomicInteger(0);
+            cacheStore.getCacheKeys().iterator().forEachRemaining(a -> count.incrementAndGet());
+            cacheBuilder.add("cache-keys", count.get());
+        }
+
+        {
+            cacheBuilder.add("groups", cacheStore.getGroups().size());
+        }
+
+        {
+            AtomicInteger count = new AtomicInteger(0);
+            cacheStore.getRepositoryGroups().iterator().forEachRemaining(a -> count.incrementAndGet());
+            cacheBuilder.add("repositories", count.get());
+        }
+
+        {
+            AtomicInteger count = new AtomicInteger(0);
             cacheStore.getProjects().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("projects", count.get());
+            cacheBuilder.add("maven-projects", count.get());
         }
 
         {
