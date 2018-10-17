@@ -42,8 +42,9 @@ class GithubWebhookController implements HttpHandler {
             return;
         }
 
-        if (exchange.getRequestURI().endsWith("webhook")) {
+        if (exchange.getRequestURI().endsWith("webhook") && "post".equalsIgnoreCase(exchange.getRequestMethod().toString())) {
             try {
+                // TODO check method and fast fail (GET causes 500)
                 String xHubSignature = exchange.getRequestHeaders().getFirst("X-Hub-Signature");
                 String xHubEvent = exchange.getRequestHeaders().getFirst("X-GitHub-Event");
 
@@ -128,6 +129,6 @@ class GithubWebhookController implements HttpHandler {
 
         exchange.setStatusCode(404);
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
-        exchange.getResponseSender().send("Unsupported resource path: " + exchange.getRequestPath());
+        exchange.getResponseSender().send(exchange.getRequestMethod() + " " + exchange.getRequestPath() + " NOT supported!");
     }
 }
