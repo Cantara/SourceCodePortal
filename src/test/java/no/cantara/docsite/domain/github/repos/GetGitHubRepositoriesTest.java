@@ -26,7 +26,9 @@ public class GetGitHubRepositoriesTest {
 
     static DynamicConfiguration configuration() {
         DynamicConfiguration configuration = new StoreBasedDynamicConfiguration.Builder()
+                .propertiesResource("application-defaults.properties")
                 .propertiesResource("security.properties")
+                .propertiesResource("application.properties")
                 .build();
         return configuration;
     }

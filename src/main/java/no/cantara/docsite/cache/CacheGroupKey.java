@@ -10,7 +10,7 @@ public class CacheGroupKey extends CacheKey {
 
     public final String groupId;
 
-    public CacheGroupKey(String organization, String repoName, String branch, String groupId) {
+    CacheGroupKey(String organization, String repoName, String branch, String groupId) {
         super(organization, repoName, branch);
         this.groupId = groupId;
     }
@@ -36,6 +36,10 @@ public class CacheGroupKey extends CacheKey {
     @Override
     public String toString() {
         return JsonUtil.asString(this);
+    }
+
+    public CacheKey asCacheKey() {
+        return CacheKey.of(organization, repoName, branch);
     }
 
     public static CacheGroupKey of(CacheKey cacheKey, String groupId) {

@@ -27,21 +27,23 @@ public class GitHubPageServiceTest {
         return CacheInitializer.initialize(configuration);
     }
 
-    @Test(enabled = false)
+    @Test //(enabled = false)
     public void testName() {
         ExecutorThreadPool executorService = new ExecutorThreadPool();
         executorService.start();
         DynamicConfiguration configuration = configuration();
         CacheStore cacheStore = cacheStore(configuration);
-
-        RepositoryConfigLoader service = new RepositoryConfigLoader(configuration, cacheStore);
-        service.load();
+        RepositoryConfigLoader loader = new RepositoryConfigLoader(configuration, cacheStore);
+        loader.load();
 
         cacheStore.getRepositoryGroups().forEach(rg -> {
-            executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey(), rg.getValue().readmeURL));
+            // TODO lookup CacheGroupKey for CacheKey and pass that to worker task
+            // TODO use CacheGroupKey for pages
+//            executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey(), rg.getValue().readmeURL));
+            LOG.trace("{} - {}", rg.getKey(), rg.getValue().readmeURL);
+//            cacheStore.getPages().get(cacheStore.getCacheKeys().get(rg.getKey().asCacheKey()));
         });
 
-//        cacheStore.getCacheManager().close();
         executorService.shutdown();
     }
 }

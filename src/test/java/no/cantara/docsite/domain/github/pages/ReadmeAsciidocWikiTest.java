@@ -8,14 +8,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
+import static org.testng.Assert.assertNotNull;
+
 public class ReadmeAsciidocWikiTest {
 
     @Test
     public void testAsciidocRenderer() throws IOException {
         try (InputStream is = ClassLoader.getSystemResourceAsStream("github/README.adoc")) {
             String adoc = new BufferedReader(new InputStreamReader(is)).lines().collect(Collectors.joining("\n"));
-            ReadmeAsciidocWiki doic = new ReadmeAsciidocWiki(adoc);
-//            System.out.println("adoc: " + doic);
+            ReadmeAsciidocWiki doc = new ReadmeAsciidocWiki(adoc);
+            assertNotNull(doc.html);
         }
     }
 }

@@ -19,6 +19,8 @@ import javax.json.bind.JsonbConfig;
 import javax.json.bind.config.PropertyNamingStrategy;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CacheStore {
 
@@ -28,19 +30,13 @@ public class CacheStore {
     final CacheManager cacheManager;
     final RepositoryConfig repositoryConfig;
 
-    Cache<CacheGroupKey, Repository> repositoryGroups;
-    Cache<CacheKey, MavenPOM> projects;
-    Cache<CacheKey, RepositoryContents> pages;
-    Cache<CacheShaKey, CommitRevision> commits;
-    Cache<CacheKey, CreatedTagEvent> releases;
-
     CacheStore(DynamicConfiguration configuration, CacheManager cacheManager) {
         this.configuration = configuration;
         this.cacheManager = cacheManager;
         this.repositoryConfig = load();
     }
 
-    private RepositoryConfig load() {
+    RepositoryConfig load() {
         try (InputStream json = ClassLoader.getSystemResourceAsStream("config/config.json")) {
             JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             Jsonb jsonb = JsonbBuilder.create(config);
@@ -51,12 +47,20 @@ public class CacheStore {
     }
 
     void initialize() {
+        if (cacheManager.getCache("cacheKeys") == null) {
+            LOG.info("Creating Grouped repositories cache");
+            MutableConfiguration<CacheKey, CacheGroupKey> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            cacheManager.createCache("cacheKeys", cacheConfig);
+        }
+
         if (cacheManager.getCache("repositoryGroup") == null) {
             LOG.info("Creating Grouped repositories cache");
             MutableConfiguration<CacheGroupKey, Repository> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            repositoryGroups = cacheManager.createCache("repositoryGroup", cacheConfig);
+            cacheManager.createCache("repositoryGroup", cacheConfig);
         }
 
         if (cacheManager.getCache("project") == null) {
@@ -64,7 +68,7 @@ public class CacheStore {
             MutableConfiguration<CacheKey, MavenPOM> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            projects = cacheManager.createCache("project", cacheConfig);
+            cacheManager.createCache("project", cacheConfig);
         }
 
         if (cacheManager.getCache("page") == null) {
@@ -72,7 +76,7 @@ public class CacheStore {
             MutableConfiguration<CacheKey, RepositoryContents> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            pages = cacheManager.createCache("page", cacheConfig);
+            cacheManager.createCache("page", cacheConfig);
         }
 
         if (cacheManager.getCache("commit") == null) {
@@ -80,7 +84,7 @@ public class CacheStore {
             MutableConfiguration<CacheShaKey, CommitRevision> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            commits = cacheManager.createCache("commit", cacheConfig);
+            cacheManager.createCache("commit", cacheConfig);
         }
 
         if (cacheManager.getCache("release") == null) {
@@ -88,7 +92,7 @@ public class CacheStore {
             MutableConfiguration<CacheKey, CreatedTagEvent> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            releases = cacheManager.createCache("release", cacheConfig);
+            cacheManager.createCache("release", cacheConfig);
         }
     }
 
@@ -100,23 +104,46 @@ public class CacheStore {
         return repositoryConfig;
     }
 
+    public List<String> getGroups() {
+        List<String> groups = new ArrayList<>();
+        repositoryConfig.gitHub.repos.forEach(r -> {
+            groups.add(r.groupId);
+        });
+        return groups;
+    }
+
+    public Cache<CacheKey, CacheGroupKey> getCacheKeys() {
+        return cacheManager.getCache("cacheKeys");
+    }
+
     public Cache<CacheGroupKey, Repository> getRepositoryGroups() {
-        return repositoryGroups;
+        return cacheManager.getCache("repositoryGroup");
+    }
+
+    public List<Repository> getRepositoryGroupsByGroupId(String groupId) {
+        List<Repository> repositories = new ArrayList<>();
+        getRepositoryGroups().forEach(a -> {
+            if (a.getKey().compareTo(groupId)) {
+                repositories.add(a.getValue());
+            }
+        });
+        return repositories;
     }
 
     public Cache<CacheKey, MavenPOM> getProjects() {
-        return projects;
+        return cacheManager.getCache("project");
     }
 
     public Cache<CacheKey, RepositoryContents> getPages() {
-        return pages;
+        return cacheManager.getCache("page");
     }
 
     public Cache<CacheShaKey, CommitRevision> getCommits() {
-        return commits;
+        return cacheManager.getCache("commit");
     }
 
     public Cache<CacheKey, CreatedTagEvent> getReleases() {
-        return releases;
+        return cacheManager.getCache("release");
     }
+
 }

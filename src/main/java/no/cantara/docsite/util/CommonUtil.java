@@ -1,8 +1,5 @@
 package no.cantara.docsite.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,9 +13,7 @@ import java.util.List;
  */
 public class CommonUtil {
 
-    private static final Logger log = LoggerFactory.getLogger(CommonUtil.class);
-    public static String fileSeparator = System.getProperty("file.separator");
-    private static ThreadLocal<OutputStream> outputLocal = new ThreadLocal<OutputStream>() {
+    private static ThreadLocal<OutputStream> outputLocal = new ThreadLocal<>() {
         private OutputStream output = null;
 
         @Override
@@ -41,25 +36,14 @@ public class CommonUtil {
         }
     };
 
-    public static void info(String msg, Object... values) {
-        log.info(msg, values);
+    public static ClassLoader tccl() {
+        final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+        if (contextClassLoader == null) {
+            return ClassLoader.getSystemClassLoader();
+        }
+        return contextClassLoader;
     }
 
-    public static void debug(String msg, Object... values) {
-        log.debug(msg, values);
-    }
-
-    public static void trace(String msg, Object... values) {
-        log.trace(msg, values);
-    }
-
-    public static void warn(String msg, Object... values) {
-        log.warn(msg, values);
-    }
-
-    public static void error(String msg, Object... values) {
-        log.error(msg, values);
-    }
 
     public static Path getCurrentPath() {
         return Paths.get("").toAbsolutePath();

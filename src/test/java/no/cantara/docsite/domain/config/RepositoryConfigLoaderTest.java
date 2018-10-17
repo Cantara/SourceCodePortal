@@ -9,6 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 public class RepositoryConfigLoaderTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RepositoryConfigLoaderTest.class);
@@ -25,20 +28,17 @@ public class RepositoryConfigLoaderTest {
         return CacheInitializer.initialize(configuration);
     }
 
-    @Test //(enabled = false)
+    @Test
     public void testRepositoryConfig() throws Exception {
         ExecutorThreadPool executorService = new ExecutorThreadPool();
         executorService.start();
         DynamicConfiguration configuration = configuration();
         CacheStore cacheStore = cacheStore(configuration);
 
-        LOG.trace("------------_> configuration: {} -- cacheStore: {}", configuration, cacheStore);
         RepositoryConfigLoader service = new RepositoryConfigLoader(configuration, cacheStore);
         service.load();
 
-        cacheStore.getPages().forEach(repo -> {
-//            LOG.trace("{} => {}", repo.getKey(), repo.getValue().getDecodedContent());
-            LOG.trace("CacheKey: {}", repo.getKey());
-        });
+        assertEquals(cacheStore.getRepositoryGroupsByGroupId("SourceCodePortal-t").size(), 1);
+        assertTrue(cacheStore.getRepositoryGroupsByGroupId("Whydah-t").size() > 15);
     }
 }

@@ -140,7 +140,7 @@ public class UndertowApplication {
     public void stop() {
         executorService.shutdown();
         server.stop();
-        if (!configuration.evaluateToBoolean("cache.shutdownOnClose")) cacheStore.getCacheManager().close();
+        cacheStore.getCacheManager().close();
         LOG.info("Leaving.. Bye!");
     }
 

@@ -8,7 +8,8 @@ import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import javax.json.bind.config.PropertyNamingStrategy;
-import java.io.IOException;
+
+import static org.testng.Assert.assertEquals;
 
 public class PullContentsTest {
 
@@ -34,11 +35,11 @@ public class PullContentsTest {
             "}";
 
     @Test
-    public void testJson() throws IOException {
+    public void thatReadmeIsDecoded() {
         JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
         Jsonb jsonb = JsonbBuilder.create(config);
         RepositoryContents contents = jsonb.fromJson(CONTENTS_JSON, RepositoryContents.class);
-//        LOG.trace("contents: {}\ncontents: {}", contents, contents.getDecodedContent());
+        assertEquals(contents.getDecodedContent(), "encoded content ...");
     }
 
 }

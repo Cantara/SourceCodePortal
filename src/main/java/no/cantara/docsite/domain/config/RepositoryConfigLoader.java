@@ -30,10 +30,8 @@ public class RepositoryConfigLoader {
         List<GitHubRepository> result = repos.getOrganizationRepos();
 
         for(RepositoryConfig.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
-            LOG.trace("repoConfig: {}", repoConfig);
             Pattern pattern = Pattern.compile(repoConfig.repo);
             for (GitHubRepository repo : result) {
-                LOG.trace("repo: {}", repo.name);
                 String repoName = repo.name;
                 Matcher matcher = pattern.matcher(repoName);
                 if (matcher.find()) {
@@ -42,9 +40,8 @@ public class RepositoryConfigLoader {
                     String readmeURL = String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", cacheKey.organization, cacheKey.repoName, cacheKey.branch);
                     String contentsURL = String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", cacheKey.organization, cacheKey.repoName, "%s", cacheKey.branch);
                     CacheGroupKey cacheGroupKey = CacheGroupKey.of(cacheKey, repoConfig.groupId);
+                    cacheStore.getCacheKeys().put(cacheKey, cacheGroupKey);
                     Repository repository = new Repository(cacheKey, repo.htmlUrl, rawRepoURL, readmeURL, contentsURL);
-                    LOG.trace("repository: {}", repository);
-                    LOG.trace("cacheStore.getRepositoryGroups(): {}", cacheStore.getRepositoryGroups());
                     cacheStore.getRepositoryGroups().put(cacheGroupKey, repository);
                 }
             }

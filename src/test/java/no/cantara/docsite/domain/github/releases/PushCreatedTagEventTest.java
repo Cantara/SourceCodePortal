@@ -11,6 +11,8 @@ import javax.json.bind.config.PropertyNamingStrategy;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static org.testng.Assert.assertEquals;
+
 public class PushCreatedTagEventTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(PushCreatedTagEventTest.class);
@@ -21,9 +23,8 @@ public class PushCreatedTagEventTest {
             JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             Jsonb jsonb = JsonbBuilder.create(config);
             CreatedTagEvent event = jsonb.fromJson(json, CreatedTagEvent.class);
-            LOG.trace("event: {}", event);
+            assertEquals(event.ref, "v0.9.0");
         }
-
     }
 
 }

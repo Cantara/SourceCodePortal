@@ -29,6 +29,7 @@ import org.commonmark.node.ThematicBreak;
 import org.commonmark.parser.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.io.BufferedReader;
@@ -39,6 +40,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.testng.Assert.assertNotNull;
+
 public class ReadmeMarkdownWikiTest {
 
     @Test
@@ -46,10 +49,11 @@ public class ReadmeMarkdownWikiTest {
         try (InputStream is = ClassLoader.getSystemResourceAsStream("github/README.md")) {
             String adoc = new BufferedReader(new InputStreamReader(is)).lines().collect(Collectors.joining("\n"));
             ReadmeMDWiki doc = new ReadmeMDWiki(adoc);
-            System.out.println("md: " + doc);
+            assertNotNull(doc.html);
         }
     }
 
+    @Ignore
     @Test
     public void testPrintNodes() {
         List<Extension> extensions = Arrays.asList(TablesExtension.create());

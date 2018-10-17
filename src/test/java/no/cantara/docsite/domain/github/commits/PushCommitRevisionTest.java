@@ -26,6 +26,7 @@ public class PushCommitRevisionTest {
         DynamicConfiguration configuration = new StoreBasedDynamicConfiguration.Builder()
                 .propertiesResource("application-defaults.properties")
                 .propertiesResource("security.properties")
+                .propertiesResource("application.properties")
                 .build();
         return configuration;
     }
@@ -79,7 +80,6 @@ public class PushCommitRevisionTest {
 
 
         LOG.trace("Cache-size: {} -- {} -- {}", count.get(), countDymmy1.get(), countDymmy2.get());
-//        cacheStore.getCacheManager().close();
 
     }
 }
