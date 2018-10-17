@@ -82,6 +82,8 @@ curl -I https://<hex-uid-from-running ngrok>.ngrok.io/ping
 ** Upon save, you will see _POST /github/webhook           200 OK _ in the ngrok window
 * Update github.webhook.securityAccessToken_ in security.properties with the secret value from the github webhook registration
 * Do a commit/push and observe something like this in the scp log
+** 21:21:53.054 [XNIO-1 task-1] TRACE n.c.docsite.controller.GithubWebhookController - Event -- xHubSignature: sha1=0fd0e22868e244102929297758fd35a -- xHubEvent: push -> Payload:
+** ...
 ** 21:20:21.373 [XNIO-1 task-1] DEBUG n.c.docsite.controller.GithubWebhookController - GitHub WebHook is authorized..
 ** 21:20:21.373 [XNIO-1 task-1] DEBUG n.c.docsite.controller.GithubWebhookController - Received Push Event!
 
