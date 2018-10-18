@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.cantara.docsite</groupId>
     <artifactId>source-code-portal</artifactId>
@@ -127,12 +128,6 @@
             <groupId>com.netflix.hystrix</groupId>
             <artifactId>hystrix-core</artifactId>
             <version>1.5.12</version>
-            <!--<exclusions>-->
-            <!--<exclusion>-->
-            <!--<groupId>commons-logging</groupId>-->
-            <!--<artifactId>commons-logging</artifactId>-->
-            <!--</exclusion>-->
-            <!--</exclusions>-->
         </dependency>
 
         <dependency>
@@ -174,36 +169,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!--
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.4.0-b180830.0359</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.activation</groupId>
-                    <artifactId>javax.activation-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>2.4.0-b180830.0438</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-core</artifactId>
-            <version>2.3.0.1</version>
-            <scope>compile</scope>
-        </dependency>
-        -->
-
 
         <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
         <dependency>
@@ -274,13 +239,6 @@
             <version>${slf4j.version}</version>
             <scope>compile</scope>
         </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>org.slf4j</groupId>-->
-        <!--<artifactId>jcl-over-slf4j</artifactId>-->
-        <!--<version>${slf4j.version}</version>-->
-        <!--<scope>compile</scope>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -371,6 +329,41 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <profiles>
+        <!-- https://github.com/warmuuh/libsass-maven-plugin
+            mvn com.github.warmuuh:libsass-maven-plugin:watch -Psass
+        -->
+        <profile>
+            <id>sass</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.warmuuh</groupId>
+                        <artifactId>libsass-maven-plugin</artifactId>
+                        <version>0.2.10-libsass_3.5.3</version>
+                        <executions>
+                            <execution>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <inputPath>${basedir}/src/main/sass/scss/</inputPath>
+                            <!--<includePath>${basedir}/src/main/sass/node_modules/bootstrap/scss/</includePath>-->
+                            <outputPath>${basedir}/target/classes/META-INF/views/css/</outputPath>
+                            <outputStyle>nested</outputStyle> <!-- nested|compressed  -->
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
@@ -560,17 +553,21 @@
                                 </filter>
                             </filters>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
                                         <Main-Class>no.cantara.docsite.Server</Main-Class>
                                     </manifestEntries>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.handlers</resource>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.schemas</resource>
                                 </transformer>
                             </transformers>

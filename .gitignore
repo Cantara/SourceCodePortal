@@ -44,3 +44,8 @@ dependency-reduced-pom.xml
 /*.png
 
 **/security.properties
+
+package-lock.json
+/.sass-cache
+
+**/node_modules/

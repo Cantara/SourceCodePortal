@@ -29,17 +29,14 @@ public class ThymeleafViewEngineProcessor {
         return file;
     }
 
-    static boolean supports(String view) {
-        return view.endsWith(".html");
-    }
-
     static String resolveView(HttpServerExchange exchange) {
-        return String.format("META-INF/views%s.html", exchange.getRequestURI());
+        return String.format("%s.html", exchange.getRequestURI());
     }
 
     public static boolean processView(HttpServerExchange exchange, Map<String, Object> templateVariables) throws RuntimeException {
         try {
             UndertowContext ctx = new UndertowContext(exchange);
+//            Context ctx = new Context();
             ctx.setLocale(Locale.ENGLISH);
             ctx.setVariables(templateVariables);
 
@@ -55,16 +52,20 @@ public class ThymeleafViewEngineProcessor {
 
             try (OutputStream out = CommonUtil.newOutputStream()) {
                 InputStream file = ClassLoader.getSystemResourceAsStream(viewId);
-                CommonUtil.writeInputToOutputStream(file, out);
+                if (file != null) {
+                    CommonUtil.writeInputToOutputStream(file, out);
 //                LOG.trace("Template:\n{}", out);
+                }
             }
 
             StringWriter writer = new StringWriter();
+            LOG.info("---> viewId: {} -- ctx: {}", viewId, ctx);
             DefaultTemplateEngine.INSTANCE.process(viewId, ctx, writer);
 
             exchange.setStatusCode(200);
             exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html");
             exchange.getResponseSender().send(writer.toString());
+//            exchange.getResponseSender().send(res);
 
             return true;
 

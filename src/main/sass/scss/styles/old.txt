@@ -1,0 +1,103 @@
+/* SPAN elements with the classes below are added by prettyprint. */
+.pln { color: #000 }  /* plain text */
+
+@media screen {
+  .str { color: #080 }  /* string content */
+  .kwd { color: #008 }  /* a keyword */
+  .com { color: #800 }  /* a comment */
+  .typ { color: #606 }  /* a type name */
+  .lit { color: #066 }  /* a literal value */
+  /* punctuation, lisp open bracket, lisp close bracket */
+  .pun, .opn, .clo { color: #660 }
+  .tag { color: #008 }  /* a markup tag name */
+  .atn { color: #606 }  /* a markup attribute name */
+  .atv { color: #080 }  /* a markup attribute value */
+  .dec, .var { color: #606 }  /* a declaration; a variable name */
+  .fun { color: red }  /* a function name */
+}
+
+/* Use higher contrast and text-weight for printable form. */
+@media print, projection {
+  .str { color: #060 }
+  .kwd { color: #006; font-weight: bold }
+  .com { color: #600; font-style: italic }
+  .typ { color: #404; font-weight: bold }
+  .lit { color: #044 }
+  .pun, .opn, .clo { color: #440 }
+  .tag { color: #006; font-weight: bold }
+  .atn { color: #404 }
+  .atv { color: #060 }
+}
+
+/* Put a border around prettyprinted code snippets. */
+pre, pre.prettyprint { padding: 2px; border: 0 !important; background-color: #F6F8FA }
+code {background-color: #F6F8FA}
+
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums { margin-top: 0; margin-bottom: 0 } /* IE indents via margin-left */
+li.L0,
+li.L1,
+li.L2,
+li.L3,
+li.L5,
+li.L6,
+li.L7,
+li.L8 { list-style-type: none }
+/* Alternate shading for lines */
+li.L1,
+li.L3,
+li.L5,
+li.L7,
+li.L9 { background: #eee }
+
+
+
+
+
+/* ----- fork on github banner ----- */
+#forkongithub a {
+  color:#fff;
+  text-decoration:none;
+  font-family:arial,sans-serif;
+  text-align:center;
+  font-weight:700;
+  font-size:1rem;
+  line-height:2rem;
+  position:relative;
+  transition:.5s;
+  padding:5px 40px;
+}
+
+#forkongithub a::before, #forkongithub a::after {
+  content:""; width:100%; display:block; position:absolute;
+  top:1px; left:0; height:1px; background:#fff;
+}
+#forkongithub a::after { bottom:1px; top:auto; }
+
+.bg-green     { background-color: #087515 !important; }
+
+@media screen and (min-width:800px) {
+  #forkongithub {
+    position:fixed;
+    display:block;
+    top:0;
+    right:0;
+    width:200px;
+    overflow:hidden;
+    height:200px;
+    z-index:9999;
+  }
+  #forkongithub a {
+    width:200px;
+    position:absolute;
+    top:60px;
+    right:-60px;
+    transform:rotate(45deg);
+    -webkit-transform:rotate(45deg);
+    -ms-transform:rotate(45deg);
+    -moz-transform:rotate(45deg);
+    -o-transform:rotate(45deg);
+    box-shadow:4px 4px 10px rgba(0,0,0,0.8);
+    box-sizing: content-box;
+  }
+}

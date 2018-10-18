@@ -32,11 +32,13 @@ public class HealthController implements HttpHandler {
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
     private final CacheStore cacheStore;
+    private final Future<HttpResponse<String>> futureGitHubRateLimit;
 
     public HealthController(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore) {
         this.configuration = configuration;
         this.executorService = executorService;
         this.cacheStore = cacheStore;
+        futureGitHubRateLimit = getGitHubRateLimit();
     }
 
     Future<HttpResponse<String>> getGitHubRateLimit() {
@@ -57,7 +59,6 @@ public class HealthController implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        Future<HttpResponse<String>> futureGitHubRateLimit = getGitHubRateLimit();
         JsonObjectBuilder builder = Json.createObjectBuilder();
 
         {

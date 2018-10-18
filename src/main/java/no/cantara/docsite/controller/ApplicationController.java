@@ -72,6 +72,16 @@ public class ApplicationController implements HttpHandler {
             return;
         }
 
+        if (requestPath.startsWith("/css")) {
+            new StaticContentController(configuration, "META-INF/views", "text/css").handleRequest(exchange);
+            return;
+        }
+
+        if (requestPath.startsWith("/js")) {
+            new StaticContentController(configuration, "META-INF/js", "application/javascript").handleRequest(exchange);
+            return;
+        }
+
         if (requestPath.startsWith("/docs")) {
             new DocsController(configuration, cacheStore).handleRequest(exchange);
             return;

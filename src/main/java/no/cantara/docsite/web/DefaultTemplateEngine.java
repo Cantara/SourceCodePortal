@@ -14,6 +14,8 @@ class DefaultTemplateEngine {
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver(classLoader);
         resolver.setTemplateMode(TemplateMode.HTML);
         resolver.setCacheable(false);
+        resolver.setPrefix("/META-INF/views");
+        resolver.setSuffix(".html");
         TemplateEngine templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(resolver);
         templateEngine.addDialect(new LayoutDialect());
