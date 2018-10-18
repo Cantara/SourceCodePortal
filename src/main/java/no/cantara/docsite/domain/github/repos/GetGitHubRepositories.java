@@ -26,14 +26,10 @@ public class GetGitHubRepositories {
     }
 
     public List<GitHubRepository> getOrganizationRepos() {
-        return getOrganizationRepos(RepositoryVisibility.PUBLIC);
-    }
-
-    public List<GitHubRepository> getOrganizationRepos(RepositoryVisibility visibility) {
         GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration, Optional.empty(),
                 String.format("https://api.github.com/orgs/%s/repos?type=%s&per_page=500",
                         organization,
-                        visibility.value()),
+                        RepositoryVisibility.valueOf(configuration.evaluateToString("github.repository.visibility=public"))),
                 HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = command.execute();
         if (response.statusCode() == HTTP_OK) {
