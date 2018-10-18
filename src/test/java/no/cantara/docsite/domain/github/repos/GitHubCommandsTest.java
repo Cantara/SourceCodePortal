@@ -19,9 +19,9 @@ import java.util.Optional;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class GetGitHubRepositoriesTest {
+public class GitHubCommandsTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GetGitHubRepositoriesTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GitHubCommandsTest.class);
 
     static DynamicConfiguration configuration() {
         DynamicConfiguration configuration = new StoreBasedDynamicConfiguration.Builder()
