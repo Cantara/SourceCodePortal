@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.github.pages;
 
+import no.cantara.docsite.domain.github.commits.PushCommitEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
