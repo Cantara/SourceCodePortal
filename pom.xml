@@ -342,33 +342,6 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>com.github.warmuuh</groupId>
-                        <artifactId>libsass-maven-plugin</artifactId>
-                        <version>0.2.10-libsass_3.5.3</version>
-                        <executions>
-                            <execution>
-                                <phase>generate-resources</phase>
-                                <goals>
-                                    <goal>compile</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <inputPath>${basedir}/src/main/sass/scss/</inputPath>
-                            <!--<includePath>${basedir}/src/main/sass/node_modules/bootstrap/scss/</includePath>-->
-                            <outputPath>${basedir}/target/classes/META-INF/views/css/</outputPath>
-                            <outputStyle>nested</outputStyle> <!-- nested|compressed  -->
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>npm</id>
-            <build>
-                <plugins>
-                    <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <version>1.6</version>
@@ -392,6 +365,26 @@
                             <nodeVersion>v10.12.0</nodeVersion>
                             <npmVersion>6.4.1</npmVersion>
                             <workingDirectory>src/main/sass</workingDirectory>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.github.warmuuh</groupId>
+                        <artifactId>libsass-maven-plugin</artifactId>
+                        <version>0.2.10-libsass_3.5.3</version>
+                        <executions>
+                            <execution>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <inputPath>${basedir}/src/main/sass/scss/</inputPath>
+                            <!--<includePath>${basedir}/src/main/sass/node_modules/bootstrap/scss/</includePath>-->
+                            <outputPath>${basedir}/target/classes/META-INF/views/css/</outputPath>
+                            <outputStyle>nested</outputStyle> <!-- nested|compressed  -->
                         </configuration>
                     </plugin>
                 </plugins>
