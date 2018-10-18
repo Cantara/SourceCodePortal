@@ -5,7 +5,7 @@ APP=source-code-portal.jar
 JAVA_PARAMS="-Dlogback.configurationFile=./config_override/logback-default.xml -Xms64m -Xmx512m"
 
 
-./update-service.sh --group-id=no.cantara.docsite --artifact-id=source-code-portal --version-pattern=0.1.6
+./update-service.sh --group-id=no.cantara.docsite --artifact-id=source-code-portal --version-pattern=SNAPSHOT
 
 date +" --- RUNNING $(basename $0) %Y-%m-%d_%H:%M:%S --- "
 set -x
