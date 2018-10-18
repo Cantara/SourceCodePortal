@@ -2,7 +2,7 @@ FROM statisticsnorway/alpine-jdk11-buildtools:latest as build
 MAINTAINER Totto <totto@totto.org>
 
 RUN ["jlink", "--strip-debug", "--no-header-files", "--no-man-pages", "--compress=2", "--module-path", "/opt/jdk/jmods", "--output", "/linked",\
- "--add-modules", "jdk.unsupported,java.base,java.management,java.net.http,java.xml,java.naming"]
+ "--add-modules", "jdk.unsupported,java.base,java.management,java.net.http,java.xml,java.naming,java.desktop"]
 
 FROM alpine:latest
 COPY --from=build /linked /opt/jdk/
