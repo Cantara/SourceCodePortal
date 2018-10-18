@@ -58,7 +58,7 @@ public class ApplicationController implements HttpHandler {
         }
 
         if (requestPath.startsWith("/health")) {
-            new HealthController(executorService, cacheStore).handleRequest(exchange);
+            new HealthController(configuration, executorService, cacheStore).handleRequest(exchange);
             return;
         }
 
@@ -73,7 +73,7 @@ public class ApplicationController implements HttpHandler {
         }
 
         if (requestPath.startsWith("/docs")) {
-            new DocsController().handleRequest(exchange);
+            new DocsController(configuration, cacheStore).handleRequest(exchange);
             return;
         }
 
