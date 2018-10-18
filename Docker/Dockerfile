@@ -1,5 +1,12 @@
-FROM statisticsnorway/alpine-jdk11-buildtools:latest
+FROM statisticsnorway/alpine-jdk11-buildtools:latest as build
 MAINTAINER Totto <totto@totto.org>
+
+RUN ["jlink", "--strip-debug", "--no-header-files", "--no-man-pages", "--compress=2", "--module-path", "/opt/jdk/jmods", "--output", "/linked",\
+ "--add-modules", "jdk.unsupported,java.base,java.management,java.net.http,java.xml,java.naming"]
+
+FROM alpine:latest
+COPY --from=build /linked /opt/jdk/
+ENV PATH=/opt/jdk/bin:$PATH
 
 RUN apk add --update \
     groff \
@@ -8,6 +15,7 @@ RUN apk add --update \
     py-pip \
     bash \
     unzip \
+    curl \
   && pip install awscli boto3 \
   && pip install --upgrade awscli \
   && rm -rf /var/cache/apk/*
