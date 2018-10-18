@@ -2,6 +2,7 @@ package no.cantara.docsite.domain.config;
 
 import no.cantara.docsite.cache.CacheInitializer;
 import no.cantara.docsite.cache.CacheStore;
+import no.cantara.docsite.domain.github.repos.GitHubRepository;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.util.JsonUtil;
 import no.ssb.config.DynamicConfiguration;
@@ -9,6 +10,8 @@ import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 import static org.testng.Assert.assertTrue;
 
@@ -26,6 +29,15 @@ public class RepositoryConfigLoaderTest {
 
     static CacheStore cacheStore(DynamicConfiguration configuration) {
         return CacheInitializer.initialize(configuration);
+    }
+
+
+    @Test(enabled = false)
+    public void findOrgGitHubRepos() {
+        DynamicConfiguration configuration = configuration();
+        RepositoryConfigLoader loader = new RepositoryConfigLoader(configuration, cacheStore(configuration));
+        List<GitHubRepository> result = loader.getOrganizationRepos("Cantara");
+        LOG.trace("repos: {}\nsize:{}", result, result.size());
     }
 
     @Test

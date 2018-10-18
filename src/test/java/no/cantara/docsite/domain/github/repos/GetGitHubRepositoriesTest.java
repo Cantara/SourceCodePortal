@@ -15,7 +15,6 @@ import org.testng.annotations.Test;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import java.net.http.HttpResponse;
-import java.util.List;
 import java.util.Optional;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -39,14 +38,6 @@ public class GetGitHubRepositoriesTest {
         DynamicConfiguration configuration = configuration();
         HttpResponse<String> response = new GetGitHubCommand<>("githubRateLimit", configuration, Optional.empty(), "https://api.github.com/rate_limit", HttpResponse.BodyHandlers.ofString()).execute();
         LOG.trace("GitHub API Limit: {}", JsonUtil.prettyPrint(response.body()));
-    }
-
-    @Test(enabled = false)
-    public void findOrgGitHubRepos() {
-        DynamicConfiguration configuration = configuration();
-        GetGitHubRepositories repos = new GetGitHubRepositories(configuration, "Cantara");
-        List<GitHubRepository> result = repos.getOrganizationRepos();
-        LOG.trace("repos: {}\nsize:{}", result, result.size());
     }
 
     @Test(enabled = false)
