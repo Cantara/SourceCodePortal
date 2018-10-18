@@ -17,7 +17,7 @@
                     <li th:text="${group.key}">Group</li>
                     <th:block th:each="repo : ${group.value}">
                         <ul>
-                            <li th:text="${(repo.cacheKey.repoName)+'/'+(repo.cacheKey.branch)}">Repo</li>
+                            <li><a th:href="${repo.repoURL}" th:text="${(repo.cacheKey.repoName)+'/'+(repo.cacheKey.branch)}">Repo</a></li>
                         </ul>
                     </th:block>
                 </ul>
