@@ -31,7 +31,9 @@ public class HealthResource {
     public String getVersion() {
         Properties mavenProperties = new Properties();
         String resourcePath = "/META-INF/maven/no.cantara.docsite/source-code-portal/pom.properties";
+        LOG.info("resourcePath: {}", resourcePath);
         URL mavenVersionResource = this.getClass().getResource(resourcePath);
+        LOG.info("mavenVersionResource: {}", mavenVersionResource);
         if (mavenVersionResource != null) {
             try {
                 mavenProperties.load(mavenVersionResource.openStream());
