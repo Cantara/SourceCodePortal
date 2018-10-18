@@ -4,12 +4,15 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
+import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 class DocsController implements HttpHandler {
@@ -31,6 +34,15 @@ class DocsController implements HttpHandler {
         }
 
         Map<String, Object> templateVariables = new HashMap<>();
+
+        templateVariables.put("groups", cacheStore.getGroups());
+        Map<String, List<Repository>> repositoryGroups = new LinkedHashMap<>();
+
+        for(String group : cacheStore.getGroups()) {
+            repositoryGroups.put(group, cacheStore.getRepositoryGroupsByGroupId(group));
+        }
+
+        templateVariables.put("repositoryGroups", repositoryGroups);
         if (ThymeleafViewEngineProcessor.processView(exchange, templateVariables)) {
             return;
         }

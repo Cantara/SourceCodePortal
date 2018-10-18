@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{/template.html}">
 
 <head>
@@ -11,6 +12,16 @@
 <section layout:fragment="custom-content">
     <main role="main" class="container">
         <article>
+            <th:block th:each="group : ${repositoryGroups}">
+                <ul>
+                    <li th:text="${group.key}">Group</li>
+                    <th:block th:each="repo : ${group.value}">
+                        <ul>
+                            <li th:text="${(repo.cacheKey.repoName)+'/'+(repo.cacheKey.branch)}">Repo</li>
+                        </ul>
+                    </th:block>
+                </ul>
+            </th:block>
         </article>
     </main>
 </section>
