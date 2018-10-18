@@ -97,7 +97,7 @@ The Source Code Portal is lisenting on push messages from GitHub.
 
 Install NPM and Get Bootstrap:
 
-`mvn clean install -DskipTests -Pnpm`
+`mvn compile -DskipTests -Pnpm`
 
 Build and generate CSS
 
