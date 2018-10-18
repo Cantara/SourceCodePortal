@@ -91,7 +91,17 @@ curl -I https://<hex-uid-from-running ngrok>.ngrok.io/ping
 
 === GitHub Webhook
 
-The Source Code Portal is lisenting on push messages from GitHub. This is
+The Source Code Portal is lisenting on push messages from GitHub.
+
+== Build
+
+Install NPM and Get Bootstrap:
+
+`mvn clean install -DskipTests -Pnpm`
+
+Build and generate CSS
+
+`mvn clean install -DskipTests`
 
 
 = Notes
