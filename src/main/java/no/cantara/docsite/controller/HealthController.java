@@ -152,6 +152,7 @@ public class HealthController implements HttpHandler {
 
         builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());
         builder.add("cache", cacheBuilder);
+
         if (futureGitHubRateLimit != null) {
             builder.add("github-rate-limit", getRateLimitJson(futureGitHubRateLimit));
         }
