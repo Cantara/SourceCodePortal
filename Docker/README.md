@@ -1,6 +1,6 @@
 Docker image for running SourceCode Dashboard Portal.
 =======================================
-This image will by default pack the latest ConfigService jar file (SNAPSHOT).
+This image will by default pack the latest SourceCodePortal jar file (SNAPSHOT).
 --build-arg DOCKER_TAG=SourceCodePortal-0.5.1 may be used to pack a specific release-version. The format matches the git tag format.
 The curl logic may be replaced by simple copies to get local jar-files into the image locally.
 
