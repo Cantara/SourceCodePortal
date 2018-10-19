@@ -40,7 +40,6 @@ public class ThymeleafViewEngineProcessor {
             ctx.setVariables(templateVariables);
 
             String viewId = resolveView(exchange);
-            LOG.info("viewId: {}", viewId);
 
             try (OutputStream out = CommonUtil.newOutputStream()) {
                 InputStream file = ClassLoader.getSystemResourceAsStream(viewId);
