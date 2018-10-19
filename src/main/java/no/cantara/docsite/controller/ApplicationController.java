@@ -3,6 +3,7 @@ package no.cantara.docsite.controller;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
+import io.undertow.util.StatusCodes;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.executor.ExecutorService;
 import no.ssb.config.DynamicConfiguration;
@@ -37,7 +38,9 @@ public class ApplicationController implements HttpHandler {
         cors.handleRequest(exchange);
 
         if (requestPath.trim().length() <= 1 && !cors.isOptionsRequest()) {
-            exchange.setStatusCode(404);
+            exchange.setStatusCode(StatusCodes.FOUND);
+            exchange.getResponseHeaders().put(Headers.LOCATION, "/docs/home");
+            exchange.endExchange();
             return;
         }
 
