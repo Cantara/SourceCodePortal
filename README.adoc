@@ -99,6 +99,31 @@ Install NPM and Get Bootstrap and generate CSS using Sass:
 
 `mvn mvn clean install -DskipTests`
 
+> The build does not require any native pre-installation of this toolset. They are automatically set up by the maven plugins.
+
+== Coding
+
+SCP depends on `npm`, `node` and `sass` for the website. When you're working with ThymeLeaf templating you need those tools installed locally. There are few steps that is useful to reduce the amount server restarts.
+
+`apt-get install nodejs` (requires 10.x+ and will also install npm for you)
+
+`apt-get install sass` (requires 3.5+)
+
+=== Setting up IntelliJ
+
+Follow this step if you want to page template changes to to be syncronized with `target/classes/META-VIEW/views` folder:
+
+* Keymap -> Main menu -> Build and assign a shortcut to Rebuild (on mac: cmd+shift+s)
+
+=== Sass watch
+
+To detect changes to sass files and have the compiler produce new `target/classes/META-INF/views/css/app.css` file, either do:
+
+* Use Sass Plugin (which doesn't require any native installation): `mvn com.github.warmuuh:libsass-maven-plugin:watch`. This is much slower than using the native sass command..
+
+* Use  native Sass command: `sass --watch src/main/sass/scss:target/classes/META-INF/views/css`
+
+> Now you should be able to tailor your pages on the fly and only restart the server when you do code changes that requires recompilation of the code base.
 
 = Notes
 
