@@ -3,6 +3,7 @@ package no.cantara.docsite.commands;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import no.cantara.docsite.client.HttpRequests;
 import no.cantara.docsite.executor.WorkerTask;
+import no.cantara.docsite.health.HealthResource;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,9 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
     @Override
     protected HttpResponse<R> run() throws Exception {
         HttpResponse<R> response = get(url);
+        if (HealthResource.instance().getGitHubLastSeen() == 0) {
+            HealthResource.instance().markGitHubLastSeen();
+        }
         return response;
     }
 

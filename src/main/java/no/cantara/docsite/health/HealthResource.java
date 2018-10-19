@@ -9,6 +9,7 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class HealthResource {
 
@@ -21,6 +22,16 @@ public class HealthResource {
 
     public static HealthResource instance() {
         return HealthHolder.instance;
+    }
+
+    private final AtomicLong gitHubLastSeen = new AtomicLong(0);
+
+    public void markGitHubLastSeen() {
+        gitHubLastSeen.set(System.currentTimeMillis());
+    }
+
+    public long getGitHubLastSeen() {
+        return gitHubLastSeen.get();
     }
 
     public String getRunningSince() {

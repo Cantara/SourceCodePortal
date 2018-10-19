@@ -12,21 +12,20 @@ public class ExecutorThreadPool implements ExecutorService {
 
     private static Logger LOG = LoggerFactory.getLogger(ExecutorService.class);
     private final BlockingQueue internalEventsQueue;
-    private ThreadPoolExecutor executorThreadPool;
+    private final ThreadPoolExecutor executorThreadPool;
 
     ExecutorThreadPool() {
         this.internalEventsQueue = new ArrayBlockingQueue(BLOCKING_QUEUE_SIZE);
-    }
-
-    @Override
-    public void start() {
-        executorThreadPool = new ThreadPoolExecutor(
+        this.executorThreadPool = new ThreadPoolExecutor(
                 8, // core size
                 50, // max size
                 10 * 60, // idle timeout
                 TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE)); // queue with a size;
+    }
 
+    @Override
+    public void start() {
         try {
 //            executorThreadPool.setRejectedExecutionHandler(new RejectedExecutionHandler() {
 //                @Override

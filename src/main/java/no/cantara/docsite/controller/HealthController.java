@@ -32,13 +32,11 @@ public class HealthController implements HttpHandler {
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
     private final CacheStore cacheStore;
-    private final Future<HttpResponse<String>> futureGitHubRateLimit;
 
     public HealthController(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore) {
         this.configuration = configuration;
         this.executorService = executorService;
         this.cacheStore = cacheStore;
-        futureGitHubRateLimit = getGitHubRateLimit();
     }
 
     Future<HttpResponse<String>> getGitHubRateLimit() {
@@ -57,18 +55,39 @@ public class HealthController implements HttpHandler {
         }
     }
 
+    boolean isGitHubHealtEndpoint(HttpServerExchange exchange) {
+        return exchange.getRequestPath().startsWith("/health/github");
+    }
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
+        Future<HttpResponse<String>> futureGitHubRateLimit = null;
+        if (isGitHubHealtEndpoint(exchange)) {
+            futureGitHubRateLimit = getGitHubRateLimit();
+        }
+
+        boolean healthyExecutorService = executorService.getThreadPool().getActiveCount() > 0;
+        boolean healthyCacheStore = !cacheStore.getCacheManager().isClosed();
+        String status = (healthyExecutorService && healthyCacheStore ? "OK" : "FAILURE");
+
         JsonObjectBuilder builder = Json.createObjectBuilder();
 
         {
-            builder.add("status", "OK"); // TODO this should be FAILED on rate limit exceeded, threadpool.active == 0, cache.isClosed
+            builder.add("status", status);
             builder.add("version", HealthResource.instance().getVersion());
             builder.add("now", Instant.now().toString());
             builder.add("since", HealthResource.instance().getRunningSince());
-            builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());
         }
 
+        JsonObjectBuilder serviceStatusBuilder = Json.createObjectBuilder();
+
+        {
+            serviceStatusBuilder.add("executor-service", healthyExecutorService ? "up" : "terminated");
+            serviceStatusBuilder.add("cache-store", healthyExecutorService ? "up" : "down");
+            serviceStatusBuilder.add("github-last-seen", Instant.ofEpochMilli(HealthResource.instance().getGitHubLastSeen()).toString());
+        }
+
+        builder.add("service-status", serviceStatusBuilder);
 
         JsonObjectBuilder executorServiceBuilder = Json.createObjectBuilder();
 
@@ -91,6 +110,7 @@ public class HealthController implements HttpHandler {
         JsonObjectBuilder cacheBuilder = Json.createObjectBuilder();
 
         {
+            builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());
             AtomicInteger count = new AtomicInteger(0);
             cacheStore.getCacheKeys().iterator().forEachRemaining(a -> count.incrementAndGet());
             cacheBuilder.add("cache-keys", count.get());
@@ -132,7 +152,9 @@ public class HealthController implements HttpHandler {
 
         builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());
         builder.add("cache", cacheBuilder);
-        builder.add("github-rate-limit", getRateLimitJson(futureGitHubRateLimit));
+        if (futureGitHubRateLimit != null) {
+            builder.add("github-rate-limit", getRateLimitJson(futureGitHubRateLimit));
+        }
 
         exchange.setStatusCode(HTTP_OK);
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");

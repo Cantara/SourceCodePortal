@@ -11,6 +11,7 @@ import no.cantara.docsite.domain.github.commits.FetchCommitRevisionTask;
 import no.cantara.docsite.domain.github.commits.PushCommitEvent;
 import no.cantara.docsite.domain.github.contents.FetchContentsTask;
 import no.cantara.docsite.executor.ExecutorService;
+import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.util.JsonUtil;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -81,6 +82,7 @@ class GithubWebhookController implements HttpHandler {
         }
 
         if (exchange.getRequestURI().endsWith("webhook") && "post".equalsIgnoreCase(exchange.getRequestMethod().toString())) {
+            HealthResource.instance().markGitHubLastSeen();
             try {
                 // TODO check method and fast fail (GET causes 500)
                 String xHubSignature = exchange.getRequestHeaders().getFirst("X-Hub-Signature");
