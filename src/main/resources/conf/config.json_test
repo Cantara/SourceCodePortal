@@ -1,0 +1,13 @@
+{
+  "title": "Cantara Source Code Portal",
+  "github": {
+    "organization": "Cantara",
+    "repos": [
+      {
+        "groupId": "SourceCodePortal",
+        "repo": "SourceCodePortal",
+        "branch": "master"
+      }
+    ]
+  }
+}
