@@ -36,36 +36,25 @@ public class ThymeleafViewEngineProcessor {
     public static boolean processView(HttpServerExchange exchange, Map<String, Object> templateVariables) throws RuntimeException {
         try {
             UndertowContext ctx = new UndertowContext(exchange);
-//            Context ctx = new Context();
             ctx.setLocale(Locale.ENGLISH);
             ctx.setVariables(templateVariables);
 
-            LOG.trace("Models Size: {}", ctx.getVariableNames().size());
-            ctx.getVariableNames().forEach(k -> {
-                LOG.trace("Model: {} = {}", k, ctx.getVariable(k));
-            });
             String viewId = resolveView(exchange);
-
             LOG.info("viewId: {}", viewId);
-
-//            LOG.trace("Process MVC Template: {} => {} ", viewId, (viewId != null && !"".equals(viewId) ? resolveTemplate(viewId).getFile() : null));
 
             try (OutputStream out = CommonUtil.newOutputStream()) {
                 InputStream file = ClassLoader.getSystemResourceAsStream(viewId);
                 if (file != null) {
                     CommonUtil.writeInputToOutputStream(file, out);
-//                LOG.trace("Template:\n{}", out);
                 }
             }
 
             StringWriter writer = new StringWriter();
-            LOG.info("---> viewId: {} -- ctx: {}", viewId, ctx);
             DefaultTemplateEngine.INSTANCE.process(viewId, ctx, writer);
 
             exchange.setStatusCode(200);
             exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html");
             exchange.getResponseSender().send(writer.toString());
-//            exchange.getResponseSender().send(res);
 
             return true;
 
