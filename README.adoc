@@ -23,6 +23,7 @@ d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5
 $ sudo cp config.json /var/lib/docker/aufs/mnt/**d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5**/home/sourcecodeportal/config_override/conf/config.json
 # Test the result
 $ wget http://localhost/health
+$ wget http://localhost/health/github
 $ wget http://localhost/docs
 -----------------
 
