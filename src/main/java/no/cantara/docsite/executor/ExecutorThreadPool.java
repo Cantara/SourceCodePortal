@@ -74,7 +74,7 @@ public class ExecutorThreadPool implements ExecutorService {
 
     @Override
     public void waitForWorkerCompletion() throws InterruptedException {
-        LOG.trace("thradCOunt: {}", countActiveThreads());
+        LOG.trace("thradCount: {}", countActiveThreads());
         while (countActiveThreads() > 1) {
             try {
                 TimeUnit.MILLISECONDS.sleep(SLEEP_INTERVAL);

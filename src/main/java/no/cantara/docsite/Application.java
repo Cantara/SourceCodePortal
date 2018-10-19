@@ -135,7 +135,7 @@ public class Application {
 
     public void start() {
         server.start();
-        LOG.info("Started Linked Data Store server. PID {}", ProcessHandle.current().pid());
+        LOG.info("Started SourceCodePortal server. PID {}", ProcessHandle.current().pid());
         LOG.info("Listening on {}:{}", host, port);
     }
 

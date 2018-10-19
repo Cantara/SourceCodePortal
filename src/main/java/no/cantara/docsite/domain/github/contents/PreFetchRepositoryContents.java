@@ -30,6 +30,7 @@ public class PreFetchRepositoryContents {
             executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey(), rg.getValue().readmeURL));
             executorService.queue(new FetchCommitRevisionsTask(configuration, executorService, cacheStore, rg.getKey()));
         });
+        executorService.queue(new PreFetchDoneTask(configuration, executorService));
     }
 
 }

@@ -82,9 +82,7 @@ class GithubWebhookController implements HttpHandler {
         }
 
         if (exchange.getRequestURI().endsWith("webhook") && "post".equalsIgnoreCase(exchange.getRequestMethod().toString())) {
-            HealthResource.instance().markGitHubLastSeen();
             try {
-                // TODO check method and fast fail (GET causes 500)
                 String xHubSignature = exchange.getRequestHeaders().getFirst("X-Hub-Signature");
                 String xHubEvent = exchange.getRequestHeaders().getFirst("X-GitHub-Event");
 
@@ -100,6 +98,7 @@ class GithubWebhookController implements HttpHandler {
                     return;
                 }
 
+                HealthResource.instance().markGitHubLastSeen();
                 LOG.debug("GitHub WebHook is authorized..");
 
                 // ------------------------------------------------------------------------------------------------------
