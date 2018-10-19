@@ -13,8 +13,8 @@ public class CacheInitializer {
     private static final Logger LOG = LoggerFactory.getLogger(CacheInitializer.class);
 
     public static CacheStore initialize(DynamicConfiguration configuration) {
-        LOG.info("Initializing JCache..");
         CachingProvider cachingProvider = Caching.getCachingProvider();
+        LOG.info("Initializing JCache Provider: {}", cachingProvider.getDefaultURI());
         CacheManager cacheManager = cachingProvider.getCacheManager();
         CacheStore cacheStore = new CacheStore(configuration, cacheManager);
         cacheStore.initialize();

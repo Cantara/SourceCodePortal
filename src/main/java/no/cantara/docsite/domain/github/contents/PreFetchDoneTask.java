@@ -23,6 +23,6 @@ public class PreFetchDoneTask extends WorkerTask {
             } catch (InterruptedException e) {
             }
         }
-        LOG.info("PreFetch is completed!");
+        LOG.info("Pre-fetch completed!");
     }
 }
