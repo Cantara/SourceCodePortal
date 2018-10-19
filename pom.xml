@@ -28,14 +28,15 @@
             <layout>default</layout>
         </repository>
     </repositories>
+
     <distributionManagement>
         <repository>
-            <id>cantara-releases</id>
+            <id>cantara</id>
             <name>Cantara Release Repository</name>
             <url>https://mvnrepo.cantara.no/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>cantara-snapshots</id>
+            <id>cantara</id>
             <name>Cantara Snapshot Repository</name>
             <url>https://mvnrepo.cantara.no/content/repositories/snapshots/</url>
         </snapshotRepository>
