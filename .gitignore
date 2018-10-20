@@ -50,3 +50,6 @@ package-lock.json
 
 **/node_modules/
 **/node/
+src/main/sass/css/
+src/main/sass/js/
+src/main/sass/dist/
