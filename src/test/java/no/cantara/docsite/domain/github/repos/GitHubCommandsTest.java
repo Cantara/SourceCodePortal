@@ -49,7 +49,7 @@ public class GitHubCommandsTest {
         if (response.statusCode() == HTTP_OK) {
             JsonbConfig config = new JsonbConfig();
             RepositoryContents repositoryContents = JsonbBuilder.create(config).fromJson(response.body(), RepositoryContents.class);
-            MavenPOM mavenPom = new MavenPOMParser().parse(repositoryContents.getDecodedContent());
+            MavenPOM mavenPom = new MavenPOMParser().parse(repositoryContents.content);
             LOG.trace("pom: {}\n{}", repositoryContents, mavenPom);
         }
     }

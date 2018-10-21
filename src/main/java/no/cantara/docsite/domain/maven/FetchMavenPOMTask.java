@@ -37,7 +37,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
             JsonbConfig config = new JsonbConfig();
             RepositoryContents mavenPOMContents = JsonbBuilder.create(config).fromJson(response.body(), RepositoryContents.class);
             MavenPOMParser parser = new MavenPOMParser();
-            MavenPOM mavenPOM = parser.parse(mavenPOMContents.getDecodedContent());
+            MavenPOM mavenPOM = parser.parse(mavenPOMContents.content);
             cacheStore.getProjects().put(cacheKey, mavenPOM);
         } else {
             LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());

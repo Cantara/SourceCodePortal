@@ -35,11 +35,11 @@ public class PullContentsTest {
             "}";
 
     @Test
-    public void thatReadmeIsDecoded() {
+    public void thatReadmeIsDecodedWithAdapter() {
         JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
         Jsonb jsonb = JsonbBuilder.create(config);
         RepositoryContents contents = jsonb.fromJson(CONTENTS_JSON, RepositoryContents.class);
-        assertEquals(contents.getDecodedContent(), "encoded content ...");
+        assertEquals(contents.content, "encoded content ...");
     }
 
 }
