@@ -39,7 +39,7 @@ public class ApplicationController implements HttpHandler {
 
         if (requestPath.trim().length() <= 1 && !cors.isOptionsRequest()) {
             exchange.setStatusCode(StatusCodes.FOUND);
-            exchange.getResponseHeaders().put(Headers.LOCATION, "/docs/home");
+            exchange.getResponseHeaders().put(Headers.LOCATION, "/index");
             exchange.endExchange();
             return;
         }
@@ -85,8 +85,8 @@ public class ApplicationController implements HttpHandler {
             return;
         }
 
-        if (requestPath.startsWith("/docs")) {
-            new DocsController(configuration, cacheStore).handleRequest(exchange);
+        if (WebController.isValidContext(exchange)) {
+            new WebController(configuration, cacheStore).handleRequest(exchange);
             return;
         }
 

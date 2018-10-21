@@ -14,7 +14,6 @@ public class UndertowContext extends AbstractContext implements IUndertowContext
 
     @Override
     public HttpServerExchange getExchange() {
-        System.out.println("----------------------------> " + exchange.getRequestPath());
         return exchange;
     }
 
