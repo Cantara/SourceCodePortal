@@ -26,7 +26,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title" th:text="${repo.displayName}">Card title</h5>
                         <p class="card-text" th:text="${repo.description}">Some quick example text to build on the card title</p>
-
+                        <a th:href="${('/card/')+repo.groupId}" class="card-link">Show</a>
                         <p>
                         <table class="table">
                             <thead>
@@ -47,7 +47,7 @@
                             </tbody>
                         </table>
                         </p>
-                        <a th:href="${('/card/')+repo.groupId}" class="card-link">Show</a>
+
                     </div>
                 </div>
             </div>
