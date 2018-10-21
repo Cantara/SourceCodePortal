@@ -4,40 +4,41 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.config.Repository;
-import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
+import no.cantara.docsite.web.ResourceContext;
+import no.cantara.docsite.web.WebContext;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 class WebController implements HttpHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebController.class);
     static final WebContext[] VALID_CONTEXTS = new WebContext[]{
-            WebContext.of("/index", ""),
-            WebContext.of("/home", "docs")
+            WebContext.of("/index", "", new RootHandler()),
+            WebContext.of("/home", "docs", new ContentsHandler())
     };
 
     final DynamicConfiguration configuration;
     final CacheStore cacheStore;
+    final ResourceContext resourceContext;
 
-    public WebController(DynamicConfiguration configuration, CacheStore cacheStore) {
+    WebController(DynamicConfiguration configuration, CacheStore cacheStore, ResourceContext resourceContext) {
         this.configuration = configuration;
         this.cacheStore = cacheStore;
+        this.resourceContext = resourceContext;
     }
 
     static boolean isValidContext(HttpServerExchange exchange) {
-        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> exchange.getRequestPath().startsWith(f.uri)).count() > 0;
+        ResourceContext context = new ResourceContext(exchange.getRequestPath());
+        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> context.getLast().get().match(f.uri)).count() > 0;
     }
 
-    static WebContext getWebContext(HttpServerExchange exchange) {
-        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> exchange.getRequestPath().startsWith(f.uri)).findFirst().get();
+    static Optional<WebContext> getWebContext(HttpServerExchange exchange) {
+        ResourceContext context = new ResourceContext(exchange.getRequestPath());
+        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> context.getLast().get().match(f.uri)).findFirst();
     }
 
     @Override
@@ -47,18 +48,13 @@ class WebController implements HttpHandler {
             return;
         }
 
-        Map<String, Object> templateVariables = new HashMap<>();
+//        ResourceContext resourceContext = new ResourceContext(exchange);
 
-        templateVariables.put("groups", cacheStore.getGroups());
-        Map<String, List<Repository>> repositoryGroups = new LinkedHashMap<>();
-
-        for (String group : cacheStore.getGroups()) {
-            repositoryGroups.put(group, cacheStore.getRepositoryGroupsByGroupId(group));
-        }
-
-        templateVariables.put("repositoryGroups", repositoryGroups);
-        if (ThymeleafViewEngineProcessor.processView(exchange, getWebContext(exchange).subContext, templateVariables)) {
-            return;
+        if (isValidContext(exchange)) {
+            WebContext webContext = getWebContext(exchange).get();
+            if (webContext.webHandler.handleRequest(configuration, cacheStore, resourceContext, webContext, exchange)){
+                return;
+            }
         }
 
         exchange.setStatusCode(404);
@@ -66,17 +62,4 @@ class WebController implements HttpHandler {
         exchange.getResponseSender().send("Not found: " + exchange.getRequestPath());
     }
 
-    static class WebContext {
-        public final String uri;        // /index /home
-        public final String subContext; // ""      docs
-
-        WebContext(String uri, String subContext) {
-            this.uri = uri;
-            this.subContext = subContext;
-        }
-
-        static WebContext of(String uri, String root) {
-            return new WebContext(uri, root);
-        }
-    }
 }

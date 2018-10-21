@@ -8,6 +8,7 @@ import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.web.ResourceContext;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +33,13 @@ public class HealthController implements HttpHandler {
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
     private final CacheStore cacheStore;
+    private ResourceContext resourceContext;
 
-    public HealthController(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore) {
+    public HealthController(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore, ResourceContext resourceContext) {
         this.configuration = configuration;
         this.executorService = executorService;
         this.cacheStore = cacheStore;
+        this.resourceContext = resourceContext;
     }
 
     Future<HttpResponse<String>> getGitHubRateLimit() {
@@ -56,7 +59,7 @@ public class HealthController implements HttpHandler {
     }
 
     boolean isGitHubHealtEndpoint(HttpServerExchange exchange) {
-        return exchange.getRequestPath().startsWith("/health/github");
+        return resourceContext.getLast().get().exactMatch("/health/github");
     }
 
     @Override

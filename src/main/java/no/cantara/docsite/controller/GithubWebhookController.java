@@ -13,6 +13,7 @@ import no.cantara.docsite.domain.github.contents.FetchContentsTask;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.web.ResourceContext;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +38,13 @@ class GithubWebhookController implements HttpHandler {
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
     private final CacheStore cacheStore;
+    private ResourceContext resourceContext;
 
-    GithubWebhookController(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore) {
+    GithubWebhookController(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore, ResourceContext resourceContext) {
         this.configuration = configuration;
         this.executorService = executorService;
         this.cacheStore = cacheStore;
+        this.resourceContext = resourceContext;
     }
 
     static boolean verifySignature(String payload, String signature, String secret) {
@@ -81,7 +84,7 @@ class GithubWebhookController implements HttpHandler {
             return;
         }
 
-        if (exchange.getRequestURI().endsWith("webhook") && "post".equalsIgnoreCase(exchange.getRequestMethod().toString())) {
+        if (resourceContext.getLast().get().id.equals("webhook") && "post".equalsIgnoreCase(exchange.getRequestMethod().toString())) {
             try {
                 String xHubSignature = exchange.getRequestHeaders().getFirst("X-Hub-Signature");
                 String xHubEvent = exchange.getRequestHeaders().getFirst("X-GitHub-Event");

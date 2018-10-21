@@ -6,6 +6,7 @@ import io.undertow.util.Headers;
 import io.undertow.util.StatusCodes;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.executor.ExecutorService;
+import no.cantara.docsite.web.ResourceContext;
 import no.ssb.config.DynamicConfiguration;
 
 public class ApplicationController implements HttpHandler {
@@ -31,6 +32,7 @@ public class ApplicationController implements HttpHandler {
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         String requestPath = exchange.getRequestPath();
+        ResourceContext resourceContext = new ResourceContext(requestPath);
 
         // NOTE: CORSController cannot be shared across requests or threads
         CORSController cors = new CORSController(corsAllowOrigin, corsAllowHeaders, corsAllowOriginTest, undertowPort);
@@ -55,44 +57,44 @@ public class ApplicationController implements HttpHandler {
 
         cors.handleValidRequest();
 
-        if (requestPath.startsWith("/ping")) {
+        if (resourceContext.getLast().get().exactMatch("/ping")) {
             new PingController().handleRequest(exchange);
             return;
         }
 
-        if (requestPath.startsWith("/health")) {
-            new HealthController(configuration, executorService, cacheStore).handleRequest(exchange);
+        if (resourceContext.getLast().get().subMatch("/health")) {
+            new HealthController(configuration, executorService, cacheStore, resourceContext).handleRequest(exchange);
             return;
         }
 
-        if (requestPath.startsWith("/echo")) {
+        if (resourceContext.getLast().get().exactMatch("/echo")) {
             new EchoController().handleRequest(exchange);
             return;
         }
 
-        if (requestPath.startsWith("/github")) {
-            new GithubWebhookController(configuration, executorService, cacheStore).handleRequest(exchange);
+        if (resourceContext.getLast().get().subMatch("/github")) {
+            new GithubWebhookController(configuration, executorService, cacheStore, resourceContext).handleRequest(exchange);
             return;
         }
 
-        if (requestPath.startsWith("/css")) {
+        if (resourceContext.getLast().get().subMatch("/css")) {
             new StaticContentController(configuration, "META-INF/views", "text/css").handleRequest(exchange);
             return;
         }
 
-        if (requestPath.startsWith("/js")) {
+        if (resourceContext.getLast().get().subMatch("/js")) {
             new StaticContentController(configuration, "META-INF/js", "application/javascript").handleRequest(exchange);
             return;
         }
 
         if (WebController.isValidContext(exchange)) {
-            new WebController(configuration, cacheStore).handleRequest(exchange);
+            new WebController(configuration, cacheStore, resourceContext).handleRequest(exchange);
             return;
         }
 
         exchange.setStatusCode(400);
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
         String namespace = requestPath.substring(1, Math.max(requestPath.substring(1).indexOf("/") + 1, requestPath.length()));
-        exchange.getResponseSender().send("Unsupported namespace: \"" + namespace + "\"");
+        exchange.getResponseSender().send("Bad request: \"" + namespace + "\"");
     }
 }

@@ -103,7 +103,7 @@ public class EchoController implements HttpHandler {
         else if ("POST".equalsIgnoreCase(exchange.getRequestMethod().toString()))
             exchange.setStatusCode(HTTP_NO_CONTENT);
         else
-            throw new UnsupportedOperationException("Method " + exchange.getRequestMethod() + "not supported!");
+            throw new UnsupportedOperationException("Method " + exchange.getRequestMethod() + " not supported!");
 
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
         exchange.getResponseSender().send(JsonUtil.prettyPrint(builder.build()));
