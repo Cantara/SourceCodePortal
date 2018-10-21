@@ -26,14 +26,14 @@
       },
       {
         "groupId": "IOT",
-        "display-name": "Whydah IOT projects",
+        "display-name": "Cantara IOT projects",
         "description": "Bulding blocks to create IOT platforms",
         "repo": "IoT*",
         "branch": "master"
       },
       {
         "groupId": "ValueReporter",
-        "display-name": "ValueReporter Toolchain",
+        "display-name": "Cantara ValueReporter Toolchain",
         "description": "Toolchain to measure and detect valuable and dead parts of solutions",
         "repo": "Value*",
         "branch": "master"
@@ -47,7 +47,7 @@
       },
       {
         "groupId": "Flow",
-        "display-name": "Flow",
+        "display-name": "Cantara Flow",
         "description": "Graphics tracing and visualization of long-running processes",
         "repo": "Flow*",
         "branch": "master"
@@ -61,7 +61,7 @@
       },
       {
         "groupId": "Cantara-All",
-        "display-name": "Cantara all",
+        "display-name": "Cantara GitHub",
         "description": "All Cantara projects on GitHub",
         "repo": "[^\\s]*",
         "branch": "master"
