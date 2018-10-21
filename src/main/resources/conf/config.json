@@ -19,9 +19,37 @@
       },
       {
         "groupId": "ConfigService",
-        "display-name": "ConfigurationAervice",
+        "display-name": "ConfigurationService",
         "description": "Provision configuration to agents",
-        "repo": "[^\\s]*/\\\b(?:ConfigService|JAU|Java-Auto-Update)\\\b*",
+        "repo": "[^\\s]*/\\b(?:ConfigService|JAU|Java-Auto-Update)\\b*",
+        "branch": "master"
+      },
+      {
+        "groupId": "IOT",
+        "display-name": "Whydah IOT projects",
+        "description": "Bulding blocks to create IOT platforms",
+        "repo": "IOT*",
+        "branch": "master"
+      },
+      {
+        "groupId": "ValueReporter",
+        "display-name": "ValueReporter Toolchain",
+        "description": "Toolchain to measure and detect valuable and dead parts of solutions",
+        "repo": "Value*",
+        "branch": "master"
+      },
+      {
+        "groupId": "dropwizard",
+        "display-name": "dropwizard examples",
+        "description": "Getting started with dropwizard",
+        "repo": "dropwizard*",
+        "branch": "master"
+      },
+      {
+        "groupId": "Flow",
+        "display-name": "Flow",
+        "description": "Graphics tracing and visualization of long-running processes",
+        "repo": "Flow*",
         "branch": "master"
       },
       {
