@@ -21,7 +21,7 @@
         "groupId": "ConfigService",
         "display-name": "ConfigurationAervice",
         "description": "Provision configuration to agents",
-        "repo": "*/\\\b(?:ConfigService|JAU|Java-Auto-Update)\\\b*",
+        "repo": "[^\\s]*/\\\b(?:ConfigService|JAU|Java-Auto-Update)\\\b*",
         "branch": "master"
       },
       {
