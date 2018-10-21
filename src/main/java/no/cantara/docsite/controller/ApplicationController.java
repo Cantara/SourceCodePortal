@@ -57,32 +57,32 @@ public class ApplicationController implements HttpHandler {
 
         cors.handleValidRequest();
 
-        if (resourceContext.getLast().get().exactMatch("/ping")) {
+        if (resourceContext.exactMatch("/ping")) {
             new PingController().handleRequest(exchange);
             return;
         }
 
-        if (resourceContext.getLast().get().subMatch("/health")) {
+        if (resourceContext.subMatch("/health")) {
             new HealthController(configuration, executorService, cacheStore, resourceContext).handleRequest(exchange);
             return;
         }
 
-        if (resourceContext.getLast().get().exactMatch("/echo")) {
+        if (resourceContext.exactMatch("/echo")) {
             new EchoController().handleRequest(exchange);
             return;
         }
 
-        if (resourceContext.getLast().get().subMatch("/github")) {
+        if (resourceContext.subMatch("/github")) {
             new GithubWebhookController(configuration, executorService, cacheStore, resourceContext).handleRequest(exchange);
             return;
         }
 
-        if (resourceContext.getLast().get().subMatch("/css")) {
+        if (resourceContext.subMatch("/css")) {
             new StaticContentController(configuration, "META-INF/views", "text/css").handleRequest(exchange);
             return;
         }
 
-        if (resourceContext.getLast().get().subMatch("/js")) {
+        if (resourceContext.subMatch("/js")) {
             new StaticContentController(configuration, "META-INF/js", "application/javascript").handleRequest(exchange);
             return;
         }

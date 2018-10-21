@@ -5,7 +5,7 @@ import java.util.Objects;
 public class WebContext {
 
     public final String uri;        // /index /home
-    public final String subContext; // ""      docs
+    public final String subContext; // ""      contents
     public final WebHandler webHandler;
 
     WebContext(String uri, String subContext, WebHandler webHandler) {

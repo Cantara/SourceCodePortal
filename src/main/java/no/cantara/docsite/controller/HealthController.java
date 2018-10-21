@@ -59,7 +59,7 @@ public class HealthController implements HttpHandler {
     }
 
     boolean isGitHubHealtEndpoint(HttpServerExchange exchange) {
-        return resourceContext.getLast().get().exactMatch("/health/github");
+        return resourceContext.exactMatch("/health/github");
     }
 
     @Override

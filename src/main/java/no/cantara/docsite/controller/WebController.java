@@ -18,7 +18,7 @@ class WebController implements HttpHandler {
     private static final Logger LOG = LoggerFactory.getLogger(WebController.class);
     static final WebContext[] VALID_CONTEXTS = new WebContext[]{
             WebContext.of("/index", "", new RootHandler()),
-            WebContext.of("/home", "docs", new ContentsHandler())
+            WebContext.of("/home", "contents", new ContentsHandler())
     };
 
     final DynamicConfiguration configuration;
@@ -33,12 +33,12 @@ class WebController implements HttpHandler {
 
     static boolean isValidContext(HttpServerExchange exchange) {
         ResourceContext context = new ResourceContext(exchange.getRequestPath());
-        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> context.getLast().get().match(f.uri)).count() > 0;
+        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> context.match(f.uri)).count() > 0;
     }
 
     static Optional<WebContext> getWebContext(HttpServerExchange exchange) {
         ResourceContext context = new ResourceContext(exchange.getRequestPath());
-        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> context.getLast().get().match(f.uri)).findFirst();
+        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> context.match(f.uri)).findFirst();
     }
 
     @Override
@@ -47,8 +47,6 @@ class WebController implements HttpHandler {
             exchange.dispatch(this);
             return;
         }
-
-//        ResourceContext resourceContext = new ResourceContext(exchange);
 
         if (isValidContext(exchange)) {
             WebContext webContext = getWebContext(exchange).get();

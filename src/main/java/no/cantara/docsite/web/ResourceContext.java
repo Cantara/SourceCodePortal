@@ -37,6 +37,29 @@ public class ResourceContext {
         return Optional.ofNullable((tuples.size() > 0 ? tuples.get(tuples.size() - 1) : null));
     }
 
+    public boolean match(String resourcePath) {
+        ResourceContext thatResourceContext = new ResourceContext(resourcePath);
+        return getLast().get().getPath().equals(thatResourceContext.getLast().get().getPath());
+    }
+
+    public boolean subMatch(String resourcePath) {
+        ResourceContext thatResourceContext = new ResourceContext(resourcePath);
+        for(int n = 0; n < thatResourceContext.tuples.size(); n++) {
+            Resource thisResource = tuples.get(n);
+            Resource thatResource = thatResourceContext.tuples.get(n);
+            if (thisResource.resource.equals(thatResource.resource)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean exactMatch(String resourcePath) {
+        ResourceContext thatResourceContext = new ResourceContext(resourcePath);
+        return getLast().get().getExactPath().equals(thatResourceContext.getLast().get().getExactPath());
+    }
+
+
     public static class Resource {
         private final ResourceContext resourceContext;
         public final Resource parent;
@@ -68,28 +91,6 @@ public class ResourceContext {
                 current = current.parent;
             }
             return builder.toString();
-        }
-
-        public boolean match(String resourcePath) {
-            ResourceContext thatResourceContext = new ResourceContext(resourcePath);
-            return getPath().equals(thatResourceContext.getLast().get().getPath());
-        }
-
-        public boolean subMatch(String resourcePath) {
-            ResourceContext thatResourceContext = new ResourceContext(resourcePath);
-            for(int n = 0; n < thatResourceContext.tuples.size(); n++) {
-                Resource thisResource = resourceContext.tuples.get(n);
-                Resource thatResource = thatResourceContext.tuples.get(n);
-                if (thisResource.resource.equals(thatResource.resource)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public boolean exactMatch(String resourcePath) {
-            ResourceContext thatResourceContext = new ResourceContext(resourcePath);
-            return getExactPath().equals(thatResourceContext.getLast().get().getExactPath());
         }
 
         @Override
