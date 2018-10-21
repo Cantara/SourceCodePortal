@@ -20,12 +20,18 @@
             <thead>
                 <tr>
                     <th scope="col">Repository</th>
+                    <th scope="col">Links</th>
+                    <th scope="col">Latest-commits</th>
+                    <th scope="col">Branches</th>
                     <th scope="col">Badges</th>
                 </tr>
             </thead>
             <tbody>
                 <tr scope="row" th:each="repo : ${repositoryGroups}">
                     <td><a th:href="${repo.repoURL}" th:text="${(repo.cacheKey.repoName)+'/'+(repo.cacheKey.branch)}">Repo</a></td>
+                    <td>WIP</td>
+                    <td>WIP</td>
+                    <td>WIP</td>
                     <td>WIP</td>
                 </tr>
             </tbody>
