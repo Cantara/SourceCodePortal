@@ -28,7 +28,7 @@
         "groupId": "IOT",
         "display-name": "Whydah IOT projects",
         "description": "Bulding blocks to create IOT platforms",
-        "repo": "IOT*",
+        "repo": "IoT*",
         "branch": "master"
       },
       {
