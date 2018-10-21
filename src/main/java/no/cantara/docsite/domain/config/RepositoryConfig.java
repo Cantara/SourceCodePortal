@@ -30,18 +30,6 @@ public class RepositoryConfig {
         public String branch;
 
         @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Repo)) return false;
-            Repo repo1 = (Repo) o;
-            return Objects.equals(groupId, repo1.groupId) &&
-                    Objects.equals(displayName, repo1.displayName) &&
-                    Objects.equals(description, repo1.description) &&
-                    Objects.equals(repo, repo1.repo) &&
-                    Objects.equals(branch, repo1.branch);
-        }
-
-        @Override
         public int hashCode() {
             return Objects.hash(groupId, displayName, description, repo, branch);
         }

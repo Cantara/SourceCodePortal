@@ -18,13 +18,13 @@ public class CardHandler implements WebHandler {
     public boolean handleRequest(DynamicConfiguration configuration, CacheStore cacheStore, ResourceContext resourceContext, WebContext webContext, HttpServerExchange exchange) {
         Map<String, Object> templateVariables = new HashMap<>();
 
-        RepositoryConfig.Repo repositoryGroup = cacheStore.getGroupByGroupId(resourceContext.getLast().get().id);
-        if (repositoryGroup == null) {
+        RepositoryConfig.Repo repositoryConfig = cacheStore.getGroupByGroupId(resourceContext.getLast().get().id);
+        if (repositoryConfig == null) {
             return false;
         }
 
-        templateVariables.put("repositoryConfig", repositoryGroup);
-        templateVariables.put("repositoryGroups", cacheStore.getRepositoryGroupsByGroupId(repositoryGroup.groupId));
+        templateVariables.put("repositoryConfig", repositoryConfig);
+        templateVariables.put("repositoryGroup", cacheStore.getRepositoryGroupsByGroupId(repositoryConfig.groupId));
 
         if (ThymeleafViewEngineProcessor.processView(exchange, "/card/card", templateVariables)) {
             return true;
