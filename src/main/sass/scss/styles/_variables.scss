@@ -826,3 +826,13 @@
 
 //$pre-color:                         $gray-900 !default;
 //$pre-scrollable-max-height:         340px !default;
+
+$primary: silver;
+//$danger: red;
+//$body-color: black;
+//$link-color: black;
+
+$theme-colors: (
+  "primary": $primary
+);
+

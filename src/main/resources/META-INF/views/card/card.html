@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/template.html}">
+
+<head>
+    <title>Getting started</title>
+</head>
+
+<body>
+
+<section layout:fragment="custom-content">
+    <main role="main" class="container-fluid">
+        <h1 th:text="${repositoryConfig.displayName}"></h1>
+        <div th:text="${repositoryConfig.description}"></div>
+
+        <div>&#160</div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Repository</th>
+                    <th scope="col">Badges</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr scope="row" th:each="repo : ${repositoryGroups}">
+                    <td><a th:href="${repo.repoURL}" th:text="${(repo.cacheKey.repoName)+'/'+(repo.cacheKey.branch)}">Repo</a></td>
+                    <td>WIP</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</section>
+
+</body>

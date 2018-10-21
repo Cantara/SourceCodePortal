@@ -10,9 +10,8 @@
 <body>
 
 <section layout:fragment="custom-content">
-    <main role="main" class="container">
+    <main role="main" class="container-fluid">
         <article>
-            <p>test</p>
             <th:block th:each="group : ${repositoryGroups}">
                 <ul>
                     <li th:text="${group.key}">Group</li>

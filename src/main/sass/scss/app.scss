@@ -8,7 +8,9 @@
 
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
-//@import "./styles/variables";
+@import "./styles/variables";
+
+
 
 // -------------------------------------------------------------
 // core mixins
@@ -32,7 +34,7 @@
 @import "../node_modules/bootstrap/scss/images"; // new
 @import "../node_modules/bootstrap/scss/code"; // new
 @import "../node_modules/bootstrap/scss/grid";
-//@import "./node_modules/bootstrap/scss/tables";
+@import "../node_modules/bootstrap/scss/tables";
 @import "../node_modules/bootstrap/scss/forms";
 
 // -------------------------------------------------------------
@@ -78,3 +80,21 @@
 // -------------------------------------------------------------
 
 //@import "./styles/base";
+
+header {
+  background-color: $primary
+}
+
+.navbar-default{
+    background-color: red !important;
+    border-color: green;
+}
+
+.navbar-brand {
+  color: black !important;
+  font-weight: bold !important;
+}
+
+.nav-link {
+  color: black !important;
+}

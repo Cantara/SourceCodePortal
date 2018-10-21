@@ -1,77 +1,53 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Cantara</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/app.css" />
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <!--<a class="navbar-brand" th:href="@{/pages/site/home}">Cantara</a>-->
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <img src="/img/cantara.png"><span style="padding-left: 1em">&#160;</span>
+                <a class="navbar-brand" href="/index">Source Code Portal</a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <!--<a class="nav-link" th:classappend="${activePage == 'home' ? 'active' : null}" th:href="@{/pages/site/home}">What <span class="sr-only">(current)</span></a>-->
-                    </li>
-                    <li class="nav-item dropdown">
-                        <!--<a class="nav-link dropdown-toggle" th:classappend="${activePage == 'contents' ? 'active' : null}" th:href="@{/pages/contents/Cantara-some-project}" id="dropdown01" data-toggle="dropdown"-->
-                           aria-haspopup="true" aria-expanded="true">Docs</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <!--<a class="dropdown-item"  th:each="githubProject : ${githubProjects}" th:href="|@{/pages/contents/}${githubProject.id}|" th:text="${githubProject.name}">GitHub Page</a>-->
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <!--<a class="nav-link" th:classappend="${activePage == 'examples' ? 'active' : null}" th:href="@{/pages/site/examples}">How</a>-->
-                    </li>
-                    <li class="nav-item">
-                        <!--<a class="nav-link" th:classappend="${activePage == 'guidelines' ? 'active' : null}" th:href="@{/pages/site/guidelines}">Stuff</a>-->
-                    </li>
-                    <li class="nav-item">
-                        <!--<a class="nav-link" th:classappend="${activePage == 'participate' ? 'active' : null}" th:href="@{/pages/site/participate}">Participate</a>-->
-                    </li>
-                    <li class="nav-item">
-                        <!--<a class="nav-link" th:classappend="${activePage == 'log' ? 'active' : null}" th:href="@{/pages/log/commits}">Log</a>-->
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0" action="https://google.com/search" method="get">
-                    <input type="hidden" name="sitesearch" value="cantara.no" />
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-        </nav>
-        <nav class="clearfix" style="margin-top: -1.5em !important;">
-            <ul style="background-color: lightgray">
-                <li style="display: inline;" th:each="trail,iterStat : ${trails}"><a th:href="${trail.path}">[[${trail.name}]]</a><span th:remove="${iterStat.index == iterStat.size-1 ? 'all' : null}">&nbsp;&nbsp;&#8594;&nbsp;</span></li>
-            </ul>
-        </nav>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
     </header>
 
-    <!--<p><span id="forkongithub">-->
-      <!--<a href="https://github.com/mockito/mockito" class="bg-green">-->
-        <!--Work in progress-->
-      <!--</a>-->
-    <!--</span></p>-->
-
-
-    <section layout:fragment="custom-content"></section>
+    <section>
+        <div class="container-fluid" layout:fragment="custom-content"></div>
+    </section>
 
     <footer></footer>
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js" integrity="sha256-EGs9T1xMHdvM1geM8jPpoo8EZ1V1VRsmcJz8OByENLA=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 </body>
 

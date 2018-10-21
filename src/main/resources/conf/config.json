@@ -5,26 +5,36 @@
     "repos": [
       {
         "groupId": "SourceCodePortal",
+        "display-name": "Source code portal",
+        "description": "The SCP gathers all content from your GitHub repos and convey them in a readable form",
         "repo": "SourceCodePortal",
         "branch": "master"
       },
       {
         "groupId": "Whydah",
+        "display-name": "Whydah IAM",
+        "description": "Defcon 5 grade security solution",
         "repo": "Whydah-*",
         "branch": "master"
       },
       {
         "groupId": "ConfigService",
+        "display-name": "Configuration service",
+        "description": "Provision configuration to agents",
         "repo": "/\\b(?:ConfigService|JAU|Java-Auto-Update)\\b/gi",
         "branch": "master"
       },
       {
         "groupId": "BaselineProjects",
+        "display-name": "Baseline projects",
+        "description": "Cantara Baseline projects for Java and Docker",
         "repo": "[^\\s]*aseline",
         "branch": "master"
       },
       {
         "groupId": "Cantara-All-t",
+        "display-name": "Cantara all",
+        "description": "Any other Cantara project",
         "repo": "[^\\s]*",
         "branch": "master"
       }

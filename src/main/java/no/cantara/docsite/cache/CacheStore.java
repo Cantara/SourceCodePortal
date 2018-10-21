@@ -101,13 +101,13 @@ public class CacheStore {
 
     public String getConfiguredRepositories() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
-        for(String grouopId : getGroups()) {
+        for(RepositoryConfig.Repo repo : getGroups()) {
             JsonArrayBuilder groupBuilder = Json.createArrayBuilder();
-            List<Repository> repositories = getRepositoryGroupsByGroupId(grouopId);
+            List<Repository> repositories = getRepositoryGroupsByGroupId(repo.groupId);
             for(Repository repository : repositories) {
                 groupBuilder.add(repository.cacheKey.asIdentifier());
             }
-            builder.add(grouopId, groupBuilder);
+            builder.add(repo.groupId, groupBuilder);
         }
         return JsonbBuilder.create().toJson(builder.build());
     }
@@ -121,10 +121,19 @@ public class CacheStore {
         return repositoryConfig;
     }
 
-    public List<String> getGroups() {
-        List<String> groups = new ArrayList<>();
+    public RepositoryConfig.Repo getGroupByGroupId(String groupId) {
+        for(RepositoryConfig.Repo repo : repositoryConfig.gitHub.repos) {
+            if (groupId.equals(repo.groupId)) {
+                return repo;
+            }
+        }
+        return null;
+    }
+
+    public List<RepositoryConfig.Repo> getGroups() {
+        List<RepositoryConfig.Repo> groups = new ArrayList<>();
         repositoryConfig.gitHub.repos.forEach(r -> {
-            groups.add(r.groupId);
+            groups.add(r);
         });
         return groups;
     }

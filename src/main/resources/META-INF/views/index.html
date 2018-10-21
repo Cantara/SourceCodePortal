@@ -1,8 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/template.html}">
+
 <head>
+    <title>Source Code Portal</title>
 </head>
+
 <body>
-index
+
+<section layout:fragment="custom-content">
+    <main role="main" class="container-fluid">
+        <div class="jumbotron">
+            <h1 class="display-6">Welcome to our source code portal!</h1>
+            <p class="lead">We bring you documentation from the sources.</p>
+
+            <p class="lead">
+                <a class="btn btn-primary btn-sm" href="#" role="button">Read more</a>
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4" th:each="repo : ${groups}">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" th:text="${repo.displayName}">Card title</h5>
+                        <p class="card-text" th:text="${repo.description}">Some quick example text to build on the card title</p>
+                        <a th:href="${('/card/')+repo.groupId}" class="card-link">Show</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>
+
 </body>
+
 </html>

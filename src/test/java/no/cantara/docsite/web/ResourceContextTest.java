@@ -54,5 +54,10 @@ public class ResourceContextTest {
             assertTrue(context.exactMatch("/github/webhook"));
             assertTrue(context.getLast().get().id.equals("webhook"));
         }
+
+        {
+            ResourceContext context = new ResourceContext("/favicon.ico");
+            assertTrue(context.exactMatch("/favicon.ico"));
+        }
     }
 }

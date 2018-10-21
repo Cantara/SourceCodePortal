@@ -5,6 +5,8 @@
     "repos": [
       {
         "groupId": "SourceCodePortal",
+        "display-name": "Source code portal",
+        "description": "The SCP gathers all content from your GitHub repos and convey them in a readable form",
         "repo": "SourceCodePortal",
         "branch": "master"
       }

@@ -77,13 +77,18 @@ public class ApplicationController implements HttpHandler {
             return;
         }
 
+        if (resourceContext.subMatch("/img") || resourceContext.exactMatch("/favicon.ico")) {
+            new ImageResourceController(configuration, "META-INF/views").handleRequest(exchange);
+            return;
+        }
+
         if (resourceContext.subMatch("/css")) {
             new StaticContentController(configuration, "META-INF/views", "text/css").handleRequest(exchange);
             return;
         }
 
         if (resourceContext.subMatch("/js")) {
-            new StaticContentController(configuration, "META-INF/js", "application/javascript").handleRequest(exchange);
+            new StaticContentController(configuration, "META-INF/views", "application/javascript").handleRequest(exchange);
             return;
         }
 
