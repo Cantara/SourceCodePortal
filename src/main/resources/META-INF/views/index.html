@@ -27,7 +27,26 @@
                         <h5 class="card-title" th:text="${repo.displayName}">Card title</h5>
                         <p class="card-text" th:text="${repo.description}">Some quick example text to build on the card title</p>
 
-                        <p>Status: Latest commit: 2018.10.21 23:12:34</p>
+                        <p>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Status</th>
+                                <th scope="col">Latest Commit</th>
+                                <th scope="col">Release</th>
+                                <th scope="col">Badges</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr scope="row" th:each="repo : ${repositoryGroups}">
+                                <td>WIP</td>
+                                <td>WIP</td>
+                                <td>WIP</td>
+                                <td>WIP</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </p>
                         <a th:href="${('/card/')+repo.groupId}" class="card-link">Show</a>
                     </div>
                 </div>
