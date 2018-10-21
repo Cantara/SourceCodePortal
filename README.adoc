@@ -15,19 +15,28 @@ Groups documentation from GitHub repositories.
 -----------------
 # Start SCP dockerimage with oauth2 client credentials at startup
 $ sudo docker run --env github.oauth2.client.clientId=xyz  --env github.oauth2.client.clientSecret=556542654721-it --rm -p 80:9090 cantara/sourcecodeportal
-# Copy a site-configuration to a running SCP docker image
-$ docker inspect -f   '{{.Id}}' cantara/sourcecodeportal
-d8e703d7e303
-$ docker inspect -f   '{{.Id}}' d8e703d7e303
-d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5
-$ sudo cp config.json /var/lib/docker/aufs/mnt/**d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5**/home/sourcecodeportal/config_override/conf/config.json
 # Test the result
 $ wget http://localhost/health
 $ wget http://localhost/health/github
 $ wget http://localhost/docs
+
+# Copy a site-configuration to a running SCP docker image
+# $ docker inspect -f   '{{.Id}}' cantara/sourcecodeportal
+# d8e703d7e303
+# $ docker inspect -f   '{{.Id}}' d8e703d7e303
+# d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5
+# $ sudo cp config.json /var/lib/docker/aufs/mnt/**d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5**/home/sourcecodeportal/config_override/conf/config.json
+
 -----------------
 
-== Pre-requisites
+An early example can be accessed https://scp.cantara.no/[Here]
+
+
+== Building and developing SourceCode Portal
+
+You might want to take a look at the provided https://raw.githubusercontent.com/Cantara/SourceCodePortal/master/Docker/Dockerfile[Dockerfile] to get installation details.
+
+=== Pre-requisites
 
 Requires JDK 11.
 
