@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.cantara.docsite</groupId>
     <artifactId>source-code-portal</artifactId>
-    <version>0.4.6</version>
+    <version>0.4.7-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Source Code Portal</name>
@@ -76,7 +76,7 @@
         <connection>scm:git:git://github.com/Cantara/SourceCodePortal.git</connection>
         <developerConnection>scm:git:git@github.com:Cantara/SourceCodePortal.git</developerConnection>
         <url>https://wiki.cantara.no/</url>
-        <tag>source-code-portal-0.4.6</tag>
+        <tag>source-code-portal-0.3.0</tag>
     </scm>
 
     <dependencies>
