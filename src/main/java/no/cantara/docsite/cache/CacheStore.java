@@ -158,6 +158,16 @@ public class CacheStore {
         return repositories;
     }
 
+    public List<Repository> getRepositoryGroupsByName(String name) {
+        List<Repository> repositories = new ArrayList<>();
+        getRepositoryGroups().forEach(a -> {
+            if (name.equals(a.getValue().name)) {
+                repositories.add(a.getValue());
+            }
+        });
+        return repositories;
+    }
+
     public Cache<CacheKey, MavenPOM> getProjects() {
         return cacheManager.getCache("project");
     }

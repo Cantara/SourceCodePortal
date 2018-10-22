@@ -28,14 +28,18 @@ public class ContentsHandler implements WebHandler {
     public boolean handleRequest(DynamicConfiguration configuration, CacheStore cacheStore, ResourceContext resourceContext, WebContext webContext, HttpServerExchange exchange) {
         Map<String, Object> templateVariables = new HashMap<>();
 
-        RepositoryConfig.Repo repositoryConfig = cacheStore.getGroupByGroupId(resourceContext.getLast().get().id);
+        String org = cacheStore.getRepositoryConfig().gitHub.organization;
+        String repoNae = resourceContext.getLast().get().id;
+        String branch = "master";
+        CacheKey cacheKey = CacheKey.of(org, repoNae, branch);
+        CacheGroupKey cacheGroupKey = cacheStore.getCacheKeys().get(cacheKey);
+
+        RepositoryConfig.Repo repositoryConfig = cacheStore.getGroupByGroupId(cacheGroupKey.groupId);
         if (repositoryConfig == null) {
             return false;
         }
 
         templateVariables.put("repositoryConfig", repositoryConfig);
-        CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repositoryConfig.repo, repositoryConfig.branch);
-        CacheGroupKey cacheGroupKey = cacheStore.getCacheKeys().get(cacheKey);
 
         Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
         templateVariables.put("repository", repository);
