@@ -29,9 +29,9 @@ public class ContentsHandler implements WebHandler {
         Map<String, Object> templateVariables = new HashMap<>();
 
         String org = cacheStore.getRepositoryConfig().gitHub.organization;
-        String repoNae = resourceContext.getLast().get().id;
+        String repoName = resourceContext.getLast().get().id;
         String branch = "master";
-        CacheKey cacheKey = CacheKey.of(org, repoNae, branch);
+        CacheKey cacheKey = CacheKey.of(org, repoName, branch);
         CacheGroupKey cacheGroupKey = cacheStore.getCacheKeys().get(cacheKey);
 
         RepositoryConfig.Repo repositoryConfig = cacheStore.getGroupByGroupId(cacheGroupKey.groupId);

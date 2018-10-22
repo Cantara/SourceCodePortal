@@ -21,12 +21,14 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-4" th:each="repo : ${groups}">
+            <div class="col-sm-4" th:each="group : ${model.groups}">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h5 class="card-title" th:text="${repo.displayName}">Card title</h5>
-                        <p class="card-text" th:text="${repo.description}">Some quick example text to build on the card title</p>
-                        <a th:href="${('/card/')+repo.groupId}" class="card-link">Show</a>
+                        <h5 class="card-title">
+                            <a style="text-decoration: none;" th:href="${group.readmeURI}" th:text="${group.displayName}" th:disabled="${!group.hasReadme}">Card link</a>
+                        </h5>
+                        <p class="card-text" th:text="${group.description}">Some quick example text to build on the card title</p>
+                        <a th:href="${group.cardURI}" class="card-link">Show</a>
                         <p>
                         <table class="table">
                             <thead>

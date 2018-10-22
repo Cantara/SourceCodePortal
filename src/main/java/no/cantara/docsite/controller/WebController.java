@@ -49,8 +49,6 @@ class WebController implements HttpHandler {
             return;
         }
 
-        LOG.trace("REQUEST-PATH: {}", exchange.getRequestPath());
-
         if (isValidContext(exchange)) {
             WebContext webContext = getWebContext(exchange).get();
             if (webContext.webHandler.handleRequest(configuration, cacheStore, resourceContext, webContext, exchange)){

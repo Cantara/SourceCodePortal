@@ -1,9 +1,10 @@
 package no.cantara.docsite.controller;
 
 import io.undertow.server.HttpServerExchange;
+import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.config.RepositoryConfig;
+import no.cantara.docsite.domain.view.DashboardModel;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
 import no.cantara.docsite.web.WebContext;
@@ -11,8 +12,6 @@ import no.cantara.docsite.web.WebHandler;
 import no.ssb.config.DynamicConfiguration;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RootHandler implements WebHandler {
@@ -21,13 +20,27 @@ public class RootHandler implements WebHandler {
     public boolean handleRequest(DynamicConfiguration configuration, CacheStore cacheStore, ResourceContext resourceContext, WebContext webContext, HttpServerExchange exchange) {
         Map<String, Object> templateVariables = new HashMap<>();
 
-        templateVariables.put("groups", cacheStore.getGroups());
+        DashboardModel model = new DashboardModel();
 
-        Map<RepositoryConfig.Repo, List<Repository>> repositoryGroups = new LinkedHashMap<>();
-        for (RepositoryConfig.Repo group : cacheStore.getGroups()) {
-            repositoryGroups.put(group, cacheStore.getRepositoryGroupsByGroupId(group.groupId));
+        for (RepositoryConfig.Repo repo : cacheStore.getGroups()) {
+            boolean hasReadme = cacheStore.getPages().get(CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repo.repo, repo.branch)) != null;
+            DashboardModel.Group group = new DashboardModel.Group(
+                    cacheStore.getRepositoryConfig().gitHub.organization,
+                    repo.repo,
+                    repo.branch,
+                    repo.groupId,
+                    repo.displayName,
+                    repo.description,
+                    hasReadme,
+                    String.format("/contents/%s", repo.repo), // TODO add branch when ContentsHandler is fixed
+                    String.format("/card/%s", repo.groupId));
+            model.groups.add(group);
         }
-        templateVariables.put("repositoryGroups", repositoryGroups);
+
+//        DashboardModel.Repo activity = new DashboardModel.Repo();
+//        group.activity.add(activity);
+
+        templateVariables.put("model", model);
 
         if (ThymeleafViewEngineProcessor.processView(exchange, webContext.asTemplateResource(), templateVariables)) {
             return true;
