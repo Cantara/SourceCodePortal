@@ -17,9 +17,9 @@ class WebController implements HttpHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebController.class);
     static final WebContext[] VALID_CONTEXTS = new WebContext[]{
-            WebContext.of("/index", "", "index.html", new RootHandler()),
-            WebContext.of("/contents", "contents", "content.html", new ContentsHandler()),
-            WebContext.of("/card", "card", "card.html", new CardHandler())
+            WebContext.of("/index", "", true, "index.html", new RootHandler()),
+            WebContext.of("/contents", "contents", false, "content.html", new ContentsHandler()),
+            WebContext.of("/card", "card", true, "card.html", new CardHandler())
     };
 
     final DynamicConfiguration configuration;
@@ -34,12 +34,12 @@ class WebController implements HttpHandler {
 
     static boolean isValidContext(HttpServerExchange exchange) {
         ResourceContext context = new ResourceContext(exchange.getRequestPath());
-        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> context.match(f.uri)).count() > 0;
+        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> (f.exactMatch ? context.match(f.uri) : context.subMatch(f.uri))).count() > 0;
     }
 
     static Optional<WebContext> getWebContext(HttpServerExchange exchange) {
         ResourceContext context = new ResourceContext(exchange.getRequestPath());
-        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> context.match(f.uri)).findFirst();
+        return Arrays.asList(VALID_CONTEXTS).stream().filter(f -> (f.exactMatch ? context.match(f.uri) : context.subMatch(f.uri))).findFirst();
     }
 
     @Override

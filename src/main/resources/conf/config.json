@@ -61,7 +61,7 @@
         "description": "Toolchain to measure and detect valuable and dead parts of solutions",
         "repo": "Value*",
         "branch": "master",
-        "default-repo": "ValueReporter",
+        "default-repo": "Valuereporter",
         "badge": {
           "jenkins": "",
           "snyk.io": ""

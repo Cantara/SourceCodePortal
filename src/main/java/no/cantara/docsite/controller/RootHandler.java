@@ -31,7 +31,7 @@ public class RootHandler implements WebHandler {
                     repo.displayName,
                     repo.description,
                     hasReadme,
-                    String.format("/contents/%s", repo.defaultRepo), // TODO add branch when ContentsHandler is fixed
+                    String.format("/contents/%s/%s", repo.defaultRepo, repo.branch),
                     String.format("/card/%s", repo.groupId),
                     String.format(cacheStore.getRepositoryConfig().gitHub.badges.jenkins, repo.defaultRepo),
                     String.format(cacheStore.getRepositoryConfig().gitHub.badges.snykIO, cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultRepo));

@@ -18,21 +18,39 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.cache.Cache;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class ContentsHandler implements WebHandler {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ContentsHandler.class);
 
     @Override
     public boolean handleRequest(DynamicConfiguration configuration, CacheStore cacheStore, ResourceContext resourceContext, WebContext webContext, HttpServerExchange exchange) {
         Map<String, Object> templateVariables = new HashMap<>();
 
+        if (resourceContext.getTuples().size() != 2) {
+            return false;
+        }
+
         String org = cacheStore.getRepositoryConfig().gitHub.organization;
-        String repoName = resourceContext.getLast().get().id;
-        String branch = "master";
+        String repoName = resourceContext.getTuples().get(0).id;
+        String branch = resourceContext.getTuples().get(1).resource;
+
         CacheKey cacheKey = CacheKey.of(org, repoName, branch);
-        CacheGroupKey cacheGroupKey = cacheStore.getCacheKeys().get(cacheKey);
+        Set<CacheGroupKey> groupKeys = new LinkedHashSet<>();
+        for (Cache.Entry<CacheGroupKey,CacheKey> entry : cacheStore.getCacheGroupKeys()) {
+            if (entry.getValue().equals(cacheKey)) {
+                groupKeys.add(entry.getKey());
+            }
+        }
+        CacheGroupKey cacheGroupKey = groupKeys.stream().filter(f -> f.repoName.toLowerCase().contains(f.groupId.toLowerCase())).findFirst().orElse(groupKeys.iterator().next());
 
         RepositoryConfig.Repo repositoryConfig = cacheStore.getGroupByGroupId(cacheGroupKey.groupId);
         if (repositoryConfig == null) {

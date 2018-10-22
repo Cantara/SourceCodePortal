@@ -59,6 +59,14 @@ public class CacheStore {
             cacheManager.createCache("cacheKeys", cacheConfig);
         }
 
+        if (cacheManager.getCache("cacheGroupKeys") == null) {
+            LOG.info("Creating CacheGroupKeys cache");
+            MutableConfiguration<CacheGroupKey, CacheKey> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            cacheManager.createCache("cacheGroupKeys", cacheConfig);
+        }
+
         if (cacheManager.getCache("repositoryGroup") == null) {
             LOG.info("Creating Grouped repositories cache");
             MutableConfiguration<CacheGroupKey, Repository> cacheConfig = new MutableConfiguration<>();
@@ -142,6 +150,10 @@ public class CacheStore {
 
     public Cache<CacheKey, CacheGroupKey> getCacheKeys() {
         return cacheManager.getCache("cacheKeys");
+    }
+
+    public Cache<CacheGroupKey,CacheKey> getCacheGroupKeys() {
+        return cacheManager.getCache("cacheGroupKeys");
     }
 
     public Cache<CacheGroupKey, Repository> getRepositoryGroups() {
