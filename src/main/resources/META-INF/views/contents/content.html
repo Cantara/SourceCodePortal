@@ -4,16 +4,17 @@
       layout:decorate="~{/template.html}">
 
 <head>
-    <title>Getting started</title>
+    <title>Documentation</title>
 </head>
 
 <body>
 
 <section layout:fragment="custom-content">
     <main role="main" class="container-fluid">
-        <h1 th:text="${repository.description}"></h1>
+        <h1 th:text="${model.repository.description}"></h1>
 
-        <article th:utext="${contentHtml}">
+        <article th:utext="${model.contentHtml}">
+
         </article>
     </main>
 </section>

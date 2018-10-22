@@ -13,11 +13,13 @@ public class Base64MimeAdapter implements JsonbAdapter<String,String> {
 
     @Override
     public String adaptToJson(String obj) throws Exception {
-        return new String(Base64.getMimeEncoder().encode(obj.getBytes()), StandardCharsets.UTF_8);
+//        return new String(Base64.getMimeEncoder().encode(obj.getBytes()), StandardCharsets.UTF_8);
+        return obj;
     }
 
     @Override
     public String adaptFromJson(String obj) throws Exception {
         return new String(Base64.getMimeDecoder().decode(obj), StandardCharsets.UTF_8);
     }
+
 }

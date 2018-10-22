@@ -23,8 +23,10 @@ import javax.json.bind.config.PropertyNamingStrategy;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class CacheStore {
 
@@ -154,6 +156,16 @@ public class CacheStore {
 
     public Cache<CacheGroupKey,CacheKey> getCacheGroupKeys() {
         return cacheManager.getCache("cacheGroupKeys");
+    }
+
+    public CacheGroupKey getCacheGroupKey(CacheKey cacheKey) {
+        Set<CacheGroupKey> groupKeys = new LinkedHashSet<>();
+        for (Cache.Entry<CacheGroupKey,CacheKey> entry : getCacheGroupKeys()) {
+            if (entry.getValue().equals(cacheKey)) {
+                groupKeys.add(entry.getKey());
+            }
+        }
+        return groupKeys.stream().filter(f -> f.repoName.toLowerCase().contains(f.groupId.toLowerCase())).findFirst().orElse(groupKeys.iterator().next());
     }
 
     public Cache<CacheGroupKey, Repository> getRepositoryGroups() {

@@ -13,7 +13,7 @@ import no.ssb.config.DynamicConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RootHandler implements WebHandler {
+public class DashboardHandler implements WebHandler {
 
     @Override
     public boolean handleRequest(DynamicConfiguration configuration, CacheStore cacheStore, ResourceContext resourceContext, WebContext webContext, HttpServerExchange exchange) {

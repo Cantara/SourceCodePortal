@@ -1,0 +1,46 @@
+package no.cantara.docsite.domain.view;
+
+import no.cantara.docsite.domain.config.Repository;
+import no.cantara.docsite.domain.github.contents.RepositoryContents;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+public class ContentsModel {
+
+    public final Repository repository;
+    public final RepositoryContents contents;
+    public final String contentHtml;
+
+    public Set<Group> groups = new LinkedHashSet<>();
+
+    public ContentsModel(Repository repository, RepositoryContents contents, String contentHtml) {
+        this.repository = repository;
+        this.contents = contents;
+        this.contentHtml = contentHtml;
+    }
+
+    public static class Group {
+        public final String organization;
+        public final String repoName;
+        public final String branch;
+        public final String groupId;
+        public final String displayName;
+        public final String description;
+        public final boolean hasReadme;
+        public final String readmeURI;
+        public final String cardURI;
+
+        public Group(String organization, String repoName, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI) {
+            this.organization = organization;
+            this.repoName = repoName;
+            this.branch = branch;
+            this.groupId = groupId;
+            this.displayName = displayName;
+            this.description = description;
+            this.hasReadme = hasReadme;
+            this.readmeURI = readmeURI;
+            this.cardURI = cardURI;
+        }
+    }
+}

@@ -7,25 +7,17 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.config.RepositoryConfig;
 import no.cantara.docsite.domain.github.contents.RepositoryContents;
-import no.cantara.docsite.domain.github.pages.ReadmeAsciidocWiki;
-import no.cantara.docsite.domain.github.pages.ReadmeMDWiki;
+import no.cantara.docsite.domain.view.ContentsModel;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
 import no.cantara.docsite.web.WebContext;
 import no.cantara.docsite.web.WebHandler;
 import no.ssb.config.DynamicConfiguration;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.cache.Cache;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class ContentsHandler implements WebHandler {
 
@@ -39,56 +31,31 @@ public class ContentsHandler implements WebHandler {
             return false;
         }
 
-        String org = cacheStore.getRepositoryConfig().gitHub.organization;
-        String repoName = resourceContext.getTuples().get(0).id;
-        String branch = resourceContext.getTuples().get(1).resource;
-
-        CacheKey cacheKey = CacheKey.of(org, repoName, branch);
-        Set<CacheGroupKey> groupKeys = new LinkedHashSet<>();
-        for (Cache.Entry<CacheGroupKey,CacheKey> entry : cacheStore.getCacheGroupKeys()) {
-            if (entry.getValue().equals(cacheKey)) {
-                groupKeys.add(entry.getKey());
-            }
-        }
-        CacheGroupKey cacheGroupKey = groupKeys.stream().filter(f -> f.repoName.toLowerCase().contains(f.groupId.toLowerCase())).findFirst().orElse(groupKeys.iterator().next());
-
-        RepositoryConfig.Repo repositoryConfig = cacheStore.getGroupByGroupId(cacheGroupKey.groupId);
-        if (repositoryConfig == null) {
-            return false;
-        }
-
-        templateVariables.put("repositoryConfig", repositoryConfig);
-
-        Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
-        templateVariables.put("repository", repository);
+        CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, resourceContext.getTuples().get(0).id, resourceContext.getTuples().get(1).resource);
+        CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(cacheKey);
 
         RepositoryContents contents = cacheStore.getPages().get(cacheKey);
-        templateVariables.put("contents", contents);
 
-        if (contents.name.endsWith(".md")) {
-            ReadmeMDWiki wiki = new ReadmeMDWiki(contents.content);
-            templateVariables.put("contentHtml", wiki.html);
+        Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
 
-        } else  if (contents.name.endsWith(".adoc")) {
-            ReadmeAsciidocWiki wiki = new ReadmeAsciidocWiki(contents.content);
+        ContentsModel model = new ContentsModel(repository, contents, contents.renderedHtml);
 
-            Document doc = Jsoup.parse(wiki.html);
-            {
-                Elements el = doc.select(".language-xml");
-                for (Element e : el) {
-                    e.parent().addClass("prettyprint");
-                }
-            }
-            {
-                Elements el = doc.select(".language-java");
-                for (Element e : el) {
-                    e.parent().addClass("prettyprint");
-                }
-            }
-
-            String htmlContent = doc.body().html();
-            templateVariables.put("contentHtml", htmlContent);
+        for (RepositoryConfig.Repo repo : cacheStore.getGroups()) {
+            boolean hasReadme = (repo.defaultGroupRepo != null && !"".equals(repo.defaultGroupRepo));
+            ContentsModel.Group group = new ContentsModel.Group(
+                    cacheStore.getRepositoryConfig().gitHub.organization,
+                    repo.repo,
+                    repo.branch,
+                    repo.groupId,
+                    repo.displayName,
+                    repo.description,
+                    hasReadme,
+                    String.format("/contents/%s/%s", repo.repo, repo.branch),
+                    String.format("/card/%s", repo.groupId));
+            model.groups.add(group);
         }
+
+        templateVariables.put("model", model);
 
         if (ThymeleafViewEngineProcessor.processView(exchange, webContext.asTemplateResource(), templateVariables)) {
             return true;

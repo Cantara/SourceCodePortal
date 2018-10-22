@@ -3,6 +3,7 @@ package no.cantara.docsite.domain.github.contents;
 import no.cantara.docsite.util.JsonUtil;
 
 import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
 import java.io.Serializable;
 
@@ -22,6 +23,7 @@ public class RepositoryContents implements Serializable {
     public @JsonbProperty("html_url") String htmlUrl;
     public @JsonbProperty("download_url") String downloadUrl;
     public @JsonbProperty("_links") Links links;
+    public @JsonbTransient String renderedHtml;
 
     @Override
     public String toString() {
