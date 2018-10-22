@@ -28,6 +28,9 @@ module cantara.docsite {
     requires org.commonmark;
     requires org.commonmark.ext.gfm.tables;
     requires asciidoctorj;
+//    requires com.headius.invokebinder;
+//    uses org.asciidoctor.internal.JRubyAsciidoctor;
+
 //    requires asciidoctorj.api;
 //    requires asciidoctorj.api;
 //    requires jruby.core;
