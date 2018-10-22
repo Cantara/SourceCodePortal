@@ -28,11 +28,16 @@
             </thead>
             <tbody>
                 <tr scope="row" th:each="repo : ${repositoryGroup}">
-                    <td><a th:href="${repo.repoURL}" th:text="${(repo.cacheKey.repoName)+'/'+(repo.cacheKey.branch)}">Repo</a></td>
-                    <td>WIP</td>
-                    <td>WIP</td>
-                    <td>WIP</td>
-                    <td>WIP</td>
+                    <td><img th:src="${repo.jenkinsURL}"
+                             onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/></td>
+                    <td><img th:src="${repo.jenkinsURL}"
+                             onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/></td>
+                    <td><img th:src="${repo.jenkinsURL}"
+                             onerror="if (this.src != 'error.jpg') this.src = 'img/commit-unknown.svg';"/></td>
+                    <td><img th:src="${repo.jenkinsURL}"
+                             onerror="if (this.src != 'error.jpg') this.src = 'img/release-unknown.svg';"/></td>
+                    <td><img th:src="${repo.jenkinsURL}"
+                             onerror="if (this.src != 'error.jpg') this.src = 'img/build-unknown.svg';"/></td>
                 </tr>
             </tbody>
         </table>

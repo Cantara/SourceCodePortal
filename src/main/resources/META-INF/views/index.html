@@ -30,9 +30,6 @@
                         </h5>
                         <p class="card-text" th:text="${group.description}">Some quick example text to build on the card title</p>
                         <a th:href="${group.cardURI}" class="card-link">Show</a>
-                        <div>
-                            <img th:src="${group.jenkinsURL}" />
-                        </div>
                         <table class="table">
                             <thead>
                             <tr>
@@ -44,10 +41,18 @@
                             </thead>
                             <tbody>
                             <tr scope="row">
-                                <td>WIP</td>
-                                <td>WIP</td>
-                                <td>WIP</td>
-                                <td>WIP</td>
+                                <td><img th:src="${group.jenkinsURL}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/>
+                                </td>
+                                <td><img th:src="${group.jenkinsURL}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'img/commit-unknown.svg';"/>
+                                </td>
+                                <td><img th:src="${group.jenkinsURL}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'img/release-unknown.svg';"/>
+                                </td>
+                                <td><img th:src="${group.jenkinsURL}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'img/build-unknown.svg';"/>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
