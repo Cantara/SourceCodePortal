@@ -13,7 +13,7 @@
         "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
         "repo": "SourceCodePortal",
         "branch": "master",
-        "default-repo": "SourceCodePortal",
+        "default-repo": "Cantara-SourceCodePortal",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
@@ -37,7 +37,7 @@
         "description": "Provision configuration to agents",
         "repo": "[^\\s]*/\\b(?:ConfigService|JAU|Java-Auto-Update)\\b*",
         "branch": "master",
-        "default-repo": "ConfigService",
+        "default-repo": "Cantara-ConfigService",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
