@@ -3,9 +3,7 @@ package no.cantara.docsite.domain.config;
 import no.cantara.docsite.util.JsonUtil;
 
 import javax.json.bind.annotation.JsonbProperty;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class RepositoryConfig {
 
@@ -28,6 +26,9 @@ public class RepositoryConfig {
         public String description;
         public String repo;
         public String branch;
+        public Set<String> lastCommits = new LinkedHashSet<>();
+        public Set<String> lastReleases = new LinkedHashSet<>();
+        public Set<String> lastStatus = new LinkedHashSet<>();
 
         @Override
         public int hashCode() {
