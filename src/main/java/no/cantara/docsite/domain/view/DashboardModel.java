@@ -25,6 +25,7 @@ public class DashboardModel {
         public String groupCommit = "unknown";
         public String groupStatus = "unknown";
         public String groupRelease = "unknown";
+        public String no_repos = "https://img.shields.io/badge/repos-5-blue.svg";
         public final String snykIOUrl;
 
         public Set<Activity> activity = new LinkedHashSet<>();

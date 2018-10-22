@@ -33,6 +33,9 @@
                         <table class="table">
                             <tbody>
                             <tr scope="row">
+                                <td><img th:src="${group.no_repos}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/repos-1-lightgrey.svg';"/>
+                                </td>
                                 <td><img th:src="${group.groupStatus}"
                                          onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/>
                                 </td>
