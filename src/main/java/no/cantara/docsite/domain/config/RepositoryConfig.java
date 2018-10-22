@@ -34,7 +34,7 @@ public class RepositoryConfig {
         public String description;
         public String repo;
         public String branch;
-        public @JsonbProperty("default-group-repo") String defaultRepo; // the project that contains main-repo documentation
+        public @JsonbProperty("default-group-repo") String defaultGroupRepo; // the project that contains main-repo documentation
 
         @Override
         public int hashCode() {

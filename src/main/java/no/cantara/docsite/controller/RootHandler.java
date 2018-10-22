@@ -22,7 +22,7 @@ public class RootHandler implements WebHandler {
         DashboardModel model = new DashboardModel();
 
         for (RepositoryConfig.Repo repo : cacheStore.getGroups()) {
-            boolean hasReadme = (repo.defaultRepo != null && !"".equals(repo.defaultRepo));
+            boolean hasReadme = (repo.defaultGroupRepo != null && !"".equals(repo.defaultGroupRepo));
             DashboardModel.Group group = new DashboardModel.Group(
                     cacheStore.getRepositoryConfig().gitHub.organization,
                     repo.repo,
@@ -31,10 +31,10 @@ public class RootHandler implements WebHandler {
                     repo.displayName,
                     repo.description,
                     hasReadme,
-                    String.format("/contents/%s/%s", repo.defaultRepo, repo.branch),
+                    String.format("/contents/%s/%s", repo.defaultGroupRepo, repo.branch),
                     String.format("/card/%s", repo.groupId),
-                    String.format(cacheStore.getRepositoryConfig().gitHub.badges.jenkins, repo.defaultRepo),
-                    String.format(cacheStore.getRepositoryConfig().gitHub.badges.snykIO, cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultRepo));
+                    String.format(cacheStore.getRepositoryConfig().gitHub.badges.jenkins, repo.defaultGroupRepo),
+                    String.format(cacheStore.getRepositoryConfig().gitHub.badges.snykIO, cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultGroupRepo));
             model.groups.add(group);
         }
 
