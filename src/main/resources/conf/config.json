@@ -80,6 +80,18 @@
         }
       },
       {
+        "groupId": "ratpack",
+        "display-name": "ratpack examples",
+        "description": "Getting started with ratpack",
+        "repo": "ratpack*",
+        "branch": "master",
+        "default-group-repo": "ratpack-websockets",
+        "badge": {
+          "jenkins": "",
+          "snyk.io": ""
+        }
+      },
+      {
         "groupId": "Flow",
         "display-name": "Cantara Flow",
         "description": "Graphics tracing and visualization of long-running processes",
