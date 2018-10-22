@@ -27,17 +27,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr scope="row" th:each="repo : ${repositoryGroup}">
-                    <td><img th:src="${repo.jenkinsURL}"
-                             onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/></td>
-                    <td><img th:src="${repo.jenkinsURL}"
-                             onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/></td>
-                    <td><img th:src="${repo.jenkinsURL}"
-                             onerror="if (this.src != 'error.jpg') this.src = 'img/commit-unknown.svg';"/></td>
-                    <td><img th:src="${repo.jenkinsURL}"
-                             onerror="if (this.src != 'error.jpg') this.src = 'img/release-unknown.svg';"/></td>
-                    <td><img th:src="${repo.jenkinsURL}"
-                             onerror="if (this.src != 'error.jpg') this.src = 'img/build-unknown.svg';"/></td>
+                <tr th:each="group : ${model.groups}">
+                    <td>
+                        <a th:href="${group.readmeURI}" th:text="${group.repoName}"></a>
+                    </td>
                 </tr>
             </tbody>
         </table>

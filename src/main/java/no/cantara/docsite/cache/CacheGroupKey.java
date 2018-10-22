@@ -22,7 +22,7 @@ public class CacheGroupKey implements Serializable {
     }
 
     public boolean compareTo(String groupId) {
-        return groupId.equals(this.groupId);
+        return groupId.equalsIgnoreCase(this.groupId);
     }
 
     @Override
