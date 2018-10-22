@@ -1,7 +1,6 @@
 package no.cantara.docsite.controller;
 
 import io.undertow.server.HttpServerExchange;
-import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfig;
 import no.cantara.docsite.domain.view.DashboardModel;
@@ -23,7 +22,7 @@ public class RootHandler implements WebHandler {
         DashboardModel model = new DashboardModel();
 
         for (RepositoryConfig.Repo repo : cacheStore.getGroups()) {
-            boolean hasReadme = cacheStore.getPages().get(CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repo.repo, repo.branch)) != null;
+            boolean hasReadme = (repo.defaultRepo != null && !"".equals(repo.defaultRepo));
             DashboardModel.Group group = new DashboardModel.Group(
                     cacheStore.getRepositoryConfig().gitHub.organization,
                     repo.repo,
@@ -32,7 +31,7 @@ public class RootHandler implements WebHandler {
                     repo.displayName,
                     repo.description,
                     hasReadme,
-                    String.format("/contents/%s", repo.repo), // TODO add branch when ContentsHandler is fixed
+                    String.format("/contents/%s", repo.defaultRepo), // TODO add branch when ContentsHandler is fixed
                     String.format("/card/%s", repo.groupId));
             model.groups.add(group);
         }
