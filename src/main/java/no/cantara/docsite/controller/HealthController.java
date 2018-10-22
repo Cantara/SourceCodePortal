@@ -6,6 +6,7 @@ import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.executor.ExecutorService;
+import no.cantara.docsite.health.GitHubRateLimit;
 import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.util.JsonUtil;
 import no.cantara.docsite.web.ResourceContext;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.bind.JsonbBuilder;
 import java.net.http.HttpResponse;
@@ -49,12 +49,13 @@ public class HealthController implements HttpHandler {
         return future;
     }
 
-    JsonObject getRateLimitJson(Future<HttpResponse<String>> futureGitHubRateLimit) throws InterruptedException, ExecutionException {
+    GitHubRateLimit getRateLimitJson(Future<HttpResponse<String>> futureGitHubRateLimit) throws InterruptedException, ExecutionException {
         HttpResponse<String> response = futureGitHubRateLimit.get();
         if (response.statusCode() == HTTP_OK) {
-            return JsonbBuilder.create().fromJson(response.body(), JsonObject.class);
+            return JsonbBuilder.create().fromJson(response.body(), GitHubRateLimit.class);
         } else {
-            return JsonbBuilder.create().fromJson(String.format("{\"error\": \"%s\"}", response.statusCode()), JsonObject.class);
+//            return JsonbBuilder.create().fromJson(String.format("{\"error\": \"%s\"}", response.statusCode()), JsonObject.class);
+            return null;
         }
     }
 
@@ -163,7 +164,8 @@ public class HealthController implements HttpHandler {
         builder.add("cache", cacheBuilder);
 
         if (futureGitHubRateLimit != null) {
-            builder.add("github-rate-limit", getRateLimitJson(futureGitHubRateLimit));
+            GitHubRateLimit rateLimitJson = getRateLimitJson(futureGitHubRateLimit);
+            builder.add("github-rate-limit", JsonUtil.asJsonObject(rateLimitJson.toString()));
         }
 
         exchange.setStatusCode(HTTP_OK);
