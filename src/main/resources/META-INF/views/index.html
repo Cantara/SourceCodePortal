@@ -31,14 +31,6 @@
                         <p class="card-text" th:text="${group.description}">Some quick example text to build on the card title</p>
                         <a th:href="${group.cardURI}" class="card-link">Show</a>
                         <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Status</th>
-                                <th scope="col">Latest Commit</th>
-                                <th scope="col">Release</th>
-                                <th scope="col">Badges</th>
-                            </tr>
-                            </thead>
                             <tbody>
                             <tr scope="row">
                                 <td><img th:src="${group.jenkinsURL}"
