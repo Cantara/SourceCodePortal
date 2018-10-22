@@ -38,7 +38,7 @@ public class RootHandler implements WebHandler {
             model.groups.add(group);
         }
 
-//        DashboardModel.Repo activity = new DashboardModel.Repo();
+//        DashboardModel.Activity activity = new DashboardModel.Activity();
 //        group.activity.add(activity);
 
         templateVariables.put("model", model);
