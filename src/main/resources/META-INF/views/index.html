@@ -36,11 +36,16 @@
                                 <td><img th:src="${group.no_repos}"
                                          onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/repos-1-lightgrey.svg';"/>
                                 </td>
-                                <td><img th:src="${group.groupStatus}"
-                                         onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/>
-                                </td>
                                 <td><img th:src="${group.groupCommit}"
                                          onerror="if (this.src != 'error.jpg') this.src = 'img/commit-unknown.svg';"/>
+                                </td>
+                                <td><img th:src="${group.snykIOUrl}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/snyk-unknown-lightgrey.svg';"/>
+                                </td>
+                            </tr>
+                            <tr scope="row">
+                                <td><img th:src="${group.groupStatus}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/>
                                 </td>
                                 <td><img th:src="${group.groupRelease}"
                                          onerror="if (this.src != 'error.jpg') this.src = 'img/release-unknown.svg';"/>

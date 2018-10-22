@@ -26,11 +26,11 @@ public class DashboardModel {
         public String groupStatus = "unknown";
         public String groupRelease = "unknown";
         public String no_repos = "https://img.shields.io/badge/repos-5-blue.svg";
-        public final String snykIOUrl;
+        public String snykIOUrl = "https://snyk.io/test/github/Cantara/ConfigService/badge.svg";
 
         public Set<Activity> activity = new LinkedHashSet<>();
 
-        public Group(String organization, String repoName, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI, String jenkinsURL, String snykIOUrl) {
+        public Group(String organization, String repoName, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI, String jenkinsURL, String snykIOUrlx) {
             this.organization = organization;
             this.repoName = repoName;
             this.branch = branch;
@@ -41,7 +41,8 @@ public class DashboardModel {
             this.readmeURI = readmeURI;
             this.cardURI = cardURI;
             this.jenkinsURL = jenkinsURL;
-            this.snykIOUrl = snykIOUrl;
+            this.snykIOUrl = snykIOUrlx.replaceAll("ConfigService", repoName);
+            //this.snykIOUrl = snykIOUrl;
         }
     }
 
