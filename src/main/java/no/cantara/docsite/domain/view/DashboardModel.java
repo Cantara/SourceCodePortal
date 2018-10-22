@@ -22,6 +22,9 @@ public class DashboardModel {
         public final String readmeURI;
         public final String cardURI;
         public final String jenkinsURL;
+        public String groupCommit = "unknown";
+        public String groupStatus = "unknown";
+        public String groupRelease = "unknown";
         public final String snykIOUrl;
 
         public Set<Activity> activity = new LinkedHashSet<>();
