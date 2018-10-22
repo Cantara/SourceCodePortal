@@ -18,7 +18,7 @@ public class Repository implements Serializable {
     public final String rawRepoURL;
     public final String readmeURL;
     public final String contentsURL;
-    public String jenkinsURL = "unknown";
+    public String jenkinsURL = "https://jenkins.capraconsulting.no/buildStatus/icon?jobConfigService";
     public String groupCommit = "unknown";
     public String groupStatus = "unknown";
     public String groupRelease = "unknown";
@@ -36,6 +36,8 @@ public class Repository implements Serializable {
         this.readmeURL = readmeURL;
         this.contentsURL = contentsURL;
         this.snykIOUrl = snykIOUrl.replace("ConfigService", name);
+        this.jenkinsURL = jenkinsURL.replace("ConfigService", name);
+
     }
 
     @Override
