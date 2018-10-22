@@ -35,6 +35,7 @@ public class Repository implements Serializable {
         this.rawRepoURL = rawRepoURL;
         this.readmeURL = readmeURL;
         this.contentsURL = contentsURL;
+        this.snykIOUrl = snykIOUrl.replace("ConfigService", name);
     }
 
     @Override
