@@ -30,7 +30,9 @@
                         </h5>
                         <p class="card-text" th:text="${group.description}">Some quick example text to build on the card title</p>
                         <a th:href="${group.cardURI}" class="card-link">Show</a>
-                        <p>
+                        <div>
+                            <img th:src="${group.jenkinsURL}" />
+                        </div>
                         <table class="table">
                             <thead>
                             <tr>
@@ -49,8 +51,6 @@
                             </tr>
                             </tbody>
                         </table>
-                        </p>
-
                     </div>
                 </div>
             </div>

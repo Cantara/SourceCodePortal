@@ -21,10 +21,12 @@ public class DashboardModel {
         public final boolean hasReadme;
         public final String readmeURI;
         public final String cardURI;
+        public final String jenkinsURL;
+        public final String snykIOUrl;
 
         public Set<Activity> activity = new LinkedHashSet<>();
 
-        public Group(String organization, String repoName, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI) {
+        public Group(String organization, String repoName, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI, String jenkinsURL, String snykIOUrl) {
             this.organization = organization;
             this.repoName = repoName;
             this.branch = branch;
@@ -34,6 +36,8 @@ public class DashboardModel {
             this.hasReadme = hasReadme;
             this.readmeURI = readmeURI;
             this.cardURI = cardURI;
+            this.jenkinsURL = jenkinsURL;
+            this.snykIOUrl = snykIOUrl;
         }
     }
 

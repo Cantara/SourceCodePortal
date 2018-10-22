@@ -2,6 +2,10 @@
   "title": "Cantara Source Code Portal",
   "github": {
     "organization": "Cantara",
+    "badges": {
+      "jenkins": "https://jenkins.capraconsulting.no/buildStatus/icon?job=%s",
+      "snyk.io": "https://snyk.io/test/github/%s/%s/badge.svg"
+    },
     "repos": [
       {
         "groupId": "SourceCodePortal",
@@ -9,7 +13,11 @@
         "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
         "repo": "SourceCodePortal",
         "branch": "master",
-        "default-repo": "SourceCodePortal"
+        "default-repo": "SourceCodePortal",
+        "badge": {
+          "jenkins": "",
+          "snyk.io": ""
+        }
       },
       {
         "groupId": "Whydah",
@@ -17,7 +25,11 @@
         "description": "Defcon 5 grade IAM and SSO security solution",
         "repo": "Whydah*",
         "branch": "master",
-        "default-repo": "Whydah"
+        "default-repo": "Whydah",
+        "badge": {
+          "jenkins": "Whydah",
+          "snyk.io": ""
+        }
       },
       {
         "groupId": "ConfigService",
@@ -25,7 +37,11 @@
         "description": "Provision configuration to agents",
         "repo": "[^\\s]*/\\b(?:ConfigService|JAU|Java-Auto-Update)\\b*",
         "branch": "master",
-        "default-repo": "ConfigService"
+        "default-repo": "ConfigService",
+        "badge": {
+          "jenkins": "",
+          "snyk.io": ""
+        }
       },
       {
         "groupId": "IOT",
@@ -33,7 +49,11 @@
         "description": "Bulding blocks to create IOT platforms",
         "repo": "IoT*",
         "branch": "master",
-        "default-repo": ""
+        "default-repo": "",
+        "badge": {
+          "jenkins": "",
+          "snyk.io": ""
+        }
       },
       {
         "groupId": "ValueReporter",
@@ -41,7 +61,11 @@
         "description": "Toolchain to measure and detect valuable and dead parts of solutions",
         "repo": "Value*",
         "branch": "master",
-        "default-repo": "ValueReporter"
+        "default-repo": "ValueReporter",
+        "badge": {
+          "jenkins": "",
+          "snyk.io": ""
+        }
       },
       {
         "groupId": "dropwizard",
@@ -49,7 +73,11 @@
         "description": "Getting started with dropwizard",
         "repo": "dropwizard*",
         "branch": "master",
-        "default-repo": ""
+        "default-repo": "",
+        "badge": {
+          "jenkins": "",
+          "snyk.io": ""
+        }
       },
       {
         "groupId": "Flow",
@@ -57,7 +85,11 @@
         "description": "Graphics tracing and visualization of long-running processes",
         "repo": "Flow*",
         "branch": "master",
-        "default-repo": ""
+        "default-repo": "",
+        "badge": {
+          "jenkins": "",
+          "snyk.io": ""
+        }
       },
       {
         "groupId": "BaselineProjects",
@@ -65,7 +97,11 @@
         "description": "Cantara Baseline projects for Java and Docker",
         "repo": "[^\\s]*aseline*",
         "branch": "master",
-        "default-repo": ""
+        "default-repo": "",
+        "badge": {
+          "jenkins": "",
+          "snyk.io": ""
+        }
       },
       {
         "groupId": "Cantara-All",
@@ -73,7 +109,11 @@
         "description": "All Cantara projects on GitHub",
         "repo": "[^\\s]*",
         "branch": "master",
-        "default-repo": ""
+        "default-repo": "",
+        "badge": {
+          "jenkins": "",
+          "snyk.io": ""
+        }
       }
     ]
   }
