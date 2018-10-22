@@ -8,6 +8,7 @@ image:https://snyk.io/test/github/Cantara/SourceCodePortal/badge.svg[Known Vulne
 
 Groups documentation from GitHub repositories.
 
+image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-dashboard-example.png
 
 === Getting started (running as SourceCode Dashboard Portal docker image)
 
