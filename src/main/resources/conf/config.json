@@ -13,7 +13,7 @@
         "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
         "repo": "SourceCodePortal",
         "branch": "master",
-        "default-repo": "SourceCodePortal",
+        "default-group-repo": "SourceCodePortal",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
@@ -25,7 +25,7 @@
         "description": "Defcon 5 grade IAM and SSO security solution",
         "repo": "Whydah*",
         "branch": "master",
-        "default-repo": "Whydah-Admin-SDK",
+        "default-group-repo": "Whydah-Admin-SDK",
         "badge": {
           "jenkins": "Whydah",
           "snyk.io": ""
@@ -37,7 +37,7 @@
         "description": "Provision configuration to agents",
         "repo": "[^\\s]*/\\b(?:ConfigService|JAU|Java-Auto-Update)\\b*",
         "branch": "master",
-        "default-repo": "ConfigService",
+        "default-group-repo": "ConfigService",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
@@ -49,7 +49,7 @@
         "description": "Bulding blocks to create IOT platforms",
         "repo": "IoT*",
         "branch": "master",
-        "default-repo": "",
+        "default-group-repo": "",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
@@ -61,7 +61,7 @@
         "description": "Toolchain to measure and detect valuable and dead parts of solutions",
         "repo": "Value*",
         "branch": "master",
-        "default-repo": "Valuereporter",
+        "default-group-repo": "Valuereporter",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
@@ -73,7 +73,7 @@
         "description": "Getting started with dropwizard",
         "repo": "dropwizard*",
         "branch": "master",
-        "default-repo": "",
+        "default-group-repo": "",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
@@ -85,7 +85,7 @@
         "description": "Graphics tracing and visualization of long-running processes",
         "repo": "Flow*",
         "branch": "master",
-        "default-repo": "",
+        "default-group-repo": "",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
@@ -97,7 +97,7 @@
         "description": "Cantara Baseline projects for Java and Docker",
         "repo": "[^\\s]*aseline*",
         "branch": "master",
-        "default-repo": "",
+        "default-group-repo": "",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
@@ -109,7 +109,7 @@
         "description": "All Cantara projects on GitHub",
         "repo": "[^\\s]*",
         "branch": "master",
-        "default-repo": "",
+        "default-group-repo": "",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
