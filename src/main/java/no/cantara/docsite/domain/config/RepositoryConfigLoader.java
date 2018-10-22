@@ -65,7 +65,8 @@ public class RepositoryConfigLoader {
                     String contentsURL = String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", cacheKey.organization, cacheKey.repoName, "%s", "%s");
                     CacheGroupKey cacheGroupKey = CacheGroupKey.of(cacheKey, repoConfig.groupId);
                     cacheStore.getCacheKeys().put(cacheKey, cacheGroupKey);
-                    Repository repository = new Repository(cacheKey, repo.htmlUrl, rawRepoURL, readmeURL, contentsURL);
+                    // copy relevant repo info to Repository instance
+                    Repository repository = new Repository(cacheKey, repo.id, repo.name, repo.description, repo.htmlUrl, rawRepoURL, readmeURL, contentsURL);
                     cacheStore.getRepositoryGroups().put(cacheGroupKey, repository);
                 }
             }

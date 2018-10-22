@@ -79,7 +79,9 @@
 // project sass
 // -------------------------------------------------------------
 
-//@import "./styles/base";
+@import "./styles/base";
+@import "./styles/github";
+@import "./styles/asciidoc";
 
 header {
   background-color: $primary

@@ -11,13 +11,19 @@ public class Repository implements Serializable {
     private static final long serialVersionUID = 3135783516132571382L;
 
     public final CacheKey cacheKey;
+    public final String id;
+    public final String name;
+    public final String description;
     public final String repoURL;
     public final String rawRepoURL;
     public final String readmeURL;
     public final String contentsURL;
 
-    Repository(CacheKey cacheKey, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {
+    Repository(CacheKey cacheKey, String id, String name, String description, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {
         this.cacheKey = cacheKey;
+        this.id = id;
+        this.name = name;
+        this.description = description;
         this.repoURL = repoURL;
         this.rawRepoURL = rawRepoURL;
         this.readmeURL = readmeURL;
@@ -46,8 +52,8 @@ public class Repository implements Serializable {
         return JsonUtil.asString(this);
     }
 
-    public static Repository of(CacheKey cacheKey, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {
-        return new Repository(cacheKey, repoURL, rawRepoURL, readmeURL, contentsURL);
+    public static Repository of(CacheKey cacheKey, String id, String name, String description, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {
+        return new Repository(cacheKey, id, name, description, repoURL, rawRepoURL, readmeURL, contentsURL);
     }
 
 }

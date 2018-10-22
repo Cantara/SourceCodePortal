@@ -5,65 +5,9 @@
     "repos": [
       {
         "groupId": "SourceCodePortal",
-        "display-name": "Source Code Portal",
-        "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
+        "display-name": "Source code portal",
+        "description": "The SCP gathers all content from your GitHub repos and convey them in a readable form",
         "repo": "SourceCodePortal",
-        "branch": "master"
-      },
-      {
-        "groupId": "Whydah",
-        "display-name": "Whydah IAM and SSO",
-        "description": "Defcon 5 grade IAM and SSO security solution",
-        "repo": "Whydah*",
-        "branch": "master"
-      },
-      {
-        "groupId": "ConfigService",
-        "display-name": "ConfigurationService",
-        "description": "Provision configuration to agents",
-        "repo": "[^\\s]*/\\b(?:ConfigService|JAU|Java-Auto-Update)\\b*",
-        "branch": "master"
-      },
-      {
-        "groupId": "IOT",
-        "display-name": "Cantara IOT projects",
-        "description": "Bulding blocks to create IOT platforms",
-        "repo": "IoT*",
-        "branch": "master"
-      },
-      {
-        "groupId": "ValueReporter",
-        "display-name": "Cantara ValueReporter Toolchain",
-        "description": "Toolchain to measure and detect valuable and dead parts of solutions",
-        "repo": "Value*",
-        "branch": "master"
-      },
-      {
-        "groupId": "dropwizard",
-        "display-name": "dropwizard examples",
-        "description": "Getting started with dropwizard",
-        "repo": "dropwizard*",
-        "branch": "master"
-      },
-      {
-        "groupId": "Flow",
-        "display-name": "Cantara Flow",
-        "description": "Graphics tracing and visualization of long-running processes",
-        "repo": "Flow*",
-        "branch": "master"
-      },
-      {
-        "groupId": "BaselineProjects",
-        "display-name": "Cantara Baseline Codebases",
-        "description": "Cantara Baseline projects for Java and Docker",
-        "repo": "[^\\s]*aseline*",
-        "branch": "master"
-      },
-      {
-        "groupId": "Cantara-All",
-        "display-name": "Cantara GitHub",
-        "description": "All Cantara projects on GitHub",
-        "repo": "[^\\s]*",
         "branch": "master"
       }
     ]
