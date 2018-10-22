@@ -18,6 +18,13 @@ public class Repository implements Serializable {
     public final String rawRepoURL;
     public final String readmeURL;
     public final String contentsURL;
+    public String jenkinsURL = "unknown";
+    public String groupCommit = "unknown";
+    public String groupStatus = "unknown";
+    public String groupRelease = "unknown";
+    public String no_repos = "https://img.shields.io/badge/repos-5-blue.svg";
+    public String snykIOUrl = "https://snyk.io/test/github/Cantara/ConfigService/badge.svg";
+
 
     Repository(CacheKey cacheKey, String id, String name, String description, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {
         this.cacheKey = cacheKey;

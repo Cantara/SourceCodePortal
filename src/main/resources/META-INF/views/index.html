@@ -29,7 +29,6 @@
                             <span th:if="${!group.hasReadme}" th:text="${group.displayName}">Card link</span>
                         </h5>
                         <p class="card-text" th:text="${group.description}">Some quick example text to build on the card title</p>
-                        <a th:href="${group.cardURI}" class="card-link">Show</a>
                         <table class="table">
                             <tbody>
                             <tr scope="row">
@@ -56,6 +55,8 @@
                             </tr>
                             </tbody>
                         </table>
+                        <a th:href="${('/card/')+group.groupId}" class="card-link">Show</a>
+                        </p>
                     </div>
                 </div>
             </div>

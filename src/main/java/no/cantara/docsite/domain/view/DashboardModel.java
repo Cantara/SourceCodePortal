@@ -44,6 +44,11 @@ public class DashboardModel {
             this.snykIOUrl = snykIOUrlx.replaceAll("ConfigService", repoName);
             //this.snykIOUrl = snykIOUrl;
         }
+
+        public void setNoOfRepos(int noOfRepos) {
+            String noString = String.valueOf(noOfRepos);
+            this.no_repos = no_repos.replaceAll("-", "-" + noString + "-");
+        }
     }
 
     public class Activity {
