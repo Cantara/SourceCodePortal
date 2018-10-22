@@ -26,9 +26,9 @@ public class PreFetchRepositoryContents {
     public void fetch() {
         LOG.info("Pre-fetch data..");
         cacheStore.getRepositoryGroups().forEach(rg -> {
-            executorService.queue(new FetchMavenPOMTask(configuration, executorService, cacheStore, rg.getKey(), rg.getValue().contentsURL));
-            executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey(), rg.getValue().readmeURL));
-            executorService.queue(new FetchCommitRevisionsTask(configuration, executorService, cacheStore, rg.getKey()));
+            executorService.queue(new FetchMavenPOMTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().contentsURL));
+            executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().readmeURL));
+            executorService.queue(new FetchCommitRevisionsTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey()));
         });
         executorService.queue(new PreFetchDoneTask(configuration, executorService));
     }

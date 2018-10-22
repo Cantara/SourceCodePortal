@@ -26,7 +26,7 @@ public class CardHandler implements WebHandler {
         templateVariables.put("repositoryConfig", repositoryConfig);
         templateVariables.put("repositoryGroup", cacheStore.getRepositoryGroupsByGroupId(repositoryConfig.groupId));
 
-        if (ThymeleafViewEngineProcessor.processView(exchange, "/card/card", templateVariables)) {
+        if (ThymeleafViewEngineProcessor.processView(exchange, webContext.asTemplateResource(), templateVariables)) {
             return true;
         }
 

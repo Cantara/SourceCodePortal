@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CacheStore {
 
@@ -122,6 +123,7 @@ public class CacheStore {
     }
 
     public RepositoryConfig.Repo getGroupByGroupId(String groupId) {
+        Objects.requireNonNull(groupId);
         for(RepositoryConfig.Repo repo : repositoryConfig.gitHub.repos) {
             if (groupId.equals(repo.groupId)) {
                 return repo;

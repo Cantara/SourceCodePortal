@@ -29,7 +29,7 @@ public class RootHandler implements WebHandler {
         }
         templateVariables.put("repositoryGroups", repositoryGroups);
 
-        if (ThymeleafViewEngineProcessor.processView(exchange, String.format("%s", webContext.uri), templateVariables)) {
+        if (ThymeleafViewEngineProcessor.processView(exchange, webContext.asTemplateResource(), templateVariables)) {
             return true;
         }
 

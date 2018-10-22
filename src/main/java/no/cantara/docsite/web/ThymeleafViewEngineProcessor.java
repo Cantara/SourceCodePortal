@@ -14,19 +14,10 @@ public class ThymeleafViewEngineProcessor {
         return classLoader.getResource(DefaultTemplateEngine.CLASS_RESOURCE_PATH + resourceName) != null;
     }
 
-    static String resolveView(HttpServerExchange exchange, String subContext) {
-        return (subContext == null || "".equals(subContext) ? String.format("%s.html", exchange.getRequestURI()) : String.format("/%s%s.html", subContext, exchange.getRequestURI()));
-    }
-
-    static String resolveView(String pageURI) {
-        return String.format("%s.html", pageURI);
-    }
-
-    public static boolean processView(HttpServerExchange exchange, String pageURI, Map<String, Object> templateVariables) throws RuntimeException {
+    public static boolean processView(HttpServerExchange exchange, String viewId, Map<String, Object> templateVariables) throws RuntimeException {
         UndertowContext ctx = new UndertowContext(exchange);
         ctx.setLocale(Locale.ENGLISH);
         ctx.setVariables(templateVariables);
-        String viewId = resolveView(pageURI);
 
         if (!templateExists(viewId)) {
             return false;

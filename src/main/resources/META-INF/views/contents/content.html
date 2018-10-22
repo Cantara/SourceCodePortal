@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/template.html}">
+
+<head>
+    <title>Getting started</title>
+</head>
+
+<body>
+
+<section layout:fragment="custom-content">
+    <main role="main" class="container-fluid">
+        <h1 th:text="${repositoryConfig.displayName}"></h1>
+        <div th:text="${repositoryConfig.description}"></div>
+
+        <article th:text="${contentHtml}">
+        </article>
+    </main>
+</section>
+
+</body>

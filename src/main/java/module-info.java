@@ -28,6 +28,10 @@ module cantara.docsite {
     requires org.commonmark;
     requires org.commonmark.ext.gfm.tables;
     requires asciidoctorj;
+//    requires asciidoctorj.api;
+//    requires asciidoctorj.api;
+//    requires jruby.core;
+//    requires jruby.stdlib;
     requires no.ssb.config;
 
     opens conf;

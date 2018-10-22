@@ -17,9 +17,9 @@ class WebController implements HttpHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebController.class);
     static final WebContext[] VALID_CONTEXTS = new WebContext[]{
-            WebContext.of("/index", "", new RootHandler()),
-            WebContext.of("/home", "contents", new ContentsHandler()),
-            WebContext.of("/card", "card", new CardHandler())
+            WebContext.of("/index", "", "index.html", new RootHandler()),
+            WebContext.of("/contents", "contents", "content.html", new ContentsHandler()),
+            WebContext.of("/card", "card", "card.html", new CardHandler())
     };
 
     final DynamicConfiguration configuration;

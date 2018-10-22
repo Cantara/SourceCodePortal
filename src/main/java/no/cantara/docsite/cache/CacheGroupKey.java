@@ -2,16 +2,22 @@ package no.cantara.docsite.cache;
 
 import no.cantara.docsite.util.JsonUtil;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class CacheGroupKey extends CacheKey {
+public class CacheGroupKey implements Serializable {
 
     private static final long serialVersionUID = 9068679113704432070L;
 
+    public final String organization;
+    public final String repoName;
+    public final String branch;
     public final String groupId;
 
     CacheGroupKey(String organization, String repoName, String branch, String groupId) {
-        super(organization, repoName, branch);
+        this.organization = organization;
+        this.repoName = repoName;
+        this.branch = branch;
         this.groupId = groupId;
     }
 
@@ -23,14 +29,16 @@ public class CacheGroupKey extends CacheKey {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CacheGroupKey)) return false;
-        if (!super.equals(o)) return false;
         CacheGroupKey that = (CacheGroupKey) o;
-        return Objects.equals(groupId, that.groupId);
+        return Objects.equals(organization, that.organization) &&
+                Objects.equals(repoName, that.repoName) &&
+                Objects.equals(branch, that.branch) &&
+                Objects.equals(groupId, that.groupId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), groupId);
+        return Objects.hash(organization, repoName, branch, groupId);
     }
 
     @Override
