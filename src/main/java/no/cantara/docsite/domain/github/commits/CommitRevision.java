@@ -1,32 +1,6 @@
 package no.cantara.docsite.domain.github.commits;
 
 
-//List<Map<String, Map<String, Map<String, String>>>> elementList = ctx.read("$.[*]");
-//        for (Map<String, Map<String, Map<String, String>>> elementMap : elementList) {
-//        String shaRevision = String.valueOf(elementMap.get("sha"));
-//        Map<String, Map<String, String>> commitMap = elementMap.get("commit");
-//        Map<String, String> authorMap = commitMap.get("commitAuthor");
-//        String commitAuthor = authorMap.get("name");
-//        String date = authorMap.get("date");
-//        String message = String.valueOf(commitMap.get("message"));
-//        String htmlUrl = String.valueOf(elementMap.get("html_url"));
-//        String projectId;
-//        try {
-//        URL url = new URL(htmlUrl);
-//        String[] pathArray = url.getPath().split("\\/");
-//        projectId = pathArray[2];
-//        } catch (MalformedURLException e) {
-//        throw new RuntimeException(e);
-//        }
-//        String avatarUrl = (elementMap.get("commitAuthor") != null ? String.valueOf(elementMap.get("commitAuthor").get("avatar_url")) : "");
-//
-//        JSONArray jsonArray = (JSONArray) elementMap.get("parents");
-//        Map<String, String> parentsMap = (Map<String, String>) (jsonArray.isEmpty() ? new HashMap<>() : jsonArray.get(0));
-//        String shaParentRevision = ((parentsMap != null && !parentsMap.isEmpty()) ? String.valueOf(parentsMap.get("sha")) : null);
-//
-//        commitRevision.addEntry(new CommitRevision.Entry(projectId, commitRevision.getCurrentPage(), shaRevision, shaParentRevision, commitAuthor, date, message, htmlUrl, avatarUrl));
-
-
 import no.cantara.docsite.util.JsonUtil;
 
 import javax.json.bind.annotation.JsonbProperty;
