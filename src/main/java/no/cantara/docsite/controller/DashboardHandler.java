@@ -32,7 +32,7 @@ public class DashboardHandler implements WebHandler {
                     repo.description,
                     hasReadme,
                     String.format("/contents/%s/%s", repo.defaultGroupRepo, repo.branch),
-                    String.format("/card/%s", repo.groupId),
+                    String.format("/group/%s", repo.groupId),
                     String.format(cacheStore.getRepositoryConfig().gitHub.badges.jenkins, repo.defaultGroupRepo),
                     String.format(cacheStore.getRepositoryConfig().gitHub.badges.snykIO, cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultGroupRepo));
             model.groups.add(group);

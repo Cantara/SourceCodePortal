@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="card-title">
-                            <a style="text-decoration: none;" th:href="${('/card/')+group.groupId}" class="card-link" th:text="${group.displayName}">Show</a>&#160;
+                            <a style="text-decoration: none;" th:href="${('/group/')+group.groupId}" class="card-link" th:text="${group.displayName}">Show</a>&#160;
                             <a style="text-decoration: none;" th:if="${group.hasReadme}" th:href="${group.readmeURI}"><img style="border: 0px; margin-top: 0; max-width: 16px;" src="/img/doc.svg" /></a>
                         </h5>
                         <p class="card-text" th:text="${group.description}">Some quick example text to build on the card title</p>

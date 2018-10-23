@@ -51,7 +51,7 @@ public class ContentsHandler implements WebHandler {
                     repo.description,
                     hasReadme,
                     String.format("/contents/%s/%s", repo.repo, repo.branch),
-                    String.format("/card/%s", repo.groupId));
+                    String.format("/group/%s", repo.groupId));
             model.groups.add(group);
         }
 
