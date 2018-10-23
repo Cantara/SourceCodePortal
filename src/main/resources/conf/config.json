@@ -25,7 +25,7 @@
         "description": "Defcon 5 grade IAM and SSO security solution",
         "repo": "Whydah*",
         "branch": "master",
-        "default-group-repo": "Whydah-Admin-SDK",
+        "default-group-repo": "Whydah-SecurityTokenService",
         "badge": {
           "jenkins": "Whydah",
           "snyk.io": ""

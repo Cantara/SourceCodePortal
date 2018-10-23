@@ -21,7 +21,7 @@ public class Repository implements Serializable {
     public String jenkinsURL = "https://jenkins.capraconsulting.no/buildStatus/icon?jobConfigService";
     public String groupCommit = "unknown";
     public String groupStatus = "unknown";
-    public String groupRelease = "unknown";
+    public String repoRelease = "https://img.shields.io/github/tag/Cantara/ConfigService.svg";
     public String no_repos = "https://img.shields.io/badge/repos-5-blue.svg";
     public String snykIOUrl = "https://snyk.io/test/github/Cantara/ConfigService/badge.svg";
     public String snyktestIOUrl = "https://snyk.io/test/github/Cantara/ConfigService";
@@ -39,6 +39,7 @@ public class Repository implements Serializable {
         this.snykIOUrl = snykIOUrl.replace("ConfigService", name);
         this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", name);
         this.jenkinsURL = jenkinsURL.replace("ConfigService", name);
+        this.repoRelease = repoRelease.replace("ConfigService", name);
 
     }
 
