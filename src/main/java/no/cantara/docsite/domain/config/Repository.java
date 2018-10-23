@@ -19,7 +19,7 @@ public class Repository implements Serializable {
     public final String rawRepoURL;
     public final String readmeURL;
     public final String contentsURL;
-    public String jenkinsURL = "https://jenkins.capraconsulting.no/buildStatus/icon?jobConfigService";
+    public String jenkinsURL = "https://jenkins.capraconsulting.no/buildStatus/icon?job=ConfigService";
     public String groupCommit = "unknown";
     public String groupStatus = "unknown";
     public String groupRelease = "https://img.shields.io/github/tag/Cantara/ConfigService.svg";
