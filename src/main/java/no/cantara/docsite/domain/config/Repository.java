@@ -38,11 +38,14 @@ public class Repository implements Serializable {
         this.rawRepoURL = rawRepoURL;
         this.readmeURL = readmeURL;
         this.contentsURL = contentsURL;
-        this.snykIOUrl = snykIOUrl.replace("ConfigService", defaultGroupRepo);
-        this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", defaultGroupRepo);
-        this.jenkinsURL = jenkinsURL.replace("ConfigService", defaultGroupRepo);
-        this.groupRelease = groupRelease.replace("ConfigService", defaultGroupRepo);
-
+        if (defaultGroupRepo != null) {
+            if (snykIOUrl != null && snykIOUrl.contains("ConfigService")) {
+                this.snykIOUrl = snykIOUrl.replace("ConfigService", defaultGroupRepo);
+            }
+            this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", defaultGroupRepo);
+            this.jenkinsURL = jenkinsURL.replace("ConfigService", defaultGroupRepo);
+            this.groupRelease = groupRelease.replace("ConfigService", defaultGroupRepo);
+        }
     }
 
     @Override
