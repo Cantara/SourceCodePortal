@@ -32,8 +32,8 @@
         }
       },
       {
-        "groupId": "The ConfigService and JAU Toolchain",
-        "display-name": "ConfigService",
+        "groupId": "ConfigService",
+        "display-name": "The ConfigService and JAU Toolchain",
         "description": "Provision configuration to agents",
         "repo": "ConfigService*",
         "branch": "master",
