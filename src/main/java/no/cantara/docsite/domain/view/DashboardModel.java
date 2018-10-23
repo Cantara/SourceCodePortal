@@ -23,7 +23,7 @@ public class DashboardModel {
         public final String readmeURI;
         public final String cardURI;
         public final String jenkinsURL;
-        public String groupCommit = "unknown";
+        public String groupCommit = "https://img.shields.io/github/last-commit/Cantara/ConfigService.svg";
         public String groupStatus = "unknown";
         public String groupRelease = "https://img.shields.io/github/tag/Cantara/ConfigService.svg";
         public String no_repos = "https://img.shields.io/badge/repos-5-blue.svg";
@@ -50,8 +50,7 @@ public class DashboardModel {
             this.snykIOUrl = snykIOUrlx.replaceAll("ConfigService", repoName);
             this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", repoName);
             this.groupRelease = groupRelease.replace("ConfigService", repoName);
-
-
+            this.groupCommit = groupCommit.replace("ConfigService", repoName);
             //this.snykIOUrl = snykIOUrl;
         }
 

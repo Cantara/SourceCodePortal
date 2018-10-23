@@ -20,7 +20,7 @@ public class Repository implements Serializable {
     public final String readmeURL;
     public final String contentsURL;
     public String jenkinsURL = "https://jenkins.capraconsulting.no/buildStatus/icon?job=ConfigService";
-    public String groupCommit = "unknown";
+    public String groupCommit = "https://img.shields.io/github/last-commit/Cantara/ConfigService.svg";
     public String groupStatus = "unknown";
     public String groupRelease = "https://img.shields.io/github/tag/Cantara/ConfigService.svg";
     public String no_repos = "https://img.shields.io/badge/repos-5-blue.svg";
@@ -45,6 +45,7 @@ public class Repository implements Serializable {
             this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", defaultGroupRepo);
             this.jenkinsURL = jenkinsURL.replace("ConfigService", defaultGroupRepo);
             this.groupRelease = groupRelease.replace("ConfigService", defaultGroupRepo);
+            this.groupCommit = groupCommit.replace("ConfigService", defaultGroupRepo);
         }
     }
 

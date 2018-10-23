@@ -41,8 +41,7 @@
                                 <td><img th:src="${group.no_repos}"
                                          onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/repos-1-lightgrey.svg';"/>
                                 </td>
-                                <td><img th:src="${group.groupCommit}"
-                                         onerror="if (this.src != 'error.jpg') this.src = 'img/commit-unknown.svg';"/>
+                                <td><img th:src="${group.groupCommit}"/>
                                 </td>
                                 <td>
                                     <a th:href="${group.snyktestIOUrl}">
