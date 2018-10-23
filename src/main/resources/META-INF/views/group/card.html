@@ -41,10 +41,11 @@
                 <td>TBD-branches</td>
                 <td>
                     <a th:href="${group.snyktestIOUrl}">
-                        <img th:src="${group.snykIOUrl}"
-                             onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/snyk-unknown-lightgrey.svg';"/>
+                        <img th:src="${group.snykIOUrl}"/>
                     </a>
-                    <img th:src="${group.jenkinsURL}"/>
+                    <img th:src="${group.jenkinsURL}"
+                         onerror="if (this.src != 'error.jpg') this.src = '../img/build-unknown.svg';"/>
+                    <img th:src="${group.githubIssues}"/>
                     <img src="../img/license-asl2.svg"/>
                 </td>
             </tr>

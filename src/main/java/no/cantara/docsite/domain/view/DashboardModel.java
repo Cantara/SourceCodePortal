@@ -31,6 +31,7 @@ public class DashboardModel {
         public String no_repos = "https://img.shields.io/badge/repos-5-blue.svg";
         public String snykIOUrl = "https://snyk.io/test/github/" + SCP_TEMPLATE_ORGANIZATION_NAME + "/" + SCP_TEMPLATE_REPO_NAME + "/badge.svg";
         public String snyktestIOUrl = "https://snyk.io/test/github/" + SCP_TEMPLATE_ORGANIZATION_NAME + "/" + SCP_TEMPLATE_REPO_NAME;
+        public String githubIssues = "https://img.shields.io/github/issues/" + SCP_TEMPLATE_ORGANIZATION_NAME + "/" + SCP_TEMPLATE_REPO_NAME + ".svg";
 
         public Set<Activity> activity = new LinkedHashSet<>();
 
@@ -52,6 +53,7 @@ public class DashboardModel {
             this.snykIOUrl = snykIOUrlx.replaceAll(SCP_TEMPLATE_REPO_NAME, repoName);
             this.snyktestIOUrl = snyktestIOUrl.replace(SCP_TEMPLATE_REPO_NAME, repoName);
             this.groupRelease = groupRelease.replace(SCP_TEMPLATE_REPO_NAME, repoName);
+            this.githubIssues = githubIssues.replace(SCP_TEMPLATE_REPO_NAME, repoName);
             this.groupCommit = groupCommit.replace(SCP_TEMPLATE_REPO_NAME, repoName);
             //this.snykIOUrl = snykIOUrl;
         }
