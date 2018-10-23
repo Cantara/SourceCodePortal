@@ -39,9 +39,10 @@ public class FetchMavenPOMTask extends WorkerTask  {
             MavenPOMParser parser = new MavenPOMParser();
             MavenPOM mavenPOM = parser.parse(mavenPOMContents.content);
             cacheStore.getProjects().put(cacheKey, mavenPOM);
-        } else {
-            LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());
         }
+//        else {
+//            LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());
+//        }
     }
 
 }
