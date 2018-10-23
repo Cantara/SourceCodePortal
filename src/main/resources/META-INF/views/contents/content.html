@@ -11,11 +11,7 @@
 
 <section layout:fragment="custom-content">
     <main role="main" class="container-fluid">
-        <h1 th:text="${model.repository.description}"></h1>
-
-        <article th:utext="${model.contentHtml}">
-
-        </article>
+        <article th:utext="${model.contentHtml}"></article>
     </main>
 </section>
 
