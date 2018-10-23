@@ -44,6 +44,9 @@ public class DashboardModel {
             this.readmeURI = readmeURI;
             this.cardURI = cardURI;
             this.jenkinsURL = jenkinsURL;
+            if (repoName.contains("*") && defaultGroupRepo != null) {
+                repoName = defaultGroupRepo;
+            }
             this.snykIOUrl = snykIOUrlx.replaceAll("ConfigService", repoName);
             this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", repoName);
             this.groupRelease = groupRelease.replace("ConfigService", repoName);
