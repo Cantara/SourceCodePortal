@@ -10,6 +10,7 @@ public class Repository implements Serializable {
 
     public static final String SCP_TEMPLATE_REPO_NAME = "ConfigService";
     public static final String SCP_TEMPLATE_ORGANIZATION_NAME = "Cantara";
+    public static final String SCP_TEMPLATE_JENKINS_URL = "https://jenkins.capraconsulting.no";
 
     private static final long serialVersionUID = 3135783516132571382L;
 
@@ -22,7 +23,7 @@ public class Repository implements Serializable {
     public final String rawRepoURL;
     public final String readmeURL;
     public final String contentsURL;
-    public String jenkinsURL = "https://jenkins.capraconsulting.no/buildStatus/icon?job=" + SCP_TEMPLATE_REPO_NAME;
+    public String jenkinsURL = SCP_TEMPLATE_JENKINS_URL + "/buildStatus/icon?job=" + SCP_TEMPLATE_REPO_NAME;
     public String groupCommit = "https://img.shields.io/github/last-commit/" + SCP_TEMPLATE_ORGANIZATION_NAME + "/" + SCP_TEMPLATE_REPO_NAME + ".svg";
     public String groupStatus = "unknown";
     public String groupRelease = "https://img.shields.io/github/tag/" + SCP_TEMPLATE_ORGANIZATION_NAME + "/" + SCP_TEMPLATE_REPO_NAME + ".svg";

@@ -3,8 +3,7 @@ package no.cantara.docsite.domain.view;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static no.cantara.docsite.domain.config.Repository.SCP_TEMPLATE_ORGANIZATION_NAME;
-import static no.cantara.docsite.domain.config.Repository.SCP_TEMPLATE_REPO_NAME;
+import static no.cantara.docsite.domain.config.Repository.*;
 
 public class DashboardModel {
 
@@ -25,7 +24,7 @@ public class DashboardModel {
         public final boolean hasReadme;
         public final String readmeURI;
         public final String cardURI;
-        public final String jenkinsURL;
+        public String jenkinsURL = SCP_TEMPLATE_JENKINS_URL + "/buildStatus/icon?job=" + SCP_TEMPLATE_REPO_NAME;
         public String groupCommit = "https://img.shields.io/github/last-commit/" + SCP_TEMPLATE_ORGANIZATION_NAME + "/" + SCP_TEMPLATE_REPO_NAME + ".svg";
         public String groupStatus = "unknown";
         public String groupRelease = "https://img.shields.io/github/tag/" + SCP_TEMPLATE_ORGANIZATION_NAME + "/" + SCP_TEMPLATE_REPO_NAME + ".svg";
