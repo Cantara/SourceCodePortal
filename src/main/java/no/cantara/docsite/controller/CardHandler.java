@@ -38,6 +38,7 @@ public class CardHandler implements WebHandler {
             DashboardModel.Group group = new DashboardModel.Group(
                     cacheStore.getRepositoryConfig().gitHub.organization,
                     repo.cacheKey.repoName,
+                    repositoryConfig.defaultGroupRepo,
                     repo.cacheKey.branch,
                     repositoryConfig.groupId,
                     repo.description,

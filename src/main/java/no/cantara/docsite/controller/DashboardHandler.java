@@ -26,6 +26,7 @@ public class DashboardHandler implements WebHandler {
             DashboardModel.Group group = new DashboardModel.Group(
                     cacheStore.getRepositoryConfig().gitHub.organization,
                     repo.repo,
+                    repo.defaultGroupRepo,
                     repo.branch,
                     repo.groupId,
                     repo.displayName,

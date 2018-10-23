@@ -13,6 +13,7 @@ public class Repository implements Serializable {
     public final CacheKey cacheKey;
     public final String id;
     public final String name;
+    public final String defaultGroupRepo;
     public final String description;
     public final String repoURL;
     public final String rawRepoURL;
@@ -21,25 +22,26 @@ public class Repository implements Serializable {
     public String jenkinsURL = "https://jenkins.capraconsulting.no/buildStatus/icon?jobConfigService";
     public String groupCommit = "unknown";
     public String groupStatus = "unknown";
-    public String repoRelease = "https://img.shields.io/github/tag/Cantara/ConfigService.svg";
+    public String groupRelease = "https://img.shields.io/github/tag/Cantara/ConfigService.svg";
     public String no_repos = "https://img.shields.io/badge/repos-5-blue.svg";
     public String snykIOUrl = "https://snyk.io/test/github/Cantara/ConfigService/badge.svg";
     public String snyktestIOUrl = "https://snyk.io/test/github/Cantara/ConfigService";
 
 
-    Repository(CacheKey cacheKey, String id, String name, String description, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {
+    Repository(CacheKey cacheKey, String id, String name, String defaultGroupRepo, String description, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {
         this.cacheKey = cacheKey;
         this.id = id;
         this.name = name;
+        this.defaultGroupRepo = defaultGroupRepo;
         this.description = description;
         this.repoURL = repoURL;
         this.rawRepoURL = rawRepoURL;
         this.readmeURL = readmeURL;
         this.contentsURL = contentsURL;
-        this.snykIOUrl = snykIOUrl.replace("ConfigService", name);
-        this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", name);
-        this.jenkinsURL = jenkinsURL.replace("ConfigService", name);
-        this.repoRelease = repoRelease.replace("ConfigService", name);
+        this.snykIOUrl = snykIOUrl.replace("ConfigService", defaultGroupRepo);
+        this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", defaultGroupRepo);
+        this.jenkinsURL = jenkinsURL.replace("ConfigService", defaultGroupRepo);
+        this.groupRelease = groupRelease.replace("ConfigService", defaultGroupRepo);
 
     }
 
@@ -65,8 +67,8 @@ public class Repository implements Serializable {
         return JsonUtil.asString(this);
     }
 
-    public static Repository of(CacheKey cacheKey, String id, String name, String description, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {
-        return new Repository(cacheKey, id, name, description, repoURL, rawRepoURL, readmeURL, contentsURL);
+    public static Repository of(CacheKey cacheKey, String id, String name, String defaultGroupRepo, String description, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {
+        return new Repository(cacheKey, id, name, defaultGroupRepo, description, repoURL, rawRepoURL, readmeURL, contentsURL);
     }
 
 }

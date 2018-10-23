@@ -68,7 +68,7 @@ public class RepositoryConfigLoader {
                     cacheStore.getCacheKeys().put(cacheKey, cacheGroupKey);
                     cacheStore.getCacheGroupKeys().put(cacheGroupKey, cacheKey);
                     // copy relevant repo info to Repository instance
-                    Repository repository = new Repository(cacheKey, repo.id, repo.name, repo.description, repo.htmlUrl, rawRepoURL, readmeURL, contentsURL);
+                    Repository repository = new Repository(cacheKey, repo.id, repo.name, repoConfig.defaultGroupRepo, repo.description, repo.htmlUrl, rawRepoURL, readmeURL, contentsURL);
                     cacheStore.getRepositoryGroups().put(cacheGroupKey, repository);
                 }
             }

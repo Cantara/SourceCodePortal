@@ -14,6 +14,7 @@ public class DashboardModel {
 
         public final String organization;
         public final String repoName;
+        public final String defaultGroupRepo;
         public final String branch;
         public final String groupId;
         public final String displayName;
@@ -31,9 +32,10 @@ public class DashboardModel {
 
         public Set<Activity> activity = new LinkedHashSet<>();
 
-        public Group(String organization, String repoName, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI, String jenkinsURL, String snykIOUrlx) {
+        public Group(String organization, String repoName, String defaultGroupRepo, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI, String jenkinsURL, String snykIOUrlx) {
             this.organization = organization;
             this.repoName = repoName;
+            this.defaultGroupRepo = defaultGroupRepo;
             this.branch = branch;
             this.groupId = groupId;
             this.displayName = displayName;
@@ -42,9 +44,9 @@ public class DashboardModel {
             this.readmeURI = readmeURI;
             this.cardURI = cardURI;
             this.jenkinsURL = jenkinsURL;
-            this.snykIOUrl = snykIOUrlx.replaceAll("ConfigService", repoName);
-            this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", repoName);
-            this.groupRelease = groupRelease.replace("ConfigService", repoName);
+            this.snykIOUrl = snykIOUrlx.replaceAll("ConfigService", defaultGroupRepo);
+            this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", defaultGroupRepo);
+            this.groupRelease = groupRelease.replace("ConfigService", defaultGroupRepo);
 
 
             //this.snykIOUrl = snykIOUrl;
