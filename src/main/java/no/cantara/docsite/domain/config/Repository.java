@@ -24,6 +24,7 @@ public class Repository implements Serializable {
     public String groupRelease = "unknown";
     public String no_repos = "https://img.shields.io/badge/repos-5-blue.svg";
     public String snykIOUrl = "https://snyk.io/test/github/Cantara/ConfigService/badge.svg";
+    public String snyktestIOUrl = "https://snyk.io/test/github/Cantara/ConfigService";
 
 
     Repository(CacheKey cacheKey, String id, String name, String description, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {
@@ -36,6 +37,7 @@ public class Repository implements Serializable {
         this.readmeURL = readmeURL;
         this.contentsURL = contentsURL;
         this.snykIOUrl = snykIOUrl.replace("ConfigService", name);
+        this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", name);
         this.jenkinsURL = jenkinsURL.replace("ConfigService", name);
 
     }

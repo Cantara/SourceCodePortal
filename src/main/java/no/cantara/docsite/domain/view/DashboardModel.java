@@ -27,6 +27,7 @@ public class DashboardModel {
         public String groupRelease = "unknown";
         public String no_repos = "https://img.shields.io/badge/repos-5-blue.svg";
         public String snykIOUrl = "https://snyk.io/test/github/Cantara/ConfigService/badge.svg";
+        public String snyktestIOUrl = "https://snyk.io/test/github/Cantara/ConfigService";
 
         public Set<Activity> activity = new LinkedHashSet<>();
 
@@ -42,6 +43,8 @@ public class DashboardModel {
             this.cardURI = cardURI;
             this.jenkinsURL = jenkinsURL;
             this.snykIOUrl = snykIOUrlx.replaceAll("ConfigService", repoName);
+            this.snyktestIOUrl = snyktestIOUrl.replace("ConfigService", repoName);
+
             //this.snykIOUrl = snykIOUrl;
         }
 

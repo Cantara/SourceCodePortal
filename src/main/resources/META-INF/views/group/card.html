@@ -21,28 +21,31 @@
 
         <table class="table">
             <thead>
-                <tr>
-                    <th scope="col">Repository</th>
-                    <th scope="col">Links</th>
-                    <th scope="col">Latest-commits</th>
-                    <th scope="col">Branches</th>
-                    <th scope="col">Badges</th>
-                </tr>
+            <tr>
+                <th scope="col">Repository</th>
+                <th scope="col">Links</th>
+                <th scope="col">Latest-commits</th>
+                <th scope="col">Branches</th>
+                <th scope="col">Badges</th>
+            </tr>
             </thead>
             <tbody>
-                <tr th:each="group : ${model.groups}">
-                    <td>
-                        <a th:href="${group.readmeURI}" th:text="${group.repoName}"></a>
-                    </td>
-                    <td>TBD-links</td>
-                    <td>TBD-commits</td>
-                    <td>TBD-branches</td>
-                    <td><img th:src="${group.snykIOUrl}"
+            <tr th:each="group : ${model.groups}">
+                <td>
+                    <a th:href="${group.readmeURI}" th:text="${group.repoName}"></a>
+                </td>
+                <td>TBD-links</td>
+                <td>TBD-commits</td>
+                <td>TBD-branches</td>
+                <td>
+                    <a th:href="${group.snyktestIOUrl}">
+                        <img th:src="${group.snykIOUrl}"
                              onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/snyk-unknown-lightgrey.svg';"/>
-                        <img th:src="${group.jenkinsURL}"/>
-                        <img src="../img/license-asl2.svg"/>
-                    </td>
-                </tr>
+                    </a>
+                    <img th:src="${group.jenkinsURL}"/>
+                    <img src="../img/license-asl2.svg"/>
+                </td>
+            </tr>
             </tbody>
         </table>
     </main>
