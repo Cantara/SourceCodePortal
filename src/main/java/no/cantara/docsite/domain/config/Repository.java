@@ -49,6 +49,11 @@ public class Repository implements Serializable {
         }
     }
 
+    public void setNoOfRepos(int noOfRepos) {
+        String noString = String.valueOf(noOfRepos);
+        this.no_repos = no_repos.replaceAll("-5-", "-" + noString + "-");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

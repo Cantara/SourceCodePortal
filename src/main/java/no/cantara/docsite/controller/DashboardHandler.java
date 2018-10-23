@@ -36,11 +36,17 @@ public class DashboardHandler implements WebHandler {
                     String.format("/group/%s", repo.groupId),
                     String.format(cacheStore.getRepositoryConfig().gitHub.badges.jenkins, repo.defaultGroupRepo),
                     String.format(cacheStore.getRepositoryConfig().gitHub.badges.snykIO, cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultGroupRepo));
+
+            group.setNoOfRepos(cacheStore.getRepositoryGroupsByGroupId(repo.groupId).size());
+
+
             model.groups.add(group);
         }
 
+
 //        DashboardModel.Activity activity = new DashboardModel.Activity();
 //        group.activity.add(activity);
+
 
         templateVariables.put("model", model);
 
