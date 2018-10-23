@@ -21,7 +21,7 @@
       },
       {
         "groupId": "Whydah",
-        "display-name": "Whydah IAM and SSO",
+        "display-name": "Whydah IAM and SSO Platform",
         "description": "Defcon 5 grade IAM and SSO security solution",
         "repo": "Whydah*",
         "branch": "master",
@@ -32,7 +32,7 @@
         }
       },
       {
-        "groupId": "ConfigService",
+        "groupId": "The ConfigService and JAU Toolchain",
         "display-name": "ConfigService",
         "description": "Provision configuration to agents",
         "repo": "ConfigService*",
@@ -45,7 +45,7 @@
       },
       {
         "groupId": "IOT",
-        "display-name": "Cantara IOT projects",
+        "display-name": "Cantara IOT platform projects",
         "description": "Bulding blocks to create IOT platforms",
         "repo": "IoT*",
         "branch": "master",
@@ -57,7 +57,7 @@
       },
       {
         "groupId": "ValueReporter",
-        "display-name": "Cantara ValueReporter Toolchain",
+        "display-name": "ValueReporter Toolchain",
         "description": "Toolchain to measure and detect valuable and dead parts of solutions",
         "repo": "Value*",
         "branch": "master",
@@ -74,18 +74,6 @@
         "repo": "dropwizard*",
         "branch": "master",
         "default-group-repo": "HTTPLoadTest-Baseline",
-        "badge": {
-          "jenkins": "",
-          "snyk.io": ""
-        }
-      },
-      {
-        "groupId": "ratpack",
-        "display-name": "ratpack examples",
-        "description": "Getting started with ratpack",
-        "repo": "ratpack*",
-        "branch": "master",
-        "default-group-repo": "ratpack-websockets",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
@@ -122,6 +110,18 @@
         "repo": "[^\\s]*",
         "branch": "master",
         "default-group-repo": "PathWatcher",
+        "badge": {
+          "jenkins": "",
+          "snyk.io": ""
+        }
+      },
+      {
+        "groupId": "ratpack",
+        "display-name": "ratpack examples",
+        "description": "Getting started with ratpack",
+        "repo": "ratpack*",
+        "branch": "master",
+        "default-group-repo": "ratpack-websockets",
         "badge": {
           "jenkins": "",
           "snyk.io": ""
