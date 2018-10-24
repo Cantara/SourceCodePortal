@@ -55,14 +55,14 @@ public class PushCommitRevisionTest {
 //        LOG.trace("event1: {}", Arrays.stream(dummyCommitEvent1).map(CommitRevision::toString).collect(Collectors.joining("\n")));
 
         for(CommitRevision commitRevision : dummyCommitEvent1) {
-            cacheStore.getCommits().put(CacheShaKey.of("Cantara", "Dummy", commitRevision.sha), commitRevision);
+            cacheStore.getCommits().put(CacheShaKey.of("Cantara", "dummyRepo", "Dummy", "master", commitRevision.sha), commitRevision);
         }
 
         CommitRevision[] dummyCommitEvent2 = jsonb.fromJson(dummyCommits2, CommitRevision[].class);
 //        LOG.trace("event2: {}", Arrays.stream(dummyCommitEvent2).map(CommitRevision::toString).collect(Collectors.joining("\n")));
 
         for(CommitRevision commitRevision : dummyCommitEvent2) {
-            cacheStore.getCommits().put(CacheShaKey.of("Cantara", "Dummy2", commitRevision.sha), commitRevision);
+            cacheStore.getCommits().put(CacheShaKey.of("Cantara", "dummyRepo", "Dummy2", "master", commitRevision.sha), commitRevision);
         }
 
         AtomicInteger count = new AtomicInteger(0);
@@ -70,10 +70,10 @@ public class PushCommitRevisionTest {
         AtomicInteger countDymmy2 = new AtomicInteger(0);
         cacheStore.getCommits().iterator().forEachRemaining(a -> {
             count.incrementAndGet();
-            if (a.getKey().compareTo("Cantara", "Dummy")) {
+            if (a.getKey().compareToUsingRepoName("Cantara", "Dummy")) {
                 countDymmy1.incrementAndGet();
             }
-            if (a.getKey().compareTo("Cantara", "Dummy2")) {
+            if (a.getKey().compareToUsingRepoName("Cantara", "Dummy2")) {
                 countDymmy2.incrementAndGet();
             }
         });

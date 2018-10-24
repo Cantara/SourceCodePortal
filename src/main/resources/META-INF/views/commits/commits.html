@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/template.html}">
+
+<head>
+    <title>Documentation</title>
+</head>
+
+<body>
+
+<section layout:fragment="custom-content">
+    <main role="main" class="container-fluid">
+        <article>
+            <div class="container">
+                <div>Commit log: [[${model.commitRevisions.size}]] revisions</div>
+                <div th:each="commitRevision : ${model.commitRevisions}">
+                    <div class="row>" th:remove="${model.commitRevisions.isNewDateGroup ? null : 'all'}">
+                        <div>&nbsp;</div>
+                        <div th:text="${#dates.format(commitRevision.commit.commitAuthor.date, 'yyyy-MM-dd')}">col-sm</div>
+                        <div>&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1"><img style="max-width: 48px" th:src="${commitRevision.author.avatarUrl}"></div>
+                        <div class="col-sm-2" th:text="${commitRevision.commit.commitAuthor.name}">col-sm</div>
+                        <div class="col-sm-1" th:text="|@${#dates.format(commitRevision.commit.commitAuthor.date, 'HH:mm')}|">col-sm</div>
+                        <div class="col-sm-3" th:text="${commitRevision.projectId}">col-sm</div>
+                        <div class="col-sm-5"><a th:href="${commitRevision.htmlUrl}" th:text="${commitRevision.commit.message}">col-sm</a></div>
+                    </div>
+                </div>
+            </div>
+
+        </article>
+    </main>
+</section>
+
+</body>

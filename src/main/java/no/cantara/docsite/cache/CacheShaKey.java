@@ -11,12 +11,32 @@ public class CacheShaKey implements Serializable {
 
     public final String organization;
     public final String repoName;
+    public final String branch;
+    public final String groupId;
     public final String sha;
 
-    CacheShaKey(String organization, String repoName, String sha) {
+    CacheShaKey(String organization, String repoName, String branch, String groupId, String sha) {
         this.organization = organization;
         this.repoName = repoName;
+        this.branch = branch;
+        this.groupId = groupId;
         this.sha = sha;
+    }
+
+    public boolean compareToUsingRepoName(String organization, String repoName) {
+        return organization.equals(this.organization) && repoName.equals(this.repoName);
+    }
+
+    public boolean compareToUsingBranch(String organization, String repoName, String branch) {
+        return organization.equals(this.organization) && repoName.equals(this.repoName) && branch.equals(this.branch);
+    }
+
+    public boolean compareToUsingGroupId(String organization, String groupId) {
+        return organization.equals(this.organization) && groupId.equals(this.groupId);
+    }
+
+    public boolean compareToUsingRepoName(String organization, String repoName, String branch, String groupId) {
+        return organization.equals(this.organization) && repoName.equals(this.repoName) && branch.equals(this.branch) && groupId.equals(this.groupId);
     }
 
     @Override
@@ -37,22 +57,12 @@ public class CacheShaKey implements Serializable {
         return JsonUtil.asString(this);
     }
 
-    // valid for lookup values in cache
-    public static CacheShaKey of(String sha) {
-        return new CacheShaKey(null, null, sha);
+    public static CacheShaKey of(String organization, String repoName, String branch, String groupId, String sha) {
+        return new CacheShaKey(organization, repoName, branch, groupId, sha);
     }
 
-    // used to create catchable values
-    public static CacheShaKey of(String organization, String repoName, String sha) {
-        return new CacheShaKey(organization, repoName, sha);
+    public static CacheShaKey of(CacheKey cacheKey, String groupId, String sha) {
+        return new CacheShaKey(cacheKey.organization, cacheKey.repoName, cacheKey.branch, groupId, sha);
     }
 
-    public static CacheShaKey of(CacheKey cacheKey, String sha) {
-        return new CacheShaKey(cacheKey.organization, cacheKey.repoName, sha);
-    }
-
-
-    public boolean compareTo(String organization, String repoName) {
-        return organization.equals(this.organization) && repoName.equals(this.repoName);
-    }
 }

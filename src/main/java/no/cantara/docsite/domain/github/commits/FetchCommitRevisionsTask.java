@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.github.commits;
 
+import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import javax.json.bind.JsonbBuilder;
 import java.net.http.HttpResponse;
 import java.util.Optional;
+import java.util.Set;
 
 public class FetchCommitRevisionsTask extends WorkerTask {
 
@@ -33,17 +35,13 @@ public class FetchCommitRevisionsTask extends WorkerTask {
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
             CommitRevision[] commitRevision = JsonbBuilder.create().fromJson(response.body(), CommitRevision[].class);
-//            for (int n = 0; n < commitRevision.length; n++) {
-//                Set<CacheGroupKey> cacheGroupKey = cacheStore.getCacheGroupKeys(cacheKey);
-//                CommitRevision cr = commitRevision[n];
-//                cacheGroupKey.forEach(key -> {
-//                    CacheShaKey cacheShaKey = CacheShaKey.of(cacheKey, cr.sha);
-//                    cacheStore.getCommits().put(cacheShaKey, cr);
-//                });
-//            }
             for (int n = 0; n < commitRevision.length; n++) {
-                CacheShaKey cacheShaKey = CacheShaKey.of(cacheKey, commitRevision[n].sha);
-                cacheStore.getCommits().put(cacheShaKey, commitRevision[n]);
+                Set<CacheGroupKey> cacheGroupKey = cacheStore.getCacheGroupKeys(cacheKey);
+                CommitRevision cr = commitRevision[n];
+                cacheGroupKey.forEach(key -> {
+                    CacheShaKey cacheShaKey = CacheShaKey.of(cacheKey, key.groupId, cr.sha);
+                    cacheStore.getCommits().put(cacheShaKey, cr);
+                });
             }
         } else {
             LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());
