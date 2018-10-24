@@ -21,7 +21,10 @@
                         <div>&nbsp;</div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-1"><img style="max-width: 48px" th:if="${commitRevision.author != null}" th:src="${commitRevision.author.avatarUrl}"></div>
+                        <div class="col-sm-1">
+                            <img style="max-width: 48px" th:if="${commitRevision.author == null}" src="/img/github-anonymous.png">
+                            <img style="max-width: 48px" th:if="${commitRevision.author != null}" th:src="${commitRevision.author.avatarUrl}">
+                        </div>
                         <div class="col-sm-2" th:text="${commitRevision.commit.commitAuthor.name}">col-sm</div>
                         <div class="col-sm-1" th:text="|@${#dates.format(commitRevision.commit.commitAuthor.date, 'HH:mm')}|">col-sm</div>
                         <div class="col-sm-3" th:text="${commitRevision.projectId}">col-sm</div>
