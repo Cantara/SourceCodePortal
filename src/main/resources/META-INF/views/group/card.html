@@ -14,9 +14,14 @@
         <h1 th:text="${repositoryConfig.displayName}"></h1>
         <div th:text="${repositoryConfig.description}"></div>
         <p class="lead">Latest changes:</p>
-        <ul><a href="">SourceCodePortal - 2018-10-23 06:50:33 - commit message</a></ul>
-        <ul><a href="">ProcessWatcher - 2018-10-23 04:53:56 - build failed</a></ul>
-
+        <div th:each="commitRevision : ${model.lastCommitRevisions}">
+            <div class="row">
+                <div class="col-sm-2" th:text="${commitRevision.commit.commitAuthor.name}">col-sm</div>
+                <div class="col-sm-2" th:text="${#dates.format(commitRevision.commit.commitAuthor.date, 'yyyy-MM-dd HH:ss')}">col-sm</div>
+                <div class="col-sm-3" th:text="${commitRevision.projectId}">col-sm</div>
+                <div class="col-sm-5"><a th:href="${commitRevision.htmlUrl}" th:text="${commitRevision.commit.message}">col-sm</a></div>
+            </div>
+        </div>
         <div>&#160</div>
 
         <table class="table">

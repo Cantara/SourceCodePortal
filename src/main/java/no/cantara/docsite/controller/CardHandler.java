@@ -1,9 +1,11 @@
 package no.cantara.docsite.controller;
 
 import io.undertow.server.HttpServerExchange;
+import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.config.RepositoryConfig;
+import no.cantara.docsite.domain.github.commits.CommitRevision;
 import no.cantara.docsite.domain.view.CardModel;
 import no.cantara.docsite.domain.view.DashboardModel;
 import no.cantara.docsite.web.ResourceContext;
@@ -12,9 +14,13 @@ import no.cantara.docsite.web.WebContext;
 import no.cantara.docsite.web.WebHandler;
 import no.ssb.config.DynamicConfiguration;
 
+import javax.cache.Cache;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static no.cantara.docsite.controller.CommitsHandler.sortByValue;
 
 public class CardHandler implements WebHandler {
 
@@ -32,6 +38,25 @@ public class CardHandler implements WebHandler {
         templateVariables.put("repositoryGroup", repositories);
 
         CardModel model = new CardModel();
+
+        // TODO this is bit expensive per view. Investigate how JCache can provide a sorted tree map
+        {
+            Cache<CacheShaKey, CommitRevision> commitRevisions = cacheStore.getCommits();
+            Map<CacheShaKey, CommitRevision> commitRevisionMap = new LinkedHashMap<>();
+            for(Cache.Entry<CacheShaKey, CommitRevision> commitRevision : commitRevisions) {
+                if (commitRevision.getKey().groupId.equals(repositoryConfig.groupId)) {
+                    commitRevisionMap.put(commitRevision.getKey(), commitRevision.getValue());
+                }
+            }
+            Map<CacheShaKey, CommitRevision> sortedMap = sortByValue(commitRevisionMap);
+
+            int n = 0;
+            for (CommitRevision commitRevision : sortedMap.values()) {
+                if (n > 5) break;
+                model.lastCommitRevisions.add(commitRevision);
+                n++;
+            }
+        }
 
         for(Repository repo : repositories) {
             boolean hasReadme = cacheStore.getPages().containsKey(repo.cacheKey);
