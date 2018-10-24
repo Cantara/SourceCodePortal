@@ -27,6 +27,7 @@
                 <th scope="col">Issues</th>
                 <th scope="col">Latest-release</th>
                 <th scope="col">Latest-commits</th>
+                <th scope="col">Security</th>
                 <th scope="col">Branches</th>
                 <th scope="col">Badges</th>
             </tr>
@@ -42,14 +43,15 @@
                 <td><img th:src="${group.githubIssues}"/></td>
                 <td><img th:src="${group.groupRelease}"/></td>
                 <td><img th:src="${group.groupCommit}"/></td>
-                <td>TBD-branches</td>
                 <td>
                     <a th:href="${group.snyktestIOUrl}">
                         <img th:src="${group.snykIOUrl}"/>
                     </a>
+                </td>
+                <td>
+                    <img src="../img/license-asl2.svg"/>
                     <img th:src="${group.jenkinsURL}"
                          onerror="if (this.src != 'error.jpg') this.src = '../img/build-unknown.svg';"/>
-                    <img src="../img/license-asl2.svg"/>
                 </td>
             </tr>
             </tbody>
