@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import javax.cache.Cache;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -33,10 +32,10 @@ public class CommitsHandler implements WebHandler {
 
     public static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
-        Collections.sort(list, (Comparator<Object>) (o1, o2) -> {
-            CommitRevision m1 = (CommitRevision) ((Map.Entry<K, V>) (o1)).getValue();
-            CommitRevision m2 = (CommitRevision) ((Map.Entry<K, V>) (o2)).getValue();
-            return (m2).commit.commitAuthor.date.compareTo(m1.commit.commitAuthor.date);
+        Collections.sort(list, (o1, o2) -> {
+            CommitRevision m1 = (CommitRevision) o1.getValue();
+            CommitRevision m2 = (CommitRevision) o2.getValue();
+            return (m2.commit.commitAuthor.date.compareTo(m1.commit.commitAuthor.date));
         });
 
         Map<K, V> result = new LinkedHashMap<>();
