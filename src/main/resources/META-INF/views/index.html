@@ -17,7 +17,7 @@
             <div th:each="commitRevision : ${model.lastCommitRevisions}">
                 <div class="row">
                     <div class="col-sm-2" th:text="${commitRevision.commit.commitAuthor.name}">col-sm</div>
-                    <div class="col-sm-2" th:text="${#dates.format(commitRevision.commit.commitAuthor.date, 'yyyy-MM-dd HH:ss')}">col-sm</div>
+                    <div class="col-sm-2" th:text="${#dates.format(commitRevision.commit.commitAuthor.date, 'yyyy-MM-dd HH:mm')}">col-sm</div>
                     <div class="col-sm-3" th:text="${commitRevision.projectId}">col-sm</div>
                     <div class="col-sm-5"><a th:href="${commitRevision.htmlUrl}" th:text="${commitRevision.commit.message}">col-sm</a></div>
                 </div>
