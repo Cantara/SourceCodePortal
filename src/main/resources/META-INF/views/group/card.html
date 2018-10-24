@@ -13,7 +13,7 @@
     <main role="main" class="container-fluid">
         <h1 th:text="${repositoryConfig.displayName}"></h1>
         <div th:text="${repositoryConfig.description}"></div>
-        <p class="lead">Latest changes:</p>
+        <h4 style="padding-top: 0.5em;" class="display-6">Latest commits</h4>
         <div th:each="commitRevision : ${model.lastCommitRevisions}">
             <div class="row">
                 <div class="col-sm-2" th:text="${commitRevision.commit.commitAuthor.name}">col-sm</div>

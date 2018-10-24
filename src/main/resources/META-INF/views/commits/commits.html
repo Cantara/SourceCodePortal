@@ -13,11 +13,11 @@
     <main role="main" class="container-fluid">
         <article>
             <div class="container-fluid">
-                <div>Commit log: [[${model.commitRevisions.size}]] revisions</div>
+                <h4 class="display-6">Commit log: [[${model.commitRevisions.size}]] revisions</h4>
                 <div th:each="commitRevision : ${model.commitRevisions}">
                     <div class="row>" th:remove="${model.commitRevisions.isNewDateGroup ? null : 'all'}">
                         <div>&nbsp;</div>
-                        <div th:text="${#dates.format(commitRevision.commit.commitAuthor.date, 'yyyy-MM-dd')}">col-sm</div>
+                        <div style="font-weight: bold" th:text="${#dates.format(commitRevision.commit.commitAuthor.date, 'yyyy-MM-dd')}">col-sm</div>
                         <div>&nbsp;</div>
                     </div>
                     <div class="row">
