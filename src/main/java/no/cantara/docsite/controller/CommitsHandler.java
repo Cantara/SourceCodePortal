@@ -58,30 +58,37 @@ public class CommitsHandler implements WebHandler {
                 return false;
             }
 
-            boolean renderGroupOrRepo = resourceContext.getTuples().size() == 1;
-
-            String organization = cacheStore.getRepositoryConfig().gitHub.organization;
-            String groupIdOrRepoName = (renderGroupOrRepo ? resourceContext.getLast().get().id : resourceContext.getFirst().get().id);
-            String branchOrNull = (renderGroupOrRepo ? null : resourceContext.getLast().get().resource);
-
-            String groupIdIfRenderRepo = null;
-            if (!renderGroupOrRepo) {
-                CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(CacheKey.of(organization, groupIdOrRepoName, branchOrNull));
-                if (cacheGroupKey != null) {
-                    groupIdIfRenderRepo = cacheGroupKey.groupId;
-                }
-            }
+            boolean renderAll = (resourceContext.getTuples().size() == 1 && resourceContext.getLast().get().id == null);
 
             Map<CacheShaKey, CommitRevision> commitRevisionMap = new LinkedHashMap<>();
             Cache<CacheShaKey, CommitRevision> commitRevisions = cacheStore.getCommits();
-            for (Cache.Entry<CacheShaKey, CommitRevision> entry : commitRevisions) {
-                CacheShaKey key = entry.getKey();
-                CommitRevision value = entry.getValue();
-                if (renderGroupOrRepo && key.compareToUsingGroupId(organization, groupIdOrRepoName)) {
-                    commitRevisionMap.put(key, value);
+            if (renderAll) {
+                commitRevisions.iterator().forEachRemaining(a -> commitRevisionMap.put(a.getKey(), a.getValue()));
 
-                } else if (!renderGroupOrRepo && key.compareToUsingRepoName(organization, groupIdOrRepoName, branchOrNull, groupIdIfRenderRepo)) {
-                    commitRevisionMap.put(key, value);
+            } else {
+                boolean renderGroupOrRepo = resourceContext.getTuples().size() == 1;
+
+                String organization = cacheStore.getRepositoryConfig().gitHub.organization;
+                String groupIdOrRepoName = (renderGroupOrRepo ? resourceContext.getLast().get().id : resourceContext.getFirst().get().id);
+                String branchOrNull = (renderGroupOrRepo ? null : resourceContext.getLast().get().resource);
+
+                String groupIdIfRenderRepo = null;
+                if (!renderGroupOrRepo) {
+                    CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(CacheKey.of(organization, groupIdOrRepoName, branchOrNull));
+                    if (cacheGroupKey != null) {
+                        groupIdIfRenderRepo = cacheGroupKey.groupId;
+                    }
+                }
+
+                for (Cache.Entry<CacheShaKey, CommitRevision> entry : commitRevisions) {
+                    CacheShaKey key = entry.getKey();
+                    CommitRevision value = entry.getValue();
+                    if (renderGroupOrRepo && key.compareToUsingGroupId(organization, groupIdOrRepoName)) {
+                        commitRevisionMap.put(key, value);
+
+                    } else if (!renderGroupOrRepo && key.compareToUsingRepoName(organization, groupIdOrRepoName, branchOrNull, groupIdIfRenderRepo)) {
+                        commitRevisionMap.put(key, value);
+                    }
                 }
             }
 
