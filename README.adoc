@@ -129,6 +129,8 @@ Follow this step if you want to page template changes to to be syncronized with 
 
 * Keymap -> Main menu -> Build and assign a shortcut to Rebuild (on mac: cmd+shift+s)
 
+To suppress JDK 11 warnings in IntelliJ when running `Server`, add VM option: `--illegal-access=deny`.
+
 === Sass watch
 
 To detect changes to sass files and have the compiler produce new `target/classes/META-INF/views/css/app.css` file, either do:
