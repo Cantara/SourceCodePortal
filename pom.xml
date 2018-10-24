@@ -59,9 +59,18 @@
 
     <developers>
         <developer>
+            <id>oranheim</id>
             <name>Ove Ranheim</name>
             <email>ove.ranheim@gmail.com</email>
+            <organization>Capra Consulting AS</organization>
             <url>https://www.linkedin.com/in/oranheim/</url>
+        </developer>
+        <developer>
+            <id>totto</id>
+            <name>Thor Henning Hetland</name>
+            <email>totto@totto.org</email>
+            <organization>Capra Consulting AS</organization>
+            <organizationUrl>http://www.capraconsulting.no/</organizationUrl>
         </developer>
     </developers>
 
