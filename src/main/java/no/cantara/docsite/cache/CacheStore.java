@@ -161,16 +161,13 @@ public class CacheStore {
     // returns the first found group key
     public CacheGroupKey getCacheGroupKey(CacheKey cacheKey) {
         Set<CacheGroupKey> groupKeys = new LinkedHashSet<>();
-        CacheGroupKey firstMatch = null;
         for (Cache.Entry<CacheGroupKey,CacheKey> entry : getCacheGroupKeys()) {
             if (entry.getValue().equals(cacheKey)) {
                 groupKeys.add(entry.getKey());
-                if (firstMatch == null && entry.getKey().repoName.toLowerCase().contains(entry.getKey().groupId.toLowerCase())) {
-                    firstMatch = entry.getKey();
-                }
             }
         }
-        return (firstMatch == null && groupKeys.iterator().hasNext() ? groupKeys.iterator().next() : firstMatch);
+        return groupKeys.stream().filter(f -> f.repoName.toLowerCase().contains(f.groupId.toLowerCase())).findFirst()
+                .orElse(groupKeys.iterator().hasNext() ? groupKeys.iterator().next() : null);
     }
 
     // returns the all matched group keys
