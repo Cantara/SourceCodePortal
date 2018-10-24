@@ -1,6 +1,8 @@
 package no.cantara.docsite.controller;
 
 import io.undertow.server.HttpServerExchange;
+import no.cantara.docsite.cache.CacheGroupKey;
+import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.github.commits.CommitRevision;
@@ -53,21 +55,36 @@ public class CommitsHandler implements WebHandler {
 
         // /commits/SourceCodePortal
 
-        if (resourceContext.getTuples().size() != 1) {
+        LOG.trace("Tuple size: {}", resourceContext.getTuples().size());
+
+        if (resourceContext.getTuples().size() > 2) {
             return false;
         }
 
+        boolean renderGroupOrRepo = resourceContext.getTuples().size() == 1;
+        LOG.trace("Render GroupOrRepo: {}", renderGroupOrRepo);
+
         String organization = cacheStore.getRepositoryConfig().gitHub.organization;
-        String groupId = resourceContext.getLast().get().id;
+        String groupIdOrRepoName = (renderGroupOrRepo ? resourceContext.getLast().get().id : resourceContext.getFirst().get().id);
+        String branchOrNull = (renderGroupOrRepo ? null : resourceContext.getLast().get().resource);
 
-        LOG.trace("URL: {} -- {}", organization, groupId);
+        String groupIdIfRenderRepo = null;
+        if (!renderGroupOrRepo) {
+            CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(CacheKey.of(organization, groupIdOrRepoName, branchOrNull));
+            if (cacheGroupKey != null) {
+                groupIdIfRenderRepo = cacheGroupKey.groupId;
+            }
+        }
 
-        Map<CacheShaKey,CommitRevision> commitRevisionMap = new LinkedHashMap<>();
+        Map<CacheShaKey, CommitRevision> commitRevisionMap = new LinkedHashMap<>();
         Cache<CacheShaKey, CommitRevision> commitRevisions = cacheStore.getCommits();
         for (Cache.Entry<CacheShaKey, CommitRevision> entry : commitRevisions) {
             CacheShaKey key = entry.getKey();
             CommitRevision value = entry.getValue();
-            if (key.compareToUsingGroupId(organization, groupId)) {
+            if (renderGroupOrRepo && key.compareToUsingGroupId(organization, groupIdOrRepoName)) {
+                commitRevisionMap.put(key, value);
+
+            } else if (!renderGroupOrRepo && key.compareToUsingRepoName(organization, groupIdOrRepoName, branchOrNull, groupIdIfRenderRepo)) {
                 commitRevisionMap.put(key, value);
             }
         }

@@ -20,7 +20,7 @@ class WebController implements HttpHandler {
             WebContext.of("/index", "", true, "index.html", new DashboardHandler()),
             WebContext.of("/group", "group", true, "card.html", new CardHandler()),
             WebContext.of("/contents", "contents", false, "content.html", new ContentsHandler()),
-            WebContext.of("/commits", "commits", true, "commits.html", new CommitsHandler())
+            WebContext.of("/commits", "commits", false, "commits.html", new CommitsHandler())
     };
 
     final DynamicConfiguration configuration;

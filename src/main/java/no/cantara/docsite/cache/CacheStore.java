@@ -166,7 +166,7 @@ public class CacheStore {
                 groupKeys.add(entry.getKey());
             }
         }
-        return groupKeys.stream().filter(f -> f.repoName.toLowerCase().contains(f.groupId.toLowerCase())).findFirst().orElse(groupKeys.iterator().next());
+        return groupKeys.stream().filter(f -> f.repoName.toLowerCase().contains(f.groupId.toLowerCase())).findFirst().orElse(null);
     }
 
     // returns the all matched group keys
