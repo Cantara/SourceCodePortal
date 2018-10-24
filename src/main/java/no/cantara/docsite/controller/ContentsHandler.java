@@ -36,6 +36,11 @@ public class ContentsHandler implements WebHandler {
 
         RepositoryContents contents = cacheStore.getPages().get(cacheKey);
 
+        if (contents == null) {
+            LOG.error("Contents is NULL. Probably because it was not fetched due to rate limit issue!");
+            return false;
+        }
+
         Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
 
         ContentsModel model = new ContentsModel(repository, contents, contents.renderedHtml);

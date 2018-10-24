@@ -20,7 +20,7 @@ public class ContentsModel {
         this.contentHtml = contentHtml;
     }
 
-    public static class Group {
+    public static class Group implements Comparable<Group> {
         public final String organization;
         public final String repoName;
         public final String branch;
@@ -41,6 +41,11 @@ public class ContentsModel {
             this.hasReadme = hasReadme;
             this.readmeURI = readmeURI;
             this.cardURI = cardURI;
+        }
+
+        @Override
+        public int compareTo(Group o) {
+            return 0;
         }
     }
 }

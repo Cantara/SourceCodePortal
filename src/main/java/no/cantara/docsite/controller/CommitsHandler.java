@@ -51,55 +51,60 @@ public class CommitsHandler implements WebHandler {
 
     @Override
     public boolean handleRequest(DynamicConfiguration configuration, CacheStore cacheStore, ResourceContext resourceContext, WebContext webContext, HttpServerExchange exchange) {
-        Map<String, Object> templateVariables = new HashMap<>();
+        try {
+            Map<String, Object> templateVariables = new HashMap<>();
 
-        // /commits/SourceCodePortal
+            // /commits/SourceCodePortal
 
-        LOG.trace("Tuple size: {}", resourceContext.getTuples().size());
+            LOG.trace("Tuple size: {}", resourceContext.getTuples().size());
 
-        if (resourceContext.getTuples().size() > 2) {
+            if (resourceContext.getTuples().size() > 2) {
+                return false;
+            }
+
+            boolean renderGroupOrRepo = resourceContext.getTuples().size() == 1;
+            LOG.trace("Render GroupOrRepo: {}", renderGroupOrRepo);
+
+            String organization = cacheStore.getRepositoryConfig().gitHub.organization;
+            String groupIdOrRepoName = (renderGroupOrRepo ? resourceContext.getLast().get().id : resourceContext.getFirst().get().id);
+            String branchOrNull = (renderGroupOrRepo ? null : resourceContext.getLast().get().resource);
+
+            String groupIdIfRenderRepo = null;
+            if (!renderGroupOrRepo) {
+                CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(CacheKey.of(organization, groupIdOrRepoName, branchOrNull));
+                if (cacheGroupKey != null) {
+                    groupIdIfRenderRepo = cacheGroupKey.groupId;
+                }
+            }
+
+            Map<CacheShaKey, CommitRevision> commitRevisionMap = new LinkedHashMap<>();
+            Cache<CacheShaKey, CommitRevision> commitRevisions = cacheStore.getCommits();
+            for (Cache.Entry<CacheShaKey, CommitRevision> entry : commitRevisions) {
+                CacheShaKey key = entry.getKey();
+                CommitRevision value = entry.getValue();
+                if (renderGroupOrRepo && key.compareToUsingGroupId(organization, groupIdOrRepoName)) {
+                    commitRevisionMap.put(key, value);
+
+                } else if (!renderGroupOrRepo && key.compareToUsingRepoName(organization, groupIdOrRepoName, branchOrNull, groupIdIfRenderRepo)) {
+                    commitRevisionMap.put(key, value);
+                }
+            }
+
+            Map<CacheShaKey, CommitRevision> sortedMap = sortByValue(commitRevisionMap);
+            GroupByDateIterator groupByDateIterator = new GroupByDateIterator(new ArrayList<>(sortedMap.values()));
+
+            CommitRevisionsModel model = new CommitRevisionsModel(groupByDateIterator);
+
+            templateVariables.put("model", model);
+
+            if (ThymeleafViewEngineProcessor.processView(exchange, webContext.asTemplateResource(), templateVariables)) {
+                return true;
+            }
+
             return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
-
-        boolean renderGroupOrRepo = resourceContext.getTuples().size() == 1;
-        LOG.trace("Render GroupOrRepo: {}", renderGroupOrRepo);
-
-        String organization = cacheStore.getRepositoryConfig().gitHub.organization;
-        String groupIdOrRepoName = (renderGroupOrRepo ? resourceContext.getLast().get().id : resourceContext.getFirst().get().id);
-        String branchOrNull = (renderGroupOrRepo ? null : resourceContext.getLast().get().resource);
-
-        String groupIdIfRenderRepo = null;
-        if (!renderGroupOrRepo) {
-            CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(CacheKey.of(organization, groupIdOrRepoName, branchOrNull));
-            if (cacheGroupKey != null) {
-                groupIdIfRenderRepo = cacheGroupKey.groupId;
-            }
-        }
-
-        Map<CacheShaKey, CommitRevision> commitRevisionMap = new LinkedHashMap<>();
-        Cache<CacheShaKey, CommitRevision> commitRevisions = cacheStore.getCommits();
-        for (Cache.Entry<CacheShaKey, CommitRevision> entry : commitRevisions) {
-            CacheShaKey key = entry.getKey();
-            CommitRevision value = entry.getValue();
-            if (renderGroupOrRepo && key.compareToUsingGroupId(organization, groupIdOrRepoName)) {
-                commitRevisionMap.put(key, value);
-
-            } else if (!renderGroupOrRepo && key.compareToUsingRepoName(organization, groupIdOrRepoName, branchOrNull, groupIdIfRenderRepo)) {
-                commitRevisionMap.put(key, value);
-            }
-        }
-
-        Map<CacheShaKey, CommitRevision> sortedMap = sortByValue(commitRevisionMap);
-        GroupByDateIterator groupByDateIterator = new GroupByDateIterator(new ArrayList<>(sortedMap.values()));
-
-        CommitRevisionsModel model = new CommitRevisionsModel(groupByDateIterator);
-
-        templateVariables.put("model", model);
-
-        if (ThymeleafViewEngineProcessor.processView(exchange, webContext.asTemplateResource(), templateVariables)) {
-            return true;
-        }
-
-        return false;
     }
 }
