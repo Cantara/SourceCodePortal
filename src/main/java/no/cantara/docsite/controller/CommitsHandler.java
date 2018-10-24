@@ -54,16 +54,11 @@ public class CommitsHandler implements WebHandler {
         try {
             Map<String, Object> templateVariables = new HashMap<>();
 
-            // /commits/SourceCodePortal
-
-            LOG.trace("Tuple size: {}", resourceContext.getTuples().size());
-
             if (resourceContext.getTuples().size() > 2) {
                 return false;
             }
 
             boolean renderGroupOrRepo = resourceContext.getTuples().size() == 1;
-            LOG.trace("Render GroupOrRepo: {}", renderGroupOrRepo);
 
             String organization = cacheStore.getRepositoryConfig().gitHub.organization;
             String groupIdOrRepoName = (renderGroupOrRepo ? resourceContext.getLast().get().id : resourceContext.getFirst().get().id);
