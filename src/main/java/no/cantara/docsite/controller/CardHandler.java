@@ -52,7 +52,7 @@ public class CardHandler implements WebHandler {
 
             int n = 0;
             for (CommitRevision commitRevision : sortedMap.values()) {
-                if (n > 5) break;
+                if (n > configuration.evaluateToInt("render.max.group.commits")) break;
                 model.lastCommitRevisions.add(commitRevision);
                 n++;
             }
