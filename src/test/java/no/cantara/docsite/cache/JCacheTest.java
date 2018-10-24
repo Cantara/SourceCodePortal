@@ -29,6 +29,7 @@ public class JCacheTest {
 //        cache.put("key2", "value2");
     }
 
+    @Ignore
     @Test
     public void testName() {
         CachingProvider cachingProvider = Caching.getCachingProvider();
