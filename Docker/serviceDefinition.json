@@ -1,0 +1,53 @@
+{
+  "application": "SourceCodePortal",
+  "services": [
+    {
+      "name": "app",
+      "group": "foreground",
+      "type": "java",
+      "scalability": {
+        "minReplicas": 1,
+        "maxReplicas": 1,
+        "targetCPUUtilizationPercentage": 150
+      },
+      "imageName": "cantara/sourcecodeportaln",
+      "dockerContext": "Docker/resources",
+      "dockerFilePath": "Docker/Dockerfile",
+      "ports": {
+        "external": {
+          "http": 9090
+        },
+        "internal": {
+          "http": 9090
+        }
+      },
+      "readiness": {
+        "path": "/health",
+        "port": 9090,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 10,
+        "failureThreshold": 5,
+        "timeoutSeconds": 5,
+        "successThreshold": 2
+      },
+      "health": {
+        "path": "/health",
+        "port": 9090,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 10,
+        "failureThreshold": 5,
+        "timeoutSeconds": 5
+      },
+      "resources": {
+        "requests": {
+          "cpu": "100m",
+          "memory": "850Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "4Gi"
+        }
+      }
+    }
+  ]
+}
