@@ -170,7 +170,7 @@ public class CacheStore {
                 }
             }
         }
-        return (firstMatch == null && groupKeys.iterator().hasNext() ? groupKeys.iterator().next() : null);
+        return (firstMatch != null && groupKeys.iterator().hasNext() ? groupKeys.iterator().next() : null);
     }
 
     // returns the all matched group keys
