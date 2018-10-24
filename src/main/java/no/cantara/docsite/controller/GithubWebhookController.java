@@ -125,7 +125,7 @@ class GithubWebhookController implements HttpHandler {
                     // Github Commit Event
                     // ------------------------------------------------------------------------------------------------------
                     if (pushCommitEvent.isCodeCommit()) {
-                        CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name);
+                        CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name, pushCommitEvent.getBranch());
                         executorService.queue(new FetchCommitRevisionTask(configuration, executorService, cacheStore, cacheKey, pushCommitEvent.headCommit.id));
                     }
 
