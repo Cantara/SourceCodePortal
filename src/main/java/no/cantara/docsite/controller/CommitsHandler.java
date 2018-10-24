@@ -31,7 +31,7 @@ public class CommitsHandler implements WebHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(CommitsHandler.class);
 
-    private <K, V> Map<K, V> sortByValue(Map<K, V> map) {
+    public static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
         Collections.sort(list, (Comparator<Object>) (o1, o2) -> {
             CommitRevision m1 = (CommitRevision) ((Map.Entry<K, V>) (o1)).getValue();
