@@ -1,18 +1,18 @@
 package no.cantara.docsite.domain.view;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import static no.cantara.docsite.domain.config.Repository.*;
 
 public class DashboardModel {
 
-    public final Set<Group> groups = new LinkedHashSet<>();
-
+    public final SortedSet<Group> groups = new TreeSet<>();
     public DashboardModel() {
     }
 
-    public static class Group {
+    public static class Group implements Comparable<Group> {
 
         public final String organization;
         public final String repoName;
@@ -33,7 +33,7 @@ public class DashboardModel {
         public String snyktestIOUrl = "https://snyk.io/test/github/" + SCP_TEMPLATE_ORGANIZATION_NAME + "/" + SCP_TEMPLATE_REPO_NAME;
         public String githubIssues = "https://img.shields.io/github/issues/" + SCP_TEMPLATE_ORGANIZATION_NAME + "/" + SCP_TEMPLATE_REPO_NAME + ".svg";
 
-        public Set<Activity> activity = new LinkedHashSet<>();
+        public SortedSet<Activity> activity = new TreeSet<>();
 
         public Group(String organization, String repoName, String defaultGroupRepo, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI, String jenkinsURL, String snykIOUrlx) {
             this.organization = organization;
@@ -61,6 +61,27 @@ public class DashboardModel {
         public void setNoOfRepos(int noOfRepos) {
             String noString = String.valueOf(noOfRepos);
             this.no_repos = no_repos.replaceAll("-5-", "-" + noString + "-");
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Group group = (Group) o;
+            return Objects.equals(organization, group.organization) &&
+                    Objects.equals(repoName, group.repoName) &&
+                    Objects.equals(branch, group.branch) &&
+                    Objects.equals(groupId, group.groupId);
+        }
+
+        @Override
+        public int hashCode() {
+
+            return Objects.hash(organization, repoName, branch, groupId);
+        }
+
+        public int compareTo(Group o) {
+            return repoName.compareTo(o.repoName);
         }
     }
 

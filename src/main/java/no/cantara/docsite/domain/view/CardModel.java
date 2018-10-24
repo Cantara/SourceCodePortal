@@ -1,10 +1,10 @@
 package no.cantara.docsite.domain.view;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class CardModel {
 
-    public final Set<DashboardModel.Group> groups = new LinkedHashSet<>();
+    public final SortedSet<DashboardModel.Group> groups = new TreeSet<>();
 
 }
