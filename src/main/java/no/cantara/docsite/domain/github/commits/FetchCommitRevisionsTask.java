@@ -33,6 +33,14 @@ public class FetchCommitRevisionsTask extends WorkerTask {
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
             CommitRevision[] commitRevision = JsonbBuilder.create().fromJson(response.body(), CommitRevision[].class);
+//            for (int n = 0; n < commitRevision.length; n++) {
+//                Set<CacheGroupKey> cacheGroupKey = cacheStore.getCacheGroupKeys(cacheKey);
+//                CommitRevision cr = commitRevision[n];
+//                cacheGroupKey.forEach(key -> {
+//                    CacheShaKey cacheShaKey = CacheShaKey.of(cacheKey, cr.sha);
+//                    cacheStore.getCommits().put(cacheShaKey, cr);
+//                });
+//            }
             for (int n = 0; n < commitRevision.length; n++) {
                 CacheShaKey cacheShaKey = CacheShaKey.of(cacheKey, commitRevision[n].sha);
                 cacheStore.getCommits().put(cacheShaKey, commitRevision[n]);

@@ -158,6 +158,7 @@ public class CacheStore {
         return cacheManager.getCache("cacheGroupKeys");
     }
 
+    // returns the first found group key
     public CacheGroupKey getCacheGroupKey(CacheKey cacheKey) {
         Set<CacheGroupKey> groupKeys = new LinkedHashSet<>();
         for (Cache.Entry<CacheGroupKey,CacheKey> entry : getCacheGroupKeys()) {
@@ -166,6 +167,17 @@ public class CacheStore {
             }
         }
         return groupKeys.stream().filter(f -> f.repoName.toLowerCase().contains(f.groupId.toLowerCase())).findFirst().orElse(groupKeys.iterator().next());
+    }
+
+    // returns the all matched group keys
+    public Set<CacheGroupKey> getCacheGroupKeys(CacheKey cacheKey) {
+        Set<CacheGroupKey> groupKeys = new LinkedHashSet<>();
+        for (Cache.Entry<CacheGroupKey,CacheKey> entry : getCacheGroupKeys()) {
+            if (entry.getValue().equals(cacheKey)) {
+                groupKeys.add(entry.getKey());
+            }
+        }
+        return groupKeys;
     }
 
     public Cache<CacheGroupKey, Repository> getRepositoryGroups() {
