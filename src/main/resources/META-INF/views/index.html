@@ -12,8 +12,7 @@
 <section layout:fragment="custom-content">
     <main role="main" class="container-fluid">
         <div class="jumbotron">
-            <h1 class="display-6">Welcome to Source Code Portal</h1>
-            <p class="lead">Latest changes:</p>
+            <h4 class="display-6">Latest commits</h4>
             <div th:each="commitRevision : ${model.lastCommitRevisions}">
                 <div class="row">
                     <div class="col-sm-2" th:text="${commitRevision.commit.commitAuthor.name}">col-sm</div>
