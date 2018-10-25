@@ -17,10 +17,10 @@
                 <div class="row">
                     <div class="col-sm-2">
                         <img height="21" width="21" th:if="${commitRevision.author == null}"
-                             src="/img/github-anonymous.png" th:text="${commitRevision.commit.commitAuthor.name}">
+                             src="/img/github-anonymous.png" th:text="${(' ')+commitRevision.commit.commitAuthor.name}">
                         <img height="21" width="21" th:if="${commitRevision.author != null}"
                              th:src="${commitRevision.author.avatarUrl}"
-                             th:text="${commitRevision.commit.commitAuthor.name}">
+                             th:text="${(' ')+commitRevision.commit.commitAuthor.name}">
                     </div>
                     <div class="col-sm-2" th:text="${#dates.format(commitRevision.commit.commitAuthor.date, 'yyyy-MM-dd HH:mm')}">col-sm</div>
                     <div class="col-sm-3" th:text="${commitRevision.projectId}">col-sm</div>
