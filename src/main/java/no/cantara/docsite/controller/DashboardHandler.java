@@ -60,8 +60,8 @@ public class DashboardHandler implements WebHandler {
 
             group.setNoOfRepos(cacheStore.getRepositoryGroupsByGroupId(repo.groupId).size());
 
+            model.groups.add(group);
 
-//            model.groups.add(group);
 //            {
 //                AtomicInteger count = new AtomicInteger(0);
 //                cacheStore.getRepositoryGroups().iterator().forEachRemaining(a -> count.incrementAndGet());
