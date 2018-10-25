@@ -72,7 +72,9 @@ MacOS installation:
 
 === Generate GitHub Access Token using Docker
 
-`docker run -it -p 9091:9091 cantara/sourcecodeportal /github-access-token`
+The ClientID and ClientSecret is found under you OAuth app: https://github.com/organizations/Cantara/settings/applications
+
+`docker run -it -p 9091:9091 -e SCP_github.oauth2.client.clientId=CLIENT_ID -e SCP_github.oauth2.client.clientSecret=CLIENT_SECRET cantara/sourcecodeportal /github-access-token`
 
 Enter username, password and otp if you are using 2/mfa at GitHub.
 
