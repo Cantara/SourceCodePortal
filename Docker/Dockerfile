@@ -6,6 +6,8 @@ RUN ["jlink", "--strip-debug", "--no-header-files", "--no-man-pages", "--compres
 
 FROM alpine:latest
 COPY --from=build /linked /opt/jdk/
+ENV CHROME_BIN=/usr/bin/chromium-browser
+ENV CHROME_PATH=/usr/lib/chromium/
 ENV PATH=/opt/jdk/bin:$PATH
 
 RUN apk add --update \
@@ -16,6 +18,9 @@ RUN apk add --update \
     bash \
     unzip \
     curl \
+    chromium \
+    nss \
+    chromium-chromedriver \
   && pip install awscli boto3 \
   && pip install --upgrade awscli \
   && rm -rf /var/cache/apk/*
@@ -31,10 +36,10 @@ COPY config_override/* $HOME/config_override/
 COPY toRoot/* $HOME/
 RUN ln -s $HOME/github-access-token.sh /github-access-token
 
-ADD https://chromedriver.storage.googleapis.com/2.42/chromedriver_linux64.zip /tmp
-RUN unzip /tmp/chromedriver_linux64.zip
-RUN mv chromedriver /usr/bin/chromedriver
-RUN chmod +x /usr/bin/chromedriver
+#ADD https://chromedriver.storage.googleapis.com/2.42/chromedriver_linux64.zip /tmp
+#RUN unzip /tmp/chromedriver_linux64.zip
+#RUN mv chromedriver /usr/bin/chromedriver
+#RUN chmod +x /usr/bin/chromedriver
 
 
 ADD https://raw.githubusercontent.com/Cantara/devops/master/scripted_deploy/update-service.sh $HOME/
