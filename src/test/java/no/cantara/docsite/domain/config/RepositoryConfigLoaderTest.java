@@ -40,7 +40,7 @@ public class RepositoryConfigLoaderTest {
         LOG.trace("repos: {}\nsize:{}", result, result.size());
     }
 
-    @Test
+    @Test(enabled = false)
     public void testRepositoryConfig() throws Exception {
         ExecutorService executorService = ExecutorService.create();
         executorService.start();
