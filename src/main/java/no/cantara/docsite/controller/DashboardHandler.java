@@ -16,6 +16,7 @@ import javax.cache.Cache;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static no.cantara.docsite.controller.CommitsHandler.sortByValue;
 
@@ -62,6 +63,11 @@ public class DashboardHandler implements WebHandler {
 
 
             model.groups.add(group);
+            {
+                AtomicInteger count = new AtomicInteger(0);
+                cacheStore.getRepositoryGroups().iterator().forEachRemaining(a -> count.incrementAndGet());
+                model.connectedRepos = String.valueOf(count.get());
+            }
         }
 
 

@@ -2,20 +2,15 @@ package no.cantara.docsite.domain.view;
 
 import no.cantara.docsite.domain.github.commits.CommitRevision;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
-import static no.cantara.docsite.domain.config.Repository.SCP_TEMPLATE_JENKINS_URL;
-import static no.cantara.docsite.domain.config.Repository.SCP_TEMPLATE_ORGANIZATION_NAME;
-import static no.cantara.docsite.domain.config.Repository.SCP_TEMPLATE_REPO_NAME;
+import static no.cantara.docsite.domain.config.Repository.*;
 
 public class DashboardModel {
 
     public final List<CommitRevision> lastCommitRevisions = new ArrayList();
     public final SortedSet<Group> groups = new TreeSet<>();
+    public String connectedRepos = "0";
 
     public DashboardModel() {
     }
