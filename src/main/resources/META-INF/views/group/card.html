@@ -56,7 +56,11 @@
                             style="border: 0px; margin-top: 0; max-width: 16px;"
                             src="/img/octions.png"/></a>
                 </td>
-                <td><img th:src="${group.githubIssues}"/></td>
+                <td>
+                    <a th:href="${('https://github.com/')+group.organization+('/')+group.repoName+('/issues')}">
+                        <img th:src="${group.githubIssues}"/>
+                    </a>
+                </td>
                 <td><img th:src="${group.groupRelease}"/></td>
                 <td><img th:src="${group.groupCommit}"/></td>
                 <td>
