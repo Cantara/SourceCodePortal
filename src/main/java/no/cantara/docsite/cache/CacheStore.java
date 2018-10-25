@@ -27,6 +27,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class CacheStore {
 
@@ -160,25 +162,20 @@ public class CacheStore {
 
     // returns the first found group key
     public CacheGroupKey getCacheGroupKey(CacheKey cacheKey) {
-        Set<CacheGroupKey> groupKeys = new LinkedHashSet<>();
-        for (Cache.Entry<CacheGroupKey,CacheKey> entry : getCacheGroupKeys()) {
-            if (entry.getValue().equals(cacheKey)) {
-                groupKeys.add(entry.getKey());
-            }
-        }
-        return groupKeys.stream().filter(f -> f.repoName.toLowerCase().contains(f.groupId.toLowerCase())).findFirst()
+        Set<CacheGroupKey> groupKeys = StreamSupport.stream(getCacheGroupKeys().spliterator(), true)
+                .filter(entry -> entry.getValue().equals(cacheKey))
+                .map(Cache.Entry::getKey)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+        return groupKeys.stream().filter(entry -> entry.repoName.toLowerCase().contains(entry.groupId.toLowerCase())).findFirst()
                 .orElse(groupKeys.iterator().hasNext() ? groupKeys.iterator().next() : null);
     }
 
     // returns the all matched group keys
     public Set<CacheGroupKey> getCacheGroupKeys(CacheKey cacheKey) {
-        Set<CacheGroupKey> groupKeys = new LinkedHashSet<>();
-        for (Cache.Entry<CacheGroupKey,CacheKey> entry : getCacheGroupKeys()) {
-            if (entry.getValue().equals(cacheKey)) {
-                groupKeys.add(entry.getKey());
-            }
-        }
-        return groupKeys;
+        return StreamSupport.stream(getCacheGroupKeys().spliterator(), true)
+                .filter(entry -> entry.getValue().equals(cacheKey))
+                .map(Cache.Entry::getKey)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public Cache<CacheGroupKey, Repository> getRepositoryGroups() {

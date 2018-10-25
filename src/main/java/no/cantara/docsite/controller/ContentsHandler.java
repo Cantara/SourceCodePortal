@@ -32,7 +32,6 @@ public class ContentsHandler implements WebHandler {
         }
 
         CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, resourceContext.getTuples().get(0).id, resourceContext.getTuples().get(1).resource);
-        CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(cacheKey);
 
         RepositoryContents contents = cacheStore.getPages().get(cacheKey);
 
@@ -41,6 +40,7 @@ public class ContentsHandler implements WebHandler {
             return false;
         }
 
+        CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(cacheKey);
         Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
 
         ContentsModel model = new ContentsModel(repository, contents, contents.renderedHtml);
