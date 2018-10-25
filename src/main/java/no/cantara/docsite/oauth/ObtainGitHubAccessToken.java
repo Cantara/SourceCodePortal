@@ -171,7 +171,11 @@ public class ObtainGitHubAccessToken implements Closeable {
     }
 
     private boolean isTwoFactorAuthentication() {
-        return driver.findElementById("otp") != null;
+        try {
+            return driver.findElementById("otp") != null;
+        } catch (RuntimeException e) {
+            return false;
+        }
     }
 
     private void verifyTwoFactorAuthentication(String otp) {
@@ -191,8 +195,8 @@ public class ObtainGitHubAccessToken implements Closeable {
         try {
             return driver.findElementById("js-oauth-authorize-btn") != null; // check location url instead
         } catch (RuntimeException e) {
+            return false;
         }
-        return false;
     }
 
     public void authorizeOAuthUser() {
