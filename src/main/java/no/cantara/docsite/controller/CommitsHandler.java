@@ -98,7 +98,7 @@ public class CommitsHandler implements WebHandler {
 
             templateVariables.put("model", model);
 
-            if (ThymeleafViewEngineProcessor.processView(exchange, webContext.asTemplateResource(), templateVariables)) {
+            if (ThymeleafViewEngineProcessor.processView(exchange, cacheStore, webContext.asTemplateResource(), templateVariables)) {
                 return true;
             }
 

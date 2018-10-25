@@ -62,7 +62,7 @@ public class ContentsHandler implements WebHandler {
 
         templateVariables.put("model", model);
 
-        if (ThymeleafViewEngineProcessor.processView(exchange, webContext.asTemplateResource(), templateVariables)) {
+        if (ThymeleafViewEngineProcessor.processView(exchange, cacheStore, webContext.asTemplateResource(), templateVariables)) {
             return true;
         }
 

@@ -16,7 +16,6 @@ import javax.cache.Cache;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static no.cantara.docsite.controller.CommitsHandler.sortByValue;
 
@@ -62,12 +61,12 @@ public class DashboardHandler implements WebHandler {
             group.setNoOfRepos(cacheStore.getRepositoryGroupsByGroupId(repo.groupId).size());
 
 
-            model.groups.add(group);
-            {
-                AtomicInteger count = new AtomicInteger(0);
-                cacheStore.getRepositoryGroups().iterator().forEachRemaining(a -> count.incrementAndGet());
-                model.connectedRepos = String.valueOf(count.get());
-            }
+//            model.groups.add(group);
+//            {
+//                AtomicInteger count = new AtomicInteger(0);
+//                cacheStore.getRepositoryGroups().iterator().forEachRemaining(a -> count.incrementAndGet());
+//                model.connectedRepos = String.valueOf(count.get());
+//            }
         }
 
 
@@ -77,7 +76,7 @@ public class DashboardHandler implements WebHandler {
 
         templateVariables.put("model", model);
 
-        if (ThymeleafViewEngineProcessor.processView(exchange, webContext.asTemplateResource(), templateVariables)) {
+        if (ThymeleafViewEngineProcessor.processView(exchange, cacheStore, webContext.asTemplateResource(), templateVariables)) {
             return true;
         }
 
