@@ -51,16 +51,6 @@ public class ObtainGitHubAccessToken implements Closeable {
         driver = new ChromeDriver();
     }
 
-    static DynamicConfiguration configuration() {
-        DynamicConfiguration configuration = new StoreBasedDynamicConfiguration.Builder()
-                .propertiesResource("application-defaults.properties")
-                .propertiesResource("security.properties")
-                .propertiesResource("application.properties")
-                .propertiesResource("application_override.properties")
-                .build();
-        return configuration;
-    }
-
     public static final void main(String[] args) {
         long now = System.currentTimeMillis();
 
