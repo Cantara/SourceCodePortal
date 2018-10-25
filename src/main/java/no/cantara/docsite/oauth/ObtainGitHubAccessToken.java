@@ -57,7 +57,7 @@ public class ObtainGitHubAccessToken implements Closeable {
         options.addArguments("--disable-gpu"); // applicable to windows os only
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.addArguments("--no-sandbox"); // Bypass OS security model
-        LOG.info("ChromeOptions: {}", options.asMap());
+        LOG.debug("ChromeOptions: {}", options.asMap());
         driver = new ChromeDriver(options);
     }
 
@@ -71,6 +71,7 @@ public class ObtainGitHubAccessToken implements Closeable {
         DynamicConfiguration configuration = new StoreBasedDynamicConfiguration.Builder()
                 .propertiesResource(Application.getDefaultConfigurationResourcePath())
                 .propertiesResource("application.properties")
+                .values("http.host", "127.0.0.1")
                 .values("http.port", "9091")
                 .propertiesResource("security.properties")
                 .propertiesResource("application_override.properties")
