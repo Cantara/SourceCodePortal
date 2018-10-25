@@ -57,7 +57,7 @@ public class ObtainGitHubAccessToken implements Closeable {
         options.addArguments("--disable-gpu"); // applicable to windows os only
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.addArguments("--no-sandbox"); // Bypass OS security model
-        LOG.trace("ChromeOptions: {}", options.asMap());
+        LOG.info("ChromeOptions: {}", options.asMap());
         driver = new ChromeDriver(options);
     }
 
