@@ -19,13 +19,14 @@ public class ThymeleafViewEngineProcessor {
     public static boolean processView(HttpServerExchange exchange, CacheStore cacheStore, String viewId, Map<String, Object> templateVariables) throws RuntimeException {
         UndertowContext ctx = new UndertowContext(exchange);
         ctx.setLocale(Locale.ENGLISH);
-        ctx.setVariables(templateVariables);
 
         {
             AtomicInteger count = new AtomicInteger(0);
             cacheStore.getRepositoryGroups().iterator().forEachRemaining(a -> count.incrementAndGet());
             templateVariables.put("connectedRepos", String.valueOf(count.get()));
         }
+
+        ctx.setVariables(templateVariables);
 
         if (!templateExists(viewId)) {
             return false;
