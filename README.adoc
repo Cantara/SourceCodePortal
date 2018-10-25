@@ -70,6 +70,12 @@ MacOS installation:
 
 `brew install chromedriver`
 
+=== Generate GitHub Access Token using Docker
+
+`docker run -it -p 9091:9091 cantara/sourcecodeportal /github-access-token`
+
+Enter username, password and otp if you are using 2/mfa at GitHub.
+
 
 === ngrok (how to set up support for github hooks via a https proxy on developmnet/localhost)
 

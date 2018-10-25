@@ -29,6 +29,7 @@ ARG DOCKER_TAG=latest
 
 COPY config_override/* $HOME/config_override/
 COPY toRoot/* $HOME/
+RUN ln -s $HOME/github-access-token.sh /github-access-token
 
 ADD https://chromedriver.storage.googleapis.com/2.42/chromedriver_linux64.zip /tmp
 RUN unzip /tmp/chromedriver_linux64.zip
@@ -58,6 +59,7 @@ VOLUME ["$HOME/config_override", "$HOME/logs", "$HOME/db"]
 
 ## Expose application port
 EXPOSE 9090
+EXPOSE 9091
 
 USER $USER
 WORKDIR /home/$USER
