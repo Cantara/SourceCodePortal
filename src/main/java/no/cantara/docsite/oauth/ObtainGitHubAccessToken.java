@@ -128,6 +128,8 @@ public class ObtainGitHubAccessToken implements Closeable {
                 String authorizationCode = githubAccessToken.getAuthorizationCode();
                 String accessToken = githubAccessToken.getAccessToken(authorizationCode);
                 LOG.trace("\n-----------------------------------\n\nACCESS_TOKEN: {}\n\n-----------------------------------\n", accessToken);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
 
