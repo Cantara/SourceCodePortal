@@ -1,13 +1,23 @@
 = Organizational SourceCode Dashboard Portal
 
-##### Status
+##### Codebase status:
 image:https://jenkins.capraconsulting.no/buildStatus/icon?job=Cantara-SourceCodePortal[Build Status]
 image:https://www.repostatus.org/badges/latest/active.svg[Project Status: Active – The project has not yet reached a stable, usable state but is being actively developed.]
 image:https://snyk.io/test/github/Cantara/SourceCodePortal/badge.svg[Known Vulnerabilities]
 
 
-An Organisational and group documentation from GitHub repositories meant for small to medium sized organizations (<2500 commits/hour). If you need support for higher commit-volumes
+[.lead]SourceCode Dashboard Portal is an Organisational and group dashboard organizing status and documentation from GitHub repositories. It is designed for small to medium sized organizations (<2500 commits/hour). If you need support for higher commit-volumes
 please contact the authors and we'll help you configure the system to your volumes/needs.
+
+Key features:
+* Grouping features
+** Quick overview of status for systems consisting of multiple codebases
+** Browse commitslogs for systems consisting of several codebases
+** See the status of all the codebases in a group
+* Organization features
+** Quick overview of status for all codebases in an organization
+** Browse commitslogs for and latest changes for an entire organization
+** See the status of all the groups in an organization
 
 image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-dashboard-example.png[Example Screenshot of SourceCode Portal in early Development]
 
