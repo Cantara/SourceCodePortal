@@ -7,7 +7,6 @@ import no.cantara.docsite.domain.github.contents.RepositoryContents;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
 import no.cantara.docsite.util.CommonUtil;
-import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import javax.json.bind.JsonbBuilder;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -52,7 +52,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
             MavenPOM mavenPom = (MavenPOM) um.unmarshal(er);
             return mavenPom;
         } catch (ParserConfigurationException | SAXException | JAXBException e) {
-            LOG.error("Error parsing pom.xml: {}", CommonUtil.captureStackTrace(e));
+            LOG.error("Error parsing pom.xml: {}\n{}", xml, CommonUtil.captureStackTrace(e));
             throw new RuntimeException(e);
         }
     }
@@ -62,7 +62,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), String.format(repoContentsURL, "pom.xml", cacheKey.branch), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
-            RepositoryContents mavenPOMContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContents.class);
+            RepositoryContents mavenPOMContents = JsonbBuilder.create().fromJson(response.body(), RepositoryContents.class);
             MavenPOM mavenPOM = parse(mavenPOMContents.content);
             cacheStore.getProjects().put(cacheKey, mavenPOM);
         }
