@@ -32,7 +32,6 @@ public class FetchCantaraWikiTask extends WorkerTask {
         HttpGetCommand<String> cmd = new HttpGetCommand<>("cantaraWiki", getConfiguration(), Optional.of(this),
                 String.format("https://wiki.cantara.no/pages/viewpage.action?pageId=%s", cacheKey.contentId), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
-        LOG.info("1: {}", response.statusCode());
         if (response.statusCode() == HTTP_OK) {
             String html = response.body();
             org.jsoup.nodes.Document doc = Jsoup.parse(html);

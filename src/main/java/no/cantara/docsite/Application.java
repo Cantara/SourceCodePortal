@@ -9,6 +9,7 @@ import no.cantara.docsite.controller.ApplicationController;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.github.contents.PreFetchRepositoryContents;
 import no.cantara.docsite.executor.ExecutorService;
+import no.cantara.docsite.executor.ScheduledExecutorService;
 import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
@@ -47,6 +48,8 @@ public class Application {
 
         ExecutorService executorService = ExecutorService.create();
 
+        ScheduledExecutorService scheduledExecutorService = ScheduledExecutorService.create(configuration, executorService, cacheStore);
+
         RepositoryConfigLoader configLoader = new RepositoryConfigLoader(configuration, cacheStore);
 
         ApplicationController applicationController = new ApplicationController(
@@ -59,22 +62,24 @@ public class Application {
                 cacheStore
         );
 
-        return new Application(configuration, host, port, executorService, cacheStore, configLoader, applicationController);
+        return new Application(configuration, host, port, executorService, scheduledExecutorService, cacheStore, configLoader, applicationController);
     }
 
     private final DynamicConfiguration configuration;
     private final String host;
     private final int port;
     private final ExecutorService executorService;
+    private final ScheduledExecutorService scheduledExecutorService;
     private final CacheStore cacheStore;
     private final RepositoryConfigLoader configLoader;
     private final Undertow server;
 
-    public Application(DynamicConfiguration configuration, String host, int port, ExecutorService executorService, CacheStore cacheStore, RepositoryConfigLoader configLoader, ApplicationController applicationController) {
+    public Application(DynamicConfiguration configuration, String host, int port, ExecutorService executorService, ScheduledExecutorService scheduledExecutorService, CacheStore cacheStore, RepositoryConfigLoader configLoader, ApplicationController applicationController) {
         this.configuration = configuration;
         this.host = host;
         this.port = port;
         this.executorService = executorService;
+        this.scheduledExecutorService = scheduledExecutorService;
         this.cacheStore = cacheStore;
         this.configLoader = configLoader;
         HystrixCommandProperties.Setter()
@@ -92,6 +97,10 @@ public class Application {
 
     public void enableExecutorService() {
         executorService.start();
+    }
+
+    public void enableScheduledExecutorService() {
+        scheduledExecutorService.start();
     }
 
     public void enableCacheManager() {
@@ -140,6 +149,7 @@ public class Application {
     }
 
     public void stop() {
+        scheduledExecutorService.shutdown();
         executorService.shutdown();
         server.stop();
         cacheStore.getCacheManager().close();
