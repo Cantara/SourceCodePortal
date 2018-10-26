@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
 
-    private static Logger LOG = LoggerFactory.getLogger(ScheduledExecutorThreadPool.class);
+    private static Logger LOG = LoggerFactory.getLogger(ScheduledExecutorService.class);
 
     private final java.util.concurrent.ScheduledExecutorService scheduledExecutorService;
     private final DynamicConfiguration configuration;
