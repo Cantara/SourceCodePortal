@@ -126,7 +126,9 @@ class GithubWebhookController implements HttpHandler {
                     // ------------------------------------------------------------------------------------------------------
                     if (pushCommitEvent.isCodeCommit()) {
                         CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name, pushCommitEvent.getBranch());
-                        executorService.queue(new FetchCommitRevisionTask(configuration, executorService, cacheStore, cacheKey, pushCommitEvent.headCommit.id));
+                        for (PushCommitEvent.Commit commit : pushCommitEvent.commits) {
+                            executorService.queue(new FetchCommitRevisionTask(configuration, executorService, cacheStore, cacheKey, commit.id));
+                        }
                     }
 
                     // ------------------------------------------------------------------------------------------------------
@@ -136,6 +138,7 @@ class GithubWebhookController implements HttpHandler {
                         CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name, pushCommitEvent.getBranch());
                         CacheGroupKey cacheGroupKey = cacheStore.getCacheKeys().get(cacheKey);
                         Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
+                        // TODO if there are page changes in multiple commits they will not be handled
                         String commitId = pushCommitEvent.headCommit.id;
                         for (String modifiedFile : pushCommitEvent.headCommit.modifiedList) {
                             executorService.queue(new FetchContentsTask(configuration, executorService, cacheStore, cacheKey, repository.contentsURL, modifiedFile, commitId));
