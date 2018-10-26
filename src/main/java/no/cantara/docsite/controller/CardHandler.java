@@ -71,6 +71,7 @@ public class CardHandler implements WebHandler {
                     hasReadme,
                     (hasReadme ? String.format("/contents/%s/%s", repo.cacheKey.repoName, repo.cacheKey.branch) : repo.repoURL),
                     String.format("/group/%s", repositoryConfig.groupId),
+                    repo.repoURL,
                     String.format(cacheStore.getRepositoryConfig().gitHub.badges.jenkins, repo.cacheKey.repoName),
                     String.format(cacheStore.getRepositoryConfig().gitHub.badges.snykIO, cacheStore.getRepositoryConfig().gitHub.organization, repo.cacheKey.repoName));
             model.groups.add(group);

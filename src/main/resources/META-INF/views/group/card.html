@@ -52,7 +52,10 @@
                 <td>
                     <a th:href="${group.readmeURI}" th:text="${group.repoName}"></a>
                 </td>
-                <td><a style="text-decoration: none;" th:if="${group.hasReadme}"
+                <td>
+                    <a style="text-decoration: none;" th:href="${group.repoURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                                                         src="/img/github-logo.svg"/></a>
+                    <a style="text-decoration: none;" th:if="${group.hasReadme}"
                        th:href="${group.readmeURI}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
                                                          src="/img/doc.svg"/></a>
                     <a style="text-decoration: none;"

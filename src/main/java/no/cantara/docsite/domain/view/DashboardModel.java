@@ -2,9 +2,15 @@ package no.cantara.docsite.domain.view;
 
 import no.cantara.docsite.domain.github.commits.CommitRevision;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import static no.cantara.docsite.domain.config.Repository.*;
+import static no.cantara.docsite.domain.config.Repository.SCP_TEMPLATE_JENKINS_URL;
+import static no.cantara.docsite.domain.config.Repository.SCP_TEMPLATE_ORGANIZATION_NAME;
+import static no.cantara.docsite.domain.config.Repository.SCP_TEMPLATE_REPO_NAME;
 
 public class DashboardModel {
 
@@ -27,6 +33,7 @@ public class DashboardModel {
         public final boolean hasReadme;
         public final String readmeURI;
         public final String cardURI;
+        public final String repoURL;
         public String jenkinsURL = SCP_TEMPLATE_JENKINS_URL + "/buildStatus/icon?job=" + SCP_TEMPLATE_REPO_NAME;
         public String groupCommit = "https://img.shields.io/github/last-commit/" + SCP_TEMPLATE_ORGANIZATION_NAME + "/" + SCP_TEMPLATE_REPO_NAME + ".svg";
         public String groupStatus = "unknown";
@@ -38,7 +45,7 @@ public class DashboardModel {
 
         public SortedSet<Activity> activity = new TreeSet<>();
 
-        public Group(String organization, String repoName, String defaultGroupRepo, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI, String jenkinsURL, String snykIOUrlx) {
+        public Group(String organization, String repoName, String defaultGroupRepo, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI, String repoURL, String jenkinsURL, String snykIOUrlx) {
             this.organization = organization;
             this.repoName = repoName;
             this.defaultGroupRepo = defaultGroupRepo;
@@ -49,6 +56,7 @@ public class DashboardModel {
             this.hasReadme = hasReadme;
             this.readmeURI = readmeURI;
             this.cardURI = cardURI;
+            this.repoURL = repoURL;
             this.jenkinsURL = jenkinsURL;
             if (repoName.contains("*") && defaultGroupRepo != null) {
                 repoName = defaultGroupRepo;

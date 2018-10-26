@@ -73,6 +73,8 @@ public class CommitsHandler implements WebHandler {
                 String groupIdOrRepoName = (renderGroupOrRepo ? resourceContext.getLast().get().id : resourceContext.getFirst().get().id);
                 String branchOrNull = (renderGroupOrRepo ? null : resourceContext.getLast().get().resource);
 
+                templateVariables.put("displayName", groupIdOrRepoName);
+
                 String groupIdIfRenderRepo = null;
                 if (!renderGroupOrRepo) {
                     CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(CacheKey.of(organization, groupIdOrRepoName, branchOrNull));
@@ -87,12 +89,10 @@ public class CommitsHandler implements WebHandler {
                     // group view
                     if (renderGroupOrRepo && key.compareToUsingGroupId(organization, groupIdOrRepoName)) {
                         commitRevisionMap.put(key, value);
-                        templateVariables.put("displayName", groupIdIfRenderRepo);
 
                     // repo view
                     } else if (!renderGroupOrRepo && key.compareToUsingRepoName(organization, groupIdOrRepoName, branchOrNull, groupIdIfRenderRepo)) {
                         commitRevisionMap.put(key, value);
-                        templateVariables.put("displayName", groupIdIfRenderRepo);
                     }
                 }
             }

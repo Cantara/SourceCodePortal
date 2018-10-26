@@ -40,6 +40,8 @@
                         <h5 class="card-title">
                             <a style="text-decoration: none;" th:href="${('/group/')+group.groupId}" class="card-link"
                                th:text="${group.displayName}">Show</a>&#160;
+                            <a style="text-decoration: none;" th:href="${group.repoURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                                                                 src="/img/github-logo.svg"/></a>
                             <a style="text-decoration: none;" th:if="${group.hasReadme}"
                                th:href="${group.readmeURI}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
                                                                  src="/img/doc.svg"/></a>
