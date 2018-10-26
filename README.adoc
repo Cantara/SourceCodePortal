@@ -10,14 +10,18 @@ image:https://snyk.io/test/github/Cantara/SourceCodePortal/badge.svg[Known Vulne
 please contact the authors and we'll help you configure the system to your volumes/needs.
 
 Key features:
+
 * Grouping features
 ** Quick overview of status for systems consisting of multiple codebases
 ** Browse commitslogs for systems consisting of several codebases
 ** See the status of all the codebases in a group
+** Easy access to all documentation in one place
 * Organization features
 ** Quick overview of status for all codebases in an organization
 ** Browse commitslogs for and latest changes for an entire organization
 ** See the status of all the groups in an organization
+** Easy access to all documentation in one place
+
 
 image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-dashboard-example.png[Example Screenshot of SourceCode Portal in early Development]
 
