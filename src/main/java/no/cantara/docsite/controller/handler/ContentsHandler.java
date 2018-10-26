@@ -1,4 +1,4 @@
-package no.cantara.docsite.controller;
+package no.cantara.docsite.controller.handler;
 
 import io.undertow.server.HttpServerExchange;
 import no.cantara.docsite.cache.CacheGroupKey;
