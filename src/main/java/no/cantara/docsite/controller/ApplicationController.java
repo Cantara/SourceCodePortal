@@ -41,7 +41,14 @@ public class ApplicationController implements HttpHandler {
 
         if (requestPath.trim().length() <= 1 && !cors.isOptionsRequest()) {
             exchange.setStatusCode(StatusCodes.FOUND);
-            exchange.getResponseHeaders().put(Headers.LOCATION, "/index");
+            exchange.getResponseHeaders().put(Headers.LOCATION, "/dashboard");
+            exchange.endExchange();
+            return;
+        }
+
+        if ("/index".equalsIgnoreCase(requestPath) && !cors.isOptionsRequest()) {
+            exchange.setStatusCode(StatusCodes.MOVED_PERMANENTLY);
+            exchange.getResponseHeaders().put(Headers.LOCATION, "/dashboard");
             exchange.endExchange();
             return;
         }
