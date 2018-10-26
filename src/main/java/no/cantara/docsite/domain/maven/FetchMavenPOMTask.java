@@ -6,6 +6,7 @@ import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.contents.RepositoryContents;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
+import no.cantara.docsite.util.CommonUtil;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
         this.repoContentsURL = repoContentsURL;
     }
 
-    public static MavenPOM parse(String xml) {
+    static MavenPOM parse(String xml) {
         try {
             SAXParserFactory sax = SAXParserFactory.newInstance();
             sax.setNamespaceAware(false);
@@ -51,6 +52,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
             MavenPOM mavenPom = (MavenPOM) um.unmarshal(er);
             return mavenPom;
         } catch (ParserConfigurationException | SAXException | JAXBException e) {
+            LOG.error("Error parsing pom.xml: {}", CommonUtil.captureStackTrace(e));
             throw new RuntimeException(e);
         }
     }
