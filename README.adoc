@@ -12,6 +12,7 @@ SourceCode Dashboard Portal is an Organisational and group dashboard organizing 
 please contact the authors and we'll help you configure the system to your volumes/needs.
 
 Key features:
+^^^^^^^^^^^^^
 
 * Grouping features
 ** Quick overview of status for systems consisting of multiple codebases
@@ -24,6 +25,10 @@ Key features:
 ** See the status of all the groups in an organization
 ** Easy access to all documentation in one place
 
+
+
+Some early development screenshots:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-dashboard-example.png[Example Screenshot of SourceCode Portal in early Development]
 
