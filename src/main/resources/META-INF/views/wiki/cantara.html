@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/template.html}">
+
+<head>
+    <title>Cantara Wiki</title>
+</head>
+
+<body>
+
+<section layout:fragment="custom-content">
+    <main role="main" class="container-fluid">
+        <article th:utext="${wikiHtml}"></article>
+    </main>
+</section>
+
+</body>

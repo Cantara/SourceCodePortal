@@ -1,7 +1,9 @@
 package no.cantara.docsite.domain.github.contents;
 
+import no.cantara.docsite.cache.CacheCantaraWikiKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
+import no.cantara.docsite.domain.confluence.cantara.FetchCantaraWikiTask;
 import no.cantara.docsite.domain.github.commits.FetchCommitRevisionsTask;
 import no.cantara.docsite.domain.github.pages.FetchPageTask;
 import no.cantara.docsite.domain.maven.FetchMavenPOMTask;
@@ -30,6 +32,8 @@ public class PreFetchRepositoryContents {
             executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().readmeURL));
             executorService.queue(new FetchCommitRevisionsTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey()));
         });
+        executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
+        executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
         executorService.queue(new PreFetchDoneTask(configuration, executorService));
     }
 
