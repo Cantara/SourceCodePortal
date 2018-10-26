@@ -6,6 +6,7 @@ import no.cantara.docsite.domain.github.commits.CommitRevision;
 import no.cantara.docsite.domain.github.contents.RepositoryContents;
 import no.cantara.docsite.domain.github.releases.CreatedTagEvent;
 import no.cantara.docsite.domain.maven.MavenPOM;
+import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +17,6 @@ import javax.cache.configuration.MutableConfiguration;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
-import javax.json.bind.config.PropertyNamingStrategy;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -46,9 +43,7 @@ public class CacheStore {
 
     RepositoryConfig load() {
         try (InputStream json = ClassLoader.getSystemResourceAsStream("conf/config.json")) {
-            JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
-            Jsonb jsonb = JsonbBuilder.create(config);
-            return jsonb.fromJson(json, RepositoryConfig.class);
+            return JsonbFactory.instance().fromJson(json, RepositoryConfig.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -122,7 +117,7 @@ public class CacheStore {
             }
             builder.add(repo.groupId, groupBuilder);
         }
-        return JsonbBuilder.create().toJson(builder.build());
+        return JsonbFactory.instance().toJson(builder.build());
     }
 
 

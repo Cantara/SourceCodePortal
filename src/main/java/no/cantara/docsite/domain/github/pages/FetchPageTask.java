@@ -6,6 +6,7 @@ import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.contents.RepositoryContents;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
+import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,7 +15,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.json.bind.JsonbBuilder;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
@@ -37,7 +37,7 @@ public class FetchPageTask extends WorkerTask {
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), repoReadmeURL, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
-            RepositoryContents readmeContents = JsonbBuilder.create().fromJson(response.body(), RepositoryContents.class);
+            RepositoryContents readmeContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContents.class);
 
             String renderedHtml = null;
             if (readmeContents.name.endsWith(".md")) {

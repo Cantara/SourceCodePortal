@@ -4,16 +4,13 @@ import no.cantara.docsite.cache.CacheInitializer;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.util.CommonUtil;
+import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
-import javax.json.bind.config.PropertyNamingStrategy;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,18 +44,14 @@ public class PushCommitRevisionTest {
             dummyCommits2 = CommonUtil.writeInputToOutputStream(json).toString();
         }
 
-        JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
-        Jsonb jsonb = JsonbBuilder.create(config);
-
-
-        CommitRevision[] dummyCommitEvent1 = jsonb.fromJson(dummyCommits1, CommitRevision[].class);
+        CommitRevision[] dummyCommitEvent1 = JsonbFactory.instance().fromJson(dummyCommits1, CommitRevision[].class);
 //        LOG.trace("event1: {}", Arrays.stream(dummyCommitEvent1).map(CommitRevision::toString).collect(Collectors.joining("\n")));
 
         for(CommitRevision commitRevision : dummyCommitEvent1) {
             cacheStore.getCommits().put(CacheShaKey.of("Cantara", "dummyRepo", "Dummy", "master", commitRevision.sha), commitRevision);
         }
 
-        CommitRevision[] dummyCommitEvent2 = jsonb.fromJson(dummyCommits2, CommitRevision[].class);
+        CommitRevision[] dummyCommitEvent2 = JsonbFactory.instance().fromJson(dummyCommits2, CommitRevision[].class);
 //        LOG.trace("event2: {}", Arrays.stream(dummyCommitEvent2).map(CommitRevision::toString).collect(Collectors.joining("\n")));
 
         for(CommitRevision commitRevision : dummyCommitEvent2) {

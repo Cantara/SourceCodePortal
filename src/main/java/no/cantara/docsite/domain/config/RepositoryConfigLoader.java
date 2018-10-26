@@ -6,11 +6,11 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.repos.GitHubRepository;
 import no.cantara.docsite.domain.github.repos.RepositoryVisibility;
+import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.json.bind.JsonbBuilder;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,7 +43,7 @@ public class RepositoryConfigLoader {
                 HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = command.execute();
         if (response.statusCode() == HTTP_OK) {
-            return Arrays.asList(JsonbBuilder.create().fromJson(response.body(), GitHubRepository[].class));
+            return Arrays.asList(JsonbFactory.instance().fromJson(response.body(), GitHubRepository[].class));
         }
         LOG.error("Error: HTTP-{} - {}", response.statusCode(), response.body());
         return Collections.emptyList();

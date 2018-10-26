@@ -7,11 +7,11 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
+import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.json.bind.JsonbBuilder;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 import java.util.Set;
@@ -34,7 +34,7 @@ public class FetchCommitRevisionsTask extends WorkerTask {
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), url, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
-            CommitRevision[] commitRevision = JsonbBuilder.create().fromJson(response.body(), CommitRevision[].class);
+            CommitRevision[] commitRevision = JsonbFactory.instance().fromJson(response.body(), CommitRevision[].class);
             for (int n = 0; n < commitRevision.length; n++) {
                 Set<CacheGroupKey> cacheGroupKey = cacheStore.getCacheGroupKeys(cacheKey);
                 CommitRevision cr = commitRevision[n];

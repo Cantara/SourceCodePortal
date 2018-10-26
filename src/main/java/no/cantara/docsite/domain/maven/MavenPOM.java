@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.maven;
 
-import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.util.JsonbFactory;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -26,7 +26,7 @@ public class MavenPOM implements Serializable {
 
     @Override
     public String toString() {
-        return JsonUtil.asString(this);
+        return JsonbFactory.asString(this);
     }
 
     public static class Parent implements Serializable {

@@ -7,17 +7,34 @@ import javax.json.JsonReader;
 import javax.json.JsonStructure;
 import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
+import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
 import javax.json.stream.JsonGenerator;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsonUtil {
+public class JsonbFactory {
+
+    private static final class JsonbBuilderHolder {
+        private static final JsonbBuilderHolder INSTANCE = new JsonbBuilderHolder();
+        private final Jsonb jsonb;
+
+        JsonbBuilderHolder() {
+            JsonbConfig config = new JsonbConfig();
+            // .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES)
+            jsonb = JsonbBuilder.create(config);
+        }
+    }
+
+    public static final Jsonb instance() {
+        return JsonbBuilderHolder.INSTANCE.jsonb;
+    }
 
     public static String prettyPrint(String json) {
-        return jsonFormat(JsonUtil.asJsonObject(json), JsonGenerator.PRETTY_PRINTING);
+        return jsonFormat(JsonbFactory.asJsonObject(json), JsonGenerator.PRETTY_PRINTING);
     }
 
     public static String prettyPrint(JsonStructure json) {
@@ -60,7 +77,7 @@ public class JsonUtil {
     }
 
     public static String asString(Object jsonObject) {
-        String json = JsonbBuilder.create().toJson(jsonObject);
+        String json = instance().toJson(jsonObject);
         return prettyPrint(json);
     }
 

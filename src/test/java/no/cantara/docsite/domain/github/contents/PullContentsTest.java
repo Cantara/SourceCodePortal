@@ -1,13 +1,9 @@
 package no.cantara.docsite.domain.github.contents;
 
+import no.cantara.docsite.util.JsonbFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
-
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
-import javax.json.bind.config.PropertyNamingStrategy;
 
 import static org.testng.Assert.assertEquals;
 
@@ -36,9 +32,7 @@ public class PullContentsTest {
 
     @Test
     public void thatReadmeIsDecodedWithAdapter() {
-        JsonbConfig config = new JsonbConfig().withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
-        Jsonb jsonb = JsonbBuilder.create(config);
-        RepositoryContents contents = jsonb.fromJson(CONTENTS_JSON, RepositoryContents.class);
+        RepositoryContents contents = JsonbFactory.instance().fromJson(CONTENTS_JSON, RepositoryContents.class);
         assertEquals(contents.content, "encoded content ...");
     }
 

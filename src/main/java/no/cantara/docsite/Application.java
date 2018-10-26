@@ -10,7 +10,7 @@ import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.github.contents.PreFetchRepositoryContents;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.health.HealthResource;
-import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,7 +100,7 @@ public class Application {
 
     public void enableConfigLoader() {
         configLoader.load();
-        LOG.info("Configured repositories:{}", JsonUtil.prettyPrint(cacheStore.getConfiguredRepositories()));
+        LOG.info("Configured repositories:{}", JsonbFactory.prettyPrint(cacheStore.getConfiguredRepositories()));
     }
 
     public void enablePreFetch() {

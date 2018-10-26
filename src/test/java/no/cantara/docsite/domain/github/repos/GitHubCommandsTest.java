@@ -4,7 +4,7 @@ import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.contents.RepositoryContents;
 import no.cantara.docsite.domain.maven.FetchMavenPOMTask;
 import no.cantara.docsite.domain.maven.MavenPOM;
-import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
@@ -37,7 +35,7 @@ public class GitHubCommandsTest {
     public void testGitHubApiLimit() {
         DynamicConfiguration configuration = configuration();
         HttpResponse<String> response = new GetGitHubCommand<>("githubRateLimit", configuration, Optional.empty(), "https://api.github.com/rate_limit", HttpResponse.BodyHandlers.ofString()).execute();
-        LOG.trace("GitHub API Limit: {}", JsonUtil.prettyPrint(response.body()));
+        LOG.trace("GitHub API Limit: {}", JsonbFactory.prettyPrint(response.body()));
     }
 
     @Deprecated
@@ -48,8 +46,7 @@ public class GitHubCommandsTest {
                 HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = command.execute();
         if (response.statusCode() == HTTP_OK) {
-            JsonbConfig config = new JsonbConfig();
-            RepositoryContents repositoryContents = JsonbBuilder.create(config).fromJson(response.body(), RepositoryContents.class);
+            RepositoryContents repositoryContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContents.class);
             MavenPOM mavenPom = FetchMavenPOMTask.parse(repositoryContents.content);
             LOG.trace("pom: {}\n{}", repositoryContents, mavenPom);
         }
