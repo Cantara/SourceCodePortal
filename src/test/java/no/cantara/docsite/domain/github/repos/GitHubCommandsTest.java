@@ -2,8 +2,8 @@ package no.cantara.docsite.domain.github.repos;
 
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.contents.RepositoryContents;
+import no.cantara.docsite.domain.maven.FetchMavenPOMTask;
 import no.cantara.docsite.domain.maven.MavenPOM;
-import no.cantara.docsite.domain.maven.MavenPOMParser;
 import no.cantara.docsite.util.JsonUtil;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
@@ -40,6 +40,7 @@ public class GitHubCommandsTest {
         LOG.trace("GitHub API Limit: {}", JsonUtil.prettyPrint(response.body()));
     }
 
+    @Deprecated
     @Test(enabled = false)
     public void getMavenPOM() {
         GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration(), Optional.empty(),
@@ -49,7 +50,7 @@ public class GitHubCommandsTest {
         if (response.statusCode() == HTTP_OK) {
             JsonbConfig config = new JsonbConfig();
             RepositoryContents repositoryContents = JsonbBuilder.create(config).fromJson(response.body(), RepositoryContents.class);
-            MavenPOM mavenPom = new MavenPOMParser().parse(repositoryContents.content);
+            MavenPOM mavenPom = FetchMavenPOMTask.parse(repositoryContents.content);
             LOG.trace("pom: {}\n{}", repositoryContents, mavenPom);
         }
     }
