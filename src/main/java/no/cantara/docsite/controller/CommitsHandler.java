@@ -62,7 +62,9 @@ public class CommitsHandler implements WebHandler {
             Map<CacheShaKey, CommitRevision> commitRevisionMap = new LinkedHashMap<>();
             Cache<CacheShaKey, CommitRevision> commitRevisions = cacheStore.getCommits();
             if (renderAll) {
+                // all view
                 commitRevisions.iterator().forEachRemaining(a -> commitRevisionMap.put(a.getKey(), a.getValue()));
+                templateVariables.put("displayName", String.format("All %s repos", cacheStore.getRepositoryConfig().gitHub.organization));
 
             } else {
                 boolean renderGroupOrRepo = resourceContext.getTuples().size() == 1;
@@ -82,11 +84,15 @@ public class CommitsHandler implements WebHandler {
                 for (Cache.Entry<CacheShaKey, CommitRevision> entry : commitRevisions) {
                     CacheShaKey key = entry.getKey();
                     CommitRevision value = entry.getValue();
+                    // group view
                     if (renderGroupOrRepo && key.compareToUsingGroupId(organization, groupIdOrRepoName)) {
                         commitRevisionMap.put(key, value);
+                        templateVariables.put("displayName", groupIdIfRenderRepo);
 
+                    // repo view
                     } else if (!renderGroupOrRepo && key.compareToUsingRepoName(organization, groupIdOrRepoName, branchOrNull, groupIdIfRenderRepo)) {
                         commitRevisionMap.put(key, value);
+                        templateVariables.put("displayName", groupIdIfRenderRepo);
                     }
                 }
             }
