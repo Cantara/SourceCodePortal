@@ -10,6 +10,7 @@ import javax.json.JsonWriterFactory;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
+import javax.json.bind.config.PropertyNamingStrategy;
 import javax.json.stream.JsonGenerator;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -24,7 +25,7 @@ public class JsonbFactory {
 
         JsonbBuilderHolder() {
             JsonbConfig config = new JsonbConfig();
-            // .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES)
+            config.withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
             jsonb = JsonbBuilder.create(config);
         }
     }

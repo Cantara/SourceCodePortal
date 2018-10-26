@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
+/**
+ * This task is used during push
+ */
 public class FetchContentsTask extends WorkerTask {
 
     private static final Logger LOG = LoggerFactory.getLogger(FetchContentsTask.class);
@@ -38,6 +41,7 @@ public class FetchContentsTask extends WorkerTask {
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
             RepositoryContents readmeContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContents.class);
+            readmeContents.renderedHtml = DocumentRenderer.render(readmeContents.name, readmeContents.content);
             cacheStore.getPages().put(cacheKey, readmeContents);
         } else {
             LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());
