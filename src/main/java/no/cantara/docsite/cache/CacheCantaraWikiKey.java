@@ -9,9 +9,11 @@ public class CacheCantaraWikiKey implements Serializable {
 
     private static final long serialVersionUID = -3831357518065033430L;
 
+    public final String pageName;
     public final String contentId;
 
-    CacheCantaraWikiKey(String contentId) {
+    CacheCantaraWikiKey(String pageName, String contentId) {
+        this.pageName = pageName;
         this.contentId = contentId;
     }
 
@@ -20,12 +22,13 @@ public class CacheCantaraWikiKey implements Serializable {
         if (this == o) return true;
         if (!(o instanceof CacheCantaraWikiKey)) return false;
         CacheCantaraWikiKey that = (CacheCantaraWikiKey) o;
-        return Objects.equals(contentId, that.contentId);
+        return Objects.equals(pageName, that.pageName) &&
+                Objects.equals(contentId, that.contentId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(contentId);
+        return Objects.hash(pageName, contentId);
     }
 
     @Override
@@ -33,7 +36,7 @@ public class CacheCantaraWikiKey implements Serializable {
         return JsonbFactory.asString(this);
     }
 
-    public static CacheCantaraWikiKey of(String contentId) {
-        return new CacheCantaraWikiKey(contentId);
+    public static CacheCantaraWikiKey of(String pageName, String contentId) {
+        return new CacheCantaraWikiKey(pageName, contentId);
     }
 }

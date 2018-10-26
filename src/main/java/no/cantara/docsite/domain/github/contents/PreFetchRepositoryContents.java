@@ -32,7 +32,8 @@ public class PreFetchRepositoryContents {
             executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().readmeURL));
             executorService.queue(new FetchCommitRevisionsTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey()));
         });
-        executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("46137421")));
+        executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
+        executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
         executorService.queue(new PreFetchDoneTask(configuration, executorService));
     }
 
