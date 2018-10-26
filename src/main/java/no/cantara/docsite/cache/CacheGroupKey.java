@@ -15,10 +15,6 @@ public class CacheGroupKey implements Serializable {
     public final String groupId;
 
     CacheGroupKey(String organization, String repoName, String branch, String groupId) {
-        Objects.requireNonNull(organization);
-        Objects.requireNonNull(repoName);
-        Objects.requireNonNull(branch);
-        Objects.requireNonNull(groupId);
         this.organization = organization;
         this.repoName = repoName;
         this.branch = branch;

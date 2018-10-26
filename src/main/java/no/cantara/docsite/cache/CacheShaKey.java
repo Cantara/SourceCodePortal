@@ -16,11 +16,6 @@ public class CacheShaKey implements Serializable {
     public final String sha;
 
     CacheShaKey(String organization, String repoName, String branch, String groupId, String sha) {
-        Objects.requireNonNull(organization);
-        Objects.requireNonNull(repoName);
-        Objects.requireNonNull(branch);
-        Objects.requireNonNull(groupId);
-        Objects.requireNonNull(sha);
         this.organization = organization;
         this.repoName = repoName;
         this.branch = branch;
@@ -37,16 +32,10 @@ public class CacheShaKey implements Serializable {
     }
 
     public boolean compareToUsingGroupId(String organization, String groupId) {
-        Objects.requireNonNull(organization);
-        Objects.requireNonNull(groupId);
         return organization.equals(this.organization) && groupId.equals(this.groupId);
     }
 
     public boolean compareToUsingRepoName(String organization, String repoName, String branch, String groupId) {
-        Objects.requireNonNull(organization);
-        Objects.requireNonNull(repoName);
-        Objects.requireNonNull(branch);
-        Objects.requireNonNull(groupId);
         return organization.equals(this.organization) && repoName.equals(this.repoName) && branch.equals(this.branch) && groupId.equals(this.groupId);
     }
 
