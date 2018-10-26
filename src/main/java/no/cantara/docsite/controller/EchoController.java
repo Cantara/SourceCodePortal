@@ -4,7 +4,7 @@ import io.undertow.io.Receiver;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
-import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.util.JsonbFactory;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -106,6 +106,6 @@ public class EchoController implements HttpHandler {
             throw new UnsupportedOperationException("Method " + exchange.getRequestMethod() + " not supported!");
 
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
-        exchange.getResponseSender().send(JsonUtil.prettyPrint(builder.build()));
+        exchange.getResponseSender().send(JsonbFactory.prettyPrint(builder.build()));
     }
 }

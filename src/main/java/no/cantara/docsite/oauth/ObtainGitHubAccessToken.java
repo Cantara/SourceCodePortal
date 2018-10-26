@@ -4,6 +4,7 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.joran.util.ConfigurationWatchListUtil;
 import no.cantara.docsite.Application;
 import no.cantara.docsite.client.HttpRequests;
+import no.cantara.docsite.util.CommonUtil;
 import no.cantara.docsite.util.JavaUtilLoggerBridge;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
@@ -99,8 +100,6 @@ public class ObtainGitHubAccessToken implements Closeable {
 
             if (configuration.evaluateToString("github.oauth2.client.clientId") == null
                     || configuration.evaluateToString("github.oauth2.client.clientSecret") == null
-//                    || configuration.evaluateToString("github.username") == null
-//                    || configuration.evaluateToString("github.password") == null
             ) {
                 LOG.error("You MUST 'specify github.oauth2.client.clientId', 'github.oauth2.client.clientSecret' in 'security.properties'");
                 return;
@@ -129,7 +128,8 @@ public class ObtainGitHubAccessToken implements Closeable {
                 String accessToken = githubAccessToken.getAccessToken(authorizationCode);
                 LOG.trace("\n-----------------------------------\n\nACCESS_TOKEN: {}\n\n-----------------------------------\n", accessToken);
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("Error obtaining GitHubAccessToken: {}", CommonUtil.captureStackTrace(e));
+
             }
 
 

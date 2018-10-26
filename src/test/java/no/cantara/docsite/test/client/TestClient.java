@@ -4,13 +4,13 @@ import no.cantara.docsite.test.server.TestUriResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+
+import static no.cantara.docsite.util.CommonUtil.captureStackTrace;
 
 public final class TestClient {
 
@@ -42,13 +42,6 @@ public final class TestClient {
 
     public TestUriResolver getTestUriResolver() {
         return server;
-    }
-
-    static String captureStackTrace(Exception e) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
-        return sw.toString();
     }
 
     public ResponseHelper<String> options(String uri, String... headersKeyAndValue) {

@@ -1,6 +1,6 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.util.JsonbFactory;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -54,7 +54,7 @@ public class CacheShaKey implements Serializable {
 
     @Override
     public String toString() {
-        return JsonUtil.asString(this);
+        return JsonbFactory.asString(this);
     }
 
     public static CacheShaKey of(String organization, String repoName, String branch, String groupId, String sha) {

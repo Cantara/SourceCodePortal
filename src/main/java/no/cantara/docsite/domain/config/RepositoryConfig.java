@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.config;
 
-import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.util.JsonbFactory;
 
 import javax.json.bind.annotation.JsonbProperty;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class RepositoryConfig {
 
     @Override
     public String toString() {
-        return JsonUtil.asString(this);
+        return JsonbFactory.asString(this);
     }
 
     public static class GitHub {

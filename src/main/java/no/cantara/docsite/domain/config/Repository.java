@@ -1,7 +1,7 @@
 package no.cantara.docsite.domain.config;
 
 import no.cantara.docsite.cache.CacheKey;
-import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.util.JsonbFactory;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -79,7 +79,7 @@ public class Repository implements Serializable {
 
     @Override
     public String toString() {
-        return JsonUtil.asString(this);
+        return JsonbFactory.asString(this);
     }
 
     public static Repository of(CacheKey cacheKey, String id, String name, String defaultGroupRepo, String description, String repoURL, String rawRepoURL, String readmeURL, String contentsURL) {

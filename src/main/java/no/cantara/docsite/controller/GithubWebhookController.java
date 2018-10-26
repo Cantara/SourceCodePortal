@@ -12,7 +12,7 @@ import no.cantara.docsite.domain.github.commits.PushCommitEvent;
 import no.cantara.docsite.domain.github.contents.FetchContentsTask;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.health.HealthResource;
-import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.util.JsonbFactory;
 import no.cantara.docsite.web.ResourceContext;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import javax.json.bind.JsonbBuilder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -93,7 +92,7 @@ class GithubWebhookController implements HttpHandler {
                 exchange.getRequestReceiver().receiveFullString((exchangeReceiver, message) -> payloadBuilder.append(message));
                 String payload = payloadBuilder.toString();
 
-                LOG.trace("Event -- xHubSignature: {} -- xHubEvent: {} -> Payload:\n{}", xHubSignature, xHubEvent, JsonUtil.prettyPrint(payload));
+                LOG.trace("Event -- xHubSignature: {} -- xHubEvent: {} -> Payload:\n{}", xHubSignature, xHubEvent, JsonbFactory.prettyPrint(payload));
 
                 if (!verifySignature(payload, xHubSignature, configuration.evaluateToString("github.webhook.securityAccessToken"))) {
                     LOG.error("GitHub WebHook authorization failed!");
@@ -119,7 +118,7 @@ class GithubWebhookController implements HttpHandler {
                 if ("push".equals(xHubEvent)) {
                     LOG.debug("Received Push Event!");
 
-                    PushCommitEvent pushCommitEvent = JsonbBuilder.create().fromJson(payload, PushCommitEvent.class);
+                    PushCommitEvent pushCommitEvent = JsonbFactory.instance().fromJson(payload, PushCommitEvent.class);
 
                     // ------------------------------------------------------------------------------------------------------
                     // Github Commit Event

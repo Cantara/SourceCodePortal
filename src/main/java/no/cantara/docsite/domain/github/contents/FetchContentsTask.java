@@ -5,14 +5,17 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
+import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.json.bind.JsonbBuilder;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
+/**
+ * This task is used during push
+ */
 public class FetchContentsTask extends WorkerTask {
 
     private static final Logger LOG = LoggerFactory.getLogger(FetchContentsTask.class);
@@ -37,7 +40,8 @@ public class FetchContentsTask extends WorkerTask {
                 String.format(contentsURL, relativeFilePath, commitId), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
-            RepositoryContents readmeContents = JsonbBuilder.create().fromJson(response.body(), RepositoryContents.class);
+            RepositoryContents readmeContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContents.class);
+            readmeContents.renderedHtml = DocumentRenderer.render(readmeContents.name, readmeContents.content);
             cacheStore.getPages().put(cacheKey, readmeContents);
         } else {
             LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());

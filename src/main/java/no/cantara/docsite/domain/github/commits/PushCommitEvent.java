@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.github.commits;
 
-import no.cantara.docsite.util.JsonUtil;
+import no.cantara.docsite.util.JsonbFactory;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
@@ -23,7 +23,7 @@ public class PushCommitEvent {
 
     @Override
     public String toString() {
-        return JsonUtil.asString(this);
+        return JsonbFactory.asString(this);
     }
 
     public static class Repository {
