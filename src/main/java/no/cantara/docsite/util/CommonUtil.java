@@ -3,6 +3,8 @@ package no.cantara.docsite.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -125,6 +127,13 @@ public class CommonUtil {
             list.add((T) item);
         }
         return list;
+    }
+
+    public static String captureStackTrace(Exception e) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        return sw.toString();
     }
 
 
