@@ -105,6 +105,14 @@ public class CacheStore {
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("release", cacheConfig);
         }
+
+        if (cacheManager.getCache("cantaraWiki") == null) {
+            LOG.info("Creating Cantara Wiki cache");
+            MutableConfiguration<CacheCantaraWikiKey, String> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            cacheManager.createCache("cantaraWiki", cacheConfig);
+        }
     }
 
     public String getConfiguredRepositories() {
@@ -211,6 +219,10 @@ public class CacheStore {
 
     public Cache<CacheKey, CreatedTagEvent> getReleases() {
         return cacheManager.getCache("release");
+    }
+
+    public Cache<CacheCantaraWikiKey, String> getCantaraWiki() {
+        return cacheManager.getCache("cantaraWiki");
     }
 
 }

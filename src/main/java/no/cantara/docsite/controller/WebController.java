@@ -18,6 +18,7 @@ class WebController implements HttpHandler {
     private static final Logger LOG = LoggerFactory.getLogger(WebController.class);
     static final WebContext[] VALID_CONTEXTS = new WebContext[]{
             WebContext.of("/dashboard", "", true, "index.html", new DashboardHandler()),
+            WebContext.of("/wiki", "wiki", false, "cantara.html", new CantaraWikiHandler()),
             WebContext.of("/group", "group", true, "card.html", new CardHandler()),
             WebContext.of("/contents", "contents", false, "content.html", new ContentsHandler()),
             WebContext.of("/commits", "commits", false, "commits.html", new CommitsHandler())
