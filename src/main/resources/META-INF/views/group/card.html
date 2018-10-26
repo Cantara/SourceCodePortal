@@ -28,6 +28,10 @@
                 <div class="col-sm-5"><a th:href="${commitRevision.htmlUrl}" th:text="${commitRevision.commit.message}">col-sm</a></div>
             </div>
         </div>
+        <p class="lead" style="margin-top: 12px; margin-bottom: 24px">
+            <a class="btn btn-primary btn-sm" th:href="${('/commits/')+repositoryConfig.defaultGroupRepo}" role="button">View group commits</a>
+        </p>
+
         <div>&#160</div>
 
         <table class="table">
