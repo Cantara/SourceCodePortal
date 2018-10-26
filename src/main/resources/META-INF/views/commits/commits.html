@@ -13,7 +13,8 @@
     <main role="main" class="container-fluid">
         <article>
             <div class="container-fluid">
-                <h4 class="display-6">Commit log: [[${model.commitRevisions.size}]] revisions</h4>
+                <h1 th:text="${displayName}"></h1>
+                <h4 style="padding-top: 0.5em;" class="display-6">Commit log: [[${model.commitRevisions.size}]] revisions</h4>
                 <div th:each="commitRevision : ${model.commitRevisions}">
                     <div class="row>" th:remove="${model.commitRevisions.isNewDateGroup ? null : 'all'}">
                         <div>&nbsp;</div>
