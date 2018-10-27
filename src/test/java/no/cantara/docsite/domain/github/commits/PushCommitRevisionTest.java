@@ -44,17 +44,17 @@ public class PushCommitRevisionTest {
             dummyCommits2 = CommonUtil.writeInputToOutputStream(json).toString();
         }
 
-        CommitRevision[] dummyCommitEvent1 = JsonbFactory.instance().fromJson(dummyCommits1, CommitRevision[].class);
+        CommitRevisionBinding[] dummyCommitEvent1 = JsonbFactory.instance().fromJson(dummyCommits1, CommitRevisionBinding[].class);
 //        LOG.trace("event1: {}", Arrays.stream(dummyCommitEvent1).map(CommitRevision::toString).collect(Collectors.joining("\n")));
 
-        for(CommitRevision commitRevision : dummyCommitEvent1) {
+        for(CommitRevisionBinding commitRevision : dummyCommitEvent1) {
             cacheStore.getCommits().put(CacheShaKey.of("Cantara", "dummyRepo", "Dummy", "master", commitRevision.sha), commitRevision);
         }
 
-        CommitRevision[] dummyCommitEvent2 = JsonbFactory.instance().fromJson(dummyCommits2, CommitRevision[].class);
+        CommitRevisionBinding[] dummyCommitEvent2 = JsonbFactory.instance().fromJson(dummyCommits2, CommitRevisionBinding[].class);
 //        LOG.trace("event2: {}", Arrays.stream(dummyCommitEvent2).map(CommitRevision::toString).collect(Collectors.joining("\n")));
 
-        for(CommitRevision commitRevision : dummyCommitEvent2) {
+        for(CommitRevisionBinding commitRevision : dummyCommitEvent2) {
             cacheStore.getCommits().put(CacheShaKey.of("Cantara", "dummyRepo", "Dummy2", "master", commitRevision.sha), commitRevision);
         }
 

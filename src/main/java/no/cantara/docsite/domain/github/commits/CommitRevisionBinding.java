@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
-public class CommitRevision implements Serializable {
+public class CommitRevisionBinding implements Serializable {
 
     private static final long serialVersionUID = -5773578164096532597L;
 
@@ -20,6 +20,7 @@ public class CommitRevision implements Serializable {
     public @JsonbProperty("html_url") String htmlUrl;
     public Author author;
     public List<Parent> parents;
+
 
     @JsonbTransient
     public String getProjectId() {

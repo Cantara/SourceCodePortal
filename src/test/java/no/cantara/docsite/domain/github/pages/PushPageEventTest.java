@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.github.pages;
 
-import no.cantara.docsite.domain.github.commits.PushCommitEvent;
+import no.cantara.docsite.domain.github.commits.PushCommitEventBinding;
 import no.cantara.docsite.util.JsonbFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class PushPageEventTest {
     @Test
     public void testName() throws IOException {
         try (InputStream json = ClassLoader.getSystemResourceAsStream("github/PushEventPage.json")) {
-            PushCommitEvent event = JsonbFactory.instance().fromJson(json, PushCommitEvent.class);
+            PushCommitEventBinding event = JsonbFactory.instance().fromJson(json, PushCommitEventBinding.class);
             assertEquals(event.afterRevision, "28cb78f509d40052afb0260f28c6f01b9eb4280e");
         }
     }

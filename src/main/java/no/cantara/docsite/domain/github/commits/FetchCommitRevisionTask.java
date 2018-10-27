@@ -36,7 +36,7 @@ public class FetchCommitRevisionTask extends WorkerTask {
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), url, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
-            CommitRevision commitRevision = JsonbFactory.instance().fromJson(response.body(), CommitRevision.class);
+            CommitRevisionBinding commitRevision = JsonbFactory.instance().fromJson(response.body(), CommitRevisionBinding.class);
             Set<CacheGroupKey> keys = cacheStore.getCacheGroupKeys(CacheKey.of(cacheKey.organization, cacheKey.repoName, cacheKey.branch));
             for(CacheGroupKey key : keys) {
                 CacheShaKey cacheShaKey = CacheShaKey.of(cacheKey, key.groupId, commitRevision.sha);

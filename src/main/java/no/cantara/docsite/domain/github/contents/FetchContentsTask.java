@@ -40,7 +40,7 @@ public class FetchContentsTask extends WorkerTask {
                 String.format(contentsURL, relativeFilePath, commitId), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
-            RepositoryContents readmeContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContents.class);
+            RepositoryContentsBinding readmeContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContentsBinding.class);
             readmeContents.renderedHtml = DocumentRenderer.render(readmeContents.name, readmeContents.content);
             cacheStore.getPages().put(cacheKey, readmeContents);
         } else {

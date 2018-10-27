@@ -5,7 +5,7 @@ import no.cantara.docsite.util.JsonbFactory;
 import javax.json.bind.annotation.JsonbProperty;
 import java.io.Serializable;
 
-public class CreatedTagEvent implements Serializable {
+public class CreatedTagEventBinding implements Serializable {
 
     private static final long serialVersionUID = 6663626423947864453L;
 

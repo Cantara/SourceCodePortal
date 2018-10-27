@@ -7,7 +7,7 @@ import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
 import java.io.Serializable;
 
-public class RepositoryContents implements Serializable {
+public class RepositoryContentsBinding implements Serializable {
 
     private static final long serialVersionUID = 3900913417928771858L;
 

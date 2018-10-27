@@ -17,7 +17,7 @@ public class PushCreatedTagEventTest {
     @Test
     public void testJson() throws IOException {
         try (InputStream json = ClassLoader.getSystemResourceAsStream("github/PushCreatedTagEvent.json")) {
-            CreatedTagEvent event = JsonbFactory.instance().fromJson(json, CreatedTagEvent.class);
+            CreatedTagEventBinding event = JsonbFactory.instance().fromJson(json, CreatedTagEventBinding.class);
             assertEquals(event.ref, "v0.0.1");
         }
     }

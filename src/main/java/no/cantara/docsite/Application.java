@@ -1,7 +1,5 @@
 package no.cantara.docsite;
 
-import com.netflix.hystrix.HystrixCommandProperties;
-import com.netflix.hystrix.HystrixThreadPoolProperties;
 import io.undertow.Undertow;
 import no.cantara.docsite.cache.CacheInitializer;
 import no.cantara.docsite.cache.CacheStore;
@@ -83,13 +81,6 @@ public class Application {
         this.scheduledExecutorService = scheduledExecutorService;
         this.cacheStore = cacheStore;
         this.configLoader = configLoader;
-        HystrixCommandProperties.Setter()
-                .withExecutionTimeoutInMilliseconds(2500)
-                .withExecutionIsolationSemaphoreMaxConcurrentRequests(25);
-        HystrixThreadPoolProperties.Setter()
-                .withMaxQueueSize(100)
-                .withQueueSizeRejectionThreshold(100)
-                .withCoreSize(4);
         this.server = Undertow.builder()
                 .addHttpListener(port, host)
                 .setHandler(applicationController)

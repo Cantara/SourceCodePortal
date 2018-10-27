@@ -17,7 +17,7 @@ public class RepositoryConfigTest {
     @Test
     public void testJson() throws IOException {
         try (InputStream json = ClassLoader.getSystemResourceAsStream("conf/config.json")) {
-            RepositoryConfig repositoryConfig = JsonbFactory.instance().fromJson(json, RepositoryConfig.class);
+            RepositoryConfigBinding repositoryConfig = JsonbFactory.instance().fromJson(json, RepositoryConfigBinding.class);
             assertEquals(repositoryConfig.gitHub.organization, "Cantara");
         }
     }

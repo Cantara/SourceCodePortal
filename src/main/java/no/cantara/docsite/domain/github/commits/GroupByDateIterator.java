@@ -7,14 +7,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class GroupByDateIterator implements Iterator<CommitRevision> {
+public class GroupByDateIterator implements Iterator<CommitRevisionBinding> {
 
-    private final List<CommitRevision> entries;
-    private final ListIterator<CommitRevision> listIterator;
-    private CommitRevision last;
-    private CommitRevision current;
+    private final List<CommitRevisionBinding> entries;
+    private final ListIterator<CommitRevisionBinding> listIterator;
+    private CommitRevisionBinding last;
+    private CommitRevisionBinding current;
 
-    public GroupByDateIterator(List<CommitRevision> entries) {
+    public GroupByDateIterator(List<CommitRevisionBinding> entries) {
         this.entries = entries;
         this.listIterator = entries.listIterator();
     }
@@ -25,7 +25,7 @@ public class GroupByDateIterator implements Iterator<CommitRevision> {
     }
 
     @Override
-    public CommitRevision next() {
+    public CommitRevisionBinding next() {
         last = current;
         current = listIterator.next();
         return current;
@@ -37,7 +37,6 @@ public class GroupByDateIterator implements Iterator<CommitRevision> {
         int month = localDate.getMonthValue();
         int day   = localDate.getDayOfMonth();
         return LocalDate.of(year, month, day);
-
     }
 
     public boolean isNewDateGroup() {

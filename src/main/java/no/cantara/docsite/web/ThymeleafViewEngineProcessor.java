@@ -2,12 +2,12 @@ package no.cantara.docsite.web;
 
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
+import no.cantara.docsite.cache.CacheHelper;
 import no.cantara.docsite.cache.CacheStore;
 
 import java.io.StringWriter;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThymeleafViewEngineProcessor {
 
@@ -21,9 +21,7 @@ public class ThymeleafViewEngineProcessor {
         ctx.setLocale(Locale.ENGLISH);
 
         {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getRepositoryGroups().iterator().forEachRemaining(a -> count.incrementAndGet());
-            templateVariables.put("connectedRepos", String.valueOf(count.get()));
+            templateVariables.put("connectedRepos", CacheHelper.cacheSize(cacheStore.getRepositoryGroups()));
         }
 
         ctx.setVariables(templateVariables);

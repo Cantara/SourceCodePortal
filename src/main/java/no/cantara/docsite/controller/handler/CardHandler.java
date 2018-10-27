@@ -4,8 +4,8 @@ import io.undertow.server.HttpServerExchange;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.Repository;
-import no.cantara.docsite.domain.config.RepositoryConfig;
-import no.cantara.docsite.domain.github.commits.CommitRevision;
+import no.cantara.docsite.domain.config.RepositoryConfigBinding;
+import no.cantara.docsite.domain.github.commits.CommitRevisionBinding;
 import no.cantara.docsite.domain.view.CardModel;
 import no.cantara.docsite.domain.view.DashboardModel;
 import no.cantara.docsite.web.ResourceContext;
@@ -28,7 +28,7 @@ public class CardHandler implements WebHandler {
     public boolean handleRequest(DynamicConfiguration configuration, CacheStore cacheStore, ResourceContext resourceContext, WebContext webContext, HttpServerExchange exchange) {
         Map<String, Object> templateVariables = new HashMap<>();
 
-        RepositoryConfig.Repo repositoryConfig = cacheStore.getGroupByGroupId(resourceContext.getLast().get().id);
+        RepositoryConfigBinding.Repo repositoryConfig = cacheStore.getGroupByGroupId(resourceContext.getLast().get().id);
         if (repositoryConfig == null) {
             return false;
         }
@@ -41,17 +41,17 @@ public class CardHandler implements WebHandler {
 
         // TODO this is bit expensive per view. Investigate how JCache can provide a sorted tree map
         {
-            Cache<CacheShaKey, CommitRevision> commitRevisions = cacheStore.getCommits();
-            Map<CacheShaKey, CommitRevision> commitRevisionMap = new LinkedHashMap<>();
-            for(Cache.Entry<CacheShaKey, CommitRevision> commitRevision : commitRevisions) {
+            Cache<CacheShaKey, CommitRevisionBinding> commitRevisions = cacheStore.getCommits();
+            Map<CacheShaKey, CommitRevisionBinding> commitRevisionMap = new LinkedHashMap<>();
+            for(Cache.Entry<CacheShaKey, CommitRevisionBinding> commitRevision : commitRevisions) {
                 if (commitRevision.getKey().groupId.equals(repositoryConfig.groupId)) {
                     commitRevisionMap.put(commitRevision.getKey(), commitRevision.getValue());
                 }
             }
-            Map<CacheShaKey, CommitRevision> sortedMap = sortByValue(commitRevisionMap);
+            Map<CacheShaKey, CommitRevisionBinding> sortedMap = sortByValue(commitRevisionMap);
 
             int n = 0;
-            for (CommitRevision commitRevision : sortedMap.values()) {
+            for (CommitRevisionBinding commitRevision : sortedMap.values()) {
                 if (n > configuration.evaluateToInt("render.max.group.commits")) break;
                 model.lastCommitRevisions.add(commitRevision);
                 n++;

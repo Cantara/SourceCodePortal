@@ -32,7 +32,7 @@ public class PullContentsTest {
 
     @Test
     public void thatReadmeIsDecodedWithAdapter() {
-        RepositoryContents contents = JsonbFactory.instance().fromJson(CONTENTS_JSON, RepositoryContents.class);
+        RepositoryContentsBinding contents = JsonbFactory.instance().fromJson(CONTENTS_JSON, RepositoryContentsBinding.class);
         assertEquals(contents.content, "encoded content ...");
     }
 

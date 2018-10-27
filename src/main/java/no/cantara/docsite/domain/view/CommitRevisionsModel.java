@@ -1,14 +1,14 @@
 package no.cantara.docsite.domain.view;
 
-import no.cantara.docsite.domain.github.commits.CommitRevision;
+import no.cantara.docsite.domain.github.commits.CommitRevisionBinding;
 
 import java.util.Iterator;
 
 public class CommitRevisionsModel {
 
-    public final Iterator<CommitRevision> commitRevisions;
+    public final Iterator<CommitRevisionBinding> commitRevisions;
 
-    public CommitRevisionsModel(Iterator<CommitRevision> commitRevisions) {
+    public CommitRevisionsModel(Iterator<CommitRevisionBinding> commitRevisions) {
         this.commitRevisions = commitRevisions;
     }
 }

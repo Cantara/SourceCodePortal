@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RepositoryConfig {
+public class RepositoryConfigBinding {
 
     public String title;
     public @JsonbProperty("github") GitHub gitHub;

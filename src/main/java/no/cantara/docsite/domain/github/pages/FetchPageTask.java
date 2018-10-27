@@ -4,7 +4,7 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.contents.DocumentRenderer;
-import no.cantara.docsite.domain.github.contents.RepositoryContents;
+import no.cantara.docsite.domain.github.contents.RepositoryContentsBinding;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
 import no.cantara.docsite.util.JsonbFactory;
@@ -37,7 +37,7 @@ public class FetchPageTask extends WorkerTask {
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), repoReadmeURL, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
-            RepositoryContents readmeContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContents.class);
+            RepositoryContentsBinding readmeContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContentsBinding.class);
             readmeContents.renderedHtml = DocumentRenderer.render(readmeContents.name, readmeContents.content);
             cacheStore.getPages().put(cacheKey, readmeContents);
         } else {

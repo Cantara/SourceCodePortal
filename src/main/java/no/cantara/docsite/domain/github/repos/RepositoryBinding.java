@@ -5,7 +5,7 @@ import no.cantara.docsite.util.JsonbFactory;
 import javax.json.bind.annotation.JsonbProperty;
 import java.util.Date;
 
-public class GitHubRepository {
+public class RepositoryBinding {
 
     public String id;
     public String name;

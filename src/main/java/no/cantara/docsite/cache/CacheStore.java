@@ -1,10 +1,10 @@
 package no.cantara.docsite.cache;
 
 import no.cantara.docsite.domain.config.Repository;
-import no.cantara.docsite.domain.config.RepositoryConfig;
-import no.cantara.docsite.domain.github.commits.CommitRevision;
-import no.cantara.docsite.domain.github.contents.RepositoryContents;
-import no.cantara.docsite.domain.github.releases.CreatedTagEvent;
+import no.cantara.docsite.domain.config.RepositoryConfigBinding;
+import no.cantara.docsite.domain.github.commits.CommitRevisionBinding;
+import no.cantara.docsite.domain.github.contents.RepositoryContentsBinding;
+import no.cantara.docsite.domain.github.releases.CreatedTagEventBinding;
 import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
@@ -33,7 +33,7 @@ public class CacheStore {
 
     final DynamicConfiguration configuration;
     final CacheManager cacheManager;
-    final RepositoryConfig repositoryConfig;
+    final RepositoryConfigBinding repositoryConfig;
 
     CacheStore(DynamicConfiguration configuration, CacheManager cacheManager) {
         this.configuration = configuration;
@@ -41,9 +41,9 @@ public class CacheStore {
         this.repositoryConfig = load();
     }
 
-    RepositoryConfig load() {
+    RepositoryConfigBinding load() {
         try (InputStream json = ClassLoader.getSystemResourceAsStream("conf/config.json")) {
-            return JsonbFactory.instance().fromJson(json, RepositoryConfig.class);
+            return JsonbFactory.instance().fromJson(json, RepositoryConfigBinding.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -84,7 +84,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("page") == null) {
             LOG.info("Creating Page cache");
-            MutableConfiguration<CacheKey, RepositoryContents> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, RepositoryContentsBinding> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("page", cacheConfig);
@@ -92,7 +92,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("commit") == null) {
             LOG.info("Creating Commit cache");
-            MutableConfiguration<CacheShaKey, CommitRevision> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheShaKey, CommitRevisionBinding> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("commit", cacheConfig);
@@ -100,7 +100,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("release") == null) {
             LOG.info("Creating Release cache");
-            MutableConfiguration<CacheKey, CreatedTagEvent> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, CreatedTagEventBinding> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("release", cacheConfig);
@@ -117,7 +117,7 @@ public class CacheStore {
 
     public String getConfiguredRepositories() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
-        for(RepositoryConfig.Repo repo : getGroups()) {
+        for(RepositoryConfigBinding.Repo repo : getGroups()) {
             JsonArrayBuilder groupBuilder = Json.createArrayBuilder();
             List<Repository> repositories = getRepositoryGroupsByGroupId(repo.groupId);
             for(Repository repository : repositories) {
@@ -133,13 +133,13 @@ public class CacheStore {
         return cacheManager;
     }
 
-    public RepositoryConfig getRepositoryConfig() {
+    public RepositoryConfigBinding getRepositoryConfig() {
         return repositoryConfig;
     }
 
-    public RepositoryConfig.Repo getGroupByGroupId(String groupId) {
+    public RepositoryConfigBinding.Repo getGroupByGroupId(String groupId) {
         Objects.requireNonNull(groupId);
-        for(RepositoryConfig.Repo repo : repositoryConfig.gitHub.repos) {
+        for(RepositoryConfigBinding.Repo repo : repositoryConfig.gitHub.repos) {
             if (groupId.equals(repo.groupId)) {
                 return repo;
             }
@@ -147,8 +147,8 @@ public class CacheStore {
         return null;
     }
 
-    public List<RepositoryConfig.Repo> getGroups() {
-        List<RepositoryConfig.Repo> groups = new ArrayList<>();
+    public List<RepositoryConfigBinding.Repo> getGroups() {
+        List<RepositoryConfigBinding.Repo> groups = new ArrayList<>();
         repositoryConfig.gitHub.repos.forEach(r -> {
             groups.add(r);
         });
@@ -209,15 +209,15 @@ public class CacheStore {
         return cacheManager.getCache("project");
     }
 
-    public Cache<CacheKey, RepositoryContents> getPages() {
+    public Cache<CacheKey, RepositoryContentsBinding> getPages() {
         return cacheManager.getCache("page");
     }
 
-    public Cache<CacheShaKey, CommitRevision> getCommits() {
+    public Cache<CacheShaKey, CommitRevisionBinding> getCommits() {
         return cacheManager.getCache("commit");
     }
 
-    public Cache<CacheKey, CreatedTagEvent> getReleases() {
+    public Cache<CacheKey, CreatedTagEventBinding> getReleases() {
         return cacheManager.getCache("release");
     }
 

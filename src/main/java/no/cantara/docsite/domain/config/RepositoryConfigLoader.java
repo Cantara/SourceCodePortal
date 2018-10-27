@@ -4,7 +4,7 @@ import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
-import no.cantara.docsite.domain.github.repos.GitHubRepository;
+import no.cantara.docsite.domain.github.repos.RepositoryBinding;
 import no.cantara.docsite.domain.github.repos.RepositoryVisibility;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
@@ -33,7 +33,7 @@ public class RepositoryConfigLoader {
         this.cacheStore = cacheStore;
     }
 
-    List<GitHubRepository> getOrganizationRepos(String organization) {
+    List<RepositoryBinding> getOrganizationRepos(String organization) {
         String repositoryVisibility = (configuration.evaluateToString("github.repository.visibility") == null ? "public" :
                 configuration.evaluateToString("github.repository.visibility"));
         GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration, Optional.empty(),
@@ -43,7 +43,7 @@ public class RepositoryConfigLoader {
                 HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = command.execute();
         if (response.statusCode() == HTTP_OK) {
-            return Arrays.asList(JsonbFactory.instance().fromJson(response.body(), GitHubRepository[].class));
+            return Arrays.asList(JsonbFactory.instance().fromJson(response.body(), RepositoryBinding[].class));
         }
         LOG.error("Error: HTTP-{} - {}", response.statusCode(), response.body());
         return Collections.emptyList();
@@ -51,11 +51,11 @@ public class RepositoryConfigLoader {
 
 
     public void load() {
-        List<GitHubRepository> result = getOrganizationRepos(cacheStore.getRepositoryConfig().gitHub.organization);
+        List<RepositoryBinding> result = getOrganizationRepos(cacheStore.getRepositoryConfig().gitHub.organization);
 
-        for(RepositoryConfig.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
+        for(RepositoryConfigBinding.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
             Pattern pattern = Pattern.compile(repoConfig.repo);
-            for (GitHubRepository repo : result) {
+            for (RepositoryBinding repo : result) {
                 String repoName = repo.name;
                 Matcher matcher = pattern.matcher(repoName);
                 if (matcher.find()) {

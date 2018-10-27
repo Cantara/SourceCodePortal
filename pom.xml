@@ -166,7 +166,7 @@
             <groupId>org.jsr107.ri</groupId>
             <artifactId>cache-ri-impl</artifactId>
             <version>1.1.0</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
             <exclusions>
                 <exclusion>
                     <groupId>javax.enterprise</groupId>

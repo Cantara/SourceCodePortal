@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.config;
 
 import no.cantara.docsite.cache.CacheInitializer;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.github.repos.GitHubRepository;
+import no.cantara.docsite.domain.github.repos.RepositoryBinding;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
@@ -36,7 +36,7 @@ public class RepositoryConfigLoaderTest {
     public void findOrgGitHubRepos() {
         DynamicConfiguration configuration = configuration();
         RepositoryConfigLoader loader = new RepositoryConfigLoader(configuration, cacheStore(configuration));
-        List<GitHubRepository> result = loader.getOrganizationRepos("Cantara");
+        List<RepositoryBinding> result = loader.getOrganizationRepos("Cantara");
         LOG.trace("repos: {}\nsize:{}", result, result.size());
     }
 
