@@ -16,6 +16,7 @@ Make a javascript function that loads svg info and update the page with the same
 
 Use eviction cache by date-expiry policy and refetch a badge per project when evicted. In this way we can at all times maintain an updated knowledge per repo.
 
+Use Slack Outgoing Webhook App integration to receive notifications through Slack from Snyk.
  
 --
 
