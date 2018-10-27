@@ -59,6 +59,7 @@ public class Application {
                 port,
                 configuration,
                 executorService,
+                scheduledExecutorService,
                 cacheStore
         );
 

@@ -6,6 +6,7 @@ import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.executor.ExecutorService;
+import no.cantara.docsite.executor.ScheduledExecutorService;
 import no.cantara.docsite.health.GitHubRateLimit;
 import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.util.JsonbFactory;
@@ -31,12 +32,14 @@ public class HealthController implements HttpHandler {
 
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
+    private ScheduledExecutorService scheduledExecutorService;
     private final CacheStore cacheStore;
     private ResourceContext resourceContext;
 
-    public HealthController(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore, ResourceContext resourceContext) {
+    public HealthController(DynamicConfiguration configuration, ExecutorService executorService, ScheduledExecutorService scheduledExecutorService, CacheStore cacheStore, ResourceContext resourceContext) {
         this.configuration = configuration;
         this.executorService = executorService;
+        this.scheduledExecutorService = scheduledExecutorService;
         this.cacheStore = cacheStore;
         this.resourceContext = resourceContext;
     }
@@ -70,8 +73,9 @@ public class HealthController implements HttpHandler {
         }
 
         boolean healthyExecutorService = executorService.getThreadPool().getActiveCount() > 0;
+        boolean healthyScheduledExecutorService = !scheduledExecutorService.getThreadPool().isTerminated();
         boolean healthyCacheStore = !cacheStore.getCacheManager().isClosed();
-        String status = (healthyExecutorService && healthyCacheStore ? "OK" : "FAILURE");
+        String status = (healthyExecutorService && healthyScheduledExecutorService && healthyCacheStore ? "OK" : "FAILURE");
 
         JsonObjectBuilder builder = Json.createObjectBuilder();
 
@@ -86,6 +90,7 @@ public class HealthController implements HttpHandler {
 
         {
             serviceStatusBuilder.add("executor-service", healthyExecutorService ? "up" : "terminated");
+            serviceStatusBuilder.add("scheduled-executor-service", healthyScheduledExecutorService ? "up" : "terminated");
             serviceStatusBuilder.add("cache-store", healthyExecutorService ? "up" : "down");
             serviceStatusBuilder.add("github-last-seen", Instant.ofEpochMilli(HealthResource.instance().getGitHubLastSeen()).toString());
         }

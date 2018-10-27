@@ -11,7 +11,7 @@ public interface ScheduledExecutorService {
 
     void shutdown();
 
-    ScheduledExecutorThreadPool getThreadPool();
+    java.util.concurrent.ScheduledExecutorService getThreadPool();
 
     static ScheduledExecutorService create(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore) {
         return new ScheduledExecutorThreadPool(configuration, executorService, cacheStore);

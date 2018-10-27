@@ -46,8 +46,8 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
     }
 
     @Override
-    public ScheduledExecutorThreadPool getThreadPool() {
-        return this;
+    public java.util.concurrent.ScheduledExecutorService getThreadPool() {
+        return scheduledExecutorService;
     }
 
     static class ScheduledThread implements Runnable {

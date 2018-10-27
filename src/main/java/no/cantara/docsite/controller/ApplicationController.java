@@ -6,6 +6,7 @@ import io.undertow.util.Headers;
 import io.undertow.util.StatusCodes;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.executor.ExecutorService;
+import no.cantara.docsite.executor.ScheduledExecutorService;
 import no.cantara.docsite.web.ResourceContext;
 import no.ssb.config.DynamicConfiguration;
 
@@ -17,15 +18,17 @@ public class ApplicationController implements HttpHandler {
     private final int undertowPort;
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
+    private ScheduledExecutorService scheduledExecutorService;
     private final CacheStore cacheStore;
 
-    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore) {
+    public ApplicationController(String corsAllowOrigin, String corsAllowHeaders, boolean corsAllowOriginTest, int undertowPort, DynamicConfiguration configuration, ExecutorService executorService, ScheduledExecutorService scheduledExecutorService, CacheStore cacheStore) {
         this.corsAllowOrigin = corsAllowOrigin;
         this.corsAllowHeaders = corsAllowHeaders;
         this.corsAllowOriginTest = corsAllowOriginTest;
         this.undertowPort = undertowPort;
         this.configuration = configuration;
         this.executorService = executorService;
+        this.scheduledExecutorService = scheduledExecutorService;
         this.cacheStore = cacheStore;
     }
 
@@ -70,7 +73,7 @@ public class ApplicationController implements HttpHandler {
         }
 
         if (resourceContext.subMatch("/health")) {
-            new HealthController(configuration, executorService, cacheStore, resourceContext).handleRequest(exchange);
+            new HealthController(configuration, executorService, scheduledExecutorService, cacheStore, resourceContext).handleRequest(exchange);
             return;
         }
 
