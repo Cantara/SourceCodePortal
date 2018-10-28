@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.scm;
 
-import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.domain.external.ExternalURL;
 import no.cantara.docsite.domain.external.GitHubApiContentsURL;
 import no.cantara.docsite.domain.external.GitHubApiReadmeURL;
@@ -15,6 +15,7 @@ import no.cantara.docsite.domain.external.SnykIOTestURL;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,9 +26,14 @@ import java.util.Objects;
 
 // TODO refactor GitHub URLs into a group of urls when adding support for Bitbucket, GitLab etc. Or use ExternalURL all over and add formatter to abstract class. Throw UnsupOp for those urls that has concrete external form
 
-public class RepositoryDefinition {
+/**
+ * A repository definition contains information about the repo, the group it belongs to and service urls
+ */
+public class RepositoryDefinition implements Serializable {
 
-    public final CacheKey cacheKey;
+    private static final long serialVersionUID = 4462535017419847061L;
+
+    public final CacheGroupKey cacheGroupKey;
     public final String id;
     public final String description;
     public final String defaultGroupRepoName;
@@ -37,8 +43,8 @@ public class RepositoryDefinition {
     public final GitHubApiContentsURL apiContentsURL;
     public final Map<String, ExternalURL> externalLinks = new LinkedHashMap<>(); // not immutable
 
-    RepositoryDefinition(DynamicConfiguration configuration, CacheKey cacheKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
-        this.cacheKey = cacheKey;
+    RepositoryDefinition(DynamicConfiguration configuration, CacheGroupKey cacheGroupKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
+        this.cacheGroupKey = cacheGroupKey;
         this.id = id;
         this.description = description;
         this.defaultGroupRepoName = defaultGroupRepoName;
@@ -54,8 +60,8 @@ public class RepositoryDefinition {
         externalLinks.put(SnykIOTestBadgeURL.KEY, new SnykIOTestBadgeURL(this));
     }
 
-    public static RepositoryDefinition of(DynamicConfiguration configuration, CacheKey cacheKey, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
-        return new RepositoryDefinition(configuration, cacheKey, id, description, defaultGroupRepo, htmlRepoURL);
+    public static RepositoryDefinition of(DynamicConfiguration configuration, CacheGroupKey cacheGroupKey, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
+        return new RepositoryDefinition(configuration, cacheGroupKey, id, description, defaultGroupRepo, htmlRepoURL);
     }
 
     @Override
@@ -63,7 +69,7 @@ public class RepositoryDefinition {
         if (this == o) return true;
         if (!(o instanceof RepositoryDefinition)) return false;
         RepositoryDefinition that = (RepositoryDefinition) o;
-        return Objects.equals(cacheKey, that.cacheKey) &&
+        return Objects.equals(cacheGroupKey, that.cacheGroupKey) &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(defaultGroupRepoName, that.defaultGroupRepoName) &&
@@ -76,7 +82,7 @@ public class RepositoryDefinition {
 
     @Override
     public int hashCode() {
-        return Objects.hash(cacheKey, id, description, defaultGroupRepoName, repoURL, rawRepoURL, apiReadmeURL, apiContentsURL, externalLinks);
+        return Objects.hash(cacheGroupKey, id, description, defaultGroupRepoName, repoURL, rawRepoURL, apiReadmeURL, apiContentsURL, externalLinks);
     }
 
     @Override

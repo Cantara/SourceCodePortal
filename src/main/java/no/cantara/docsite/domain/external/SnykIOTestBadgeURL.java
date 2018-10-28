@@ -26,6 +26,6 @@ public class SnykIOTestBadgeURL extends ExternalURL<RepositoryDefinition> {
 
     @Override
     public String getExternalURL() {
-        return String.format("https://snyk.io/test/github/%s/%s/badge.svg", internal.cacheKey.organization, (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheKey.repoName));
+        return String.format("https://snyk.io/test/github/%s/%s/badge.svg", internal.cacheGroupKey.organization, (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheGroupKey.repoName));
     }
 }

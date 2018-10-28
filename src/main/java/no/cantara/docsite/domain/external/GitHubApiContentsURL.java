@@ -26,8 +26,8 @@ public class GitHubApiContentsURL extends ExternalURL<RepositoryDefinition> {
 
     @Override
     public String getExternalURL() {
-        return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheKey.organization,
-                (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheKey.repoName), "%s", "%s");
+        return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheGroupKey.organization,
+                (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheGroupKey.repoName), "%s", "%s");
     }
 
     public String getExternalURL(String relativeFilePath, String commitId) {

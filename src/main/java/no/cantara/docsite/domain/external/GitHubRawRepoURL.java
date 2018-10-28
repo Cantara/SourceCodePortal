@@ -26,8 +26,8 @@ public class GitHubRawRepoURL extends ExternalURL<RepositoryDefinition> {
 
     @Override
     public String getExternalURL() {
-        return String.format("https://raw.githubusercontent.com/%s/%s/%s/", internal.cacheKey.organization,
-                (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheKey.repoName), internal.cacheKey.branch);
+        return String.format("https://raw.githubusercontent.com/%s/%s/%s/", internal.cacheGroupKey.organization,
+                (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheGroupKey.repoName), internal.cacheGroupKey.branch);
     }
 
 }

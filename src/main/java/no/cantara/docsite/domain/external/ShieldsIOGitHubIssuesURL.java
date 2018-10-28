@@ -26,6 +26,6 @@ public class ShieldsIOGitHubIssuesURL extends ExternalURL<RepositoryDefinition> 
 
     @Override
     public String getExternalURL() {
-        return String.format("https://img.shields.io/github/issues/%s/%s.svg", internal.cacheKey.organization, (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheKey.repoName));
+        return String.format("https://img.shields.io/github/issues/%s/%s.svg", internal.cacheGroupKey.organization, (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheGroupKey.repoName));
     }
 }

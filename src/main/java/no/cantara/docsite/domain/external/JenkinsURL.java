@@ -29,6 +29,6 @@ public class JenkinsURL extends ExternalURL<RepositoryDefinition> {
 
     @Override
     public String getExternalURL() {
-        return String.format("%s/buildStatus/icon?job=%s", configuration.evaluateToString("jenkins.baseUrl"), (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheKey.repoName));
+        return String.format("%s/buildStatus/icon?job=%s", configuration.evaluateToString("jenkins.baseUrl"), (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheGroupKey.repoName));
     }
 }

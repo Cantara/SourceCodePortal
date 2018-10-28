@@ -115,6 +115,7 @@ public class CacheStore {
         }
     }
 
+    // TODO requires refactoring (prepared done)
     public String getConfiguredRepositories() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         for(RepositoryConfigBinding.Repo repo : getGroups()) {
@@ -133,6 +134,7 @@ public class CacheStore {
         return cacheManager;
     }
 
+    @Deprecated // TODO this should not be leaked out into the app, because it is confusing
     public RepositoryConfigBinding getRepositoryConfig() {
         return repositoryConfig;
     }
@@ -155,14 +157,17 @@ public class CacheStore {
         return groups;
     }
 
+    // OK
     public Cache<CacheKey, CacheGroupKey> getCacheKeys() {
         return cacheManager.getCache("cacheKeys");
     }
 
+    // OK
     public Cache<CacheGroupKey,CacheKey> getCacheGroupKeys() {
         return cacheManager.getCache("cacheGroupKeys");
     }
 
+    // OK
     // returns the first found group key
     public CacheGroupKey getCacheGroupKey(CacheKey cacheKey) {
         Set<CacheGroupKey> groupKeys = StreamSupport.stream(getCacheGroupKeys().spliterator(), true)
@@ -173,6 +178,7 @@ public class CacheStore {
                 .orElse(groupKeys.iterator().hasNext() ? groupKeys.iterator().next() : null);
     }
 
+    // OK
     // returns the all matched group keys
     public Set<CacheGroupKey> getCacheGroupKeys(CacheKey cacheKey) {
         return StreamSupport.stream(getCacheGroupKeys().spliterator(), true)
@@ -181,10 +187,12 @@ public class CacheStore {
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    // TODO requires refactoring (prepared done)
     public Cache<CacheGroupKey, Repository> getRepositoryGroups() {
         return cacheManager.getCache("repositoryGroup");
     }
 
+    // TODO requires refactoring (prepared done)
     public List<Repository> getRepositoryGroupsByGroupId(String groupId) {
         List<Repository> repositories = new ArrayList<>();
         getRepositoryGroups().forEach(a -> {
@@ -195,6 +203,7 @@ public class CacheStore {
         return repositories;
     }
 
+    @Deprecated // unused
     public List<Repository> getRepositoryGroupsByName(String name) {
         List<Repository> repositories = new ArrayList<>();
         getRepositoryGroups().forEach(a -> {
