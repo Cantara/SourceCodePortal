@@ -1,10 +1,12 @@
 package no.cantara.docsite;
 
 import io.undertow.Undertow;
+import no.cantara.docsite.cache.CacheCantaraWikiKey;
 import no.cantara.docsite.cache.CacheInitializer;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.controller.ApplicationController;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
+import no.cantara.docsite.domain.confluence.cantara.FetchCantaraWikiTask;
 import no.cantara.docsite.domain.github.contents.PreFetchRepositoryContents;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.ScheduledExecutorService;
@@ -92,6 +94,13 @@ public class Application {
     }
 
     public void enableScheduledExecutorService() {
+        // obtain delegated worke tasks and assign them before start
+        scheduledExecutorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
+        scheduledExecutorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
+        // initate wiki task ScheduledWikiTasks
+        // initate wiki task ScheduledJenkinsTasks
+        // initate wiki task ScheduledSnykTasks
+
         scheduledExecutorService.start();
     }
 
