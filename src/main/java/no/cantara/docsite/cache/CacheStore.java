@@ -132,14 +132,13 @@ public class CacheStore {
         }
     }
 
-    // TODO requires refactoring (prepared done)
     public String getConfiguredRepositories() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         for(RepositoryConfigBinding.Repo repo : getGroups()) {
             JsonArrayBuilder groupBuilder = Json.createArrayBuilder();
-            List<Repository> repositories = getRepositoryGroupsByGroupId(repo.groupId);
-            for(Repository repository : repositories) {
-                groupBuilder.add(repository.cacheKey.asIdentifier());
+            List<RepositoryDefinition> repositories = getRepositoryGroupsByGroupId(repo.groupId);
+            for(RepositoryDefinition repository : repositories) {
+                groupBuilder.add(repository.cacheRepositoryKey.asIdentifier());
             }
             builder.add(repo.groupId, groupBuilder);
         }
@@ -215,9 +214,9 @@ public class CacheStore {
     }
 
     // TODO requires refactoring (prepared done)
-    public List<Repository> getRepositoryGroupsByGroupId(String groupId) {
-        List<Repository> repositories = new ArrayList<>();
-        getRepositoryGroups().forEach(a -> {
+    public List<RepositoryDefinition> getRepositoryGroupsByGroupId(String groupId) {
+        List<RepositoryDefinition> repositories = new ArrayList<>();
+        getRepositories().forEach(a -> {
             if (a.getKey().compareTo(groupId)) {
                 repositories.add(a.getValue());
             }

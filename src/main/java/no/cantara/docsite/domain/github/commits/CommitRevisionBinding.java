@@ -30,6 +30,7 @@ public class CommitRevisionBinding implements Serializable {
     public List<Parent> parents = new ArrayList<>();
 
 
+    @Deprecated
     @JsonbTransient
     public String getProjectId() {
         try {

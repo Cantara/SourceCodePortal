@@ -136,7 +136,7 @@ public class HealthController implements HttpHandler {
 
         {
             AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getRepositoryGroups().iterator().forEachRemaining(a -> count.incrementAndGet());
+            cacheStore.getRepositories().iterator().forEachRemaining(a -> count.incrementAndGet());
             cacheBuilder.add("repositories", count.get());
         }
 

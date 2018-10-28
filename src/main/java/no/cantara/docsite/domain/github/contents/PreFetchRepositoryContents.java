@@ -27,9 +27,9 @@ public class PreFetchRepositoryContents {
 
     public void fetch() {
         LOG.info("Pre-fetch data..");
-        cacheStore.getRepositoryGroups().forEach(rg -> {
-            executorService.queue(new FetchMavenPOMTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().contentsURL));
-            executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().readmeURL));
+        cacheStore.getRepositories().forEach(rg -> {
+            executorService.queue(new FetchMavenPOMTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().apiContentsURL));
+            executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().apiReadmeURL));
             executorService.queue(new FetchCommitRevisionsTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey()));
         });
         executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));

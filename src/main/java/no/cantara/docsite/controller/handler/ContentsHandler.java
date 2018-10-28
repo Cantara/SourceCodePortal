@@ -4,9 +4,9 @@ import io.undertow.server.HttpServerExchange;
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
 import no.cantara.docsite.domain.scm.RepositoryContents;
+import no.cantara.docsite.domain.scm.RepositoryDefinition;
 import no.cantara.docsite.domain.view.ContentsModel;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
@@ -41,7 +41,7 @@ public class ContentsHandler implements WebHandler {
         }
 
         CacheRepositoryKey cacheRepositoryKey = cacheStore.getCacheRepositoryKey(cacheKey);
-        Repository repository = cacheStore.getRepositoryGroups().get(cacheRepositoryKey);
+        RepositoryDefinition repository = cacheStore.getRepositories().get(cacheRepositoryKey);
 
         ContentsModel model = new ContentsModel(repository, contents, contents.content);
 

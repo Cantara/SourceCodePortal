@@ -3,6 +3,7 @@ package no.cantara.docsite.domain.github.pages;
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
+import no.cantara.docsite.domain.external.GitHubApiReadmeURL;
 import no.cantara.docsite.domain.github.contents.DocumentRenderer;
 import no.cantara.docsite.domain.github.contents.RepositoryContentsBinding;
 import no.cantara.docsite.executor.ExecutorService;
@@ -23,9 +24,9 @@ public class FetchPageTask extends WorkerTask {
     private static final Logger LOG = LoggerFactory.getLogger(FetchPageTask.class);
     private final CacheStore cacheStore;
     private final CacheKey cacheKey;
-    private final String repoReadmeURL;
+    private final GitHubApiReadmeURL repoReadmeURL;
 
-    public FetchPageTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey, String repoReadmeURL) {
+    public FetchPageTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey, GitHubApiReadmeURL repoReadmeURL) {
         super(configuration, executor);
         this.cacheStore = cacheStore;
         this.cacheKey = cacheKey;
@@ -34,7 +35,7 @@ public class FetchPageTask extends WorkerTask {
 
     @Override
     public void execute() {
-        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), repoReadmeURL, HttpResponse.BodyHandlers.ofString());
+        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), repoReadmeURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
             RepositoryContentsBinding readmeContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContentsBinding.class);

@@ -3,7 +3,10 @@ package no.cantara.docsite.domain.scm;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.util.JsonbFactory;
 
+import javax.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -13,23 +16,34 @@ public class CommitRevision implements Serializable {
     private static final long serialVersionUID = -9181843231543416840L;
 
     public final CacheShaKey cacheShaKey;
-    public final String name;
-    public final String email;
+    public final String authorName;
+    public final String authorEmail;
     public final Date date;
     public final String htmlUrl;
     public final String avatarUrl;
     public final String message;
     public final List<Parent> parents;
 
-    public CommitRevision(CacheShaKey cacheShaKey, String name, String email, Date date, String htmlUrl, String avatarUrl, String message, List<Parent> parents) {
+    public CommitRevision(CacheShaKey cacheShaKey, String authorName, String authorEmail, Date date, String htmlUrl, String avatarUrl, String message, List<Parent> parents) {
         this.cacheShaKey = cacheShaKey;
-        this.name = name;
-        this.email = email;
+        this.authorName = authorName;
+        this.authorEmail = authorEmail;
         this.date = date;
         this.htmlUrl = htmlUrl;
         this.avatarUrl = avatarUrl;
         this.message = message;
         this.parents = parents;
+    }
+
+    @JsonbTransient
+    public String getProjectId() {
+        try {
+            URL url = new URL(htmlUrl);
+            String[] pathArray = url.getPath().split("\\/");
+            return pathArray[2];
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static class Parent implements Serializable {
@@ -52,8 +66,8 @@ public class CommitRevision implements Serializable {
         if (!(o instanceof CommitRevision)) return false;
         CommitRevision that = (CommitRevision) o;
         return Objects.equals(cacheShaKey, that.cacheShaKey) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(email, that.email) &&
+                Objects.equals(authorName, that.authorName) &&
+                Objects.equals(authorEmail, that.authorEmail) &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(htmlUrl, that.htmlUrl) &&
                 Objects.equals(avatarUrl, that.avatarUrl) &&
@@ -63,7 +77,7 @@ public class CommitRevision implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(cacheShaKey, name, email, date, htmlUrl, avatarUrl, message, parents);
+        return Objects.hash(cacheShaKey, authorName, authorEmail, date, htmlUrl, avatarUrl, message, parents);
     }
 
     @Override

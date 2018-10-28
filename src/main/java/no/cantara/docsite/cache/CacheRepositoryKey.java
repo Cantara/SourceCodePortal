@@ -33,6 +33,10 @@ public class CacheRepositoryKey implements Serializable {
         return groupId;
     }
 
+    public String asIdentifier() {
+        return String.format("%s/%s/%s", organization, repoName, branch);
+    }
+
     public CacheGroupKey asCacheGroupKey() {
         return CacheGroupKey.of(organization, groupId);
     }

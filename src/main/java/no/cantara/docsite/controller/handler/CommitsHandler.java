@@ -5,7 +5,6 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.github.commits.CommitRevisionBinding;
 import no.cantara.docsite.domain.github.commits.GroupByDateIterator;
 import no.cantara.docsite.domain.scm.CommitRevision;
 import no.cantara.docsite.domain.view.CommitRevisionsModel;
@@ -34,9 +33,9 @@ public class CommitsHandler implements WebHandler {
     public static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
         Collections.sort(list, (o1, o2) -> {
-            CommitRevisionBinding m1 = (CommitRevisionBinding) o1.getValue();
-            CommitRevisionBinding m2 = (CommitRevisionBinding) o2.getValue();
-            return (m2.commit.commitAuthor.date.compareTo(m1.commit.commitAuthor.date));
+            CommitRevision m1 = (CommitRevision) o1.getValue();
+            CommitRevision m2 = (CommitRevision) o2.getValue();
+            return (m2.date.compareTo(m1.date));
         });
 
         Map<K, V> result = new LinkedHashMap<>();

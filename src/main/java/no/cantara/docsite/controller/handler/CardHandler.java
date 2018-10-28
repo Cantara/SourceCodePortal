@@ -3,9 +3,9 @@ package no.cantara.docsite.controller.handler;
 import io.undertow.server.HttpServerExchange;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
 import no.cantara.docsite.domain.scm.CommitRevision;
+import no.cantara.docsite.domain.scm.RepositoryDefinition;
 import no.cantara.docsite.domain.view.CardModel;
 import no.cantara.docsite.domain.view.DashboardModel;
 import no.cantara.docsite.web.ResourceContext;
@@ -34,7 +34,7 @@ public class CardHandler implements WebHandler {
         }
 
         templateVariables.put("repositoryConfig", repositoryConfig);
-        List<Repository> repositories = cacheStore.getRepositoryGroupsByGroupId(repositoryConfig.groupId);
+        List<RepositoryDefinition> repositories = cacheStore.getRepositoryGroupsByGroupId(repositoryConfig.groupId);
         templateVariables.put("repositoryGroup", repositories);
 
         CardModel model = new CardModel();
@@ -58,22 +58,22 @@ public class CardHandler implements WebHandler {
             }
         }
 
-        for(Repository repo : repositories) {
-            boolean hasReadme = cacheStore.getPages().containsKey(repo.cacheKey);
+        for(RepositoryDefinition repo : repositories) {
+            boolean hasReadme = cacheStore.getPages().containsKey(repo.cacheRepositoryKey.asCacheKey());
             DashboardModel.Group group = new DashboardModel.Group(
                     cacheStore.getRepositoryConfig().gitHub.organization,
-                    repo.cacheKey.repoName,
+                    repo.cacheRepositoryKey.repoName,
                     repositoryConfig.defaultGroupRepo,
-                    repo.cacheKey.branch,
+                    repo.cacheRepositoryKey.branch,
                     repositoryConfig.groupId,
                     repo.description,
                     repo.description,
                     hasReadme,
-                    (hasReadme ? String.format("/contents/%s/%s", repo.cacheKey.repoName, repo.cacheKey.branch) : repo.repoURL),
+                    (hasReadme ? String.format("/contents/%s/%s", repo.cacheRepositoryKey.repoName, repo.cacheRepositoryKey.branch) : repo.repoURL.getExternalURL()),
                     String.format("/group/%s", repositoryConfig.groupId),
-                    repo.repoURL,
-                    String.format(cacheStore.getRepositoryConfig().gitHub.badges.jenkins, repo.cacheKey.repoName),
-                    String.format(cacheStore.getRepositoryConfig().gitHub.badges.snykIO, cacheStore.getRepositoryConfig().gitHub.organization, repo.cacheKey.repoName));
+                    repo.repoURL.getExternalURL(),
+                    String.format(cacheStore.getRepositoryConfig().gitHub.badges.jenkins, repo.cacheRepositoryKey.repoName),
+                    String.format(cacheStore.getRepositoryConfig().gitHub.badges.snykIO, cacheStore.getRepositoryConfig().gitHub.organization, repo.cacheRepositoryKey.repoName));
             model.groups.add(group);
         }
 

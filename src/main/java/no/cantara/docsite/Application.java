@@ -105,7 +105,7 @@ public class Application {
     }
 
     public void enablePreFetch() {
-        if (!cacheStore.getRepositoryGroups().iterator().hasNext()) {
+        if (!cacheStore.getRepositories().iterator().hasNext()) {
             enableConfigLoader();
         }
         if (configuration.evaluateToBoolean("cache.prefetch")) {

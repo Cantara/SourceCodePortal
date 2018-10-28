@@ -21,7 +21,7 @@ public class ThymeleafViewEngineProcessor {
         ctx.setLocale(Locale.ENGLISH);
 
         {
-            templateVariables.put("connectedRepos", CacheHelper.cacheSize(cacheStore.getRepositoryGroups()));
+            templateVariables.put("connectedRepos", CacheHelper.cacheSize(cacheStore.getRepositories()));
         }
 
         ctx.setVariables(templateVariables);
