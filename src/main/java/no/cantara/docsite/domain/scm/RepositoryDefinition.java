@@ -36,7 +36,7 @@ public class RepositoryDefinition {
     public final GitHubApiContentsURL apiContentsURL;
     public final Map<String, ExternalURL> externalLinks = new LinkedHashMap<>(); // not immutable
 
-    public RepositoryDefinition(CacheKey cacheKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
+    RepositoryDefinition(CacheKey cacheKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
         this.cacheKey = cacheKey;
         this.id = id;
         this.description = description;
@@ -53,7 +53,7 @@ public class RepositoryDefinition {
         externalLinks.put(SnykIOTestBadgeURL.KEY, new SnykIOTestBadgeURL(this));
     }
 
-    public static RepositoryDefinition of(CacheKey cacheKey, String id, String name, String defaultGroupRepo, String description, String htmlRepoURL) {
+    public static RepositoryDefinition of(CacheKey cacheKey, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
         return new RepositoryDefinition(cacheKey, id, description, defaultGroupRepo, htmlRepoURL);
     }
 

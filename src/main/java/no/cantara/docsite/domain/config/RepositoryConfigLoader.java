@@ -6,6 +6,7 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.repos.RepositoryBinding;
 import no.cantara.docsite.domain.github.repos.RepositoryVisibility;
+import no.cantara.docsite.domain.scm.RepositoryDefinition;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -70,6 +71,32 @@ public class RepositoryConfigLoader {
                     // copy relevant repo info to Repository instance
                         Repository repository = new Repository(cacheKey, repo.id, repo.name, repoConfig.defaultGroupRepo, repo.description, repo.htmlUrl, rawRepoURL, readmeURL, contentsURL);
                     cacheStore.getRepositoryGroups().put(cacheGroupKey, repository);
+                }
+            }
+        }
+
+    }
+
+    public void _load() {
+        // get all org repos from github
+        List<RepositoryBinding> result = getOrganizationRepos(cacheStore.getRepositoryConfig().gitHub.organization);
+
+        // iterate app config
+        for(RepositoryConfigBinding.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
+            Pattern pattern = Pattern.compile(repoConfig.repo);
+            for (RepositoryBinding repo : result) {
+                String repoName = repo.name; // TODO expand this to support a group of regex repoNames?
+                Matcher matcher = pattern.matcher(repoName);
+                if (matcher.find()) {
+                    CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repoName, repoConfig.branch);
+                    CacheGroupKey cacheGroupKey = CacheGroupKey.of(cacheKey, repoConfig.groupId);
+                    // build key store
+                    cacheStore.getCacheKeys().put(cacheKey, cacheGroupKey);
+                    cacheStore.getCacheGroupKeys().put(cacheGroupKey, cacheKey);
+                    // create an internal definition of a repo
+                    RepositoryDefinition repositoryDefinition = RepositoryDefinition.of(cacheKey, repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
+                    // TODO refactor getRepositoryGroups() to use RepositoryDefinition
+//                    cacheStore.getRepositoryGroups().put(cacheGroupKey, repositoryDefinition);
                 }
             }
         }
