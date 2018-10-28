@@ -25,6 +25,18 @@ public class CacheRepositoryKey implements Serializable {
         return groupId.equalsIgnoreCase(this.groupId);
     }
 
+    public String getRepoName() {
+        return repoName;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public CacheGroupKey asCacheGroupKey() {
+        return CacheGroupKey.of(organization, groupId);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

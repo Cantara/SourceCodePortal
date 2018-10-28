@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.scm;
 
+import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.domain.external.ExternalURL;
 import no.cantara.docsite.domain.external.GitHubApiContentsURL;
@@ -15,6 +16,7 @@ import no.cantara.docsite.domain.external.SnykIOTestURL;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 
+import javax.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,6 +64,21 @@ public class RepositoryDefinition implements Serializable {
 
     public static RepositoryDefinition of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
         return new RepositoryDefinition(configuration, repositoryDefinition, id, description, defaultGroupRepo, htmlRepoURL);
+    }
+
+    @JsonbTransient
+    public CacheGroupKey getCacheGroupKey() {
+        return CacheGroupKey.of(cacheRepositoryKey.organization, cacheRepositoryKey.groupId);
+    }
+
+    @JsonbTransient
+    public CacheRepositoryKey getCacheRepositoryKey() {
+        return cacheRepositoryKey;
+    }
+
+    @JsonbTransient
+    public String getGroupId() {
+        return cacheRepositoryKey.groupId;
     }
 
     @Override

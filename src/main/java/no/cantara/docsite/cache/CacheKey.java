@@ -43,8 +43,9 @@ public class CacheKey implements Serializable {
         return JsonbFactory.asString(this);
     }
 
+    @Deprecated
     public static CacheKey of(String organization, String repoName) {
-        return new CacheKey(organization, repoName, null);
+        return new CacheKey(organization, repoName, "master");
     }
 
     public static CacheKey of(String organization, String repoName, String branch) {
