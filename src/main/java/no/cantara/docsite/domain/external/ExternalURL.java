@@ -1,6 +1,7 @@
 package no.cantara.docsite.domain.external;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 
 abstract public class ExternalURL<T> implements Serializable {
@@ -43,6 +44,10 @@ abstract public class ExternalURL<T> implements Serializable {
     abstract public String getKey();
 
     abstract public String getExternalURL();
+
+    public boolean isGenericOf(Class<?> clazz) {
+        return Arrays.asList(internal.getClass().getTypeName()).stream().anyMatch(type -> type.equals(clazz.getTypeName()));
+    }
 
     // TODO should this simply output the externalURL?
     @Override

@@ -8,7 +8,6 @@ public class ShieldsIOGroupReleaseURL extends ExternalURL<RepositoryDefinition> 
 
     private static final long serialVersionUID = 5485906572024332485L;
     public static final String KEY = "shieldsGroupRelease";
-    private boolean useDefaultGroupRepoName;
 
     public ShieldsIOGroupReleaseURL(RepositoryDefinition internal) {
         super(internal);
@@ -19,13 +18,13 @@ public class ShieldsIOGroupReleaseURL extends ExternalURL<RepositoryDefinition> 
         return KEY;
     }
 
-    public void useDefaultGroupRepoName() {
-        Objects.requireNonNull(internal.defaultGroupRepoName);
-        useDefaultGroupRepoName = true;
-    }
-
     @Override
     public String getExternalURL() {
-        return String.format("https://img.shields.io/github/tag//%s/%s.svg", internal.cacheGroupKey.organization, (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheGroupKey.repoName));
+        return String.format("https://img.shields.io/github/tag//%s/%s.svg", internal.cacheGroupKey.organization, internal.cacheGroupKey.repoName);
+    }
+
+    public String getExternalGroupURL() {
+        Objects.requireNonNull(internal.defaultGroupRepoName);
+        return String.format("https://img.shields.io/github/tag//%s/%s.svg", internal.cacheGroupKey.organization, internal.defaultGroupRepoName);
     }
 }

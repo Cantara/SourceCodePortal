@@ -8,7 +8,6 @@ public class GitHubApiContentsURL extends ExternalURL<RepositoryDefinition> {
 
     private static final long serialVersionUID = 6542826512042618912L;
     public static final String KEY = "gitHubApiContentsURL";
-    private boolean useDefaultGroupRepoName;
 
     public GitHubApiContentsURL(RepositoryDefinition repositoryInfo) {
         super(repositoryInfo);
@@ -19,19 +18,22 @@ public class GitHubApiContentsURL extends ExternalURL<RepositoryDefinition> {
         return KEY;
     }
     
-    public void useDefaultGroupRepoName() {
-        Objects.requireNonNull(internal.defaultGroupRepoName);
-        useDefaultGroupRepoName = true;
-    }
-
     @Override
     public String getExternalURL() {
-        return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheGroupKey.organization,
-                (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheGroupKey.repoName), "%s", "%s");
+        return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheGroupKey.organization, internal.cacheGroupKey.repoName, "%s", "%s");
     }
 
     public String getExternalURL(String relativeFilePath, String commitId) {
         return String.format(getExternalURL(), relativeFilePath, commitId);
     }
     
+    public String getExternalGroupURL() {
+        Objects.requireNonNull(internal.defaultGroupRepoName);
+        return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheGroupKey.organization, internal.defaultGroupRepoName, "%s", "%s");
+    }
+
+    public String getExternalGroupURL(String relativeFilePath, String commitId) {
+        return String.format(getExternalGroupURL(), relativeFilePath, commitId);
+    }
+
 }

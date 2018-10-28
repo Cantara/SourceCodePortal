@@ -8,7 +8,6 @@ public class GitHubApiReadmeURL extends ExternalURL<RepositoryDefinition> {
 
     private static final long serialVersionUID = -4310813562270437275L;
     public static final String KEY = "gitHubApiReadmeURL";
-    private boolean useDefaultGroupRepoName;
 
     public GitHubApiReadmeURL(RepositoryDefinition repositoryInfo) {
         super(repositoryInfo);
@@ -19,15 +18,14 @@ public class GitHubApiReadmeURL extends ExternalURL<RepositoryDefinition> {
         return KEY;
     }
 
-    public void useDefaultGroupRepoName() {
-        Objects.requireNonNull(internal.defaultGroupRepoName);
-        useDefaultGroupRepoName = true;
-    }
-
     @Override
     public String getExternalURL() {
-        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.cacheGroupKey.organization,
-                (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheGroupKey.repoName), internal.cacheGroupKey.branch);
+        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.cacheGroupKey.organization, internal.cacheGroupKey.repoName, internal.cacheGroupKey.branch);
+    }
+
+    public String getExternalGroupURL() {
+        Objects.requireNonNull(internal.defaultGroupRepoName);
+        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.cacheGroupKey.organization, internal.defaultGroupRepoName, internal.cacheGroupKey.branch);
     }
 
 }

@@ -8,7 +8,6 @@ public class GitHubRawRepoURL extends ExternalURL<RepositoryDefinition> {
 
     private static final long serialVersionUID = -5712528210551460515L;
     public static final String KEY = "gitHubRawRepoURL";
-    private boolean useDefaultGroupRepoName;
 
     public GitHubRawRepoURL(RepositoryDefinition repositoryInfo) {
         super(repositoryInfo);
@@ -19,15 +18,14 @@ public class GitHubRawRepoURL extends ExternalURL<RepositoryDefinition> {
         return KEY;
     }
 
-    public void useDefaultGroupRepoName() {
-        Objects.requireNonNull(internal.defaultGroupRepoName);
-        useDefaultGroupRepoName = true;
-    }
-
     @Override
     public String getExternalURL() {
-        return String.format("https://raw.githubusercontent.com/%s/%s/%s/", internal.cacheGroupKey.organization,
-                (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheGroupKey.repoName), internal.cacheGroupKey.branch);
+        return String.format("https://raw.githubusercontent.com/%s/%s/%s/", internal.cacheGroupKey.organization, internal.cacheGroupKey.repoName, internal.cacheGroupKey.branch);
+    }
+
+    public String getExternalGroupURL() {
+        Objects.requireNonNull(internal.defaultGroupRepoName);
+        return String.format("https://raw.githubusercontent.com/%s/%s/%s/", internal.cacheGroupKey.organization, internal.defaultGroupRepoName, internal.cacheGroupKey.branch);
     }
 
 }

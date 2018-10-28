@@ -8,7 +8,6 @@ public class SnykIOTestBadgeURL extends ExternalURL<RepositoryDefinition> {
 
     private static final long serialVersionUID = 8890035117418785973L;
     public static final String KEY = "snykIOTestBadgeURL";
-    private boolean useDefaultGroupRepoName;
 
     public SnykIOTestBadgeURL(RepositoryDefinition internal) {
         super(internal);
@@ -19,13 +18,13 @@ public class SnykIOTestBadgeURL extends ExternalURL<RepositoryDefinition> {
         return KEY;
     }
 
-    public void useDefaultGroupRepoName() {
-        Objects.requireNonNull(internal.defaultGroupRepoName);
-        useDefaultGroupRepoName = true;
-    }
-
     @Override
     public String getExternalURL() {
-        return String.format("https://snyk.io/test/github/%s/%s/badge.svg", internal.cacheGroupKey.organization, (useDefaultGroupRepoName ? internal.defaultGroupRepoName : internal.cacheGroupKey.repoName));
+        return String.format("https://snyk.io/test/github/%s/%s/badge.svg", internal.cacheGroupKey.organization, internal.cacheGroupKey.repoName);
+    }
+
+    public String getExternalGroupURL() {
+        Objects.requireNonNull(internal.defaultGroupRepoName);
+        return String.format("https://snyk.io/test/github/%s/%s/badge.svg", internal.cacheGroupKey.organization, internal.defaultGroupRepoName);
     }
 }
