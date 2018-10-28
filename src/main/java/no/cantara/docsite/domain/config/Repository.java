@@ -6,6 +6,7 @@ import no.cantara.docsite.util.JsonbFactory;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Deprecated
 public class Repository implements Serializable {
 
     public static final String SCP_TEMPLATE_REPO_NAME = "ConfigService";

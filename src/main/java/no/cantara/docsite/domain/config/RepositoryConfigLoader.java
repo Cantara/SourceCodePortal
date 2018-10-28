@@ -94,7 +94,7 @@ public class RepositoryConfigLoader {
                     cacheStore.getCacheKeys().put(cacheKey, cacheGroupKey);
                     cacheStore.getCacheGroupKeys().put(cacheGroupKey, cacheKey);
                     // create an internal definition of a repo
-                    RepositoryDefinition repositoryDefinition = RepositoryDefinition.of(cacheKey, repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
+                    RepositoryDefinition repositoryDefinition = RepositoryDefinition.of(configuration, cacheKey, repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
                     // TODO refactor getRepositoryGroups() to use RepositoryDefinition
 //                    cacheStore.getRepositoryGroups().put(cacheGroupKey, repositoryDefinition);
                 }

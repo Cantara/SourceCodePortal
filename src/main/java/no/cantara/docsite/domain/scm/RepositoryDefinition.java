@@ -13,6 +13,7 @@ import no.cantara.docsite.domain.external.ShieldsIONoReposURL;
 import no.cantara.docsite.domain.external.SnykIOTestBadgeURL;
 import no.cantara.docsite.domain.external.SnykIOTestURL;
 import no.cantara.docsite.util.JsonbFactory;
+import no.ssb.config.DynamicConfiguration;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class RepositoryDefinition {
     public final GitHubApiContentsURL apiContentsURL;
     public final Map<String, ExternalURL> externalLinks = new LinkedHashMap<>(); // not immutable
 
-    RepositoryDefinition(CacheKey cacheKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
+    RepositoryDefinition(DynamicConfiguration configuration, CacheKey cacheKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
         this.cacheKey = cacheKey;
         this.id = id;
         this.description = description;
@@ -45,7 +46,7 @@ public class RepositoryDefinition {
         this.rawRepoURL = new GitHubRawRepoURL(this);
         this.apiReadmeURL = new GitHubApiReadmeURL(this);
         this.apiContentsURL = new GitHubApiContentsURL(this);
-        externalLinks.put(JenkinsURL.KEY, new JenkinsURL(this));
+        externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, this));
         externalLinks.put(ShieldsIONoReposURL.KEY, new ShieldsIONoReposURL(""));
         externalLinks.put(ShieldsIOGroupCommitURL.KEY, new ShieldsIOGroupCommitURL(this));
         externalLinks.put(ShieldsIOGroupReleaseURL.KEY, new ShieldsIOGroupReleaseURL(this));
@@ -53,8 +54,8 @@ public class RepositoryDefinition {
         externalLinks.put(SnykIOTestBadgeURL.KEY, new SnykIOTestBadgeURL(this));
     }
 
-    public static RepositoryDefinition of(CacheKey cacheKey, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
-        return new RepositoryDefinition(cacheKey, id, description, defaultGroupRepo, htmlRepoURL);
+    public static RepositoryDefinition of(DynamicConfiguration configuration, CacheKey cacheKey, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
+        return new RepositoryDefinition(configuration, cacheKey, id, description, defaultGroupRepo, htmlRepoURL);
     }
 
     @Override
