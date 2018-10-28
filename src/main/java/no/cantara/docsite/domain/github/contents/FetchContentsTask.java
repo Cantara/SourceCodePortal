@@ -42,7 +42,7 @@ public class FetchContentsTask extends WorkerTask {
         if (GetGitHubCommand.anyOf(response, 200)) {
             RepositoryContentsBinding readmeContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContentsBinding.class);
             readmeContents.renderedHtml = DocumentRenderer.render(readmeContents.name, readmeContents.content);
-            cacheStore.getPages().put(cacheKey, readmeContents);
+            cacheStore.getPages().put(cacheKey, readmeContents.asRepositoryContents(cacheKey));
         } else {
             LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());
         }

@@ -1,7 +1,7 @@
 package no.cantara.docsite.domain.view;
 
 import no.cantara.docsite.domain.config.Repository;
-import no.cantara.docsite.domain.github.contents.RepositoryContentsBinding;
+import no.cantara.docsite.domain.scm.RepositoryContents;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -9,12 +9,12 @@ import java.util.TreeSet;
 public class ContentsModel {
 
     public final Repository repository;
-    public final RepositoryContentsBinding contents;
+    public final RepositoryContents contents;
     public final String contentHtml;
 
     public SortedSet<Group> groups = new TreeSet<>();
 
-    public ContentsModel(Repository repository, RepositoryContentsBinding contents, String contentHtml) {
+    public ContentsModel(Repository repository, RepositoryContents contents, String contentHtml) {
         this.repository = repository;
         this.contents = contents;
         this.contentHtml = contentHtml;

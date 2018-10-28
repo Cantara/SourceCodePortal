@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.view;
 
-import no.cantara.docsite.domain.github.commits.CommitRevisionBinding;
+import no.cantara.docsite.domain.scm.CommitRevision;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import static no.cantara.docsite.domain.config.Repository.SCP_TEMPLATE_REPO_NAME
 
 public class DashboardModel {
 
-    public final List<CommitRevisionBinding> lastCommitRevisions = new ArrayList();
+    public final List<CommitRevision> lastCommitRevisions = new ArrayList();
     public final SortedSet<Group> groups = new TreeSet<>();
     public String connectedRepos = "0";
 

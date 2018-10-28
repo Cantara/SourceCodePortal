@@ -4,7 +4,7 @@ import io.undertow.server.HttpServerExchange;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
-import no.cantara.docsite.domain.github.commits.CommitRevisionBinding;
+import no.cantara.docsite.domain.scm.CommitRevision;
 import no.cantara.docsite.domain.view.DashboardModel;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
@@ -29,13 +29,13 @@ public class DashboardHandler implements WebHandler {
 
         // TODO this is bit expensive per view. Investigate how JCache can provide a sorted tree map
         {
-            Cache<CacheShaKey, CommitRevisionBinding> commitRevisions = cacheStore.getCommits();
-            Map<CacheShaKey, CommitRevisionBinding> commitRevisionMap = new LinkedHashMap<>();
+            Cache<CacheShaKey, CommitRevision> commitRevisions = cacheStore.getCommits();
+            Map<CacheShaKey, CommitRevision> commitRevisionMap = new LinkedHashMap<>();
             commitRevisions.iterator().forEachRemaining(a -> commitRevisionMap.put(a.getKey(), a.getValue()));
-            Map<CacheShaKey, CommitRevisionBinding> sortedMap = sortByValue(commitRevisionMap);
+            Map<CacheShaKey, CommitRevision> sortedMap = sortByValue(commitRevisionMap);
 
             int n = 0;
-            for (CommitRevisionBinding commitRevision : sortedMap.values()) {
+            for (CommitRevision commitRevision : sortedMap.values()) {
                 if (n > configuration.evaluateToInt("render.max.group.commits")) break;
                 model.lastCommitRevisions.add(commitRevision);
                 n++;

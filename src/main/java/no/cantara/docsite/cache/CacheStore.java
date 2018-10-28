@@ -2,10 +2,10 @@ package no.cantara.docsite.cache;
 
 import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
-import no.cantara.docsite.domain.github.commits.CommitRevisionBinding;
-import no.cantara.docsite.domain.github.contents.RepositoryContentsBinding;
 import no.cantara.docsite.domain.github.releases.CreatedTagEventBinding;
 import no.cantara.docsite.domain.maven.MavenPOM;
+import no.cantara.docsite.domain.scm.CommitRevision;
+import no.cantara.docsite.domain.scm.RepositoryContents;
 import no.cantara.docsite.domain.scm.RepositoryDefinition;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
@@ -101,7 +101,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("page") == null) {
             LOG.info("Creating Page cache");
-            MutableConfiguration<CacheKey, RepositoryContentsBinding> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, RepositoryContents> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("page", cacheConfig);
@@ -109,7 +109,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("commit") == null) {
             LOG.info("Creating Commit cache");
-            MutableConfiguration<CacheShaKey, CommitRevisionBinding> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheShaKey, CommitRevision> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("commit", cacheConfig);
@@ -241,18 +241,22 @@ public class CacheStore {
         return cacheManager.getCache("repositories");
     }
 
+    // OK
     public Cache<CacheKey, MavenPOM> getProjects() {
         return cacheManager.getCache("project");
     }
 
-    public Cache<CacheKey, RepositoryContentsBinding> getPages() {
+    // OK
+    public Cache<CacheKey, RepositoryContents> getPages() {
         return cacheManager.getCache("page");
     }
 
-    public Cache<CacheShaKey, CommitRevisionBinding> getCommits() {
+    // OK
+    public Cache<CacheShaKey, CommitRevision> getCommits() {
         return cacheManager.getCache("commit");
     }
 
+    // TBD
     public Cache<CacheKey, CreatedTagEventBinding> getReleases() {
         return cacheManager.getCache("release");
     }

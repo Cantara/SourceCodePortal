@@ -1,5 +1,7 @@
 package no.cantara.docsite.domain.github.commits;
 
+import no.cantara.docsite.domain.scm.CommitRevision;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -7,14 +9,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class GroupByDateIterator implements Iterator<CommitRevisionBinding> {
+public class GroupByDateIterator implements Iterator<CommitRevision> {
 
-    private final List<CommitRevisionBinding> entries;
-    private final ListIterator<CommitRevisionBinding> listIterator;
-    private CommitRevisionBinding last;
-    private CommitRevisionBinding current;
+    private final List<CommitRevision> entries;
+    private final ListIterator<CommitRevision> listIterator;
+    private CommitRevision last;
+    private CommitRevision current;
 
-    public GroupByDateIterator(List<CommitRevisionBinding> entries) {
+    public GroupByDateIterator(List<CommitRevision> entries) {
         this.entries = entries;
         this.listIterator = entries.listIterator();
     }
@@ -25,7 +27,7 @@ public class GroupByDateIterator implements Iterator<CommitRevisionBinding> {
     }
 
     @Override
-    public CommitRevisionBinding next() {
+    public CommitRevision next() {
         last = current;
         current = listIterator.next();
         return current;
@@ -44,8 +46,8 @@ public class GroupByDateIterator implements Iterator<CommitRevisionBinding> {
             return true; // first entry - new start date
 
         } else if (last != null && current != null) {
-            LocalDate lastDate = onlyDate(last.commit.commitAuthor.date);
-            LocalDate currDate = onlyDate(current.commit.commitAuthor.date);
+            LocalDate lastDate = onlyDate(last.date);
+            LocalDate currDate = onlyDate(current.date);
             return lastDate.compareTo(currDate) > 0;
         }
         return false;

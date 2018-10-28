@@ -7,6 +7,7 @@ import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.github.commits.CommitRevisionBinding;
 import no.cantara.docsite.domain.github.commits.GroupByDateIterator;
+import no.cantara.docsite.domain.scm.CommitRevision;
 import no.cantara.docsite.domain.view.CommitRevisionsModel;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
@@ -59,8 +60,8 @@ public class CommitsHandler implements WebHandler {
 
             boolean renderAll = (resourceContext.getTuples().size() == 1 && resourceContext.getLast().get().id == null);
 
-            Map<CacheShaKey, CommitRevisionBinding> commitRevisionMap = new LinkedHashMap<>();
-            Cache<CacheShaKey, CommitRevisionBinding> commitRevisions = cacheStore.getCommits();
+            Map<CacheShaKey, CommitRevision> commitRevisionMap = new LinkedHashMap<>();
+            Cache<CacheShaKey, CommitRevision> commitRevisions = cacheStore.getCommits();
             if (renderAll) {
                 // all view
                 commitRevisions.iterator().forEachRemaining(a -> commitRevisionMap.put(a.getKey(), a.getValue()));
@@ -83,9 +84,9 @@ public class CommitsHandler implements WebHandler {
                     }
                 }
 
-                for (Cache.Entry<CacheShaKey, CommitRevisionBinding> entry : commitRevisions) {
+                for (Cache.Entry<CacheShaKey, CommitRevision> entry : commitRevisions) {
                     CacheShaKey key = entry.getKey();
-                    CommitRevisionBinding value = entry.getValue();
+                    CommitRevision value = entry.getValue();
                     // group view
                     if (renderGroupOrRepo && key.compareToUsingGroupId(organization, groupIdOrRepoName)) {
                         commitRevisionMap.put(key, value);
@@ -97,7 +98,7 @@ public class CommitsHandler implements WebHandler {
                 }
             }
 
-            Map<CacheShaKey, CommitRevisionBinding> sortedMap = sortByValue(commitRevisionMap);
+            Map<CacheShaKey, CommitRevision> sortedMap = sortByValue(commitRevisionMap);
             GroupByDateIterator groupByDateIterator = new GroupByDateIterator(new ArrayList<>(sortedMap.values()));
 
             CommitRevisionsModel model = new CommitRevisionsModel(groupByDateIterator);

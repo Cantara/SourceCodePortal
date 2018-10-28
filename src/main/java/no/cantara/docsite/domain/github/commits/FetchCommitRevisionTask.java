@@ -40,7 +40,7 @@ public class FetchCommitRevisionTask extends WorkerTask {
             Set<CacheRepositoryKey> keys = cacheStore.getCacheRepositoryKeys(CacheKey.of(cacheKey.organization, cacheKey.repoName, cacheKey.branch));
             for(CacheRepositoryKey key : keys) {
                 CacheShaKey cacheShaKey = CacheShaKey.of(cacheKey, key.groupId, commitRevision.sha);
-                cacheStore.getCommits().put(cacheShaKey, commitRevision);
+                cacheStore.getCommits().put(cacheShaKey, commitRevision.asCommitRevision(cacheShaKey));
             }
         } else {
             LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());

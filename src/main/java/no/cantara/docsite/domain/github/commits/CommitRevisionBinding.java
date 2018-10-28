@@ -1,6 +1,8 @@
 package no.cantara.docsite.domain.github.commits;
 
 
+import no.cantara.docsite.cache.CacheShaKey;
+import no.cantara.docsite.domain.scm.CommitRevision;
 import no.cantara.docsite.util.JsonbFactory;
 
 import javax.json.bind.annotation.JsonbProperty;
@@ -10,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CommitRevisionBinding implements Serializable {
 
@@ -36,6 +39,12 @@ public class CommitRevisionBinding implements Serializable {
     @Override
     public String toString() {
         return JsonbFactory.asString(this);
+    }
+
+    @JsonbTransient
+    public CommitRevision asCommitRevision(CacheShaKey cacheShaKey) {
+        return new CommitRevision(cacheShaKey, commit.commitAuthor.name, commit.commitAuthor.email, commit.commitAuthor.date, htmlUrl, author.avatarUrl, commit.message,
+                parents.stream().map(m -> new CommitRevision.Parent(m.sha, m.url, m.htmlUrl)).collect(Collectors.toList()));
     }
 
     public static class Commit implements Serializable {

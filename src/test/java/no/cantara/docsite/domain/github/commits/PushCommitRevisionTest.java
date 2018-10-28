@@ -48,14 +48,16 @@ public class PushCommitRevisionTest {
 //        LOG.trace("event1: {}", Arrays.stream(dummyCommitEvent1).map(CommitRevision::toString).collect(Collectors.joining("\n")));
 
         for(CommitRevisionBinding commitRevision : dummyCommitEvent1) {
-            cacheStore.getCommits().put(CacheShaKey.of("Cantara", "dummyRepo", "Dummy", "master", commitRevision.sha), commitRevision);
+            CacheShaKey cacheShaKey = CacheShaKey.of("Cantara", "dummyRepo", "Dummy", "master", commitRevision.sha);
+            cacheStore.getCommits().put(cacheShaKey, commitRevision.asCommitRevision(cacheShaKey));
         }
 
         CommitRevisionBinding[] dummyCommitEvent2 = JsonbFactory.instance().fromJson(dummyCommits2, CommitRevisionBinding[].class);
 //        LOG.trace("event2: {}", Arrays.stream(dummyCommitEvent2).map(CommitRevision::toString).collect(Collectors.joining("\n")));
 
         for(CommitRevisionBinding commitRevision : dummyCommitEvent2) {
-            cacheStore.getCommits().put(CacheShaKey.of("Cantara", "dummyRepo", "Dummy2", "master", commitRevision.sha), commitRevision);
+            CacheShaKey cacheShaKey = CacheShaKey.of("Cantara", "dummyRepo", "Dummy2", "master", commitRevision.sha);
+            cacheStore.getCommits().put(cacheShaKey, commitRevision.asCommitRevision(cacheShaKey));
         }
 
         AtomicInteger count = new AtomicInteger(0);

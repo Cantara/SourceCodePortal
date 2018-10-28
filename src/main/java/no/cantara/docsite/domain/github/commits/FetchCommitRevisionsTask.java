@@ -40,7 +40,7 @@ public class FetchCommitRevisionsTask extends WorkerTask {
                 CommitRevisionBinding cr = commitRevision[n];
                 cacheRepositoryKeys.forEach(key -> {
                     CacheShaKey cacheShaKey = CacheShaKey.of(cacheKey, key.groupId, cr.sha);
-                    cacheStore.getCommits().put(cacheShaKey, cr);
+                    cacheStore.getCommits().put(cacheShaKey, cr.asCommitRevision(cacheShaKey));
                 });
             }
         } else {
