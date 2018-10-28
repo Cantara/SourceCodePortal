@@ -6,6 +6,7 @@ import no.cantara.docsite.domain.github.commits.CommitRevisionBinding;
 import no.cantara.docsite.domain.github.contents.RepositoryContentsBinding;
 import no.cantara.docsite.domain.github.releases.CreatedTagEventBinding;
 import no.cantara.docsite.domain.maven.MavenPOM;
+import no.cantara.docsite.domain.scm.RepositoryDefinition;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -72,6 +73,14 @@ public class CacheStore {
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("repositoryGroup", cacheConfig);
+        }
+
+        if (cacheManager.getCache("repositories") == null) {
+            LOG.info("Creating Repositories cache");
+            MutableConfiguration<CacheGroupKey, RepositoryDefinition> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            cacheManager.createCache("repositories", cacheConfig);
         }
 
         if (cacheManager.getCache("project") == null) {
@@ -212,6 +221,11 @@ public class CacheStore {
             }
         });
         return repositories;
+    }
+
+    // NEW
+    public Cache<CacheGroupKey, RepositoryDefinition> getRepositories() {
+        return cacheManager.getCache("repositories");
     }
 
     public Cache<CacheKey, MavenPOM> getProjects() {

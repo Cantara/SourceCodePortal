@@ -2,6 +2,7 @@ package no.cantara.docsite.domain.external;
 
 import no.cantara.docsite.domain.scm.RepositoryDefinition;
 
+import javax.json.bind.annotation.JsonbTransient;
 import java.util.Objects;
 
 public class GitHubApiContentsURL extends ExternalURL<RepositoryDefinition> {
@@ -23,15 +24,17 @@ public class GitHubApiContentsURL extends ExternalURL<RepositoryDefinition> {
         return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheGroupKey.organization, internal.cacheGroupKey.repoName, "%s", "%s");
     }
 
+    @JsonbTransient
     public String getExternalURL(String relativeFilePath, String commitId) {
         return String.format(getExternalURL(), relativeFilePath, commitId);
     }
-    
+
     public String getExternalGroupURL() {
         Objects.requireNonNull(internal.defaultGroupRepoName);
         return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheGroupKey.organization, internal.defaultGroupRepoName, "%s", "%s");
     }
 
+    @JsonbTransient
     public String getExternalGroupURL(String relativeFilePath, String commitId) {
         return String.format(getExternalGroupURL(), relativeFilePath, commitId);
     }

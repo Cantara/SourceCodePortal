@@ -89,5 +89,4 @@ public class RepositoryDefinition implements Serializable {
     public String toString() {
         return JsonbFactory.asString(this);
     }
-
 }

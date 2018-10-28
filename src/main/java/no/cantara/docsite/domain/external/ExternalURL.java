@@ -1,12 +1,18 @@
 package no.cantara.docsite.domain.external;
 
+import no.cantara.docsite.util.JsonbFactory;
+
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
 abstract public class ExternalURL<T> implements Serializable {
 
-    protected final T internal;
+    protected final @JsonbTransient T internal;
 
     public ExternalURL(T internal) {
         this.internal = internal;
@@ -26,6 +32,14 @@ abstract public class ExternalURL<T> implements Serializable {
         };
     }
 
+    abstract public @JsonbProperty("key") String getKey();
+
+    abstract public @JsonbProperty("value") String getExternalURL();
+
+    public @JsonbTransient boolean isGenericOf(Class<?> clazz) {
+        return Arrays.asList(internal.getClass().getTypeName()).stream().anyMatch(type -> type.equals(clazz.getTypeName()));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,24 +52,13 @@ abstract public class ExternalURL<T> implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(internal, getKey(), getExternalURL());
+        return Objects.hash(getKey(), getExternalURL());
     }
 
-    abstract public String getKey();
-
-    abstract public String getExternalURL();
-
-    public boolean isGenericOf(Class<?> clazz) {
-        return Arrays.asList(internal.getClass().getTypeName()).stream().anyMatch(type -> type.equals(clazz.getTypeName()));
-    }
-
-    // TODO should this simply output the externalURL?
     @Override
     public String toString() {
-        return "ExternalURL{" +
-                "internal=" + internal +
-                ", key=" + getKey() +
-                ", externalURL=" + getExternalURL() +
-                '}';
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        builder.add(getKey(), getExternalURL());
+        return JsonbFactory.asString(builder.build());
     }
 }
