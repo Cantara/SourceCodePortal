@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.scm;
 
-import no.cantara.docsite.cache.CacheGroupKey;
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.domain.external.ExternalURL;
 import no.cantara.docsite.domain.external.GitHubApiContentsURL;
 import no.cantara.docsite.domain.external.GitHubApiReadmeURL;
@@ -33,7 +33,7 @@ public class RepositoryDefinition implements Serializable {
 
     private static final long serialVersionUID = 4462535017419847061L;
 
-    public final CacheGroupKey cacheGroupKey;
+    public final CacheRepositoryKey cacheRepositoryKey;
     public final String id;
     public final String description;
     public final String defaultGroupRepoName;
@@ -43,8 +43,8 @@ public class RepositoryDefinition implements Serializable {
     public final GitHubApiContentsURL apiContentsURL;
     public final Map<String, ExternalURL> externalLinks = new LinkedHashMap<>(); // not immutable
 
-    RepositoryDefinition(DynamicConfiguration configuration, CacheGroupKey cacheGroupKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
-        this.cacheGroupKey = cacheGroupKey;
+    RepositoryDefinition(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
+        this.cacheRepositoryKey = cacheRepositoryKey;
         this.id = id;
         this.description = description;
         this.defaultGroupRepoName = defaultGroupRepoName;
@@ -60,8 +60,8 @@ public class RepositoryDefinition implements Serializable {
         externalLinks.put(SnykIOTestBadgeURL.KEY, new SnykIOTestBadgeURL(this));
     }
 
-    public static RepositoryDefinition of(DynamicConfiguration configuration, CacheGroupKey cacheGroupKey, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
-        return new RepositoryDefinition(configuration, cacheGroupKey, id, description, defaultGroupRepo, htmlRepoURL);
+    public static RepositoryDefinition of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
+        return new RepositoryDefinition(configuration, repositoryDefinition, id, description, defaultGroupRepo, htmlRepoURL);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class RepositoryDefinition implements Serializable {
         if (this == o) return true;
         if (!(o instanceof RepositoryDefinition)) return false;
         RepositoryDefinition that = (RepositoryDefinition) o;
-        return Objects.equals(cacheGroupKey, that.cacheGroupKey) &&
+        return Objects.equals(cacheRepositoryKey, that.cacheRepositoryKey) &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(defaultGroupRepoName, that.defaultGroupRepoName) &&
@@ -82,7 +82,7 @@ public class RepositoryDefinition implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(cacheGroupKey, id, description, defaultGroupRepoName, repoURL, rawRepoURL, apiReadmeURL, apiContentsURL, externalLinks);
+        return Objects.hash(cacheRepositoryKey, id, description, defaultGroupRepoName, repoURL, rawRepoURL, apiReadmeURL, apiContentsURL, externalLinks);
     }
 
     @Override

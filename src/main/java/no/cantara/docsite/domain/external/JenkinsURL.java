@@ -23,7 +23,7 @@ public class JenkinsURL extends ExternalURL<RepositoryDefinition> {
 
     @Override
     public String getExternalURL() {
-        return String.format("%s/buildStatus/icon?job=%s", baseURL, internal.cacheGroupKey.repoName);
+        return String.format("%s/buildStatus/icon?job=%s", baseURL, internal.cacheRepositoryKey.repoName);
     }
 
     public String getExternalGroupURL() {

@@ -1,7 +1,7 @@
 package no.cantara.docsite.domain.github.commits;
 
-import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
@@ -37,8 +37,8 @@ public class FetchCommitRevisionTask extends WorkerTask {
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
             CommitRevisionBinding commitRevision = JsonbFactory.instance().fromJson(response.body(), CommitRevisionBinding.class);
-            Set<CacheGroupKey> keys = cacheStore.getCacheGroupKeys(CacheKey.of(cacheKey.organization, cacheKey.repoName, cacheKey.branch));
-            for(CacheGroupKey key : keys) {
+            Set<CacheRepositoryKey> keys = cacheStore.getCacheRepositoryKeys(CacheKey.of(cacheKey.organization, cacheKey.repoName, cacheKey.branch));
+            for(CacheRepositoryKey key : keys) {
                 CacheShaKey cacheShaKey = CacheShaKey.of(cacheKey, key.groupId, commitRevision.sha);
                 cacheStore.getCommits().put(cacheShaKey, commitRevision);
             }

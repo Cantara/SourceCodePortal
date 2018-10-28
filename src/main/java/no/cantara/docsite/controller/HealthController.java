@@ -126,7 +126,7 @@ public class HealthController implements HttpHandler {
 
         {
             AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getCacheGroupKeys().iterator().forEachRemaining(a -> count.incrementAndGet());
+            cacheStore.getCacheRepositoryKeys().iterator().forEachRemaining(a -> count.incrementAndGet());
             cacheBuilder.add("cache-group-keys", count.get());
         }
 

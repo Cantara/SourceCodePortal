@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.external;
 
-import no.cantara.docsite.cache.CacheGroupKey;
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.domain.scm.RepositoryDefinition;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
@@ -27,13 +27,13 @@ public class ExternalURLTest {
         DynamicConfiguration configuration = configuration();
         List<ExternalURL<?>> list = new ArrayList<>();
 
-        list.add(new GitHubRawRepoURL(RepositoryDefinition.of(configuration, CacheGroupKey.of("Cantara", "repo1", "master", "group1"),
+        list.add(new GitHubRawRepoURL(RepositoryDefinition.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
                 "id", "desc", "group", "http://example.com")));
 
-        list.add(new GitHubApiReadmeURL(RepositoryDefinition.of(configuration, CacheGroupKey.of("Cantara", "repo1", "master", "group1"),
+        list.add(new GitHubApiReadmeURL(RepositoryDefinition.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
                 "id", "desc", "group", "http://example.com")));
 
-        list.add(new GitHubApiContentsURL(RepositoryDefinition.of(configuration, CacheGroupKey.of("Cantara", "repo1", "master", "group1"),
+        list.add(new GitHubApiContentsURL(RepositoryDefinition.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
                 "id", "desc", "group", "http://example.com")));
 
         list.add(new GitHubHtmlURL("http://example.com"));

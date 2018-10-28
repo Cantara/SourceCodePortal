@@ -1,7 +1,7 @@
 package no.cantara.docsite.domain.config;
 
-import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.repos.RepositoryBinding;
@@ -64,13 +64,13 @@ public class RepositoryConfigLoader {
                     String rawRepoURL = String.format("https://raw.githubusercontent.com/%s/%s/%s/", cacheKey.organization, cacheKey.repoName, cacheKey.branch);
                     String readmeURL = String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", cacheKey.organization, cacheKey.repoName, cacheKey.branch);
                     String contentsURL = String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", cacheKey.organization, cacheKey.repoName, "%s", "%s");
-                    CacheGroupKey cacheGroupKey = CacheGroupKey.of(cacheKey, repoConfig.groupId);
-//                    LOG.info("Cache cacheGroupKey: {}", cacheGroupKey);
-                    cacheStore.getCacheKeys().put(cacheKey, cacheGroupKey);
-                    cacheStore.getCacheGroupKeys().put(cacheGroupKey, cacheKey);
+                    CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheKey, repoConfig.groupId);
+//                    LOG.info("Cache cacheRepositoryKey: {}", cacheRepositoryKey);
+                    cacheStore.getCacheKeys().put(cacheKey, cacheRepositoryKey);
+                    cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
                     // copy relevant repo info to Repository instance
                     Repository repository = new Repository(cacheKey, repo.id, repo.name, repoConfig.defaultGroupRepo, repo.description, repo.htmlUrl, rawRepoURL, readmeURL, contentsURL);
-                    cacheStore.getRepositoryGroups().put(cacheGroupKey, repository);
+                    cacheStore.getRepositoryGroups().put(cacheRepositoryKey, repository);
                 }
             }
         }
@@ -89,14 +89,14 @@ public class RepositoryConfigLoader {
                 Matcher matcher = pattern.matcher(repoName);
                 if (matcher.find()) {
                     CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repoName, repoConfig.branch);
-                    CacheGroupKey cacheGroupKey = CacheGroupKey.of(cacheKey, repoConfig.groupId);
+                    CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheKey, repoConfig.groupId);
                     // build key store
-                    cacheStore.getCacheKeys().put(cacheKey, cacheGroupKey);
-                    cacheStore.getCacheGroupKeys().put(cacheGroupKey, cacheKey);
+                    cacheStore.getCacheKeys().put(cacheKey, cacheRepositoryKey);
+                    cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
                     // create an internal definition of a repo
-                    RepositoryDefinition repositoryDefinition = RepositoryDefinition.of(configuration, cacheGroupKey, repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
+                    RepositoryDefinition repositoryDefinition = RepositoryDefinition.of(configuration, cacheRepositoryKey, repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
                     // TODO refactor getRepositoryGroups() to use RepositoryDefinition
-//                    cacheStore.getRepositoryGroups().put(cacheGroupKey, repositoryDefinition);
+//                    cacheStore.getRepositoryGroups().put(cacheRepositoryKey, repositoryDefinition);
                 }
             }
         }

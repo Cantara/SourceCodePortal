@@ -3,8 +3,8 @@ package no.cantara.docsite.controller;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
-import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.github.commits.FetchCommitRevisionTask;
@@ -135,8 +135,8 @@ class GithubWebhookController implements HttpHandler {
                     // ------------------------------------------------------------------------------------------------------
                     if (pushCommitEvent.isPageCommit()) {
                         CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name, pushCommitEvent.getBranch());
-                        CacheGroupKey cacheGroupKey = cacheStore.getCacheKeys().get(cacheKey);
-                        Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
+                        CacheRepositoryKey cacheRepositoryKey = cacheStore.getCacheKeys().get(cacheKey);
+                        Repository repository = cacheStore.getRepositoryGroups().get(cacheRepositoryKey);
                         // TODO if there are page changes in multiple commits they will not be handled
                         String commitId = pushCommitEvent.headCommit.id;
                         for (String modifiedFile : pushCommitEvent.headCommit.modifiedList) {

@@ -20,12 +20,12 @@ public class GitHubApiReadmeURL extends ExternalURL<RepositoryDefinition> {
 
     @Override
     public String getExternalURL() {
-        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.cacheGroupKey.organization, internal.cacheGroupKey.repoName, internal.cacheGroupKey.branch);
+        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.cacheRepositoryKey.organization, internal.cacheRepositoryKey.repoName, internal.cacheRepositoryKey.branch);
     }
 
     public String getExternalGroupURL() {
         Objects.requireNonNull(internal.defaultGroupRepoName);
-        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.cacheGroupKey.organization, internal.defaultGroupRepoName, internal.cacheGroupKey.branch);
+        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.cacheRepositoryKey.organization, internal.defaultGroupRepoName, internal.cacheRepositoryKey.branch);
     }
 
 }

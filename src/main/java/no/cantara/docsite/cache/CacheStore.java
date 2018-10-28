@@ -53,23 +53,23 @@ public class CacheStore {
     void initialize() {
         if (cacheManager.getCache("cacheKeys") == null) {
             LOG.info("Creating CacheKeys cache");
-            MutableConfiguration<CacheKey, CacheGroupKey> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, CacheRepositoryKey> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("cacheKeys", cacheConfig);
         }
 
-        if (cacheManager.getCache("cacheGroupKeys") == null) {
-            LOG.info("Creating CacheGroupKeys cache");
-            MutableConfiguration<CacheGroupKey, CacheKey> cacheConfig = new MutableConfiguration<>();
+        if (cacheManager.getCache("cacheRepositoryKeys") == null) {
+            LOG.info("Creating CacheRepositoryKeys cache");
+            MutableConfiguration<CacheRepositoryKey, CacheKey> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("cacheGroupKeys", cacheConfig);
+            cacheManager.createCache("cacheRepositoryKeys", cacheConfig);
         }
 
         if (cacheManager.getCache("repositoryGroup") == null) {
             LOG.info("Creating Grouped repositories cache");
-            MutableConfiguration<CacheGroupKey, Repository> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheRepositoryKey, Repository> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("repositoryGroup", cacheConfig);
@@ -77,7 +77,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("repositories") == null) {
             LOG.info("Creating Repositories cache");
-            MutableConfiguration<CacheGroupKey, RepositoryDefinition> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheRepositoryKey, RepositoryDefinition> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("repositories", cacheConfig);
@@ -167,19 +167,19 @@ public class CacheStore {
     }
 
     // OK
-    public Cache<CacheKey, CacheGroupKey> getCacheKeys() {
+    public Cache<CacheKey, CacheRepositoryKey> getCacheKeys() {
         return cacheManager.getCache("cacheKeys");
     }
 
     // OK
-    public Cache<CacheGroupKey,CacheKey> getCacheGroupKeys() {
-        return cacheManager.getCache("cacheGroupKeys");
+    public Cache<CacheRepositoryKey,CacheKey> getCacheRepositoryKeys() {
+        return cacheManager.getCache("cacheRepositoryKeys");
     }
 
     // OK
     // returns the first found group key
-    public CacheGroupKey getCacheGroupKey(CacheKey cacheKey) {
-        Set<CacheGroupKey> groupKeys = StreamSupport.stream(getCacheGroupKeys().spliterator(), true)
+    public CacheRepositoryKey getCacheRepositoryKey(CacheKey cacheKey) {
+        Set<CacheRepositoryKey> groupKeys = StreamSupport.stream(getCacheRepositoryKeys().spliterator(), true)
                 .filter(entry -> entry.getValue().equals(cacheKey))
                 .map(Cache.Entry::getKey)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
@@ -189,15 +189,15 @@ public class CacheStore {
 
     // OK
     // returns the all matched group keys
-    public Set<CacheGroupKey> getCacheGroupKeys(CacheKey cacheKey) {
-        return StreamSupport.stream(getCacheGroupKeys().spliterator(), true)
+    public Set<CacheRepositoryKey> getCacheRepositoryKeys(CacheKey cacheKey) {
+        return StreamSupport.stream(getCacheRepositoryKeys().spliterator(), true)
                 .filter(entry -> entry.getValue().equals(cacheKey))
                 .map(Cache.Entry::getKey)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     // TODO requires refactoring (prepared done)
-    public Cache<CacheGroupKey, Repository> getRepositoryGroups() {
+    public Cache<CacheRepositoryKey, Repository> getRepositoryGroups() {
         return cacheManager.getCache("repositoryGroup");
     }
 
@@ -224,7 +224,7 @@ public class CacheStore {
     }
 
     // NEW
-    public Cache<CacheGroupKey, RepositoryDefinition> getRepositories() {
+    public Cache<CacheRepositoryKey, RepositoryDefinition> getRepositories() {
         return cacheManager.getCache("repositories");
     }
 

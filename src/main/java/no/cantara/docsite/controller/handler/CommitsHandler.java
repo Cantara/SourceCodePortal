@@ -1,8 +1,8 @@
 package no.cantara.docsite.controller.handler;
 
 import io.undertow.server.HttpServerExchange;
-import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.github.commits.CommitRevisionBinding;
@@ -77,9 +77,9 @@ public class CommitsHandler implements WebHandler {
 
                 String groupIdIfRenderRepo = null;
                 if (!renderGroupOrRepo) {
-                    CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(CacheKey.of(organization, groupIdOrRepoName, branchOrNull));
-                    if (cacheGroupKey != null) {
-                        groupIdIfRenderRepo = cacheGroupKey.groupId;
+                    CacheRepositoryKey cacheRepositoryKey = cacheStore.getCacheRepositoryKey(CacheKey.of(organization, groupIdOrRepoName, branchOrNull));
+                    if (cacheRepositoryKey != null) {
+                        groupIdIfRenderRepo = cacheRepositoryKey.groupId;
                     }
                 }
 

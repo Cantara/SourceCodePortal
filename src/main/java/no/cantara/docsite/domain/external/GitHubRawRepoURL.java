@@ -20,12 +20,12 @@ public class GitHubRawRepoURL extends ExternalURL<RepositoryDefinition> {
 
     @Override
     public String getExternalURL() {
-        return String.format("https://raw.githubusercontent.com/%s/%s/%s/", internal.cacheGroupKey.organization, internal.cacheGroupKey.repoName, internal.cacheGroupKey.branch);
+        return String.format("https://raw.githubusercontent.com/%s/%s/%s/", internal.cacheRepositoryKey.organization, internal.cacheRepositoryKey.repoName, internal.cacheRepositoryKey.branch);
     }
 
     public String getExternalGroupURL() {
         Objects.requireNonNull(internal.defaultGroupRepoName);
-        return String.format("https://raw.githubusercontent.com/%s/%s/%s/", internal.cacheGroupKey.organization, internal.defaultGroupRepoName, internal.cacheGroupKey.branch);
+        return String.format("https://raw.githubusercontent.com/%s/%s/%s/", internal.cacheRepositoryKey.organization, internal.defaultGroupRepoName, internal.cacheRepositoryKey.branch);
     }
 
 }

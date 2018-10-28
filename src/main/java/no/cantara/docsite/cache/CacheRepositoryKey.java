@@ -5,7 +5,7 @@ import no.cantara.docsite.util.JsonbFactory;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class CacheGroupKey implements Serializable {
+public class CacheRepositoryKey implements Serializable {
 
     private static final long serialVersionUID = 9068679113704432070L;
 
@@ -14,7 +14,7 @@ public class CacheGroupKey implements Serializable {
     public final String branch;
     public final String groupId;
 
-    CacheGroupKey(String organization, String repoName, String branch, String groupId) {
+    CacheRepositoryKey(String organization, String repoName, String branch, String groupId) {
         this.organization = organization;
         this.repoName = repoName;
         this.branch = branch;
@@ -28,8 +28,8 @@ public class CacheGroupKey implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CacheGroupKey)) return false;
-        CacheGroupKey that = (CacheGroupKey) o;
+        if (!(o instanceof CacheRepositoryKey)) return false;
+        CacheRepositoryKey that = (CacheRepositoryKey) o;
         return Objects.equals(organization, that.organization) &&
                 Objects.equals(repoName, that.repoName) &&
                 Objects.equals(branch, that.branch) &&
@@ -50,11 +50,11 @@ public class CacheGroupKey implements Serializable {
         return CacheKey.of(organization, repoName, branch);
     }
 
-    public static CacheGroupKey of(CacheKey cacheKey, String groupId) {
-        return new CacheGroupKey(cacheKey.organization, cacheKey.repoName, cacheKey.branch, groupId);
+    public static CacheRepositoryKey of(CacheKey cacheKey, String groupId) {
+        return new CacheRepositoryKey(cacheKey.organization, cacheKey.repoName, cacheKey.branch, groupId);
     }
 
-    public static CacheGroupKey of(String organization, String repoName, String branch, String groupId) {
-        return new CacheGroupKey(organization, repoName, branch, groupId);
+    public static CacheRepositoryKey of(String organization, String repoName, String branch, String groupId) {
+        return new CacheRepositoryKey(organization, repoName, branch, groupId);
     }
 }

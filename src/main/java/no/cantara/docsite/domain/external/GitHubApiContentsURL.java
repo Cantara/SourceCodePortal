@@ -21,7 +21,7 @@ public class GitHubApiContentsURL extends ExternalURL<RepositoryDefinition> {
     
     @Override
     public String getExternalURL() {
-        return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheGroupKey.organization, internal.cacheGroupKey.repoName, "%s", "%s");
+        return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheRepositoryKey.organization, internal.cacheRepositoryKey.repoName, "%s", "%s");
     }
 
     @JsonbTransient
@@ -31,7 +31,7 @@ public class GitHubApiContentsURL extends ExternalURL<RepositoryDefinition> {
 
     public String getExternalGroupURL() {
         Objects.requireNonNull(internal.defaultGroupRepoName);
-        return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheGroupKey.organization, internal.defaultGroupRepoName, "%s", "%s");
+        return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.cacheRepositoryKey.organization, internal.defaultGroupRepoName, "%s", "%s");
     }
 
     @JsonbTransient

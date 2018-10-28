@@ -20,11 +20,11 @@ public class ShieldsIOGroupCommitURL extends ExternalURL<RepositoryDefinition> {
 
     @Override
     public String getExternalURL() {
-        return String.format("https://img.shields.io/github/last-commit/%s/%s.svg", internal.cacheGroupKey.organization, internal.cacheGroupKey.repoName);
+        return String.format("https://img.shields.io/github/last-commit/%s/%s.svg", internal.cacheRepositoryKey.organization, internal.cacheRepositoryKey.repoName);
     }
 
     public String getExternalGroupURL() {
         Objects.requireNonNull(internal.defaultGroupRepoName);
-        return String.format("https://img.shields.io/github/last-commit/%s/%s.svg", internal.cacheGroupKey.organization, internal.defaultGroupRepoName);
+        return String.format("https://img.shields.io/github/last-commit/%s/%s.svg", internal.cacheRepositoryKey.organization, internal.defaultGroupRepoName);
     }
 }

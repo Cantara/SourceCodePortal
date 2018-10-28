@@ -1,8 +1,8 @@
 package no.cantara.docsite.controller.handler;
 
 import io.undertow.server.HttpServerExchange;
-import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
@@ -40,8 +40,8 @@ public class ContentsHandler implements WebHandler {
             return false;
         }
 
-        CacheGroupKey cacheGroupKey = cacheStore.getCacheGroupKey(cacheKey);
-        Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
+        CacheRepositoryKey cacheRepositoryKey = cacheStore.getCacheRepositoryKey(cacheKey);
+        Repository repository = cacheStore.getRepositoryGroups().get(cacheRepositoryKey);
 
         ContentsModel model = new ContentsModel(repository, contents, contents.renderedHtml);
 
