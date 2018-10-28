@@ -174,3 +174,7 @@ To detect changes to sass files and have the compiler produce new `target/classe
 
 * Push CommitEvents arrives as single objects.
 * Pull CommitEvents arrives as arrays.
+
+= Resurces
+
+* https://confluence.atlassian.com/bitbucket/manage-webhooks-735643732.html[Bitbucket webhooks]
