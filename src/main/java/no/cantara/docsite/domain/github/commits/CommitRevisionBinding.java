@@ -4,17 +4,22 @@ package no.cantara.docsite.domain.github.commits;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.domain.scm.CommitRevision;
 import no.cantara.docsite.util.JsonbFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CommitRevisionBinding implements Serializable {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CommitRevisionBinding.class);
 
     private static final long serialVersionUID = -5773578164096532597L;
 
@@ -22,7 +27,7 @@ public class CommitRevisionBinding implements Serializable {
     public Commit commit;
     public @JsonbProperty("html_url") String htmlUrl;
     public Author author;
-    public List<Parent> parents;
+    public List<Parent> parents = new ArrayList<>();
 
 
     @JsonbTransient
@@ -43,7 +48,13 @@ public class CommitRevisionBinding implements Serializable {
 
     @JsonbTransient
     public CommitRevision asCommitRevision(CacheShaKey cacheShaKey) {
-        return new CommitRevision(cacheShaKey, commit.commitAuthor.name, commit.commitAuthor.email, commit.commitAuthor.date, htmlUrl, author.avatarUrl, commit.message,
+        return new CommitRevision(cacheShaKey,
+                (commit.commitAuthor == null ? null : commit.commitAuthor.name),
+                (commit.commitAuthor == null ? null : commit.commitAuthor.email),
+                (commit.commitAuthor == null ? null : commit.commitAuthor.date),
+                htmlUrl,
+                (author == null ? null : author.avatarUrl),
+                commit.message,
                 parents.stream().map(m -> new CommitRevision.Parent(m.sha, m.url, m.htmlUrl)).collect(Collectors.toList()));
     }
 

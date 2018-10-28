@@ -51,7 +51,7 @@ public class RepositoryConfigLoader {
     }
 
 
-    public void load() {
+    public void _load() {
         List<RepositoryBinding> result = getOrganizationRepos(cacheStore.getRepositoryConfig().gitHub.organization);
 
         for(RepositoryConfigBinding.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
@@ -77,7 +77,7 @@ public class RepositoryConfigLoader {
 
     }
 
-    public void _load() {
+    public void load() {
         // get all org repos from github
         List<RepositoryBinding> result = getOrganizationRepos(cacheStore.getRepositoryConfig().gitHub.organization);
 
