@@ -1,11 +1,11 @@
-package no.cantara.docsite.domain.github.contents;
+package no.cantara.docsite.prefetch;
 
 import no.cantara.docsite.cache.CacheCantaraWikiKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.confluence.cantara.FetchCantaraWikiTask;
-import no.cantara.docsite.domain.github.commits.FetchCommitRevisionsTask;
-import no.cantara.docsite.domain.github.pages.FetchPageTask;
+import no.cantara.docsite.domain.github.commits.FetchGitHubCommitRevisionsTask;
+import no.cantara.docsite.domain.github.contents.FetchGitHubReadmeTask;
 import no.cantara.docsite.domain.maven.FetchMavenPOMTask;
 import no.cantara.docsite.executor.ExecutorService;
 import no.ssb.config.DynamicConfiguration;
@@ -29,8 +29,8 @@ public class PreFetchRepositoryContents {
         LOG.info("Pre-fetch data..");
         cacheStore.getRepositories().forEach(rg -> {
             executorService.queue(new FetchMavenPOMTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().apiContentsURL));
-            executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().apiReadmeURL));
-            executorService.queue(new FetchCommitRevisionsTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey()));
+            executorService.queue(new FetchGitHubReadmeTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey(), rg.getValue().apiReadmeURL));
+            executorService.queue(new FetchGitHubCommitRevisionsTask(configuration, executorService, cacheStore, rg.getKey().asCacheKey()));
         });
         executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
         executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));

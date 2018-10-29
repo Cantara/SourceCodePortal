@@ -16,14 +16,14 @@ import java.net.http.HttpResponse;
 import java.util.Optional;
 import java.util.Set;
 
-public class FetchCommitRevisionTask extends WorkerTask {
+public class FetchGitHubCommitRevisionTask extends WorkerTask {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FetchCommitRevisionsTask.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FetchGitHubCommitRevisionsTask.class);
     private final CacheStore cacheStore;
     private final CacheKey cacheKey;
     private final String sha;
 
-    public FetchCommitRevisionTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey, String sha) {
+    public FetchGitHubCommitRevisionTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey, String sha) {
         super(configuration, executor);
         this.cacheStore = cacheStore;
         this.cacheKey = cacheKey;

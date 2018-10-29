@@ -17,16 +17,16 @@ import java.util.Optional;
 /**
  * This task is used during push
  */
-public class FetchContentsTask extends WorkerTask {
+public class FetchGitHubContentsTask extends WorkerTask {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FetchContentsTask.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FetchGitHubContentsTask.class);
     private final CacheStore cacheStore;
     private final CacheKey cacheKey;
     private final GitHubApiContentsURL contentsURL;
     private final String relativeFilePath;
     private final String commitId;
 
-    public FetchContentsTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey, GitHubApiContentsURL contentsURL, String relativeFilePath, String commitId) {
+    public FetchGitHubContentsTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey, GitHubApiContentsURL contentsURL, String relativeFilePath, String commitId) {
         super(configuration, executor);
         this.cacheStore = cacheStore;
         this.cacheKey = cacheKey;

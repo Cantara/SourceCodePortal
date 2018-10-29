@@ -16,13 +16,13 @@ import java.net.http.HttpResponse;
 import java.util.Optional;
 import java.util.Set;
 
-public class FetchCommitRevisionsTask extends WorkerTask {
+public class FetchGitHubCommitRevisionsTask extends WorkerTask {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FetchCommitRevisionsTask.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FetchGitHubCommitRevisionsTask.class);
     private final CacheStore cacheStore;
     private final CacheKey cacheKey;
 
-    public FetchCommitRevisionsTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey) {
+    public FetchGitHubCommitRevisionsTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey) {
         super(configuration, executor);
         this.cacheStore = cacheStore;
         this.cacheKey = cacheKey;

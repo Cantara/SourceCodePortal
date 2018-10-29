@@ -1,4 +1,4 @@
-package no.cantara.docsite.domain.github.contents;
+package no.cantara.docsite.prefetch;
 
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;

@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.scm;
 
+import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.util.JsonbFactory;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ public class ScmRepositoryContents implements Serializable {
 
     private static final long serialVersionUID = -9144603141360888994L;
 
+    public final CacheKey cacheKey;
     public final String sha;
     public final String filename;
     public final String type;
@@ -21,7 +23,8 @@ public class ScmRepositoryContents implements Serializable {
     public final String htmlUrl;
     public final String downloadUrl;
 
-    public ScmRepositoryContents(String sha, String filename, String type, String encoding, String path, int size, String content, String contentUrl, String scmUrl, String htmlUrl, String downloadUrl) {
+    public ScmRepositoryContents(CacheKey cacheKey, String sha, String filename, String type, String encoding, String path, int size, String content, String contentUrl, String scmUrl, String htmlUrl, String downloadUrl) {
+        this.cacheKey = cacheKey;
         this.sha = sha;
         this.filename = filename;
         this.type = type;
@@ -41,6 +44,7 @@ public class ScmRepositoryContents implements Serializable {
         if (!(o instanceof ScmRepositoryContents)) return false;
         ScmRepositoryContents that = (ScmRepositoryContents) o;
         return size == that.size &&
+                Objects.equals(cacheKey, that.cacheKey) &&
                 Objects.equals(sha, that.sha) &&
                 Objects.equals(filename, that.filename) &&
                 Objects.equals(type, that.type) &&
@@ -55,7 +59,7 @@ public class ScmRepositoryContents implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(sha, filename, type, encoding, path, size, content, contentUrl, scmUrl, htmlUrl, downloadUrl);
+        return Objects.hash(cacheKey, sha, filename, type, encoding, path, size, content, contentUrl, scmUrl, htmlUrl, downloadUrl);
     }
 
     @Override

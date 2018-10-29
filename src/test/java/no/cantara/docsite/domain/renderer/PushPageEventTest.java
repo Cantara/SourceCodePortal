@@ -1,4 +1,4 @@
-package no.cantara.docsite.domain.github.pages;
+package no.cantara.docsite.domain.renderer;
 
 import no.cantara.docsite.domain.github.commits.GitHubPushCommitEvent;
 import no.cantara.docsite.util.JsonbFactory;

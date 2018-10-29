@@ -6,9 +6,9 @@ import io.undertow.util.Headers;
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.github.commits.FetchCommitRevisionTask;
+import no.cantara.docsite.domain.github.commits.FetchGitHubCommitRevisionTask;
 import no.cantara.docsite.domain.github.commits.GitHubPushCommitEvent;
-import no.cantara.docsite.domain.github.contents.FetchContentsTask;
+import no.cantara.docsite.domain.github.contents.FetchGitHubContentsTask;
 import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.health.HealthResource;
@@ -126,7 +126,7 @@ class GithubWebhookController implements HttpHandler {
                     if (pushCommitEvent.isCodeCommit()) {
                         CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name, pushCommitEvent.getBranch());
                         for (GitHubPushCommitEvent.Commit commit : pushCommitEvent.commits) {
-                            executorService.queue(new FetchCommitRevisionTask(configuration, executorService, cacheStore, cacheKey, commit.id));
+                            executorService.queue(new FetchGitHubCommitRevisionTask(configuration, executorService, cacheStore, cacheKey, commit.id));
                         }
                     }
 
@@ -140,7 +140,7 @@ class GithubWebhookController implements HttpHandler {
                         // TODO if there are page changes in multiple commits they will not be handled
                         String commitId = pushCommitEvent.headCommit.id;
                         for (String modifiedFile : pushCommitEvent.headCommit.modifiedList) {
-                            executorService.queue(new FetchContentsTask(configuration, executorService, cacheStore, cacheKey, repository.apiContentsURL, modifiedFile, commitId));
+                            executorService.queue(new FetchGitHubContentsTask(configuration, executorService, cacheStore, cacheKey, repository.apiContentsURL, modifiedFile, commitId));
                         }
                     }
                 }

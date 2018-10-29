@@ -36,7 +36,7 @@ public class GitHubRepositoryContents implements Serializable {
 
     @JsonbTransient
     public ScmRepositoryContents asRepositoryContents(CacheKey cacheKey) {
-        return new ScmRepositoryContents(sha, name, type, encoding, path, size, content, url, gitUrl, htmlUrl, downloadUrl);
+        return new ScmRepositoryContents(cacheKey, sha, name, type, encoding, path, size, renderedHtml, url, gitUrl, htmlUrl, downloadUrl);
     }
 
     public static class Links implements Serializable {

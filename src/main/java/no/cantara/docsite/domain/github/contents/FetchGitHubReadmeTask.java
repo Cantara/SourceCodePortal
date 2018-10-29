@@ -1,11 +1,9 @@
-package no.cantara.docsite.domain.github.pages;
+package no.cantara.docsite.domain.github.contents;
 
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.external.GitHubApiReadmeURL;
-import no.cantara.docsite.domain.github.contents.DocumentRenderer;
-import no.cantara.docsite.domain.github.contents.GitHubRepositoryContents;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
 import no.cantara.docsite.util.JsonbFactory;
@@ -19,14 +17,14 @@ import java.util.Optional;
 /**
  * This task is used during pull
  */
-public class FetchPageTask extends WorkerTask {
+public class FetchGitHubReadmeTask extends WorkerTask {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FetchPageTask.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FetchGitHubReadmeTask.class);
     private final CacheStore cacheStore;
     private final CacheKey cacheKey;
     private final GitHubApiReadmeURL repoReadmeURL;
 
-    public FetchPageTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey, GitHubApiReadmeURL repoReadmeURL) {
+    public FetchGitHubReadmeTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey, GitHubApiReadmeURL repoReadmeURL) {
         super(configuration, executor);
         this.cacheStore = cacheStore;
         this.cacheKey = cacheKey;
