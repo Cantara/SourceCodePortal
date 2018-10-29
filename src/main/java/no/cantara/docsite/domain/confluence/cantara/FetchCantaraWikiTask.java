@@ -54,4 +54,9 @@ public class FetchCantaraWikiTask extends WorkerTask {
             cacheStore.getCantaraWiki().put(cacheKey, rendered);
         }
     }
+
+    @Override
+    public String toString() {
+        return "FetchCantaraWikiTask:\n" + cacheKey;
+    }
 }
