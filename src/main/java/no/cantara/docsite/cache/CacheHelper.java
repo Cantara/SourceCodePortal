@@ -3,7 +3,7 @@ package no.cantara.docsite.cache;
 import javax.cache.Cache;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class CacheHelper {
 
@@ -16,7 +16,7 @@ public class CacheHelper {
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
         }
 
-        AtomicInteger count = new AtomicInteger(0);
+        AtomicLong count = new AtomicLong(0);
         cache.iterator().forEachRemaining(a -> count.incrementAndGet());
         return count.get();
     }

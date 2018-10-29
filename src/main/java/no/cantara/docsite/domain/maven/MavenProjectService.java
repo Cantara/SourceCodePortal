@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.maven;
 
+import no.cantara.docsite.cache.CacheHelper;
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheService;
 import no.cantara.docsite.cache.CacheStore;
@@ -37,5 +38,10 @@ public class MavenProjectService implements CacheService<CacheKey, MavenPOM> {
     @Override
     public Map<CacheKey, MavenPOM> entrySet() {
         return StreamSupport.stream(cacheStore.getMavenProjects().spliterator(), false).collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue));
+    }
+
+    @Override
+    public long size() {
+        return CacheHelper.cacheSize(cacheStore.getMavenProjects());
     }
 }

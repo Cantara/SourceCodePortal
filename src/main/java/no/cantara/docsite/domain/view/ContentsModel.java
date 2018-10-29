@@ -1,20 +1,20 @@
 package no.cantara.docsite.domain.view;
 
+import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
-import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class ContentsModel {
 
-    public final ScmRepositoryDefinition repository;
+    public final ScmRepository repository;
     public final ScmRepositoryContents contents;
     public final String contentHtml;
 
     public SortedSet<Group> groups = new TreeSet<>();
 
-    public ContentsModel(ScmRepositoryDefinition repository, ScmRepositoryContents contents, String contentHtml) {
+    public ContentsModel(ScmRepository repository, ScmRepositoryContents contents, String contentHtml) {
         this.repository = repository;
         this.contents = contents;
         this.contentHtml = contentHtml;

@@ -3,6 +3,7 @@ package no.cantara.docsite.controller;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
+import no.cantara.docsite.cache.CacheHelper;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.executor.ExecutorService;
@@ -22,7 +23,6 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -32,8 +32,8 @@ public class HealthController implements HttpHandler {
 
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
-    private ScheduledExecutorService scheduledExecutorService;
     private final CacheStore cacheStore;
+    private ScheduledExecutorService scheduledExecutorService;
     private ResourceContext resourceContext;
 
     public HealthController(DynamicConfiguration configuration, ExecutorService executorService, ScheduledExecutorService scheduledExecutorService, CacheStore cacheStore, ResourceContext resourceContext) {
@@ -119,49 +119,14 @@ public class HealthController implements HttpHandler {
 
         {
             builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getCacheKeys().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("cache-keys", count.get());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getCacheRepositoryKeys().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("cache-group-keys", count.get());
-        }
-
-        {
+            cacheBuilder.add("cache-keys", CacheHelper.cacheSize(cacheStore.getCacheKeys()));
+            cacheBuilder.add("cache-group-keys", CacheHelper.cacheSize(cacheStore.getCacheRepositoryKeys()));
             cacheBuilder.add("groups", cacheStore.getGroups().size());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getRepositories().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("repositories", count.get());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getMavenProjects().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("maven-projects", count.get());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getReadmeContents().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("pages", count.get());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getCommits().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("commits", count.get());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getReleases().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("releases", count.get());
+            cacheBuilder.add("repositories", CacheHelper.cacheSize(cacheStore.getRepositories()));
+            cacheBuilder.add("maven-projects", CacheHelper.cacheSize(cacheStore.getMavenProjects()));
+            cacheBuilder.add("contents", CacheHelper.cacheSize(cacheStore.getReadmeContents()));
+            cacheBuilder.add("commits", CacheHelper.cacheSize(cacheStore.getCommits()));
+            cacheBuilder.add("releases", CacheHelper.cacheSize(cacheStore.getReleases()));
         }
 
         builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());

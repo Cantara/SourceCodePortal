@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.scm;
 
+import no.cantara.docsite.cache.CacheHelper;
 import no.cantara.docsite.cache.CacheService;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
@@ -42,5 +43,10 @@ public class ScmCommitRevisionService implements CacheService<CacheShaKey, ScmCo
         return StreamSupport.stream(cacheStore.getCommits().spliterator(), false)
                 .sorted(Comparator.comparing(c -> c.getValue().date, Comparator.reverseOrder()))
                 .collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue, (oldValue, newValue) -> newValue, LinkedHashMap::new));
+    }
+
+    @Override
+    public long size() {
+        return CacheHelper.cacheSize(cacheStore.getCommits());
     }
 }

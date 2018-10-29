@@ -6,7 +6,8 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.repos.GitHubRepository;
 import no.cantara.docsite.domain.github.repos.RepositoryVisibility;
-import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmGroupRepository;
+import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ public class RepositoryConfigLoader {
     public void _load() {
         List<GitHubRepository> result = getOrganizationRepos(cacheStore.getRepositoryConfig().gitHub.organization);
 
-        for(RepositoryConfigBinding.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
+        for (RepositoryConfigBinding.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
             Pattern pattern = Pattern.compile(repoConfig.repo);
             for (GitHubRepository repo : result) {
                 String repoName = repo.name;
@@ -80,26 +81,34 @@ public class RepositoryConfigLoader {
     public void load() {
         // get all org repos from github
         List<GitHubRepository> result = getOrganizationRepos(cacheStore.getRepositoryConfig().gitHub.organization);
-
         // iterate app config
-        for(RepositoryConfigBinding.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
+        for (RepositoryConfigBinding.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
+            String groupId = repoConfig.defaultGroupRepo;
             Pattern pattern = Pattern.compile(repoConfig.repo);
             for (GitHubRepository repo : result) {
-                String repoName = repo.name; // TODO expand this to support a group of regex repoNames?
+                // TODO expand this to support a group of regex repoNames?
+                String repoName = repo.name;
                 Matcher matcher = pattern.matcher(repoName);
                 if (matcher.find()) {
+                    boolean isGroup = groupId.equals(repoName);
                     CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repoName, repoConfig.branch);
-                    CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheKey, repoConfig.groupId);
+                    CacheRepositoryKey cacheRepositoryKey = (isGroup ?
+                            CacheRepositoryKey.of(cacheKey, repoConfig.groupId, repoConfig.displayName, repoConfig.description) :
+                            CacheRepositoryKey.of(cacheKey, repoConfig.groupId));
                     // build key store
                     cacheStore.getCacheKeys().put(cacheKey, cacheRepositoryKey);
                     cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
                     cacheStore.getCacheGroupKeys().put(cacheRepositoryKey.asCacheGroupKey(), cacheRepositoryKey.groupId);
-                    // create an internal definition of a repo
-                    ScmRepositoryDefinition scmRepositoryDefinition = ScmRepositoryDefinition.of(configuration, cacheRepositoryKey, repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
-                    cacheStore.getRepositories().put(cacheRepositoryKey, scmRepositoryDefinition);
+                    // create an internal group repo
+                    if (isGroup) {
+                        ScmGroupRepository scmGroupRepository = ScmGroupRepository.of(configuration, cacheRepositoryKey, repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl, -1);
+                        cacheStore.getRepositoryGroup().put(cacheRepositoryKey, scmGroupRepository);
+                    }
+                    // create an internal of a repo
+                    ScmRepository scmRepository = ScmRepository.of(configuration, cacheRepositoryKey, repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
+                    cacheStore.getRepositories().put(cacheRepositoryKey, scmRepository);
                 }
             }
         }
     }
-
 }

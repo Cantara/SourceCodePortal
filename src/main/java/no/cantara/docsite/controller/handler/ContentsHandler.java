@@ -5,8 +5,8 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
+import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
-import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 import no.cantara.docsite.domain.view.ContentsModel;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
@@ -41,7 +41,7 @@ public class ContentsHandler implements WebHandler {
         }
 
         CacheRepositoryKey cacheRepositoryKey = cacheStore.getCacheRepositoryKey(cacheKey);
-        ScmRepositoryDefinition repository = cacheStore.getRepositories().get(cacheRepositoryKey);
+        ScmRepository repository = cacheStore.getRepositories().get(cacheRepositoryKey);
 
         ContentsModel model = new ContentsModel(repository, contents, contents.content);
 

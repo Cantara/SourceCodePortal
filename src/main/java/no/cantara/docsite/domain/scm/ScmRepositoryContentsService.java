@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.scm;
 
+import no.cantara.docsite.cache.CacheHelper;
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheService;
 import no.cantara.docsite.cache.CacheStore;
@@ -37,5 +38,10 @@ public class ScmRepositoryContentsService implements CacheService<CacheKey, ScmR
     @Override
     public Map<CacheKey, ScmRepositoryContents> entrySet() {
         return StreamSupport.stream(cacheStore.getReadmeContents().spliterator(), false).collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue));
+    }
+
+    @Override
+    public long size() {
+        return CacheHelper.cacheSize(cacheStore.getReadmeContents());
     }
 }

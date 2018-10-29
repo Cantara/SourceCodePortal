@@ -5,7 +5,7 @@ import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
-import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.view.CardModel;
 import no.cantara.docsite.domain.view.DashboardModel;
 import no.cantara.docsite.web.ResourceContext;
@@ -34,7 +34,7 @@ public class CardHandler implements WebHandler {
         }
 
         templateVariables.put("repositoryConfig", repositoryConfig);
-        List<ScmRepositoryDefinition> repositories = cacheStore.getRepositoryGroupsByGroupId(repositoryConfig.groupId);
+        List<ScmRepository> repositories = cacheStore.getRepositoryGroupsByGroupId(repositoryConfig.groupId);
         templateVariables.put("repositoryGroup", repositories);
 
         CardModel model = new CardModel();
@@ -58,7 +58,7 @@ public class CardHandler implements WebHandler {
             }
         }
 
-        for(ScmRepositoryDefinition repo : repositories) {
+        for(ScmRepository repo : repositories) {
             boolean hasReadme = cacheStore.getReadmeContents().containsKey(repo.cacheRepositoryKey.asCacheKey());
             DashboardModel.Group group = new DashboardModel.Group(
                     cacheStore.getRepositoryConfig().gitHub.organization,

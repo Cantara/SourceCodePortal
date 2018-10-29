@@ -41,16 +41,16 @@ public class RepositoryServiceTest {
         cacheStore.getCacheGroupKeys().put(groupKey2, groupKey2.groupId);
 
         CacheRepositoryKey key1 = CacheRepositoryKey.of("Cantara", "repo1", "master", "g1");
-        cacheStore.getRepositories().put(key1, ScmRepositoryDefinition.of(configuration, key1, "id1", "desc", "g1", "http://example.com"));
+        cacheStore.getRepositories().put(key1, ScmRepository.of(configuration, key1, "id1", "desc", "g1", "http://example.com"));
 
         CacheRepositoryKey key2 = CacheRepositoryKey.of("Cantara", "repo2", "master", "g2");
-        cacheStore.getRepositories().put(key2, ScmRepositoryDefinition.of(configuration, key2, "id2", "desc", "g1", "http://example.com"));
+        cacheStore.getRepositories().put(key2, ScmRepository.of(configuration, key2, "id2", "desc", "g1", "http://example.com"));
 
         CacheRepositoryKey key3 = CacheRepositoryKey.of("Cantara", "repo3", "master", "g3");
-        cacheStore.getRepositories().put(key3, ScmRepositoryDefinition.of(configuration, key3, "id3", "desc", "g1", "http://example.com"));
+        cacheStore.getRepositories().put(key3, ScmRepository.of(configuration, key3, "id3", "desc", "g1", "http://example.com"));
 
         CacheRepositoryKey key4 = CacheRepositoryKey.of("Cantara", "repo4", "master", "g1");
-        cacheStore.getRepositories().put(key4, ScmRepositoryDefinition.of(configuration, key4, "id4", "desc", "g2", "http://example.com"));
+        cacheStore.getRepositories().put(key4, ScmRepository.of(configuration, key4, "id4", "desc", "g2", "http://example.com"));
 
         ScmRepositoryService service = new ScmRepositoryService(cacheStore);
         LOG.trace("{}", service.get(key1));

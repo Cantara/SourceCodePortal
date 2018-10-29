@@ -13,12 +13,28 @@ public class CacheRepositoryKey implements Serializable {
     public final String repoName;
     public final String branch;
     public final String groupId;
+    public final boolean groupRepository;
+    public final String displayName;
+    public final String description;
 
     CacheRepositoryKey(String organization, String repoName, String branch, String groupId) {
         this.organization = organization;
         this.repoName = repoName;
         this.branch = branch;
         this.groupId = groupId;
+        this.groupRepository = false;
+        this.displayName = null;
+        this.description = null;
+    }
+
+    CacheRepositoryKey(String organization, String repoName, String branch, String groupId, String displayName, String description) {
+        this.organization = organization;
+        this.repoName = repoName;
+        this.branch = branch;
+        this.groupId = groupId;
+        this.groupRepository = true;
+        this.displayName = displayName;
+        this.description = description;
     }
 
     public boolean compareTo(String groupId) {
@@ -31,6 +47,10 @@ public class CacheRepositoryKey implements Serializable {
 
     public String getGroupId() {
         return groupId;
+    }
+
+    public boolean isGroup() {
+        return groupRepository;
     }
 
     public String asIdentifier() {
@@ -72,5 +92,13 @@ public class CacheRepositoryKey implements Serializable {
 
     public static CacheRepositoryKey of(String organization, String repoName, String branch, String groupId) {
         return new CacheRepositoryKey(organization, repoName, branch, groupId);
+    }
+
+    public static CacheRepositoryKey of(CacheKey cacheKey, String groupId, String displayName, String description) {
+        return new CacheRepositoryKey(cacheKey.organization, cacheKey.repoName, cacheKey.branch, groupId, displayName, description);
+    }
+
+    public static CacheRepositoryKey of(String organization, String repoName, String branch, String groupId, String displayName, String description) {
+        return new CacheRepositoryKey(organization, repoName, branch, groupId, displayName, description);
     }
 }

@@ -1,6 +1,7 @@
 package no.cantara.docsite.domain.scm;
 
 import no.cantara.docsite.cache.CacheGroupKey;
+import no.cantara.docsite.cache.CacheHelper;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheService;
 import no.cantara.docsite.cache.CacheStore;
@@ -18,7 +19,7 @@ import java.util.stream.StreamSupport;
 
 import static java.util.stream.Collectors.groupingBy;
 
-public class ScmRepositoryService implements CacheService<CacheRepositoryKey, ScmRepositoryDefinition> {
+public class ScmRepositoryService implements CacheService<CacheRepositoryKey, ScmRepository> {
 
     private final CacheStore cacheStore;
 
@@ -33,7 +34,7 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
      * @return Repository definition that is not bound to any specific scm
      */
     @Override
-    public ScmRepositoryDefinition get(CacheRepositoryKey key) {
+    public ScmRepository get(CacheRepositoryKey key) {
         return cacheStore.getRepositories().get(key);
     }
 
@@ -43,7 +44,7 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
      * @return A cache iterator
      */
     @Override
-    public Iterator<Cache.Entry<CacheRepositoryKey, ScmRepositoryDefinition>> getAll() {
+    public Iterator<Cache.Entry<CacheRepositoryKey, ScmRepository>> getAll() {
         return cacheStore.getRepositories().iterator();
     }
 
@@ -59,19 +60,24 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
     }
 
     @Override
-    public Map<CacheRepositoryKey, ScmRepositoryDefinition> entrySet() {
+    public Map<CacheRepositoryKey, ScmRepository> entrySet() {
         return StreamSupport.stream(cacheStore.getRepositories().spliterator(), false)
                 .sorted(Comparator.comparing(entry -> entry.getKey().groupId))
                 .collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue, (oldValue, newValue) -> newValue, () -> new TreeMap<>(Comparator.comparing(c -> c.repoName))));
     }
 
-    public Map<CacheGroupKey, Set<ScmRepositoryDefinition>> sortedEntrySet() {
-        Stream<Cache.Entry<CacheRepositoryKey, ScmRepositoryDefinition>> stream = StreamSupport.stream(cacheStore.getRepositories().spliterator(), false);
+    @Override
+    public long size() {
+        return CacheHelper.cacheSize(cacheStore.getRepositories());
+    }
+
+    public Map<CacheGroupKey, Set<ScmRepository>> sortedEntrySet() {
+        Stream<Cache.Entry<CacheRepositoryKey, ScmRepository>> stream = StreamSupport.stream(cacheStore.getRepositories().spliterator(), false);
         return stream
                 .sorted(Comparator.comparing(entry -> entry.getKey().groupId))
                 .collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue, (oldValue, newValue) -> newValue, () -> new TreeMap<>(Comparator.comparing(c -> c.repoName))))
                 .values().stream()
-                .collect(groupingBy(ScmRepositoryDefinition::getCacheGroupKey, Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(c -> c.cacheRepositoryKey.repoName)))));
+                .collect(groupingBy(ScmRepository::getCacheGroupKey, Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(c -> c.cacheRepositoryKey.repoName)))));
     }
 
 }

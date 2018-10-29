@@ -15,4 +15,5 @@ public interface CacheService<K,V> {
 
     Map<K,V> entrySet();
 
+    long size();
 }
