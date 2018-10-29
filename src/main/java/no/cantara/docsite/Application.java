@@ -96,13 +96,10 @@ public class Application {
     }
 
     public void enableScheduledExecutorService() {
-        // configuration.evaluateToInt("scheduled.tasks.interval")
-        // obtain delegated worke tasks and assign them before start
         ScheduledWorker scheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.tasks.interval"), TimeUnit.SECONDS);
         scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
         scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
         scheduledExecutorService.queue(scheduledWorker);
-        // initate wiki task ScheduledWikiTasks
         // initate wiki task ScheduledJenkinsTasks
         // initate wiki task ScheduledSnykTasks
 
