@@ -18,25 +18,27 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
     private final CacheStore cacheStore;
-    private final Deque<WorkerTask> workerTasks;
+    private final Deque<ScheduledWorker> scheduledWorkers;
 
     ScheduledExecutorThreadPool(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore) {
         this.configuration = configuration;
         this.executorService = executorService;
         this.cacheStore = cacheStore;
-        this.workerTasks = new ConcurrentLinkedDeque<>();
+        this.scheduledWorkers = new ConcurrentLinkedDeque<>();
         this.scheduledExecutorService = Executors.newScheduledThreadPool(1);
     }
 
     @Override
-    public void queue(WorkerTask workerTask) {
-        workerTasks.add(workerTask);
+    public void queue(ScheduledWorker scheduledWorker) {
+        scheduledWorkers.add(scheduledWorker);
     }
 
     @Override
     public void start() {
         LOG.info("Starting ScheduledExecutorService..");
-        scheduledExecutorService.scheduleAtFixedRate(new ScheduledThread(configuration, executorService, cacheStore, workerTasks), 0, configuration.evaluateToInt("scheduled.tasks.interval"), TimeUnit.SECONDS);
+        for (ScheduledWorker scheduledWorker : scheduledWorkers) {
+            scheduledExecutorService.scheduleAtFixedRate(new ScheduledThread(configuration, executorService, cacheStore, scheduledWorker), scheduledWorker.initialDelay, scheduledWorker.period, scheduledWorker.timeUnit);
+        }
     }
 
     @Override
@@ -62,18 +64,20 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
         private final DynamicConfiguration configuration;
         private final ExecutorService executorService;
         private final CacheStore cacheStore;
-        private final Deque<WorkerTask> workerTasks;
+        private final ScheduledWorker scheduledWorkers;
 
-        public ScheduledThread(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore, Deque<WorkerTask> workerTasks) {
+        public ScheduledThread(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore, ScheduledWorker scheduledWorkers) {
             this.configuration = configuration;
             this.executorService = executorService;
             this.cacheStore = cacheStore;
-            this.workerTasks = workerTasks;
+            this.scheduledWorkers = scheduledWorkers;
         }
 
         @Override
         public void run() {
-            workerTasks.forEach(workerTask -> workerTask.getExecutor().queue(workerTask));
+            for (WorkerTask workerTask : scheduledWorkers.workerTaskList) {
+                workerTask.getExecutor().queue(workerTask);
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ public interface ScheduledExecutorService {
 
     long WAIT_FOR_TERMINATION = 100;
 
-    void queue(WorkerTask workerTask);
+    void queue(ScheduledWorker scheduledWorker);
 
     void start();
 

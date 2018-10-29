@@ -9,6 +9,7 @@ import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.confluence.cantara.FetchCantaraWikiTask;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.ScheduledExecutorService;
+import no.cantara.docsite.executor.ScheduledWorker;
 import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.prefetch.PreFetchRepositoryContents;
 import no.cantara.docsite.util.JsonbFactory;
@@ -17,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class Application {
 
@@ -94,9 +96,12 @@ public class Application {
     }
 
     public void enableScheduledExecutorService() {
+        // configuration.evaluateToInt("scheduled.tasks.interval")
         // obtain delegated worke tasks and assign them before start
-        scheduledExecutorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
-        scheduledExecutorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
+        ScheduledWorker scheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.tasks.interval"), TimeUnit.SECONDS);
+        scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
+        scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
+        scheduledExecutorService.queue(scheduledWorker);
         // initate wiki task ScheduledWikiTasks
         // initate wiki task ScheduledJenkinsTasks
         // initate wiki task ScheduledSnykTasks
