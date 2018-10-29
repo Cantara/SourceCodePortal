@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 // https://api.github.com/repos/Cantara/SourceCodePortal/readme?ref=master
 
-public class RepositoryContentsBinding implements Serializable {
+public class GitHubRepositoryContents implements Serializable {
 
     private static final long serialVersionUID = 3900913417928771858L;
 

@@ -5,7 +5,7 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.github.commits.GroupByDateIterator;
+import no.cantara.docsite.domain.scm.GroupByDateIterator;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.view.CommitRevisionsModel;
 import no.cantara.docsite.web.ResourceContext;

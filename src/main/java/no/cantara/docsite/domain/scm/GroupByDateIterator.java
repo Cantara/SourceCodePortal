@@ -1,6 +1,4 @@
-package no.cantara.docsite.domain.github.commits;
-
-import no.cantara.docsite.domain.scm.ScmCommitRevision;
+package no.cantara.docsite.domain.scm;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

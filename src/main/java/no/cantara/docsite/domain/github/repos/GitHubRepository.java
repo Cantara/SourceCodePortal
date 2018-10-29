@@ -7,7 +7,7 @@ import java.util.Date;
 
 // https://api.github.com/orgs/Cantara/repos?type=master&per_page=500
 
-public class RepositoryBinding {
+public class GitHubRepository {
 
     public String id;
     public String name;

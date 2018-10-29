@@ -6,7 +6,7 @@ import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import java.util.List;
 
-public class PushCommitEventBinding {
+public class GitHubPushCommitEvent {
 
     public String ref;
     public @JsonbProperty("before") String beforeRevision;

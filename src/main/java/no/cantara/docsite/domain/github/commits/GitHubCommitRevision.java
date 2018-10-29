@@ -17,9 +17,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CommitRevisionBinding implements Serializable {
+public class GitHubCommitRevision implements Serializable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CommitRevisionBinding.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GitHubCommitRevision.class);
 
     private static final long serialVersionUID = -5773578164096532597L;
 

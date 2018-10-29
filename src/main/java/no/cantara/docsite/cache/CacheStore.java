@@ -2,7 +2,7 @@ package no.cantara.docsite.cache;
 
 import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
-import no.cantara.docsite.domain.github.releases.CreatedTagEventBinding;
+import no.cantara.docsite.domain.github.releases.GitHubCreatedTagEvent;
 import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
@@ -117,7 +117,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("release") == null) {
             LOG.info("Creating Release cache");
-            MutableConfiguration<CacheKey, CreatedTagEventBinding> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, GitHubCreatedTagEvent> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("release", cacheConfig);
@@ -256,7 +256,7 @@ public class CacheStore {
     }
 
     // TBD
-    public Cache<CacheKey, CreatedTagEventBinding> getReleases() {
+    public Cache<CacheKey, GitHubCreatedTagEvent> getReleases() {
         return cacheManager.getCache("release");
     }
 

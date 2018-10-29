@@ -4,7 +4,7 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.external.GitHubApiContentsURL;
-import no.cantara.docsite.domain.github.contents.RepositoryContentsBinding;
+import no.cantara.docsite.domain.github.contents.GitHubRepositoryContents;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
 import no.cantara.docsite.util.CommonUtil;
@@ -63,7 +63,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), repoContentsURL.getExternalURL("pom.xml", cacheKey.branch), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
-            RepositoryContentsBinding mavenPOMContents = JsonbBuilder.create().fromJson(response.body(), RepositoryContentsBinding.class);
+            GitHubRepositoryContents mavenPOMContents = JsonbBuilder.create().fromJson(response.body(), GitHubRepositoryContents.class);
             MavenPOM mavenPOM = parse(mavenPOMContents.content);
             cacheStore.getProjects().put(cacheKey, mavenPOM);
         }

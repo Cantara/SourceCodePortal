@@ -7,7 +7,7 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.github.commits.FetchCommitRevisionTask;
-import no.cantara.docsite.domain.github.commits.PushCommitEventBinding;
+import no.cantara.docsite.domain.github.commits.GitHubPushCommitEvent;
 import no.cantara.docsite.domain.github.contents.FetchContentsTask;
 import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 import no.cantara.docsite.executor.ExecutorService;
@@ -118,14 +118,14 @@ class GithubWebhookController implements HttpHandler {
                 if ("push".equals(xHubEvent)) {
                     LOG.debug("Received Push Event!");
 
-                    PushCommitEventBinding pushCommitEvent = JsonbFactory.instance().fromJson(payload, PushCommitEventBinding.class);
+                    GitHubPushCommitEvent pushCommitEvent = JsonbFactory.instance().fromJson(payload, GitHubPushCommitEvent.class);
 
                     // ------------------------------------------------------------------------------------------------------
                     // Github Commit Event
                     // ------------------------------------------------------------------------------------------------------
                     if (pushCommitEvent.isCodeCommit()) {
                         CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name, pushCommitEvent.getBranch());
-                        for (PushCommitEventBinding.Commit commit : pushCommitEvent.commits) {
+                        for (GitHubPushCommitEvent.Commit commit : pushCommitEvent.commits) {
                             executorService.queue(new FetchCommitRevisionTask(configuration, executorService, cacheStore, cacheKey, commit.id));
                         }
                     }
