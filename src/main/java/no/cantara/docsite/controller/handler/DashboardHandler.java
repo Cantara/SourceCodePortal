@@ -37,7 +37,6 @@ public class DashboardHandler implements WebHandler {
         {
             ScmRepositoryService repositoryService = new ScmRepositoryService(cacheStore);
             Map<CacheGroupKey, Set<ScmRepositoryDefinition>> sortedEntrySet = repositoryService.sortedEntrySet();
-
             templateVariables.put("groupedRepos", sortedEntrySet);
         }
 

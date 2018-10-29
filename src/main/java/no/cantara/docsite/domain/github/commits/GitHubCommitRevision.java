@@ -4,12 +4,9 @@ package no.cantara.docsite.domain.github.commits;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.util.JsonbFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
-import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,11 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GitHubCommitRevision implements Serializable {
-
-    private static final Logger LOG = LoggerFactory.getLogger(GitHubCommitRevision.class);
-
-    private static final long serialVersionUID = -5773578164096532597L;
+public class GitHubCommitRevision {
 
     public String sha;
     public Commit commit;
@@ -59,34 +52,22 @@ public class GitHubCommitRevision implements Serializable {
                 parents.stream().map(m -> new ScmCommitRevision.Parent(m.sha, m.url, m.htmlUrl)).collect(Collectors.toList()));
     }
 
-    public static class Commit implements Serializable {
-
-        private static final long serialVersionUID = 5045291959738847188L;
-
+    public static class Commit {
         public @JsonbProperty("author") CommitAuthor commitAuthor;
         public String message;
     }
 
-    public static class CommitAuthor implements Serializable {
-
-        private static final long serialVersionUID = -2525412735629228593L;
-
+    public static class CommitAuthor {
         public String name;
         public String email;
         public Date date;
     }
 
-    public static class Author implements Serializable {
-
-        private static final long serialVersionUID = -8018559961277889833L;
-
+    public static class Author {
         public @JsonbProperty("avatar_url") String avatarUrl;
     }
 
-    public static class Parent implements Serializable {
-
-        private static final long serialVersionUID = -3518347737753544401L;
-
+    public static class Parent {
         public String sha;
         public String url;
         public @JsonbProperty("html_url") String htmlUrl;

@@ -2,10 +2,6 @@
   "title": "Cantara Source Code Portal",
   "github": {
     "organization": "Cantara",
-    "badges": {
-      "jenkins": "https://jenkins.capraconsulting.no/buildStatus/icon?job=%s",
-      "snyk.io": "https://snyk.io/test/github/%s/%s/badge.svg"
-    },
     "repos": [
       {
         "groupId": "SourceCodePortal",
@@ -13,11 +9,7 @@
         "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
         "repo": "SourceCodePortal",
         "branch": "master",
-        "default-group-repo": "SourceCodePortal",
-        "badge": {
-          "jenkins": "",
-          "snyk.io": ""
-        }
+        "default-group-repo": "SourceCodePortal"
       },
       {
         "groupId": "Whydah",
@@ -25,11 +17,7 @@
         "description": "Defcon 5 grade IAM and SSO security solution",
         "repo": "Whydah*",
         "branch": "master",
-        "default-group-repo": "Whydah-SecurityTokenService",
-        "badge": {
-          "jenkins": "Whydah",
-          "snyk.io": ""
-        }
+        "default-group-repo": "Whydah-SecurityTokenService"
       },
       {
         "groupId": "ConfigService",
@@ -37,11 +25,7 @@
         "description": "Provision configuration to agents",
         "repo": "ConfigService*",
         "branch": "master",
-        "default-group-repo": "ConfigService",
-        "badge": {
-          "jenkins": "",
-          "snyk.io": ""
-        }
+        "default-group-repo": "ConfigService"
       },
       {
         "groupId": "IOT",
@@ -49,11 +33,7 @@
         "description": "Bulding blocks to create IOT platforms",
         "repo": "IoT*",
         "branch": "master",
-        "default-group-repo": "IoT-Service",
-        "badge": {
-          "jenkins": "",
-          "snyk.io": ""
-        }
+        "default-group-repo": "IoT-Service"
       },
       {
         "groupId": "ValueReporter",
@@ -61,11 +41,7 @@
         "description": "Toolchain to measure and detect valuable and dead parts of solutions",
         "repo": "Value*",
         "branch": "master",
-        "default-group-repo": "Valuereporter",
-        "badge": {
-          "jenkins": "",
-          "snyk.io": ""
-        }
+        "default-group-repo": "Valuereporter"
       },
       {
         "groupId": "dropwizard",
@@ -73,11 +49,7 @@
         "description": "Getting started with dropwizard",
         "repo": "dropwizard*",
         "branch": "master",
-        "default-group-repo": "HTTPLoadTest-Baseline",
-        "badge": {
-          "jenkins": "",
-          "snyk.io": ""
-        }
+        "default-group-repo": "HTTPLoadTest-Baseline"
       },
       {
         "groupId": "Flow",
@@ -85,11 +57,7 @@
         "description": "Graphics tracing and visualization of long-running processes",
         "repo": "Flow*",
         "branch": "master",
-        "default-group-repo": "FlowLogger",
-        "badge": {
-          "jenkins": "",
-          "snyk.io": ""
-        }
+        "default-group-repo": "FlowLogger"
       },
       {
         "groupId": "BaselineProjects",
@@ -97,11 +65,7 @@
         "description": "Cantara Baseline projects for Java and Docker",
         "repo": "[^\\s]*aseline*",
         "branch": "master",
-        "default-group-repo": "microservice-baseline",
-        "badge": {
-          "jenkins": "",
-          "snyk.io": ""
-        }
+        "default-group-repo": "microservice-baseline"
       },
       {
         "groupId": "Cantara-All",
@@ -109,11 +73,7 @@
         "description": "All Cantara projects on GitHub",
         "repo": "[^\\s]*",
         "branch": "master",
-        "default-group-repo": "PathWatcher",
-        "badge": {
-          "jenkins": "",
-          "snyk.io": ""
-        }
+        "default-group-repo": "PathWatcher"
       },
       {
         "groupId": "ratpack",
@@ -121,11 +81,7 @@
         "description": "Getting started with ratpack",
         "repo": "ratpack*",
         "branch": "master",
-        "default-group-repo": "ratpack-websockets",
-        "badge": {
-          "jenkins": "",
-          "snyk.io": ""
-        }
+        "default-group-repo": "ratpack-websockets"
       }
     ]
   }

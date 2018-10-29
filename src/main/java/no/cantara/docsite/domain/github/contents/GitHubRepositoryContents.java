@@ -7,13 +7,10 @@ import no.cantara.docsite.util.JsonbFactory;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
-import java.io.Serializable;
 
 // https://api.github.com/repos/Cantara/SourceCodePortal/readme?ref=master
 
-public class GitHubRepositoryContents implements Serializable {
-
-    private static final long serialVersionUID = 3900913417928771858L;
+public class GitHubRepositoryContents {
 
     public String type;
     public String encoding;
@@ -39,10 +36,7 @@ public class GitHubRepositoryContents implements Serializable {
         return new ScmRepositoryContents(cacheKey, sha, name, type, encoding, path, size, renderedHtml, url, gitUrl, htmlUrl, downloadUrl);
     }
 
-    public static class Links implements Serializable {
-
-        private static final long serialVersionUID = 1084824923791038625L;
-
+    public static class Links {
         public String git;
         public String self;
         public String html;

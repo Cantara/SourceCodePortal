@@ -45,7 +45,7 @@ public class DashboardModel {
 
         public SortedSet<Activity> activity = new TreeSet<>();
 
-        public Group(String organization, String repoName, String defaultGroupRepo, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI, String repoURL, String jenkinsURL, String snykIOUrlx) {
+        public Group(String organization, String repoName, String defaultGroupRepo, String branch, String groupId, String displayName, String description, boolean hasReadme, String readmeURI, String cardURI, String repoURL) {
             this.organization = organization;
             this.repoName = repoName;
             this.defaultGroupRepo = defaultGroupRepo;
@@ -61,7 +61,7 @@ public class DashboardModel {
             if (repoName.contains("*") && defaultGroupRepo != null) {
                 repoName = defaultGroupRepo;
             }
-            this.snykIOUrl = snykIOUrlx.replaceAll(SCP_TEMPLATE_REPO_NAME, repoName);
+            this.snykIOUrl = "https://snyk.io/test/github/%s/%s/badge.svg".replaceAll(SCP_TEMPLATE_REPO_NAME, repoName);
             this.snyktestIOUrl = snyktestIOUrl.replace(SCP_TEMPLATE_REPO_NAME, repoName);
             this.groupRelease = groupRelease.replace(SCP_TEMPLATE_REPO_NAME, repoName);
             this.githubIssues = githubIssues.replace(SCP_TEMPLATE_REPO_NAME, repoName);

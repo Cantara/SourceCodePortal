@@ -19,13 +19,7 @@ public class RepositoryConfigBinding {
 
     public static class GitHub {
         public String organization;
-        public Badges badges;
         public List<Repo> repos = new ArrayList<>();
-    }
-
-    public static class Badges {
-        public String jenkins;
-        public @JsonbProperty("snyk.io") String snykIO;
     }
 
     public static class Repo {
