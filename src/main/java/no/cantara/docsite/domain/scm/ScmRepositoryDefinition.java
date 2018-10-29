@@ -31,7 +31,7 @@ import java.util.Objects;
 /**
  * A repository definition contains information about the repo, the group it belongs to and service urls
  */
-public class RepositoryDefinition implements Serializable {
+public class ScmRepositoryDefinition implements Serializable {
 
     private static final long serialVersionUID = 4462535017419847061L;
 
@@ -45,7 +45,7 @@ public class RepositoryDefinition implements Serializable {
     public final GitHubApiContentsURL apiContentsURL;
     public final Map<String, ExternalURL> externalLinks = new LinkedHashMap<>(); // not immutable
 
-    RepositoryDefinition(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
+    ScmRepositoryDefinition(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
         this.cacheRepositoryKey = cacheRepositoryKey;
         this.id = id;
         this.description = description;
@@ -62,8 +62,8 @@ public class RepositoryDefinition implements Serializable {
         externalLinks.put(SnykIOTestBadgeURL.KEY, new SnykIOTestBadgeURL(this));
     }
 
-    public static RepositoryDefinition of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
-        return new RepositoryDefinition(configuration, repositoryDefinition, id, description, defaultGroupRepo, htmlRepoURL);
+    public static ScmRepositoryDefinition of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
+        return new ScmRepositoryDefinition(configuration, repositoryDefinition, id, description, defaultGroupRepo, htmlRepoURL);
     }
 
     @JsonbTransient
@@ -84,8 +84,8 @@ public class RepositoryDefinition implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RepositoryDefinition)) return false;
-        RepositoryDefinition that = (RepositoryDefinition) o;
+        if (!(o instanceof ScmRepositoryDefinition)) return false;
+        ScmRepositoryDefinition that = (ScmRepositoryDefinition) o;
         return Objects.equals(cacheRepositoryKey, that.cacheRepositoryKey) &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(description, that.description) &&

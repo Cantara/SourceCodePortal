@@ -1,14 +1,14 @@
 package no.cantara.docsite.domain.view;
 
-import no.cantara.docsite.domain.scm.CommitRevision;
+import no.cantara.docsite.domain.scm.ScmCommitRevision;
 
 import java.util.Iterator;
 
 public class CommitRevisionsModel {
 
-    public final Iterator<CommitRevision> commitRevisions;
+    public final Iterator<ScmCommitRevision> commitRevisions;
 
-    public CommitRevisionsModel(Iterator<CommitRevision> commitRevisions) {
+    public CommitRevisionsModel(Iterator<ScmCommitRevision> commitRevisions) {
         this.commitRevisions = commitRevisions;
     }
 }

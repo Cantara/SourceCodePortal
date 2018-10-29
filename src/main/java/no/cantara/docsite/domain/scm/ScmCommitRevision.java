@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class CommitRevision implements Serializable {
+public class ScmCommitRevision implements Serializable {
 
     private static final long serialVersionUID = -9181843231543416840L;
 
@@ -24,7 +24,7 @@ public class CommitRevision implements Serializable {
     public final String message;
     public final List<Parent> parents;
 
-    public CommitRevision(CacheShaKey cacheShaKey, String authorName, String authorEmail, Date date, String htmlUrl, String avatarUrl, String message, List<Parent> parents) {
+    public ScmCommitRevision(CacheShaKey cacheShaKey, String authorName, String authorEmail, Date date, String htmlUrl, String avatarUrl, String message, List<Parent> parents) {
         this.cacheShaKey = cacheShaKey;
         this.authorName = authorName;
         this.authorEmail = authorEmail;
@@ -63,8 +63,8 @@ public class CommitRevision implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CommitRevision)) return false;
-        CommitRevision that = (CommitRevision) o;
+        if (!(o instanceof ScmCommitRevision)) return false;
+        ScmCommitRevision that = (ScmCommitRevision) o;
         return Objects.equals(cacheShaKey, that.cacheShaKey) &&
                 Objects.equals(authorName, that.authorName) &&
                 Objects.equals(authorEmail, that.authorEmail) &&

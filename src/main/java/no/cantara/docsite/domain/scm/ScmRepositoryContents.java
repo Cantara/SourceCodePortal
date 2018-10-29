@@ -5,7 +5,7 @@ import no.cantara.docsite.util.JsonbFactory;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class RepositoryContents implements Serializable {
+public class ScmRepositoryContents implements Serializable {
 
     private static final long serialVersionUID = -9144603141360888994L;
 
@@ -21,7 +21,7 @@ public class RepositoryContents implements Serializable {
     public final String htmlUrl;
     public final String downloadUrl;
 
-    public RepositoryContents(String sha, String filename, String type, String encoding, String path, int size, String content, String contentUrl, String scmUrl, String htmlUrl, String downloadUrl) {
+    public ScmRepositoryContents(String sha, String filename, String type, String encoding, String path, int size, String content, String contentUrl, String scmUrl, String htmlUrl, String downloadUrl) {
         this.sha = sha;
         this.filename = filename;
         this.type = type;
@@ -38,8 +38,8 @@ public class RepositoryContents implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RepositoryContents)) return false;
-        RepositoryContents that = (RepositoryContents) o;
+        if (!(o instanceof ScmRepositoryContents)) return false;
+        ScmRepositoryContents that = (ScmRepositoryContents) o;
         return size == that.size &&
                 Objects.equals(sha, that.sha) &&
                 Objects.equals(filename, that.filename) &&

@@ -6,7 +6,7 @@ import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.github.commits.GroupByDateIterator;
-import no.cantara.docsite.domain.scm.CommitRevision;
+import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.view.CommitRevisionsModel;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
@@ -33,8 +33,8 @@ public class CommitsHandler implements WebHandler {
     public static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
         Collections.sort(list, (o1, o2) -> {
-            CommitRevision m1 = (CommitRevision) o1.getValue();
-            CommitRevision m2 = (CommitRevision) o2.getValue();
+            ScmCommitRevision m1 = (ScmCommitRevision) o1.getValue();
+            ScmCommitRevision m2 = (ScmCommitRevision) o2.getValue();
             return (m2.date.compareTo(m1.date));
         });
 
@@ -59,8 +59,8 @@ public class CommitsHandler implements WebHandler {
 
             boolean renderAll = (resourceContext.getTuples().size() == 1 && resourceContext.getLast().get().id == null);
 
-            Map<CacheShaKey, CommitRevision> commitRevisionMap = new LinkedHashMap<>();
-            Cache<CacheShaKey, CommitRevision> commitRevisions = cacheStore.getCommits();
+            Map<CacheShaKey, ScmCommitRevision> commitRevisionMap = new LinkedHashMap<>();
+            Cache<CacheShaKey, ScmCommitRevision> commitRevisions = cacheStore.getCommits();
             if (renderAll) {
                 // all view
                 commitRevisions.iterator().forEachRemaining(a -> commitRevisionMap.put(a.getKey(), a.getValue()));
@@ -83,9 +83,9 @@ public class CommitsHandler implements WebHandler {
                     }
                 }
 
-                for (Cache.Entry<CacheShaKey, CommitRevision> entry : commitRevisions) {
+                for (Cache.Entry<CacheShaKey, ScmCommitRevision> entry : commitRevisions) {
                     CacheShaKey key = entry.getKey();
-                    CommitRevision value = entry.getValue();
+                    ScmCommitRevision value = entry.getValue();
                     // group view
                     if (renderGroupOrRepo && key.compareToUsingGroupId(organization, groupIdOrRepoName)) {
                         commitRevisionMap.put(key, value);
@@ -97,7 +97,7 @@ public class CommitsHandler implements WebHandler {
                 }
             }
 
-            Map<CacheShaKey, CommitRevision> sortedMap = sortByValue(commitRevisionMap);
+            Map<CacheShaKey, ScmCommitRevision> sortedMap = sortByValue(commitRevisionMap);
             GroupByDateIterator groupByDateIterator = new GroupByDateIterator(new ArrayList<>(sortedMap.values()));
 
             CommitRevisionsModel model = new CommitRevisionsModel(groupByDateIterator);

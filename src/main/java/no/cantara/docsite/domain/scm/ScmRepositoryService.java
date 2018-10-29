@@ -18,11 +18,11 @@ import java.util.stream.StreamSupport;
 
 import static java.util.stream.Collectors.groupingBy;
 
-public class RepositoryService implements CacheService<CacheRepositoryKey, RepositoryDefinition> {
+public class ScmRepositoryService implements CacheService<CacheRepositoryKey, ScmRepositoryDefinition> {
 
     private final CacheStore cacheStore;
 
-    public RepositoryService(CacheStore cacheStore) {
+    public ScmRepositoryService(CacheStore cacheStore) {
         this.cacheStore = cacheStore;
     }
 
@@ -33,7 +33,7 @@ public class RepositoryService implements CacheService<CacheRepositoryKey, Repos
      * @return Repository definition that is not bound to any specific scm
      */
     @Override
-    public RepositoryDefinition get(CacheRepositoryKey key) {
+    public ScmRepositoryDefinition get(CacheRepositoryKey key) {
         return cacheStore.getRepositories().get(key);
     }
 
@@ -43,7 +43,7 @@ public class RepositoryService implements CacheService<CacheRepositoryKey, Repos
      * @return A cache iterator
      */
     @Override
-    public Iterator<Cache.Entry<CacheRepositoryKey, RepositoryDefinition>> getAll() {
+    public Iterator<Cache.Entry<CacheRepositoryKey, ScmRepositoryDefinition>> getAll() {
         return cacheStore.getRepositories().iterator();
     }
 
@@ -59,19 +59,19 @@ public class RepositoryService implements CacheService<CacheRepositoryKey, Repos
     }
 
     @Override
-    public Map<CacheRepositoryKey, RepositoryDefinition> entrySet() {
+    public Map<CacheRepositoryKey, ScmRepositoryDefinition> entrySet() {
         return StreamSupport.stream(cacheStore.getRepositories().spliterator(), false)
                 .sorted(Comparator.comparing(entry -> entry.getKey().groupId))
                 .collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue, (oldValue, newValue) -> newValue, () -> new TreeMap<>(Comparator.comparing(c -> c.repoName))));
     }
 
-    public Map<CacheGroupKey, Set<RepositoryDefinition>> sortedEntrySet() {
-        Stream<Cache.Entry<CacheRepositoryKey, RepositoryDefinition>> stream = StreamSupport.stream(cacheStore.getRepositories().spliterator(), false);
+    public Map<CacheGroupKey, Set<ScmRepositoryDefinition>> sortedEntrySet() {
+        Stream<Cache.Entry<CacheRepositoryKey, ScmRepositoryDefinition>> stream = StreamSupport.stream(cacheStore.getRepositories().spliterator(), false);
         return stream
                 .sorted(Comparator.comparing(entry -> entry.getKey().groupId))
                 .collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue, (oldValue, newValue) -> newValue, () -> new TreeMap<>(Comparator.comparing(c -> c.repoName))))
                 .values().stream()
-                .collect(groupingBy(RepositoryDefinition::getCacheGroupKey, Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(c -> c.cacheRepositoryKey.repoName)))));
+                .collect(groupingBy(ScmRepositoryDefinition::getCacheGroupKey, Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(c -> c.cacheRepositoryKey.repoName)))));
     }
 
 }

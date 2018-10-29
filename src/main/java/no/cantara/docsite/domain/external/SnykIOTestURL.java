@@ -1,15 +1,15 @@
 package no.cantara.docsite.domain.external;
 
-import no.cantara.docsite.domain.scm.RepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 
 import java.util.Objects;
 
-public class SnykIOTestURL extends ExternalURL<RepositoryDefinition> {
+public class SnykIOTestURL extends ExternalURL<ScmRepositoryDefinition> {
 
     private static final long serialVersionUID = 8890035117418785973L;
     public static final String KEY = "snykIOTestURL";
 
-    public SnykIOTestURL(RepositoryDefinition internal) {
+    public SnykIOTestURL(ScmRepositoryDefinition internal) {
         super(internal);
     }
 

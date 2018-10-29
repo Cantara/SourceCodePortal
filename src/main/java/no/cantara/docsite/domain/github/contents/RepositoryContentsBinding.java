@@ -1,7 +1,7 @@
 package no.cantara.docsite.domain.github.contents;
 
 import no.cantara.docsite.cache.CacheKey;
-import no.cantara.docsite.domain.scm.RepositoryContents;
+import no.cantara.docsite.domain.scm.ScmRepositoryContents;
 import no.cantara.docsite.util.JsonbFactory;
 
 import javax.json.bind.annotation.JsonbProperty;
@@ -35,8 +35,8 @@ public class RepositoryContentsBinding implements Serializable {
     }
 
     @JsonbTransient
-    public RepositoryContents asRepositoryContents(CacheKey cacheKey) {
-        return new RepositoryContents(sha, name, type, encoding, path, size, content, url, gitUrl, htmlUrl, downloadUrl);
+    public ScmRepositoryContents asRepositoryContents(CacheKey cacheKey) {
+        return new ScmRepositoryContents(sha, name, type, encoding, path, size, content, url, gitUrl, htmlUrl, downloadUrl);
     }
 
     public static class Links implements Serializable {

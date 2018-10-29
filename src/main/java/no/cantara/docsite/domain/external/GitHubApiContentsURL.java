@@ -1,16 +1,16 @@
 package no.cantara.docsite.domain.external;
 
-import no.cantara.docsite.domain.scm.RepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 
 import javax.json.bind.annotation.JsonbTransient;
 import java.util.Objects;
 
-public class GitHubApiContentsURL extends ExternalURL<RepositoryDefinition> {
+public class GitHubApiContentsURL extends ExternalURL<ScmRepositoryDefinition> {
 
     private static final long serialVersionUID = 6542826512042618912L;
     public static final String KEY = "gitHubApiContentsURL";
 
-    public GitHubApiContentsURL(RepositoryDefinition repositoryInfo) {
+    public GitHubApiContentsURL(ScmRepositoryDefinition repositoryInfo) {
         super(repositoryInfo);
     }
 

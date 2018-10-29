@@ -4,9 +4,9 @@ import no.cantara.docsite.domain.config.Repository;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
 import no.cantara.docsite.domain.github.releases.CreatedTagEventBinding;
 import no.cantara.docsite.domain.maven.MavenPOM;
-import no.cantara.docsite.domain.scm.CommitRevision;
-import no.cantara.docsite.domain.scm.RepositoryContents;
-import no.cantara.docsite.domain.scm.RepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmCommitRevision;
+import no.cantara.docsite.domain.scm.ScmRepositoryContents;
+import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -85,7 +85,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("repositories") == null) {
             LOG.info("Creating Repositories cache");
-            MutableConfiguration<CacheRepositoryKey, RepositoryDefinition> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheRepositoryKey, ScmRepositoryDefinition> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("repositories", cacheConfig);
@@ -101,7 +101,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("page") == null) {
             LOG.info("Creating Page cache");
-            MutableConfiguration<CacheKey, RepositoryContents> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, ScmRepositoryContents> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("page", cacheConfig);
@@ -109,7 +109,7 @@ public class CacheStore {
 
         if (cacheManager.getCache("commit") == null) {
             LOG.info("Creating Commit cache");
-            MutableConfiguration<CacheShaKey, CommitRevision> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheShaKey, ScmCommitRevision> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache("commit", cacheConfig);
@@ -136,8 +136,8 @@ public class CacheStore {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         for(RepositoryConfigBinding.Repo repo : getGroups()) {
             JsonArrayBuilder groupBuilder = Json.createArrayBuilder();
-            List<RepositoryDefinition> repositories = getRepositoryGroupsByGroupId(repo.groupId);
-            for(RepositoryDefinition repository : repositories) {
+            List<ScmRepositoryDefinition> repositories = getRepositoryGroupsByGroupId(repo.groupId);
+            for(ScmRepositoryDefinition repository : repositories) {
                 groupBuilder.add(repository.cacheRepositoryKey.asIdentifier());
             }
             builder.add(repo.groupId, groupBuilder);
@@ -214,8 +214,8 @@ public class CacheStore {
     }
 
     // TODO requires refactoring (prepared done)
-    public List<RepositoryDefinition> getRepositoryGroupsByGroupId(String groupId) {
-        List<RepositoryDefinition> repositories = new ArrayList<>();
+    public List<ScmRepositoryDefinition> getRepositoryGroupsByGroupId(String groupId) {
+        List<ScmRepositoryDefinition> repositories = new ArrayList<>();
         getRepositories().forEach(a -> {
             if (a.getKey().compareTo(groupId)) {
                 repositories.add(a.getValue());
@@ -236,7 +236,7 @@ public class CacheStore {
     }
 
     // NEW
-    public Cache<CacheRepositoryKey, RepositoryDefinition> getRepositories() {
+    public Cache<CacheRepositoryKey, ScmRepositoryDefinition> getRepositories() {
         return cacheManager.getCache("repositories");
     }
 
@@ -246,12 +246,12 @@ public class CacheStore {
     }
 
     // OK
-    public Cache<CacheKey, RepositoryContents> getPages() {
+    public Cache<CacheKey, ScmRepositoryContents> getPages() {
         return cacheManager.getCache("page");
     }
 
     // OK
-    public Cache<CacheShaKey, CommitRevision> getCommits() {
+    public Cache<CacheShaKey, ScmCommitRevision> getCommits() {
         return cacheManager.getCache("commit");
     }
 

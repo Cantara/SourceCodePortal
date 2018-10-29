@@ -1,6 +1,6 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.domain.scm.RepositoryContents;
+import no.cantara.docsite.domain.scm.ScmRepositoryContents;
 import org.jsr107.ri.RICache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class JCacheTest {
     @Ignore
     @Test
     public void testRICacheProvider() {
-        Cache<CacheKey, RepositoryContents> cache = cacheStore.getPages();
+        Cache<CacheKey, ScmRepositoryContents> cache = cacheStore.getPages();
 //        cache.put("key1", "value1");
 //        cache.put("key2", "value2");
     }

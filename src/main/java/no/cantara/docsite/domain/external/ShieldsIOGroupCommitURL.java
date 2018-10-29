@@ -1,15 +1,15 @@
 package no.cantara.docsite.domain.external;
 
-import no.cantara.docsite.domain.scm.RepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 
 import java.util.Objects;
 
-public class ShieldsIOGroupCommitURL extends ExternalURL<RepositoryDefinition> {
+public class ShieldsIOGroupCommitURL extends ExternalURL<ScmRepositoryDefinition> {
 
     private static final long serialVersionUID = 201847051522984036L;
     public static final String KEY = "shieldsGroupCommit";
 
-    public ShieldsIOGroupCommitURL(RepositoryDefinition internal) {
+    public ShieldsIOGroupCommitURL(ScmRepositoryDefinition internal) {
         super(internal);
     }
 

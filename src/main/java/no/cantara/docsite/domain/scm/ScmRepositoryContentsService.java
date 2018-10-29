@@ -11,21 +11,21 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class RepositoryContentsService implements CacheService<CacheKey, RepositoryContents> {
+public class ScmRepositoryContentsService implements CacheService<CacheKey, ScmRepositoryContents> {
 
     private final CacheStore cacheStore;
 
-    public RepositoryContentsService(CacheStore cacheStore) {
+    public ScmRepositoryContentsService(CacheStore cacheStore) {
         this.cacheStore = cacheStore;
     }
 
     @Override
-    public RepositoryContents get(CacheKey key) {
+    public ScmRepositoryContents get(CacheKey key) {
         return cacheStore.getPages().get(key);
     }
 
     @Override
-    public Iterator<Cache.Entry<CacheKey, RepositoryContents>> getAll() {
+    public Iterator<Cache.Entry<CacheKey, ScmRepositoryContents>> getAll() {
         return cacheStore.getPages().iterator();
     }
 
@@ -35,7 +35,7 @@ public class RepositoryContentsService implements CacheService<CacheKey, Reposit
     }
 
     @Override
-    public Map<CacheKey, RepositoryContents> entrySet() {
+    public Map<CacheKey, ScmRepositoryContents> entrySet() {
         return StreamSupport.stream(cacheStore.getPages().spliterator(), false).collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue));
     }
 }

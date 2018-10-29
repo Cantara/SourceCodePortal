@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.github.commits;
 
-import no.cantara.docsite.domain.scm.CommitRevision;
+import no.cantara.docsite.domain.scm.ScmCommitRevision;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -9,14 +9,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class GroupByDateIterator implements Iterator<CommitRevision> {
+public class GroupByDateIterator implements Iterator<ScmCommitRevision> {
 
-    private final List<CommitRevision> entries;
-    private final ListIterator<CommitRevision> listIterator;
-    private CommitRevision last;
-    private CommitRevision current;
+    private final List<ScmCommitRevision> entries;
+    private final ListIterator<ScmCommitRevision> listIterator;
+    private ScmCommitRevision last;
+    private ScmCommitRevision current;
 
-    public GroupByDateIterator(List<CommitRevision> entries) {
+    public GroupByDateIterator(List<ScmCommitRevision> entries) {
         this.entries = entries;
         this.listIterator = entries.listIterator();
     }
@@ -27,7 +27,7 @@ public class GroupByDateIterator implements Iterator<CommitRevision> {
     }
 
     @Override
-    public CommitRevision next() {
+    public ScmCommitRevision next() {
         last = current;
         current = listIterator.next();
         return current;

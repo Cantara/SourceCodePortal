@@ -1,7 +1,7 @@
 package no.cantara.docsite.domain.external;
 
 import no.cantara.docsite.cache.CacheRepositoryKey;
-import no.cantara.docsite.domain.scm.RepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.testng.annotations.Test;
@@ -27,18 +27,18 @@ public class ExternalURLTest {
         DynamicConfiguration configuration = configuration();
         List<ExternalURL<?>> list = new ArrayList<>();
 
-        list.add(new GitHubRawRepoURL(RepositoryDefinition.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
+        list.add(new GitHubRawRepoURL(ScmRepositoryDefinition.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
                 "id", "desc", "group", "http://example.com")));
 
-        list.add(new GitHubApiReadmeURL(RepositoryDefinition.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
+        list.add(new GitHubApiReadmeURL(ScmRepositoryDefinition.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
                 "id", "desc", "group", "http://example.com")));
 
-        list.add(new GitHubApiContentsURL(RepositoryDefinition.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
+        list.add(new GitHubApiContentsURL(ScmRepositoryDefinition.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
                 "id", "desc", "group", "http://example.com")));
 
         list.add(new GitHubHtmlURL("http://example.com"));
 
         assertEquals(list.stream().filter(externalURL -> externalURL.isGenericOf(String.class)).count(), 1);
-        assertEquals(list.stream().filter(externalURL -> externalURL.isGenericOf(RepositoryDefinition.class)).count(), 3);
+        assertEquals(list.stream().filter(externalURL -> externalURL.isGenericOf(ScmRepositoryDefinition.class)).count(), 3);
     }
 }

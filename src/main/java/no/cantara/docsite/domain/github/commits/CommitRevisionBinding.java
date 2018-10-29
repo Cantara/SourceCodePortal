@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.github.commits;
 
 
 import no.cantara.docsite.cache.CacheShaKey;
-import no.cantara.docsite.domain.scm.CommitRevision;
+import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.util.JsonbFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,15 +48,15 @@ public class CommitRevisionBinding implements Serializable {
     }
 
     @JsonbTransient
-    public CommitRevision asCommitRevision(CacheShaKey cacheShaKey) {
-        return new CommitRevision(cacheShaKey,
+    public ScmCommitRevision asCommitRevision(CacheShaKey cacheShaKey) {
+        return new ScmCommitRevision(cacheShaKey,
                 (commit.commitAuthor == null ? null : commit.commitAuthor.name),
                 (commit.commitAuthor == null ? null : commit.commitAuthor.email),
                 (commit.commitAuthor == null ? null : commit.commitAuthor.date),
                 htmlUrl,
                 (author == null ? null : author.avatarUrl),
                 commit.message,
-                parents.stream().map(m -> new CommitRevision.Parent(m.sha, m.url, m.htmlUrl)).collect(Collectors.toList()));
+                parents.stream().map(m -> new ScmCommitRevision.Parent(m.sha, m.url, m.htmlUrl)).collect(Collectors.toList()));
     }
 
     public static class Commit implements Serializable {

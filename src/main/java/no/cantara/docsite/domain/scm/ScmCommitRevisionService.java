@@ -11,21 +11,21 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class CommitRevisionService implements CacheService<CacheShaKey, CommitRevision> {
+public class ScmCommitRevisionService implements CacheService<CacheShaKey, ScmCommitRevision> {
 
     private final CacheStore cacheStore;
 
-    public CommitRevisionService(CacheStore cacheStore) {
+    public ScmCommitRevisionService(CacheStore cacheStore) {
         this.cacheStore = cacheStore;
     }
 
     @Override
-    public CommitRevision get(CacheShaKey key) {
+    public ScmCommitRevision get(CacheShaKey key) {
         return cacheStore.getCommits().get(key);
     }
 
     @Override
-    public Iterator<Cache.Entry<CacheShaKey, CommitRevision>> getAll() {
+    public Iterator<Cache.Entry<CacheShaKey, ScmCommitRevision>> getAll() {
         return cacheStore.getCommits().iterator();
     }
 
@@ -35,7 +35,7 @@ public class CommitRevisionService implements CacheService<CacheShaKey, CommitRe
     }
 
     @Override
-    public Map<CacheShaKey, CommitRevision> entrySet() {
+    public Map<CacheShaKey, ScmCommitRevision> entrySet() {
         return StreamSupport.stream(cacheStore.getCommits().spliterator(), false).collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue));
     }
 }

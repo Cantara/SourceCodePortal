@@ -1,15 +1,15 @@
 package no.cantara.docsite.domain.external;
 
-import no.cantara.docsite.domain.scm.RepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 
 import java.util.Objects;
 
-public class GitHubRawRepoURL extends ExternalURL<RepositoryDefinition> {
+public class GitHubRawRepoURL extends ExternalURL<ScmRepositoryDefinition> {
 
     private static final long serialVersionUID = -5712528210551460515L;
     public static final String KEY = "gitHubRawRepoURL";
 
-    public GitHubRawRepoURL(RepositoryDefinition repositoryInfo) {
+    public GitHubRawRepoURL(ScmRepositoryDefinition repositoryInfo) {
         super(repositoryInfo);
     }
 

@@ -6,7 +6,7 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.repos.RepositoryBinding;
 import no.cantara.docsite.domain.github.repos.RepositoryVisibility;
-import no.cantara.docsite.domain.scm.RepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -95,8 +95,8 @@ public class RepositoryConfigLoader {
                     cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
                     cacheStore.getCacheGroupKeys().put(cacheRepositoryKey.asCacheGroupKey(), cacheRepositoryKey.groupId);
                     // create an internal definition of a repo
-                    RepositoryDefinition repositoryDefinition = RepositoryDefinition.of(configuration, cacheRepositoryKey, repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
-                    cacheStore.getRepositories().put(cacheRepositoryKey, repositoryDefinition);
+                    ScmRepositoryDefinition scmRepositoryDefinition = ScmRepositoryDefinition.of(configuration, cacheRepositoryKey, repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
+                    cacheStore.getRepositories().put(cacheRepositoryKey, scmRepositoryDefinition);
                 }
             }
         }

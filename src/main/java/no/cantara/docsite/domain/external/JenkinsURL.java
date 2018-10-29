@@ -1,17 +1,17 @@
 package no.cantara.docsite.domain.external;
 
-import no.cantara.docsite.domain.scm.RepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 import no.ssb.config.DynamicConfiguration;
 
 import java.util.Objects;
 
-public class JenkinsURL extends ExternalURL<RepositoryDefinition> {
+public class JenkinsURL extends ExternalURL<ScmRepositoryDefinition> {
 
     private static final long serialVersionUID = -3316821555454748209L;
     public static final String KEY = "jenkins";
     private final String baseURL;
 
-    public JenkinsURL(DynamicConfiguration configuration, RepositoryDefinition repositoryInfo) {
+    public JenkinsURL(DynamicConfiguration configuration, ScmRepositoryDefinition repositoryInfo) {
         super(repositoryInfo);
         this.baseURL = configuration.evaluateToString("jenkins.baseUrl");
     }

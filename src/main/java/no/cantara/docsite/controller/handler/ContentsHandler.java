@@ -5,8 +5,8 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
-import no.cantara.docsite.domain.scm.RepositoryContents;
-import no.cantara.docsite.domain.scm.RepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmRepositoryContents;
+import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
 import no.cantara.docsite.domain.view.ContentsModel;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
@@ -33,7 +33,7 @@ public class ContentsHandler implements WebHandler {
 
         CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, resourceContext.getTuples().get(0).id, resourceContext.getTuples().get(1).resource);
 
-        RepositoryContents contents = cacheStore.getPages().get(cacheKey);
+        ScmRepositoryContents contents = cacheStore.getPages().get(cacheKey);
 
         if (contents == null) {
             LOG.error("Contents is NULL. Probably because it was not fetched due to rate limit issue!");
@@ -41,7 +41,7 @@ public class ContentsHandler implements WebHandler {
         }
 
         CacheRepositoryKey cacheRepositoryKey = cacheStore.getCacheRepositoryKey(cacheKey);
-        RepositoryDefinition repository = cacheStore.getRepositories().get(cacheRepositoryKey);
+        ScmRepositoryDefinition repository = cacheStore.getRepositories().get(cacheRepositoryKey);
 
         ContentsModel model = new ContentsModel(repository, contents, contents.content);
 
