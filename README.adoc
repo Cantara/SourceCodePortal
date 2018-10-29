@@ -1,4 +1,4 @@
-= Organizational SourceCode Dashboard Portal
+= Organizational SourceCode Dashboard Portal (SCP)
 
 Codebase status:
 ^^^^^^^^^^^^^^^^
@@ -11,46 +11,49 @@ image:https://snyk.io/test/github/Cantara/SourceCodePortal/badge.svg[Known Vulne
 SourceCode Dashboard Portal is an Organisational and group dashboard organizing status and documentation from GitHub repositories. It is designed for small to medium sized organizations (<2500 commits/hour). If you need support for higher commit-volumes
 please contact the authors and we'll help you configure the system to your volumes/needs.
 
-Key features:
-^^^^^^^^^^^^^
+SCP Key features:
+^^^^^^^^^^^^^^^^^
 
-* Grouping features
-** Quick overview of status for systems consisting of multiple codebases
-** Browse commitslogs for systems consisting of several codebases
-** See the status of all the codebases in a group
-** Easy access to all documentation in one place
-* Organization features
-** Quick overview of status for all codebases in an organization
-** Browse commitslogs for and latest changes for an entire organization
-** See the status of all the groups in an organization
-** Easy access to all documentation in one place
+*Grouping features*
+
+* Quick overview of status for systems consisting of multiple codebases
+* Browse commitslogs for systems consisting of several codebases
+* See the status of all the codebases in a group
+* Easy access to all documentation in one place
+
+*Organization features*
+
+* Quick overview of status for all codebases in an organization
+* Browse commitslogs for and latest changes for an entire organization
+* See the status of all the groups in an organization
+* Easy access to all documentation in one place
 
 
 
 Some early development screenshots:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-dashboard-example.png[Example Screenshot of SourceCode Portal in early Development]
+image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-dashboard-example.png[Example Screenshot of SourceCode Portal in early Development, 500,400]
 
-image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-group-display.png[Example Screenshot of SourceCode Portal Group Listing in early Development]
+image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-group-display.png[Example Screenshot of SourceCode Portal Group Listing in early Development, 500,400]
 
 === Getting started (running as SourceCode Dashboard Portal docker image)
 
 [source,bash]
 -----------------
-# Start SCP dockerimage with oauth2 client credentials at startup
+### Start SCP dockerimage with oauth2 client credentials at startup
 $ sudo docker run --env github.oauth2.client.clientId=xyz  --env github.oauth2.client.clientSecret=556542654721-it --rm -p 80:9090 cantara/sourcecodeportal
-# Test the result
+### Test the result
 $ wget http://localhost/health
 $ wget http://localhost/health/github
 $ wget http://localhost/docs
 
-# Copy a site-configuration to a running SCP docker image
-# $ docker inspect -f   '{{.Id}}' cantara/sourcecodeportal
-# d8e703d7e303
-# $ docker inspect -f   '{{.Id}}' d8e703d7e303
-# d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5
-# $ sudo cp config.json /var/lib/docker/aufs/mnt/**d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5**/home/sourcecodeportal/config_override/conf/config.json
+### Copy a site-configuration to a running SCP docker image
+$ docker inspect -f   '{{.Id}}' cantara/sourcecodeportal
+d8e703d7e303
+$ docker inspect -f   '{{.Id}}' d8e703d7e303
+d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5
+$ sudo cp config.json /var/lib/docker/aufs/mnt/**d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5**/home/sourcecodeportal/config_override/conf/config.json
 
 -----------------
 
@@ -85,17 +88,26 @@ The `ObtainGitHubAccessTokenTestTool` doesn't work for Multi-Factor-Auth, in whi
 
 Ubuntu installation:
 
+[source,bash]
+-----------------
 `apt-get install chromedriver`
+-----------------
 
 MacOS installation:
 
+[source,bash]
+-----------------
 `brew install chromedriver`
+-----------------
 
 === Generate GitHub Access Token using Docker
 
 The ClientID and ClientSecret is found under you OAuth app: https://github.com/organizations/Cantara/settings/applications
 
+[source,bash]
+-----------------
 `docker run -it -e SCP_github.oauth2.client.clientId=CLIENT_ID -e SCP_github.oauth2.client.clientSecret=CLIENT_SECRET cantara/sourcecodeportal /github-access-token`
+-----------------
 
 Enter username, password and otp if you are using 2/mfa at GitHub.
 
@@ -104,18 +116,18 @@ Enter username, password and otp if you are using 2/mfa at GitHub.
 
 [source,bash]
 -----------------
-# Open a terminal and change into the /opt directory.
+### Open a terminal and change into the /opt directory.
 $ cd /opt
-# Use wget to download the ngrok application.
+### Use wget to download the ngrok application.
 $ sudo wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
-# Extract the downloaded file.
+### Extract the downloaded file.
 $ sudo unzip ngrok-stable-linux-amd64.zip
-# Move the file into the /usr/local/bin directory to make it easily executable.
+### Move the file into the /usr/local/bin directory to make it easily executable.
 $ sudo mv ngrok /usr/local/bin
-# Note the hex-id when you start ngrok
+### Note the hex-id when you start ngrok
 $ ngrok http 9090
-# test that ngrok is happy
-curl -I https://<hex-uid-from-running ngrok>.ngrok.io/ping
+### test that ngrok is happy
+$ curl -I https://<hex-uid-from-running-ngrok>.ngrok.io/ping
 -----------------
 
 * https://github.com/organizations/Cantara/settings/hooks/ [Set up/find github webhook]
@@ -140,7 +152,10 @@ The Source Code Portal is lisenting on push messages from GitHub.
 
 Install NPM and Get Bootstrap and generate CSS using Sass:
 
+[source,bash]
+-----------------
 `mvn mvn clean install -DskipTests`
+-----------------
 
 > The build does not require any native pre-installation of this toolset. They are automatically set up by the maven plugins.
 
@@ -148,9 +163,12 @@ Install NPM and Get Bootstrap and generate CSS using Sass:
 
 SCP depends on `npm`, `node` and `sass` for the website. When you're working with ThymeLeaf templating you need those tools installed locally. There are few steps that is useful to reduce the amount server restarts.
 
+[source,bash]
+-----------------
 `apt-get install nodejs` (requires 10.x+ and will also install npm for you)
 
 `apt-get install sass` (requires 3.5+)
+-----------------
 
 === Setting up IntelliJ
 
