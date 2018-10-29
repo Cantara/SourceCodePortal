@@ -14,7 +14,7 @@ import static no.cantara.docsite.domain.config.Repository.SCP_TEMPLATE_REPO_NAME
 
 public class DashboardModel {
 
-    public final List<ScmCommitRevision> lastScmCommitRevisions = new ArrayList();
+    public final List<ScmCommitRevision> lastCommitRevisions = new ArrayList();
     public final SortedSet<Group> groups = new TreeSet<>();
     public String connectedRepos = "0";
 

@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 public class CardModel {
 
-    public final List<ScmCommitRevision> lastScmCommitRevisions = new ArrayList();
+    public final List<ScmCommitRevision> lastCommitRevisions = new ArrayList();
     public final SortedSet<DashboardModel.Group> groups = new TreeSet<>();
 
 }

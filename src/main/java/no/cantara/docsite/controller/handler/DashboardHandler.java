@@ -37,7 +37,7 @@ public class DashboardHandler implements WebHandler {
             int n = 0;
             for (ScmCommitRevision scmCommitRevision : sortedMap.values()) {
                 if (n > configuration.evaluateToInt("render.max.group.commits")) break;
-                model.lastScmCommitRevisions.add(scmCommitRevision);
+                model.lastCommitRevisions.add(scmCommitRevision);
                 n++;
             }
         }

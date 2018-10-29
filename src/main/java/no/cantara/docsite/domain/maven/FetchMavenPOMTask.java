@@ -65,7 +65,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
         if (GetGitHubCommand.anyOf(response, 200)) {
             GitHubRepositoryContents mavenPOMContents = JsonbBuilder.create().fromJson(response.body(), GitHubRepositoryContents.class);
             MavenPOM mavenPOM = parse(mavenPOMContents.content);
-            cacheStore.getProjects().put(cacheKey, mavenPOM);
+            cacheStore.getMavenProjects().put(cacheKey, mavenPOM);
         }
     }
 

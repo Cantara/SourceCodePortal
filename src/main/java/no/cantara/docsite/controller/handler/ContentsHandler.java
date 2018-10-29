@@ -33,7 +33,7 @@ public class ContentsHandler implements WebHandler {
 
         CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, resourceContext.getTuples().get(0).id, resourceContext.getTuples().get(1).resource);
 
-        ScmRepositoryContents contents = cacheStore.getPages().get(cacheKey);
+        ScmRepositoryContents contents = cacheStore.getReadmeContents().get(cacheKey);
 
         if (contents == null) {
             LOG.error("Contents is NULL. Probably because it was not fetched due to rate limit issue!");

@@ -26,7 +26,7 @@ public class JCacheTest {
     @Ignore
     @Test
     public void testRICacheProvider() {
-        Cache<CacheKey, ScmRepositoryContents> cache = cacheStore.getPages();
+        Cache<CacheKey, ScmRepositoryContents> cache = cacheStore.getReadmeContents();
 //        cache.put("key1", "value1");
 //        cache.put("key2", "value2");
     }

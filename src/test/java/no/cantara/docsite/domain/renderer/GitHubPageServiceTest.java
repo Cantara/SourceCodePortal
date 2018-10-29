@@ -41,7 +41,7 @@ public class GitHubPageServiceTest {
             // TODO use CacheGroupKey for pages
 //            executorService.queue(new FetchPageTask(configuration, executorService, cacheStore, rg.getKey(), rg.getValue().readmeURL));
             LOG.trace("{} - {}", rg.getKey(), rg.getValue().apiReadmeURL.getExternalURL());
-//            cacheStore.getPages().get(cacheStore.getCacheKeys().get(rg.getKey().asCacheKey()));
+//            cacheStore.getReadmeContents().get(cacheStore.getCacheKeys().get(rg.getKey().asCacheKey()));
         });
 
         executorService.shutdown();

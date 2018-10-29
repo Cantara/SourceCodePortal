@@ -21,21 +21,21 @@ public class MavenProjectService implements CacheService<CacheKey, MavenPOM> {
 
     @Override
     public MavenPOM get(CacheKey key) {
-        return cacheStore.getProjects().get(key);
+        return cacheStore.getMavenProjects().get(key);
     }
 
     @Override
     public Iterator<Cache.Entry<CacheKey, MavenPOM>> getAll() {
-        return cacheStore.getProjects().iterator();
+        return cacheStore.getMavenProjects().iterator();
     }
 
     @Override
     public Set<CacheKey> keySet() {
-        return StreamSupport.stream(cacheStore.getProjects().spliterator(), false).map(m -> m.getKey()).collect(Collectors.toSet());
+        return StreamSupport.stream(cacheStore.getMavenProjects().spliterator(), false).map(m -> m.getKey()).collect(Collectors.toSet());
     }
 
     @Override
     public Map<CacheKey, MavenPOM> entrySet() {
-        return StreamSupport.stream(cacheStore.getProjects().spliterator(), false).collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue));
+        return StreamSupport.stream(cacheStore.getMavenProjects().spliterator(), false).collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue));
     }
 }

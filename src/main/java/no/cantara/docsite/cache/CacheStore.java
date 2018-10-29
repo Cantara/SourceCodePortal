@@ -91,20 +91,20 @@ public class CacheStore {
             cacheManager.createCache("repositories", cacheConfig);
         }
 
-        if (cacheManager.getCache("project") == null) {
+        if (cacheManager.getCache("mavenProject") == null) {
             LOG.info("Creating Project cache");
             MutableConfiguration<CacheKey, MavenPOM> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("project", cacheConfig);
+            cacheManager.createCache("mavenProject", cacheConfig);
         }
 
-        if (cacheManager.getCache("page") == null) {
+        if (cacheManager.getCache("contents") == null) {
             LOG.info("Creating Page cache");
             MutableConfiguration<CacheKey, ScmRepositoryContents> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("page", cacheConfig);
+            cacheManager.createCache("contents", cacheConfig);
         }
 
         if (cacheManager.getCache("commit") == null) {
@@ -241,13 +241,13 @@ public class CacheStore {
     }
 
     // OK
-    public Cache<CacheKey, MavenPOM> getProjects() {
-        return cacheManager.getCache("project");
+    public Cache<CacheKey, MavenPOM> getMavenProjects() {
+        return cacheManager.getCache("mavenProject");
     }
 
     // OK
-    public Cache<CacheKey, ScmRepositoryContents> getPages() {
-        return cacheManager.getCache("page");
+    public Cache<CacheKey, ScmRepositoryContents> getReadmeContents() {
+        return cacheManager.getCache("contents");
     }
 
     // OK

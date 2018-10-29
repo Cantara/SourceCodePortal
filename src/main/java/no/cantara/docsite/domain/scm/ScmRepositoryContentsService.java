@@ -21,21 +21,21 @@ public class ScmRepositoryContentsService implements CacheService<CacheKey, ScmR
 
     @Override
     public ScmRepositoryContents get(CacheKey key) {
-        return cacheStore.getPages().get(key);
+        return cacheStore.getReadmeContents().get(key);
     }
 
     @Override
     public Iterator<Cache.Entry<CacheKey, ScmRepositoryContents>> getAll() {
-        return cacheStore.getPages().iterator();
+        return cacheStore.getReadmeContents().iterator();
     }
 
     @Override
     public Set<CacheKey> keySet() {
-        return StreamSupport.stream(cacheStore.getPages().spliterator(), false).map(m -> m.getKey()).collect(Collectors.toSet());
+        return StreamSupport.stream(cacheStore.getReadmeContents().spliterator(), false).map(m -> m.getKey()).collect(Collectors.toSet());
     }
 
     @Override
     public Map<CacheKey, ScmRepositoryContents> entrySet() {
-        return StreamSupport.stream(cacheStore.getPages().spliterator(), false).collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue));
+        return StreamSupport.stream(cacheStore.getReadmeContents().spliterator(), false).collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue));
     }
 }

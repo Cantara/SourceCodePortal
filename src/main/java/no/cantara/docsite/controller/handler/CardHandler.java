@@ -53,13 +53,13 @@ public class CardHandler implements WebHandler {
             int n = 0;
             for (ScmCommitRevision scmCommitRevision : sortedMap.values()) {
                 if (n > configuration.evaluateToInt("render.max.group.commits")) break;
-                model.lastScmCommitRevisions.add(scmCommitRevision);
+                model.lastCommitRevisions.add(scmCommitRevision);
                 n++;
             }
         }
 
         for(ScmRepositoryDefinition repo : repositories) {
-            boolean hasReadme = cacheStore.getPages().containsKey(repo.cacheRepositoryKey.asCacheKey());
+            boolean hasReadme = cacheStore.getReadmeContents().containsKey(repo.cacheRepositoryKey.asCacheKey());
             DashboardModel.Group group = new DashboardModel.Group(
                     cacheStore.getRepositoryConfig().gitHub.organization,
                     repo.cacheRepositoryKey.repoName,
