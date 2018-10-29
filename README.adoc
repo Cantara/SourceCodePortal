@@ -33,9 +33,9 @@ SCP Key features:
 Some early development screenshots:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-dashboard-example.png[Example Screenshot of SourceCode Portal in early Development, 500,300]
+image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-dashboard-example.png[Example Screenshot of SourceCode Portal in early Development, 600]
 
-image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-group-display.png[Example Screenshot of SourceCode Portal Group Listing in early Development, 500,300]
+image:https://github.com/Cantara/SourceCodePortal/raw/master/images/SCP-group-display.png[Example Screenshot of SourceCode Portal Group Listing in early Development, 600]
 
 === Getting started (running as SourceCode Dashboard Portal docker image)
 
