@@ -53,6 +53,8 @@ public class FetchCantaraWikiTask extends WorkerTask {
             String rendered = String.format("<h1>%s</h1>%s", title, content);
 //            LOG.info("Cache Cantara:\n{}", rendered);
             cacheStore.getCantaraWiki().put(cacheKey, rendered);
+        } else {
+            LOG.trace("{} -- {} -- {}", cacheKey.contentId, response.statusCode(), response.body());
         }
     }
 

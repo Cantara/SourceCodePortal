@@ -16,7 +16,7 @@
         </div>
         <div class="jumbotron">
             <h4 class="display-6">Latest commits</h4>
-            <div th:each="commitRevision : ${model.lastCommitRevisions}">
+            <div th:each="commitRevision : ${lastCommitRevisions}">
                 <div class="row">
                     <div class="col-sm-2">
                         <img height="21" width="21" th:if="${commitRevision.authorName == null}"
@@ -37,52 +37,13 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-4" th:each="group : ${model.groups}">
+            <div class="col-sm-4" th:each="key : ${groupedRepos.keySet()}">
                 <div class="card">
+                    <p th:each="value : ${groupedRepos.get(key)}" th:text="${value.cacheRepositoryKey.repoName}"></p>
+
                     <div class="card-body text-center">
                         <h5 class="card-title">
-                            <a style="text-decoration: none;" th:href="${('/group/')+group.groupId}" class="card-link"
-                               th:text="${group.displayName}">Show</a>&#160;
-                            <a style="text-decoration: none;" th:href="${group.repoURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
-                                                                 src="/img/github-logo.svg"/></a>
-                            <a style="text-decoration: none;" th:if="${group.hasReadme}"
-                               th:href="${group.readmeURI}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
-                                                                 src="/img/doc.svg"/></a>
-                            <a style="text-decoration: none;"
-                               th:href="${('/commits/')+group.groupId}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
-                                                                 src="/img/octions.png"/></a>
                         </h5>
-                        <p class="card-text" th:text="${group.description}">Some quick example text to build on the card
-                            title</p>
-                        <table class="table">
-                            <tbody>
-                            <tr scope="row">
-                                <td><img th:src="${group.no_repos}"
-                                         onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/repos-1-lightgrey.svg';"/>
-                                </td>
-                                <td><img th:src="${group.groupCommit}"/>
-                                </td>
-                                <td>
-                                    <a th:href="${group.snyktestIOUrl}">
-                                        <img th:src="${group.snykIOUrl}"
-                                             onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/snyk-unknown-lightgrey.svg';"/>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr scope="row">
-                                <td><img th:src="${group.groupStatus}"
-                                         onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/>
-                                </td>
-                                <td><img th:src="${group.groupRelease}"
-                                         onerror="if (this.src != 'error.jpg') this.src = 'img/release-unknown.svg';"/>
-                                </td>
-                                <td><img th:src="${group.jenkinsURL}"
-                                         onerror="if (this.src != 'error.jpg') this.src = 'img/build-unknown.svg';"/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </p>
                     </div>
                 </div>
             </div>

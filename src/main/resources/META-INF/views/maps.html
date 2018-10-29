@@ -1,0 +1,10 @@
+<div class="col-sm-4" th:each="key : ${groupedRepos.keySet()}">
+    <div class="card">
+        <p th:each="value : ${groupedRepos.get(key)}" th:text="${value.cacheRepositoryKey.repoName}"></p>
+
+        <div class="card-body text-center">
+            <h5 class="card-title">
+            </h5>
+        </div>
+    </div>
+</div>
