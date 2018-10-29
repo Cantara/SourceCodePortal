@@ -1,7 +1,5 @@
-package no.cantara.docsite.domain.github.contents;
+package no.cantara.docsite.domain.renderer;
 
-import no.cantara.docsite.domain.renderer.ReadmeAsciidocWiki;
-import no.cantara.docsite.domain.renderer.ReadmeMDWiki;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
