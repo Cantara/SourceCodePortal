@@ -40,7 +40,7 @@ public class ExecutorThreadPool implements ExecutorService {
                         WorkerTask workerTask = (WorkerTask) internalEventsQueue.take();
                         int retryCount = workerTask.incrementCount();
                         if (retryCount < MAX_RETRIES) {
-                            if (retryCount > 0) LOG.warn("RetryCount: {} for {}", retryCount, workerTask.getClass().getName());
+                            if (retryCount > 0) LOG.warn("RetryCount: {} for {}", retryCount, workerTask.toString());
                             executorThreadPool.execute(new Worker(workerTask));
                         }
 

@@ -1,10 +1,13 @@
 package no.cantara.docsite.controller.handler;
 
 import io.undertow.server.HttpServerExchange;
-import no.cantara.docsite.cache.CacheShaKey;
+import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
+import no.cantara.docsite.domain.scm.ScmCommitRevisionService;
+import no.cantara.docsite.domain.scm.ScmRepositoryDefinition;
+import no.cantara.docsite.domain.scm.ScmRepositoryService;
 import no.cantara.docsite.domain.view.DashboardModel;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
@@ -12,12 +15,11 @@ import no.cantara.docsite.web.WebContext;
 import no.cantara.docsite.web.WebHandler;
 import no.ssb.config.DynamicConfiguration;
 
-import javax.cache.Cache;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-
-import static no.cantara.docsite.controller.handler.CommitsHandler.sortByValue;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class DashboardHandler implements WebHandler {
 
@@ -25,21 +27,16 @@ public class DashboardHandler implements WebHandler {
     public boolean handleRequest(DynamicConfiguration configuration, CacheStore cacheStore, ResourceContext resourceContext, WebContext webContext, HttpServerExchange exchange) {
         Map<String, Object> templateVariables = new HashMap<>();
 
+        ScmRepositoryService repositoryService = new ScmRepositoryService(cacheStore);
+        Map<CacheGroupKey, Set<ScmRepositoryDefinition>> sortedEntrySet = repositoryService.sortedEntrySet();
+        templateVariables.put("groupedRepos", sortedEntrySet);
+
         DashboardModel model = new DashboardModel();
 
-        // TODO this is bit expensive per view. Investigate how JCache can provide a sorted tree map
         {
-            Cache<CacheShaKey, ScmCommitRevision> commitRevisions = cacheStore.getCommits();
-            Map<CacheShaKey, ScmCommitRevision> commitRevisionMap = new LinkedHashMap<>();
-            commitRevisions.iterator().forEachRemaining(a -> commitRevisionMap.put(a.getKey(), a.getValue()));
-            Map<CacheShaKey, ScmCommitRevision> sortedMap = sortByValue(commitRevisionMap);
-
-            int n = 0;
-            for (ScmCommitRevision scmCommitRevision : sortedMap.values()) {
-                if (n > configuration.evaluateToInt("render.max.group.commits")) break;
-                model.lastCommitRevisions.add(scmCommitRevision);
-                n++;
-            }
+            ScmCommitRevisionService commitRevisionService = new ScmCommitRevisionService(cacheStore);
+            List<ScmCommitRevision> lastCommitRevisions = commitRevisionService.entrySet().values().stream().limit(5).collect(Collectors.toList());;
+            model.lastCommitRevisions.addAll(lastCommitRevisions);
         }
 
         for (RepositoryConfigBinding.Repo repo : cacheStore.getGroups()) {

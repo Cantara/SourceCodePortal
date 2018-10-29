@@ -37,7 +37,7 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
     public void start() {
         LOG.info("Starting ScheduledExecutorService..");
         for (ScheduledWorker scheduledWorker : scheduledWorkers) {
-            scheduledExecutorService.scheduleAtFixedRate(new ScheduledThread(configuration, executorService, cacheStore, scheduledWorker), scheduledWorker.initialDelay, scheduledWorker.period, scheduledWorker.timeUnit);
+            scheduledExecutorService.scheduleAtFixedRate(new ScheduledThread(scheduledWorker), scheduledWorker.initialDelay, scheduledWorker.period, scheduledWorker.timeUnit);
         }
     }
 
@@ -61,15 +61,9 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
 
     static class ScheduledThread implements Runnable {
 
-        private final DynamicConfiguration configuration;
-        private final ExecutorService executorService;
-        private final CacheStore cacheStore;
         private final ScheduledWorker scheduledWorkers;
 
-        public ScheduledThread(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore, ScheduledWorker scheduledWorkers) {
-            this.configuration = configuration;
-            this.executorService = executorService;
-            this.cacheStore = cacheStore;
+        public ScheduledThread(ScheduledWorker scheduledWorkers) {
             this.scheduledWorkers = scheduledWorkers;
         }
 

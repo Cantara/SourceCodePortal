@@ -81,4 +81,8 @@ public class JsonbFactory {
         return prettyPrint(json);
     }
 
+    public static String asCompactString(Object jsonObject) {
+        return instance().toJson(jsonObject);
+    }
+
 }
