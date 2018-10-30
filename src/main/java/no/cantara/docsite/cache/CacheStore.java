@@ -170,7 +170,6 @@ public class CacheStore {
         return cacheManager;
     }
 
-    @Deprecated // TODO this should not be leaked out into the app, because it is confusing
     public RepositoryConfigBinding getRepositoryConfig() {
         return repositoryConfig;
     }
@@ -203,7 +202,6 @@ public class CacheStore {
     }
 
     // OK
-    @Deprecated
     public Cache<CacheRepositoryKey,CacheKey> getCacheRepositoryKeys() {
         return cacheManager.getCache(CACHE_REPOSITORY_KEYS);
     }

@@ -20,11 +20,11 @@ public class ShieldsIOGroupReleaseURL extends ExternalURL<ScmRepository> {
 
     @Override
     public String getExternalURL() {
-        return String.format("https://img.shields.io/github/tag//%s/%s.svg", internal.cacheRepositoryKey.organization, internal.cacheRepositoryKey.repoName);
+        return String.format("https://img.shields.io/github/tag/%s/%s.svg", internal.cacheRepositoryKey.organization, internal.cacheRepositoryKey.repoName);
     }
 
     public String getExternalGroupURL() {
         Objects.requireNonNull(internal.defaultGroupRepoName);
-        return String.format("https://img.shields.io/github/tag//%s/%s.svg", internal.cacheRepositoryKey.organization, internal.defaultGroupRepoName);
+        return String.format("https://img.shields.io/github/tag/%s/%s.svg", internal.cacheRepositoryKey.organization, internal.defaultGroupRepoName);
     }
 }

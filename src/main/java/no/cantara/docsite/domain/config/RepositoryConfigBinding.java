@@ -34,5 +34,10 @@ public class RepositoryConfigBinding {
         public int hashCode() {
             return Objects.hash(groupId, displayName, description, repo, branch);
         }
+
+        @Override
+        public String toString() {
+            return JsonbFactory.asString(this);
+        }
     }
 }

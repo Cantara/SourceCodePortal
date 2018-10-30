@@ -43,8 +43,8 @@ public class JCacheTest {
     @Test
     public void testHashCode() {
         CacheStore cacheStore = cacheStore(configuration());
-        CacheRepositoryKey k1 = CacheRepositoryKey.of("org", "repo","branch", "groupId");
-        CacheRepositoryKey k2 = CacheRepositoryKey.of("org", "repo", "branch", "groupId");
+        CacheRepositoryKey k1 = CacheRepositoryKey.of("org", "repo","branch", "groupId", false);
+        CacheRepositoryKey k2 = CacheRepositoryKey.of("org", "repo", "branch", "groupId", false);
         assertTrue(k1.equals(k2));
         assertEquals(k1, k2);
         assertEquals(k1.hashCode(), k2.hashCode());

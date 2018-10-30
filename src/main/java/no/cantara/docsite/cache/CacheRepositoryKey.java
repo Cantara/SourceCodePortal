@@ -15,12 +15,12 @@ public class CacheRepositoryKey implements Serializable {
     public final String groupId;
     final boolean groupRepository;
 
-    CacheRepositoryKey(String organization, String repoName, String branch, String groupId) {
+    CacheRepositoryKey(String organization, String repoName, String branch, String groupId, boolean isGroupRepository) {
         this.organization = organization;
         this.repoName = repoName;
         this.branch = branch;
         this.groupId = groupId;
-        this.groupRepository = false;
+        this.groupRepository = isGroupRepository;
     }
 
     public boolean compareTo(String groupId) {
@@ -72,12 +72,12 @@ public class CacheRepositoryKey implements Serializable {
         return CacheKey.of(organization, repoName, branch);
     }
 
-    public static CacheRepositoryKey of(CacheKey cacheKey, String groupId) {
-        return new CacheRepositoryKey(cacheKey.organization, cacheKey.repoName, cacheKey.branch, groupId);
+    public static CacheRepositoryKey of(CacheKey cacheKey, String groupId, boolean isGroupRepository) {
+        return new CacheRepositoryKey(cacheKey.organization, cacheKey.repoName, cacheKey.branch, groupId, isGroupRepository);
     }
 
-    public static CacheRepositoryKey of(String organization, String repoName, String branch, String groupId) {
-        return new CacheRepositoryKey(organization, repoName, branch, groupId);
+    public static CacheRepositoryKey of(String organization, String repoName, String branch, String groupId, boolean isGroupRepository) {
+        return new CacheRepositoryKey(organization, repoName, branch, groupId, isGroupRepository);
     }
 
 }

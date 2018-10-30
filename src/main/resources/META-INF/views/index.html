@@ -38,16 +38,57 @@
 
         <div class="row">
             <div class="col-sm-4" th:each="key : ${repositoryGroups.keySet()}">
-                <div class="card">
-                    <!--<p th:each="value : ${repositoryGroups.get(key)}" th:text="${value.defaultGroupRepoName}"></p>-->
-                    <span th:text="${repositoryGroups.get(key)}"></span>
-                    <p th:text="${key.groupId}">
-                        <span th:text="${repositoryGroups.get(key)}"></span>
-                    </p>
-
+                <div class="card" th:with="model=${repositoryGroups.get(key)}">
                     <div class="card-body text-center">
                         <h5 class="card-title">
+                            <a style="text-decoration: none;" th:href="${('/group/')+key.groupId}" class="card-link"
+                               th:text="${model.displayName}">Show</a>&#160;
+                            <a style="text-decoration: none;" th:href="${model.repository.repoURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                                                                                              src="/img/github-logo.svg"/></a>
+                            <a style="text-decoration: none;" th:if="${model.repository.apiReadmeURL != null}"
+                               th:href="${model.repository.apiReadmeURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                                                                 src="/img/doc.svg"/></a>
+                            <a style="text-decoration: none;"
+                               th:href="${('/commits/')+key.groupId}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                                                                             src="/img/octions.png"/></a>
                         </h5>
+                        <p class="card-text" th:text="${model.repository.description}">Some quick example text to build on the card
+                            title</p>
+                        <table class="table">
+                            <tbody>
+                            <tr scope="row">
+                                <td>
+                                    <img th:if="${model.numberOfRepos == 0}" th:src="${model.repository.externalLinks['shieldRepos'].externalURL}"/>
+                                    <img th:if="${model.numberOfRepos > 0}" th:src="${model.repository.externalLinks['shieldRepos'].getNumberOfReposURL(model.numberOfRepos)}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/repos-1-lightgrey.svg';" />
+                                </td>
+                                <td>
+                                    <img th:src="${model.repository.externalLinks['shieldsGroupCommit'].getExternalGroupURL}"/>
+                                </td>
+                                <td>
+                                    <a th:href="${model.repository.externalLinks['snykIOTestURL'].getExternalGroupURL}">
+                                        <img th:src="${model.repository.externalLinks['snykIOTestBadgeURL'].getExternalGroupURL}"
+                                             onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/snyk-unknown-lightgrey.svg';" />
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr scope="row">
+                                <td>
+                                    <img th:src="${model.repository.externalLinks['shieldsGroupCommit'].getExternalGroupURL}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/>
+                                </td>
+                                <td>
+                                    <img th:src="${model.repository.externalLinks['shieldsGroupRelease'].getExternalGroupURL}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'img/release-unknown.svg';"/>
+                                </td>
+                                <td>
+                                    <img th:src="${model.repository.externalLinks['jenkins'].getExternalGroupURL}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'img/build-unknown.svg';"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </p>
                     </div>
                 </div>
             </div>

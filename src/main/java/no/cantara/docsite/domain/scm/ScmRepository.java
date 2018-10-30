@@ -10,7 +10,7 @@ import no.cantara.docsite.domain.external.GitHubRawRepoURL;
 import no.cantara.docsite.domain.external.JenkinsURL;
 import no.cantara.docsite.domain.external.ShieldsIOGroupCommitURL;
 import no.cantara.docsite.domain.external.ShieldsIOGroupReleaseURL;
-import no.cantara.docsite.domain.external.ShieldsIONoReposURL;
+import no.cantara.docsite.domain.external.ShieldsIOReposURL;
 import no.cantara.docsite.domain.external.SnykIOTestBadgeURL;
 import no.cantara.docsite.domain.external.SnykIOTestURL;
 import no.cantara.docsite.util.JsonbFactory;
@@ -57,7 +57,7 @@ public class ScmRepository implements Serializable {
         this.rawRepoURL = new GitHubRawRepoURL(this);
         this.apiContentsURL = new GitHubApiContentsURL(this);
         externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, this));
-        externalLinks.put(ShieldsIONoReposURL.KEY, new ShieldsIONoReposURL(""));
+        externalLinks.put(ShieldsIOReposURL.KEY, new ShieldsIOReposURL(""));
         externalLinks.put(ShieldsIOGroupCommitURL.KEY, new ShieldsIOGroupCommitURL(this));
         externalLinks.put(ShieldsIOGroupReleaseURL.KEY, new ShieldsIOGroupReleaseURL(this));
         externalLinks.put(SnykIOTestURL.KEY, new SnykIOTestURL(this));
