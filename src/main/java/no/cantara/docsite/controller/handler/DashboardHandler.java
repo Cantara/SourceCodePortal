@@ -32,41 +32,6 @@ public class DashboardHandler implements WebHandler {
         Map<CacheRepositoryKey, ScmGroupRepository> groupedRepositories = scmRepositoryService.defaultRepositoryGroups();
         templateVariables.put("repositoryGroups", groupedRepositories);
 
-//        for (RepositoryConfigBinding.Repo repo : cacheStore.getGroups()) {
-//            boolean hasReadme = (repo.defaultGroupRepo != null && !"".equals(repo.defaultGroupRepo));
-//            DashboardModel.Group group = new DashboardModel.Group(
-//                    cacheStore.getRepositoryConfig().gitHub.organization,
-//                    repo.repo,
-//                    repo.defaultGroupRepo,
-//                    repo.branch,
-//                    repo.groupId,
-//                    repo.displayName,
-//                    repo.description,
-//                    hasReadme,
-//                    String.format("/contents/%s/%s", repo.defaultGroupRepo, repo.branch),
-//                    String.format("/group/%s", repo.groupId),
-//                    String.format("https://github.com/%s/%s", cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultGroupRepo),
-//                    String.format(cacheStore.getRepositoryConfig().gitHub.badges.jenkins, repo.defaultGroupRepo),
-//                    String.format(cacheStore.getRepositoryConfig().gitHub.badges.snykIO, cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultGroupRepo));
-//
-//            group.setNoOfRepos(cacheStore.getRepositoryGroupsByGroupId(repo.groupId).size());
-//
-//            model.groups.add(group);
-
-//            {
-//                AtomicInteger count = new AtomicInteger(0);
-//                cacheStore.getRepositoryGroups().iterator().forEachRemaining(a -> count.incrementAndGet());
-//                model.connectedRepos = String.valueOf(count.get());
-//            }
-//        }
-
-
-//        DashboardModel.Activity activity = new DashboardModel.Activity();
-//        group.activity.add(activity);
-
-
-//        templateVariables.put("model", model);
-
         if (ThymeleafViewEngineProcessor.processView(exchange, cacheStore, webContext.asTemplateResource(), templateVariables)) {
             return true;
         }
