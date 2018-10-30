@@ -1,11 +1,10 @@
 package no.cantara.docsite.domain.external;
 
-import no.cantara.docsite.domain.scm.ScmGroupRepository;
 import no.cantara.docsite.domain.scm.ScmRepository;
 
 import java.util.Objects;
 
-public class ShieldsIOGitHubIssuesURL extends ExternalURL<ScmGroupRepository> {
+public class ShieldsIOGitHubIssuesURL extends ExternalURL<ScmRepository> {
 
     private static final long serialVersionUID = 6817528366457367770L;
     public static final String KEY = "shieldsIOGitHubIssuesURL";

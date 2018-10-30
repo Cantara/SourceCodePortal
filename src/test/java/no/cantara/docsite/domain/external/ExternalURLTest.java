@@ -28,13 +28,13 @@ public class ExternalURLTest {
         List<ExternalURL<?>> list = new ArrayList<>();
 
         list.add(new GitHubRawRepoURL(ScmRepository.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
-                "id", "desc", "group", "http://example.com")));
+                "dn", "cd", "id", "desc", "group", "http://example.com")));
 
         list.add(new GitHubApiReadmeURL(ScmRepository.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
-                "id", "desc", "group", "http://example.com")));
+                "dn", "cd", "id", "desc", "group", "http://example.com")));
 
         list.add(new GitHubApiContentsURL(ScmRepository.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1"),
-                "id", "desc", "group", "http://example.com")));
+                "dn", "cd", "id", "desc", "group", "http://example.com")));
 
         list.add(new GitHubHtmlURL("http://example.com"));
 

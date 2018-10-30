@@ -1,6 +1,7 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.domain.scm.ScmRepositoryContents;
+import no.ssb.config.DynamicConfiguration;
+import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.jsr107.ri.RICache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,21 +15,41 @@ import javax.cache.configuration.MutableConfiguration;
 import javax.cache.spi.CachingProvider;
 import java.util.Random;
 import java.util.Spliterator;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 //@Listeners(TestServerListener.class)
 public class JCacheTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(JCacheTest.class);
 
-    //    @Inject
-    CacheStore cacheStore;
+    static DynamicConfiguration configuration() {
+        return new StoreBasedDynamicConfiguration.Builder()
+                .propertiesResource("application-defaults.properties")
+                .propertiesResource("security.properties")
+                .propertiesResource("application.properties")
+                .build();
+    }
 
-    @Ignore
+    static CacheStore cacheStore(DynamicConfiguration configuration) {
+        return CacheInitializer.initialize(configuration);
+    }
+
+
+
     @Test
-    public void testRICacheProvider() {
-        Cache<CacheKey, ScmRepositoryContents> cache = cacheStore.getReadmeContents();
-//        cache.put("key1", "value1");
-//        cache.put("key2", "value2");
+    public void testHashCode() {
+        CacheStore cacheStore = cacheStore(configuration());
+        CacheRepositoryKey k1 = CacheRepositoryKey.of("org", "repo","branch", "groupId");
+        CacheRepositoryKey k2 = CacheRepositoryKey.of("org", "repo", "branch", "groupId");
+        assertTrue(k1.equals(k2));
+        assertEquals(k1, k2);
+        assertEquals(k1.hashCode(), k2.hashCode());
+        cacheStore.getRepositoryGroup().put(k1, new AtomicLong(0));
+        assertNotNull(cacheStore.getRepositoryGroup().get(k2));
     }
 
     @Ignore
@@ -42,7 +63,6 @@ public class JCacheTest {
         Cache<String, String> cache = cacheManager.createCache("test", cacheConfig);
 
         Random r = new Random();
-
         for(int n=0; n<10000; n++) {
             cache.put(String.valueOf(n), String.valueOf(r.nextInt(26) + 'a'));
         }

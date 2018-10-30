@@ -4,11 +4,20 @@ import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.domain.external.ExternalURL;
 import no.cantara.docsite.domain.external.GitHubApiContentsURL;
+import no.cantara.docsite.domain.external.GitHubApiReadmeURL;
+import no.cantara.docsite.domain.external.GitHubHtmlURL;
 import no.cantara.docsite.domain.external.GitHubRawRepoURL;
+import no.cantara.docsite.domain.external.JenkinsURL;
+import no.cantara.docsite.domain.external.ShieldsIOGroupCommitURL;
+import no.cantara.docsite.domain.external.ShieldsIOGroupReleaseURL;
+import no.cantara.docsite.domain.external.ShieldsIONoReposURL;
+import no.cantara.docsite.domain.external.SnykIOTestBadgeURL;
+import no.cantara.docsite.domain.external.SnykIOTestURL;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 
 import javax.json.bind.annotation.JsonbTransient;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,22 +31,54 @@ import java.util.Objects;
 /**
  * A repository definition contains information about the repo, the group it belongs to and service urls
  */
-public class ScmRepository extends ScmGroupRepository {
+public class ScmRepository implements Serializable {
 
     private static final long serialVersionUID = 4462535017419847061L;
 
+    public final Config config;
+    public final CacheRepositoryKey cacheRepositoryKey;
+    public final String id;
+    public final String description;
+    public final String defaultGroupRepoName;
+    public final GitHubHtmlURL repoURL;
     public final GitHubRawRepoURL rawRepoURL;
+    public final GitHubApiReadmeURL apiReadmeURL;
     public final GitHubApiContentsURL apiContentsURL;
     public final Map<String, ExternalURL> externalLinks = new LinkedHashMap<>(); // not immutable
 
-    ScmRepository(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
-        super(configuration, cacheRepositoryKey, id, description, defaultGroupRepoName, htmlRepoURL, -1);
+    ScmRepository(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, String configDisplayName, String configDescription, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
+        this.config = new Config(configDisplayName, configDescription);
+        this.cacheRepositoryKey = cacheRepositoryKey;
+        this.id = id;
+        this.description = description;
+        this.defaultGroupRepoName = defaultGroupRepoName;
+        this.repoURL = new GitHubHtmlURL(htmlRepoURL);
+        this.apiReadmeURL = new GitHubApiReadmeURL(this);
         this.rawRepoURL = new GitHubRawRepoURL(this);
         this.apiContentsURL = new GitHubApiContentsURL(this);
+        externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, this));
+        externalLinks.put(ShieldsIONoReposURL.KEY, new ShieldsIONoReposURL(""));
+        externalLinks.put(ShieldsIOGroupCommitURL.KEY, new ShieldsIOGroupCommitURL(this));
+        externalLinks.put(ShieldsIOGroupReleaseURL.KEY, new ShieldsIOGroupReleaseURL(this));
+        externalLinks.put(SnykIOTestURL.KEY, new SnykIOTestURL(this));
+        externalLinks.put(SnykIOTestBadgeURL.KEY, new SnykIOTestBadgeURL(this));
     }
 
-    public static ScmRepository of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
-        return new ScmRepository(configuration, repositoryDefinition, id, description, defaultGroupRepo, htmlRepoURL);
+    public static class Config implements Serializable {
+        private static final long serialVersionUID = -1697907617210696141L;
+
+        public final String displayName;
+        public final String description;
+
+        public Config(String displayName, String description) {
+            this.displayName = displayName;
+            this.description = description;
+        }
+    }
+
+
+    public static ScmRepository of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String configDisplayName, String configDescription,String id, String description, String defaultGroupRepo, String htmlRepoURL) {
+        return new ScmRepository(configuration, repositoryDefinition, configDisplayName, configDescription, id, description, defaultGroupRepo, htmlRepoURL);
     }
 
     @JsonbTransient
@@ -59,16 +100,22 @@ public class ScmRepository extends ScmGroupRepository {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ScmRepository)) return false;
-        if (!super.equals(o)) return false;
         ScmRepository that = (ScmRepository) o;
-        return Objects.equals(rawRepoURL, that.rawRepoURL) &&
+        return Objects.equals(config, that.config) &&
+                Objects.equals(getCacheRepositoryKey(), that.getCacheRepositoryKey()) &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(defaultGroupRepoName, that.defaultGroupRepoName) &&
+                Objects.equals(repoURL, that.repoURL) &&
+                Objects.equals(rawRepoURL, that.rawRepoURL) &&
+                Objects.equals(apiReadmeURL, that.apiReadmeURL) &&
                 Objects.equals(apiContentsURL, that.apiContentsURL) &&
                 Objects.equals(externalLinks, that.externalLinks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), rawRepoURL, apiContentsURL, externalLinks);
+        return Objects.hash(config, getCacheRepositoryKey(), id, description, defaultGroupRepoName, repoURL, rawRepoURL, apiReadmeURL, apiContentsURL, externalLinks);
     }
 
     @Override

@@ -1,15 +1,15 @@
 package no.cantara.docsite.domain.external;
 
-import no.cantara.docsite.domain.scm.ScmGroupRepository;
+import no.cantara.docsite.domain.scm.ScmRepository;
 
 import java.util.Objects;
 
-public class ShieldsIOGroupReleaseURL extends ExternalURL<ScmGroupRepository> {
+public class ShieldsIOGroupReleaseURL extends ExternalURL<ScmRepository> {
 
     private static final long serialVersionUID = 5485906572024332485L;
     public static final String KEY = "shieldsGroupRelease";
 
-    public ShieldsIOGroupReleaseURL(ScmGroupRepository internal) {
+    public ShieldsIOGroupReleaseURL(ScmRepository internal) {
         super(internal);
     }
 

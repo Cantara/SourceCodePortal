@@ -1,12 +1,9 @@
 package no.cantara.docsite.controller.handler;
 
 import io.undertow.server.HttpServerExchange;
-import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.scm.ScmCommitRevisionService;
-import no.cantara.docsite.domain.scm.ScmGroupRepository;
-import no.cantara.docsite.domain.scm.ScmGroupRepositoryService;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
 import no.cantara.docsite.web.WebContext;
@@ -28,10 +25,10 @@ public class DashboardHandler implements WebHandler {
         List<ScmCommitRevision> lastCommitRevisions = commitRevisionService.entrySet().values().stream().limit(5).collect(Collectors.toList());;
         templateVariables.put("lastCommitRevisions", lastCommitRevisions);
 
-        ScmGroupRepositoryService groupRepositoryService = new ScmGroupRepositoryService(cacheStore);
-        Map<CacheRepositoryKey, ScmGroupRepository> entrySet = groupRepositoryService.entrySet();
-        templateVariables.put("groupedRepos", entrySet);
-
+//        ScmGroupRepositoryService groupRepositoryService = new ScmGroupRepositoryService(cacheStore);
+//        Map<CacheRepositoryKey, AtomicLong> entrySet = groupRepositoryService.entrySet();
+//        templateVariables.put("repositoryGroups", entrySet);
+//
 //        for (RepositoryConfigBinding.Repo repo : cacheStore.getGroups()) {
 //            boolean hasReadme = (repo.defaultGroupRepo != null && !"".equals(repo.defaultGroupRepo));
 //            DashboardModel.Group group = new DashboardModel.Group(

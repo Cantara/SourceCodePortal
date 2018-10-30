@@ -37,9 +37,13 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-4" th:each="key : ${groupedRepos.keySet()}">
+            <div class="col-sm-4" th:each="key : ${repositoryGroups.keySet()}">
                 <div class="card">
-                    <p th:each="value : ${groupedRepos.get(key)}" th:text="${value.cacheRepositoryKey.repoName}"></p>
+                    <!--<p th:each="value : ${repositoryGroups.get(key)}" th:text="${value.defaultGroupRepoName}"></p>-->
+                    <span th:text="${repositoryGroups.get(key)}"></span>
+                    <p th:text="${key.groupId}">
+                        <span th:text="${repositoryGroups.get(key)}"></span>
+                    </p>
 
                     <div class="card-body text-center">
                         <h5 class="card-title">
