@@ -2,12 +2,9 @@ package no.cantara.docsite.controller.handler;
 
 import io.undertow.server.HttpServerExchange;
 import no.cantara.docsite.cache.CacheKey;
-import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.config.RepositoryConfigBinding;
-import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
-import no.cantara.docsite.domain.view.ContentsModel;
+import no.cantara.docsite.domain.scm.ScmRepositoryContentsService;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
 import no.cantara.docsite.web.WebContext;
@@ -31,36 +28,16 @@ public class ContentsHandler implements WebHandler {
             return false;
         }
 
+        ScmRepositoryContentsService repositoryContentsService = new ScmRepositoryContentsService(cacheStore);
         CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, resourceContext.getTuples().get(0).id, resourceContext.getTuples().get(1).resource);
-
-        ScmRepositoryContents contents = cacheStore.getReadmeContents().get(cacheKey);
+        ScmRepositoryContents contents = repositoryContentsService.get(cacheKey);
 
         if (contents == null) {
             LOG.error("Contents is NULL. Probably because it was not fetched due to rate limit issue!");
             return false;
         }
 
-        CacheRepositoryKey cacheRepositoryKey = cacheStore.getCacheRepositoryKey(cacheKey);
-        ScmRepository repository = cacheStore.getRepositories().get(cacheRepositoryKey);
-
-        ContentsModel model = new ContentsModel(repository, contents, contents.content);
-
-        for (RepositoryConfigBinding.Repo repo : cacheStore.getGroups()) {
-            boolean hasReadme = (repo.defaultGroupRepo != null && !"".equals(repo.defaultGroupRepo));
-            ContentsModel.Group group = new ContentsModel.Group(
-                    cacheStore.getRepositoryConfig().gitHub.organization,
-                    repo.repo,
-                    repo.branch,
-                    repo.groupId,
-                    repo.displayName,
-                    repo.description,
-                    hasReadme,
-                    String.format("/contents/%s/%s", repo.repo, repo.branch),
-                    String.format("/group/%s", repo.groupId));
-            model.groups.add(group);
-        }
-
-        templateVariables.put("model", model);
+        templateVariables.put("contents", contents);
 
         if (ThymeleafViewEngineProcessor.processView(exchange, cacheStore, webContext.asTemplateResource(), templateVariables)) {
             return true;
