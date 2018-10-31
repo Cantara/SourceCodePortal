@@ -45,6 +45,7 @@ public class CardHandler implements WebHandler {
         Set<ScmRepository> repos = repositoryGroups.getValue().stream().sorted(Comparator.comparing(c -> c.cacheRepositoryKey.repoName.toLowerCase())).collect(Collectors.toCollection(LinkedHashSet::new));
         ScmRepositoryGroup<Set<ScmRepository>> scmRepositoryGroup = new ScmRepositoryGroup<>(repos, repositoryConfig.displayName, repositoryConfig.description, repos.size());
         templateVariables.put("lastCommitRevisions", lastCommitRevisions);
+        templateVariables.put("groupId", groupId);
         templateVariables.put("cacheKey", key);
         templateVariables.put("repositoryGroup", scmRepositoryGroup);
 
