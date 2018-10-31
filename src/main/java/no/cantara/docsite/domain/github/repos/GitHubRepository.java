@@ -5,6 +5,8 @@ import no.cantara.docsite.util.JsonbFactory;
 import javax.json.bind.annotation.JsonbProperty;
 import java.util.Date;
 
+// https://api.github.com/orgs/Cantara/repos?type=master&per_page=500
+
 public class GitHubRepository {
 
     public String id;

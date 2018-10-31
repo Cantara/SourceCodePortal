@@ -4,32 +4,32 @@
       layout:decorate="~{/template.html}">
 
 <head>
-    <title>Getting started</title>
+    <title>Repsitory Group</title>
 </head>
 
 <body>
 
 <section layout:fragment="custom-content">
     <main role="main" class="container-fluid">
-        <h1 th:text="${repositoryConfig.displayName}"></h1>
-        <div th:text="${repositoryConfig.description}"></div>
+        <h1 th:text="${repositoryGroup.displayName}"></h1>
+        <div th:text="${repositoryGroup.description}"></div>
         <h4 style="padding-top: 0.5em;" class="display-6">Latest commits</h4>
-        <div th:each="commitRevision : ${model.lastCommitRevisions}">
+        <div th:each="commitRevision : ${lastCommitRevisions}">
             <div class="row">
                 <div class="col-sm-2">
-                    <img height="21" width="21" th:if="${commitRevision.author == null}" src="/img/github-anonymous.png"
-                         th:text="${(' ')+commitRevision.commit.commitAuthor.name}">
-                    <img height="21" width="21" th:if="${commitRevision.author != null}"
-                         th:src="${commitRevision.author.avatarUrl}"
-                         th:text="${(' ')+commitRevision.commit.commitAuthor.name}">
+                    <img height="21" width="21" th:if="${commitRevision.authorName == null}" src="/img/github-anonymous.png"
+                         th:text="${(' ')+commitRevision.authorName}">
+                    <img height="21" width="21" th:if="${commitRevision.authorName != null}"
+                         th:src="${commitRevision.avatarUrl}"
+                         th:text="${(' ')+commitRevision.authorName}">
                 </div>
-                <div class="col-sm-2" th:text="${#dates.format(commitRevision.commit.commitAuthor.date, 'yyyy-MM-dd HH:mm')}">col-sm</div>
+                <div class="col-sm-2" th:text="${#dates.format(commitRevision.date, 'yyyy-MM-dd HH:mm')}">col-sm</div>
                 <div class="col-sm-3" th:text="${commitRevision.projectId}">col-sm</div>
-                <div class="col-sm-5"><a th:href="${commitRevision.htmlUrl}" th:text="${commitRevision.commit.message}">col-sm</a></div>
+                <div class="col-sm-5"><a th:href="${commitRevision.htmlUrl}" th:text="${#strings.abbreviate(commitRevision.message,60)}">col-sm</a></div>
             </div>
         </div>
         <p class="lead" style="margin-top: 12px; margin-bottom: 24px">
-            <a class="btn btn-primary btn-sm" th:href="${('/commits/')+repositoryConfig.defaultGroupRepo}" role="button">View group commits</a>
+            <a class="btn btn-primary btn-sm" th:href="${('/commits/')+cacheKey.repoName}" role="button">View group commits</a>
         </p>
 
         <div>&#160</div>
@@ -48,38 +48,39 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="group : ${model.groups}">
+            <tr th:each="group : ${repositoryGroup.repository}">
                 <td>
-                    <a th:href="${group.readmeURI}" th:text="${group.repoName}"></a>
+                    <a th:href="${group.apiReadmeURL.internalURL}" th:text="${group.cacheRepositoryKey.repoName}"></a>
                 </td>
                 <td>
-                    <a style="text-decoration: none;" th:href="${group.repoURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                    <a style="text-decoration: none;" th:href="${group.repoURL.externalURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
                                                          src="/img/github-logo.svg"/></a>
-                    <a style="text-decoration: none;" th:if="${group.hasReadme}"
-                       th:href="${group.readmeURI}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                    <a style="text-decoration: none;" th:if="${group.apiReadmeURL != null}"
+                       th:href="${group.apiReadmeURL.internalURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
                                                          src="/img/doc.svg"/></a>
                     <a style="text-decoration: none;"
-                       th:href="${('/commits/')+group.repoName+('/')+group.branch}"><img
+                       th:href="${('/commits/')+group.cacheRepositoryKey.repoName+('/')+group.cacheRepositoryKey.branch}"><img
                             style="border: 0px; margin-top: 0; max-width: 16px;"
                             src="/img/octions.png"/></a>
                 </td>
                 <td>
-                    <a th:href="${('https://github.com/')+group.organization+('/')+group.repoName+('/issues')}">
-                        <img th:src="${group.githubIssues}"/>
+                    <a th:href="${('https://github.com/')+group.cacheRepositoryKey.organization+('/')+group.cacheRepositoryKey.repoName+('/issues')}">
+                        <img th:src="${group.externalLinks['shieldsIOGitHubIssuesURL'].externalURL}"/>
                     </a>
                 </td>
-                <td><img th:src="${group.groupRelease}"/></td>
-                <td><img th:src="${group.groupCommit}"/></td>
+                <td><img th:src="${group.externalLinks['shieldsGroupRelease'].externalURL}"/></td>
+                <td><img th:src="${group.externalLinks['shieldsGroupCommit'].externalURL}"/></td>
                 <td>
-                    <a th:href="${group.snyktestIOUrl}">
-                        <img th:src="${group.snykIOUrl}"/>
+                    <a th:href="${group.externalLinks['snykIOTestURL'].externalURL}">
+                        <img th:src="${group.externalLinks['snykIOTestBadgeURL'].externalURL}"
+                             onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/snyk-unknown-lightgrey.svg';" />
                     </a>
                 </td>
                 <td>In development</td>
                 <td>
                     <img src="../img/license-asl2.svg"/>
-                    <img th:src="${group.jenkinsURL}"
-                         onerror="if (this.src != 'error.jpg') this.src = '../img/build-unknown.svg';"/>
+                    <img th:src="${group.externalLinks['jenkins'].externalURL}"
+                         onerror="if (this.src != 'error.jpg') this.src = '/img/build-unknown.svg';"/>
                 </td>
             </tr>
             </tbody>

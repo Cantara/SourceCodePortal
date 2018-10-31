@@ -1,11 +1,11 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.domain.config.Repository;
-import no.cantara.docsite.domain.config.RepositoryConfig;
-import no.cantara.docsite.domain.github.commits.CommitRevision;
-import no.cantara.docsite.domain.github.contents.RepositoryContents;
-import no.cantara.docsite.domain.github.releases.CreatedTagEvent;
+import no.cantara.docsite.domain.config.RepositoryConfigBinding;
+import no.cantara.docsite.domain.github.releases.GitHubCreatedTagEvent;
 import no.cantara.docsite.domain.maven.MavenPOM;
+import no.cantara.docsite.domain.scm.ScmCommitRevision;
+import no.cantara.docsite.domain.scm.ScmRepository;
+import no.cantara.docsite.domain.scm.ScmRepositoryContents;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -22,18 +22,27 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CacheStore {
 
-    static final Logger LOG = LoggerFactory.getLogger(CacheStore.class);
+    public static final String CACHE_KEYS = "cacheKeys";
+    public static final String CACHE_GROUP_KEYS = "cacheGroupKeys";
+    public static final String CACHE_REPOSITORY_KEYS = "cacheRepositoryKeys";
+    public static final String REPOSITORIES = "repositories";
+    public static final String MAVEN_PROJECTS = "mavenProject";
+    public static final String CONTENTS = "contents";
+    public static final String COMMITS = "commits";
+    public static final String RELEASES = "releases";
+    public static final String CANTARA_WIKI = "cantaraWiki";
+
+    private static final Logger LOG = LoggerFactory.getLogger(CacheStore.class);
 
     final DynamicConfiguration configuration;
     final CacheManager cacheManager;
-    final RepositoryConfig repositoryConfig;
+    final RepositoryConfigBinding repositoryConfig;
 
     CacheStore(DynamicConfiguration configuration, CacheManager cacheManager) {
         this.configuration = configuration;
@@ -41,87 +50,105 @@ public class CacheStore {
         this.repositoryConfig = load();
     }
 
-    RepositoryConfig load() {
+    RepositoryConfigBinding load() {
         try (InputStream json = ClassLoader.getSystemResourceAsStream("conf/config.json")) {
-            return JsonbFactory.instance().fromJson(json, RepositoryConfig.class);
+            return JsonbFactory.instance().fromJson(json, RepositoryConfigBinding.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     void initialize() {
-        if (cacheManager.getCache("cacheKeys") == null) {
+        if (cacheManager.getCache(CACHE_KEYS) == null) {
             LOG.info("Creating CacheKeys cache");
-            MutableConfiguration<CacheKey, CacheGroupKey> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheKey, CacheRepositoryKey> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("cacheKeys", cacheConfig);
+            cacheManager.createCache(CACHE_KEYS, cacheConfig);
         }
 
-        if (cacheManager.getCache("cacheGroupKeys") == null) {
+        if (cacheManager.getCache(CACHE_GROUP_KEYS) == null) {
             LOG.info("Creating CacheGroupKeys cache");
-            MutableConfiguration<CacheGroupKey, CacheKey> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheGroupKey, String> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("cacheGroupKeys", cacheConfig);
+            cacheManager.createCache(CACHE_GROUP_KEYS, cacheConfig);
         }
 
-        if (cacheManager.getCache("repositoryGroup") == null) {
-            LOG.info("Creating Grouped repositories cache");
-            MutableConfiguration<CacheGroupKey, Repository> cacheConfig = new MutableConfiguration<>();
+        if (cacheManager.getCache(CACHE_REPOSITORY_KEYS) == null) {
+            LOG.info("Creating CacheRepositoryKeys cache");
+            MutableConfiguration<CacheRepositoryKey, CacheKey> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("repositoryGroup", cacheConfig);
+            cacheManager.createCache(CACHE_REPOSITORY_KEYS, cacheConfig);
         }
 
-        if (cacheManager.getCache("project") == null) {
-            LOG.info("Creating Project cache");
+        if (cacheManager.getCache(REPOSITORIES) == null) {
+            LOG.info("Creating Repositories cache");
+            MutableConfiguration<CacheRepositoryKey, ScmRepository> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            cacheManager.createCache(REPOSITORIES, cacheConfig);
+        }
+
+        if (cacheManager.getCache(MAVEN_PROJECTS) == null) {
+            LOG.info("Creating Maven Projects cache");
             MutableConfiguration<CacheKey, MavenPOM> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("project", cacheConfig);
+            cacheManager.createCache(MAVEN_PROJECTS, cacheConfig);
         }
 
-        if (cacheManager.getCache("page") == null) {
-            LOG.info("Creating Page cache");
-            MutableConfiguration<CacheKey, RepositoryContents> cacheConfig = new MutableConfiguration<>();
+        if (cacheManager.getCache(CONTENTS) == null) {
+            LOG.info("Creating Contents cache");
+            MutableConfiguration<CacheKey, ScmRepositoryContents> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("page", cacheConfig);
+            cacheManager.createCache(CONTENTS, cacheConfig);
         }
 
-        if (cacheManager.getCache("commit") == null) {
-            LOG.info("Creating Commit cache");
-            MutableConfiguration<CacheShaKey, CommitRevision> cacheConfig = new MutableConfiguration<>();
+        if (cacheManager.getCache(COMMITS) == null) {
+            LOG.info("Creating Commits cache");
+            MutableConfiguration<CacheShaKey, ScmCommitRevision> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("commit", cacheConfig);
+            cacheManager.createCache(COMMITS, cacheConfig);
         }
 
-        if (cacheManager.getCache("release") == null) {
-            LOG.info("Creating Release cache");
-            MutableConfiguration<CacheKey, CreatedTagEvent> cacheConfig = new MutableConfiguration<>();
+        if (cacheManager.getCache(RELEASES) == null) {
+            LOG.info("Creating Releases cache");
+            MutableConfiguration<CacheKey, GitHubCreatedTagEvent> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("release", cacheConfig);
+            cacheManager.createCache(RELEASES, cacheConfig);
         }
 
-        if (cacheManager.getCache("cantaraWiki") == null) {
+        if (cacheManager.getCache(CANTARA_WIKI) == null) {
             LOG.info("Creating Cantara Wiki cache");
             MutableConfiguration<CacheCantaraWikiKey, String> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-            cacheManager.createCache("cantaraWiki", cacheConfig);
+            cacheManager.createCache(CANTARA_WIKI, cacheConfig);
         }
+    }
+
+    public List<ScmRepository> getRepositoryGroupsByGroupId(String groupId) {
+        List<ScmRepository> repositories = new ArrayList<>();
+        getRepositories().forEach(a -> {
+            if (a.getKey().compareTo(groupId)) {
+                repositories.add(a.getValue());
+            }
+        });
+        return repositories;
     }
 
     public String getConfiguredRepositories() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
-        for(RepositoryConfig.Repo repo : getGroups()) {
+        for (RepositoryConfigBinding.Repo repo : getGroups()) {
             JsonArrayBuilder groupBuilder = Json.createArrayBuilder();
-            List<Repository> repositories = getRepositoryGroupsByGroupId(repo.groupId);
-            for(Repository repository : repositories) {
-                groupBuilder.add(repository.cacheKey.asIdentifier());
+            List<ScmRepository> repositories = getRepositoryGroupsByGroupId(repo.groupId);
+            for (ScmRepository repository : repositories) {
+                groupBuilder.add(repository.cacheRepositoryKey.asIdentifier());
             }
             builder.add(repo.groupId, groupBuilder);
         }
@@ -133,96 +160,60 @@ public class CacheStore {
         return cacheManager;
     }
 
-    public RepositoryConfig getRepositoryConfig() {
+    public RepositoryConfigBinding getRepositoryConfig() {
         return repositoryConfig;
     }
 
-    public RepositoryConfig.Repo getGroupByGroupId(String groupId) {
-        Objects.requireNonNull(groupId);
-        for(RepositoryConfig.Repo repo : repositoryConfig.gitHub.repos) {
-            if (groupId.equals(repo.groupId)) {
-                return repo;
-            }
-        }
-        return null;
-    }
-
-    public List<RepositoryConfig.Repo> getGroups() {
-        List<RepositoryConfig.Repo> groups = new ArrayList<>();
+    public List<RepositoryConfigBinding.Repo> getGroups() {
+        List<RepositoryConfigBinding.Repo> groups = new ArrayList<>();
         repositoryConfig.gitHub.repos.forEach(r -> {
             groups.add(r);
         });
         return groups;
     }
 
-    public Cache<CacheKey, CacheGroupKey> getCacheKeys() {
-        return cacheManager.getCache("cacheKeys");
+    public Cache<CacheKey, CacheRepositoryKey> getCacheKeys() {
+        return cacheManager.getCache(CACHE_KEYS);
     }
 
-    public Cache<CacheGroupKey,CacheKey> getCacheGroupKeys() {
-        return cacheManager.getCache("cacheGroupKeys");
+    public Cache<CacheGroupKey, String> getCacheGroupKeys() {
+        return cacheManager.getCache(CACHE_GROUP_KEYS);
     }
 
-    // returns the first found group key
-    public CacheGroupKey getCacheGroupKey(CacheKey cacheKey) {
-        Set<CacheGroupKey> groupKeys = StreamSupport.stream(getCacheGroupKeys().spliterator(), true)
-                .filter(entry -> entry.getValue().equals(cacheKey))
-                .map(Cache.Entry::getKey)
-                .collect(Collectors.toCollection(LinkedHashSet::new));
-        return groupKeys.stream().filter(entry -> entry.repoName.toLowerCase().contains(entry.groupId.toLowerCase())).findFirst()
-                .orElse(groupKeys.iterator().hasNext() ? groupKeys.iterator().next() : null);
+    public Cache<CacheRepositoryKey, CacheKey> getCacheRepositoryKeys() {
+        return cacheManager.getCache(CACHE_REPOSITORY_KEYS);
     }
 
-    // returns the all matched group keys
-    public Set<CacheGroupKey> getCacheGroupKeys(CacheKey cacheKey) {
-        return StreamSupport.stream(getCacheGroupKeys().spliterator(), true)
+    // used by FetchGitHubCommitRevision(s)
+    public Set<CacheRepositoryKey> getCacheRepositoryKeys(CacheKey cacheKey) {
+        return StreamSupport.stream(getCacheRepositoryKeys().spliterator(), true)
                 .filter(entry -> entry.getValue().equals(cacheKey))
                 .map(Cache.Entry::getKey)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
-    public Cache<CacheGroupKey, Repository> getRepositoryGroups() {
-        return cacheManager.getCache("repositoryGroup");
+    public Cache<CacheRepositoryKey, ScmRepository> getRepositories() {
+        return cacheManager.getCache(REPOSITORIES);
     }
 
-    public List<Repository> getRepositoryGroupsByGroupId(String groupId) {
-        List<Repository> repositories = new ArrayList<>();
-        getRepositoryGroups().forEach(a -> {
-            if (a.getKey().compareTo(groupId)) {
-                repositories.add(a.getValue());
-            }
-        });
-        return repositories;
+    public Cache<CacheKey, MavenPOM> getMavenProjects() {
+        return cacheManager.getCache(MAVEN_PROJECTS);
     }
 
-    public List<Repository> getRepositoryGroupsByName(String name) {
-        List<Repository> repositories = new ArrayList<>();
-        getRepositoryGroups().forEach(a -> {
-            if (name.equals(a.getValue().name)) {
-                repositories.add(a.getValue());
-            }
-        });
-        return repositories;
+    public Cache<CacheKey, ScmRepositoryContents> getReadmeContents() {
+        return cacheManager.getCache(CONTENTS);
     }
 
-    public Cache<CacheKey, MavenPOM> getProjects() {
-        return cacheManager.getCache("project");
+    public Cache<CacheShaKey, ScmCommitRevision> getCommits() {
+        return cacheManager.getCache(COMMITS);
     }
 
-    public Cache<CacheKey, RepositoryContents> getPages() {
-        return cacheManager.getCache("page");
-    }
-
-    public Cache<CacheShaKey, CommitRevision> getCommits() {
-        return cacheManager.getCache("commit");
-    }
-
-    public Cache<CacheKey, CreatedTagEvent> getReleases() {
-        return cacheManager.getCache("release");
+    public Cache<CacheKey, GitHubCreatedTagEvent> getReleases() {
+        return cacheManager.getCache(RELEASES);
     }
 
     public Cache<CacheCantaraWikiKey, String> getCantaraWiki() {
-        return cacheManager.getCache("cantaraWiki");
+        return cacheManager.getCache(CANTARA_WIKI);
     }
 
 }

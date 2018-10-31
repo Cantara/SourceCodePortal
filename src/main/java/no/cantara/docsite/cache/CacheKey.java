@@ -19,10 +19,6 @@ public class CacheKey implements Serializable {
         this.branch = branch;
     }
 
-    public String asIdentifier() {
-        return String.format("%s/%s/%s", organization, repoName, branch);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,8 +39,9 @@ public class CacheKey implements Serializable {
         return JsonbFactory.asString(this);
     }
 
+    @Deprecated
     public static CacheKey of(String organization, String repoName) {
-        return new CacheKey(organization, repoName, null);
+        return new CacheKey(organization, repoName, "master");
     }
 
     public static CacheKey of(String organization, String repoName, String branch) {

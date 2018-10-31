@@ -44,18 +44,20 @@ public class PushCommitRevisionTest {
             dummyCommits2 = CommonUtil.writeInputToOutputStream(json).toString();
         }
 
-        CommitRevision[] dummyCommitEvent1 = JsonbFactory.instance().fromJson(dummyCommits1, CommitRevision[].class);
+        GitHubCommitRevision[] dummyCommitEvent1 = JsonbFactory.instance().fromJson(dummyCommits1, GitHubCommitRevision[].class);
 //        LOG.trace("event1: {}", Arrays.stream(dummyCommitEvent1).map(CommitRevision::toString).collect(Collectors.joining("\n")));
 
-        for(CommitRevision commitRevision : dummyCommitEvent1) {
-            cacheStore.getCommits().put(CacheShaKey.of("Cantara", "dummyRepo", "Dummy", "master", commitRevision.sha), commitRevision);
+        for(GitHubCommitRevision commitRevision : dummyCommitEvent1) {
+            CacheShaKey cacheShaKey = CacheShaKey.of("Cantara", "dummyRepo", "Dummy", "master", commitRevision.sha);
+            cacheStore.getCommits().put(cacheShaKey, commitRevision.asCommitRevision(cacheShaKey));
         }
 
-        CommitRevision[] dummyCommitEvent2 = JsonbFactory.instance().fromJson(dummyCommits2, CommitRevision[].class);
+        GitHubCommitRevision[] dummyCommitEvent2 = JsonbFactory.instance().fromJson(dummyCommits2, GitHubCommitRevision[].class);
 //        LOG.trace("event2: {}", Arrays.stream(dummyCommitEvent2).map(CommitRevision::toString).collect(Collectors.joining("\n")));
 
-        for(CommitRevision commitRevision : dummyCommitEvent2) {
-            cacheStore.getCommits().put(CacheShaKey.of("Cantara", "dummyRepo", "Dummy2", "master", commitRevision.sha), commitRevision);
+        for(GitHubCommitRevision commitRevision : dummyCommitEvent2) {
+            CacheShaKey cacheShaKey = CacheShaKey.of("Cantara", "dummyRepo", "Dummy2", "master", commitRevision.sha);
+            cacheStore.getCommits().put(cacheShaKey, commitRevision.asCommitRevision(cacheShaKey));
         }
 
         AtomicInteger count = new AtomicInteger(0);

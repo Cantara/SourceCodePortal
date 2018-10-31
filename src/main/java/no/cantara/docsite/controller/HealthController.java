@@ -3,9 +3,11 @@ package no.cantara.docsite.controller;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
+import no.cantara.docsite.cache.CacheHelper;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.executor.ExecutorService;
+import no.cantara.docsite.executor.ScheduledExecutorService;
 import no.cantara.docsite.health.GitHubRateLimit;
 import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.util.JsonbFactory;
@@ -21,7 +23,6 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -32,11 +33,13 @@ public class HealthController implements HttpHandler {
     private final DynamicConfiguration configuration;
     private final ExecutorService executorService;
     private final CacheStore cacheStore;
+    private ScheduledExecutorService scheduledExecutorService;
     private ResourceContext resourceContext;
 
-    public HealthController(DynamicConfiguration configuration, ExecutorService executorService, CacheStore cacheStore, ResourceContext resourceContext) {
+    public HealthController(DynamicConfiguration configuration, ExecutorService executorService, ScheduledExecutorService scheduledExecutorService, CacheStore cacheStore, ResourceContext resourceContext) {
         this.configuration = configuration;
         this.executorService = executorService;
+        this.scheduledExecutorService = scheduledExecutorService;
         this.cacheStore = cacheStore;
         this.resourceContext = resourceContext;
     }
@@ -70,8 +73,9 @@ public class HealthController implements HttpHandler {
         }
 
         boolean healthyExecutorService = executorService.getThreadPool().getActiveCount() > 0;
+        boolean healthyScheduledExecutorService = !scheduledExecutorService.getThreadPool().isTerminated();
         boolean healthyCacheStore = !cacheStore.getCacheManager().isClosed();
-        String status = (healthyExecutorService && healthyCacheStore ? "OK" : "FAILURE");
+        String status = (healthyExecutorService && healthyScheduledExecutorService && healthyCacheStore ? "OK" : "FAILURE");
 
         JsonObjectBuilder builder = Json.createObjectBuilder();
 
@@ -86,6 +90,7 @@ public class HealthController implements HttpHandler {
 
         {
             serviceStatusBuilder.add("executor-service", healthyExecutorService ? "up" : "terminated");
+            serviceStatusBuilder.add("scheduled-executor-service", healthyScheduledExecutorService ? "up" : "terminated");
             serviceStatusBuilder.add("cache-store", healthyExecutorService ? "up" : "down");
             serviceStatusBuilder.add("github-last-seen", Instant.ofEpochMilli(HealthResource.instance().getGitHubLastSeen()).toString());
         }
@@ -114,49 +119,14 @@ public class HealthController implements HttpHandler {
 
         {
             builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getCacheKeys().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("cache-keys", count.get());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getCacheGroupKeys().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("cache-group-keys", count.get());
-        }
-
-        {
+            cacheBuilder.add("cache-keys", CacheHelper.cacheSize(cacheStore.getCacheKeys()));
+            cacheBuilder.add("cache-group-keys", CacheHelper.cacheSize(cacheStore.getCacheRepositoryKeys()));
             cacheBuilder.add("groups", cacheStore.getGroups().size());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getRepositoryGroups().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("repositories", count.get());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getProjects().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("maven-projects", count.get());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getPages().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("pages", count.get());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getCommits().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("commits", count.get());
-        }
-
-        {
-            AtomicInteger count = new AtomicInteger(0);
-            cacheStore.getReleases().iterator().forEachRemaining(a -> count.incrementAndGet());
-            cacheBuilder.add("releases", count.get());
+            cacheBuilder.add("repositories", CacheHelper.cacheSize(cacheStore.getRepositories()));
+            cacheBuilder.add("maven-projects", CacheHelper.cacheSize(cacheStore.getMavenProjects()));
+            cacheBuilder.add("contents", CacheHelper.cacheSize(cacheStore.getReadmeContents()));
+            cacheBuilder.add("commits", CacheHelper.cacheSize(cacheStore.getCommits()));
+            cacheBuilder.add("releases", CacheHelper.cacheSize(cacheStore.getReleases()));
         }
 
         builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());

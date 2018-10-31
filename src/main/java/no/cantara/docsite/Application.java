@@ -1,22 +1,24 @@
 package no.cantara.docsite;
 
-import com.netflix.hystrix.HystrixCommandProperties;
-import com.netflix.hystrix.HystrixThreadPoolProperties;
 import io.undertow.Undertow;
+import no.cantara.docsite.cache.CacheCantaraWikiKey;
 import no.cantara.docsite.cache.CacheInitializer;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.controller.ApplicationController;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
-import no.cantara.docsite.domain.github.contents.PreFetchRepositoryContents;
+import no.cantara.docsite.domain.confluence.cantara.FetchCantaraWikiTask;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.ScheduledExecutorService;
+import no.cantara.docsite.executor.ScheduledWorker;
 import no.cantara.docsite.health.HealthResource;
+import no.cantara.docsite.prefetch.PreFetchRepositoryContents;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class Application {
 
@@ -59,6 +61,7 @@ public class Application {
                 port,
                 configuration,
                 executorService,
+                scheduledExecutorService,
                 cacheStore
         );
 
@@ -82,13 +85,6 @@ public class Application {
         this.scheduledExecutorService = scheduledExecutorService;
         this.cacheStore = cacheStore;
         this.configLoader = configLoader;
-        HystrixCommandProperties.Setter()
-                .withExecutionTimeoutInMilliseconds(2500)
-                .withExecutionIsolationSemaphoreMaxConcurrentRequests(25);
-        HystrixThreadPoolProperties.Setter()
-                .withMaxQueueSize(100)
-                .withQueueSizeRejectionThreshold(100)
-                .withCoreSize(4);
         this.server = Undertow.builder()
                 .addHttpListener(port, host)
                 .setHandler(applicationController)
@@ -100,6 +96,13 @@ public class Application {
     }
 
     public void enableScheduledExecutorService() {
+        ScheduledWorker scheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.tasks.interval"), TimeUnit.SECONDS);
+        scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
+        scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
+        scheduledExecutorService.queue(scheduledWorker);
+        // initate wiki task ScheduledJenkinsTasks
+        // initate wiki task ScheduledSnykTasks
+
         scheduledExecutorService.start();
     }
 
@@ -113,7 +116,7 @@ public class Application {
     }
 
     public void enablePreFetch() {
-        if (!cacheStore.getRepositoryGroups().iterator().hasNext()) {
+        if (!cacheStore.getRepositories().iterator().hasNext()) {
             enableConfigLoader();
         }
         if (configuration.evaluateToBoolean("cache.prefetch")) {

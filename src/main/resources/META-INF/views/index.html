@@ -16,19 +16,19 @@
         </div>
         <div class="jumbotron">
             <h4 class="display-6">Latest commits</h4>
-            <div th:each="commitRevision : ${model.lastCommitRevisions}">
+            <div th:each="commitRevision : ${lastCommitRevisions}">
                 <div class="row">
                     <div class="col-sm-2">
-                        <img height="21" width="21" th:if="${commitRevision.author == null}"
-                             src="/img/github-anonymous.png" th:text="${(' ')+commitRevision.commit.commitAuthor.name}">
-                        <img height="21" width="21" th:if="${commitRevision.author != null}"
-                             th:src="${commitRevision.author.avatarUrl}"
-                             th:text="${(' ')+commitRevision.commit.commitAuthor.name}">
+                        <img height="21" width="21" th:if="${commitRevision.authorName == null}"
+                             src="/img/github-anonymous.png" th:text="${(' ')+commitRevision.authorName}">
+                        <img height="21" width="21" th:if="${commitRevision.authorName != null}"
+                             th:src="${commitRevision.avatarUrl}"
+                             th:text="${(' ')+commitRevision.authorName}">
                     </div>
-                    <div class="col-sm-2" th:text="${#dates.format(commitRevision.commit.commitAuthor.date, 'yyyy-MM-dd HH:mm')}">col-sm</div>
+                    <div class="col-sm-2" th:text="${#dates.format(commitRevision.date, 'yyyy-MM-dd HH:mm')}">col-sm</div>
                     <div class="col-sm-3" th:text="${commitRevision.projectId}">col-sm</div>
                     <div class="col-sm-4"><a th:href="${commitRevision.htmlUrl}"
-                                             th:text="${commitRevision.commit.message}">col-sm</a></div>
+                                             th:text="${#strings.abbreviate(commitRevision.message,60)}">col-sm</a></div>
                 </div>
             </div>
             <p class="lead" style="margin-top: 12px; margin-bottom: 24px">
@@ -37,46 +37,52 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-4" th:each="group : ${model.groups}">
-                <div class="card">
+            <div class="col-sm-4" th:each="key : ${repositoryGroups.keySet()}">
+                <div class="card" th:with="model=${repositoryGroups.get(key)}">
                     <div class="card-body text-center">
                         <h5 class="card-title">
-                            <a style="text-decoration: none;" th:href="${('/group/')+group.groupId}" class="card-link"
-                               th:text="${group.displayName}">Show</a>&#160;
-                            <a style="text-decoration: none;" th:href="${group.repoURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
-                                                                 src="/img/github-logo.svg"/></a>
-                            <a style="text-decoration: none;" th:if="${group.hasReadme}"
-                               th:href="${group.readmeURI}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                            <a style="text-decoration: none;" th:href="${('/group/')+key.groupId}" class="card-link"
+                               th:text="${model.displayName}">Show</a>&#160;
+                            <a style="text-decoration: none;" th:href="${model.repository.repoURL.externalURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                                                                                              src="/img/github-logo.svg"/></a>
+                            <a style="text-decoration: none;" th:if="${model.repository.apiReadmeURL != null}"
+                               th:href="${model.repository.apiReadmeURL.internalURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
                                                                  src="/img/doc.svg"/></a>
                             <a style="text-decoration: none;"
-                               th:href="${('/commits/')+group.groupId}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
-                                                                 src="/img/octions.png"/></a>
+                               th:href="${('/commits/')+key.groupId}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                                                                             src="/img/octions.png"/></a>
                         </h5>
-                        <p class="card-text" th:text="${group.description}">Some quick example text to build on the card
+                        <p class="card-text" th:text="${model.repository.description}">Some quick example text to build on the card
                             title</p>
                         <table class="table">
                             <tbody>
                             <tr scope="row">
-                                <td><img th:src="${group.no_repos}"
-                                         onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/repos-1-lightgrey.svg';"/>
-                                </td>
-                                <td><img th:src="${group.groupCommit}"/>
+                                <td>
+                                    <img th:if="${model.numberOfRepos == 0}" th:src="${model.repository.externalLinks['shieldRepos'].externalURL}"/>
+                                    <img th:if="${model.numberOfRepos > 0}" th:src="${model.repository.externalLinks['shieldRepos'].getNumberOfReposURL(model.numberOfRepos)}"
+                                         onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/repos-1-lightgrey.svg';" />
                                 </td>
                                 <td>
-                                    <a th:href="${group.snyktestIOUrl}">
-                                        <img th:src="${group.snykIOUrl}"
-                                             onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/snyk-unknown-lightgrey.svg';"/>
+                                    <img th:src="${model.repository.externalLinks['shieldsGroupCommit'].getExternalGroupURL}"/>
+                                </td>
+                                <td>
+                                    <a th:href="${model.repository.externalLinks['snykIOTestURL'].getExternalGroupURL}">
+                                        <img th:src="${model.repository.externalLinks['snykIOTestBadgeURL'].getExternalGroupURL}"
+                                             onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/snyk-unknown-lightgrey.svg';" />
                                     </a>
                                 </td>
                             </tr>
                             <tr scope="row">
-                                <td><img th:src="${group.groupStatus}"
+                                <td>
+                                    <img th:src="${model.repository.externalLinks['shieldsGroupCommit'].getExternalGroupURL}"
                                          onerror="if (this.src != 'error.jpg') this.src = 'img/license-asl2.svg';"/>
                                 </td>
-                                <td><img th:src="${group.groupRelease}"
+                                <td>
+                                    <img th:src="${model.repository.externalLinks['shieldsGroupRelease'].getExternalGroupURL}"
                                          onerror="if (this.src != 'error.jpg') this.src = 'img/release-unknown.svg';"/>
                                 </td>
-                                <td><img th:src="${group.jenkinsURL}"
+                                <td>
+                                    <img th:src="${model.repository.externalLinks['jenkins'].getExternalGroupURL}"
                                          onerror="if (this.src != 'error.jpg') this.src = 'img/build-unknown.svg';"/>
                                 </td>
                             </tr>

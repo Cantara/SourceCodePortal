@@ -4,14 +4,20 @@
     "organization": "Cantara",
     "repos": [
       {
-        "groupId": "SourceCodePortal-t",
+        "groupId": "SourceCodePortal",
+        "display-name": "Source Code Portal",
+        "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
         "repo": "SourceCodePortal",
-        "branch": "master"
+        "branch": "master",
+        "default-group-repo": "SourceCodePortal"
       },
       {
-        "groupId": "Whydah-t",
-        "repo": "Whydah-*",
-        "branch": "master"
+        "groupId": "Whydah",
+        "display-name": "Whydah IAM and SSO Platform",
+        "description": "Defcon 5 grade IAM and SSO security solution",
+        "repo": "Whydah*",
+        "branch": "master",
+        "default-group-repo": "Whydah-SecurityTokenService"
       }
     ]
   }

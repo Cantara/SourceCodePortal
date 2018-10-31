@@ -3,13 +3,13 @@ package no.cantara.docsite.controller;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
-import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.config.Repository;
-import no.cantara.docsite.domain.github.commits.FetchCommitRevisionTask;
-import no.cantara.docsite.domain.github.commits.PushCommitEvent;
-import no.cantara.docsite.domain.github.contents.FetchContentsTask;
+import no.cantara.docsite.domain.github.commits.FetchGitHubCommitRevisionTask;
+import no.cantara.docsite.domain.github.commits.GitHubPushCommitEvent;
+import no.cantara.docsite.domain.github.contents.FetchGitHubContentsTask;
+import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.util.JsonbFactory;
@@ -118,15 +118,15 @@ class GithubWebhookController implements HttpHandler {
                 if ("push".equals(xHubEvent)) {
                     LOG.debug("Received Push Event!");
 
-                    PushCommitEvent pushCommitEvent = JsonbFactory.instance().fromJson(payload, PushCommitEvent.class);
+                    GitHubPushCommitEvent pushCommitEvent = JsonbFactory.instance().fromJson(payload, GitHubPushCommitEvent.class);
 
                     // ------------------------------------------------------------------------------------------------------
                     // Github Commit Event
                     // ------------------------------------------------------------------------------------------------------
                     if (pushCommitEvent.isCodeCommit()) {
                         CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name, pushCommitEvent.getBranch());
-                        for (PushCommitEvent.Commit commit : pushCommitEvent.commits) {
-                            executorService.queue(new FetchCommitRevisionTask(configuration, executorService, cacheStore, cacheKey, commit.id));
+                        for (GitHubPushCommitEvent.Commit commit : pushCommitEvent.commits) {
+                            executorService.queue(new FetchGitHubCommitRevisionTask(configuration, executorService, cacheStore, cacheKey, commit.id));
                         }
                     }
 
@@ -135,12 +135,12 @@ class GithubWebhookController implements HttpHandler {
                     // ------------------------------------------------------------------------------------------------------
                     if (pushCommitEvent.isPageCommit()) {
                         CacheKey cacheKey = CacheKey.of(pushCommitEvent.repository.owner.name, pushCommitEvent.repository.name, pushCommitEvent.getBranch());
-                        CacheGroupKey cacheGroupKey = cacheStore.getCacheKeys().get(cacheKey);
-                        Repository repository = cacheStore.getRepositoryGroups().get(cacheGroupKey);
+                        CacheRepositoryKey cacheRepositoryKey = cacheStore.getCacheKeys().get(cacheKey);
+                        ScmRepository repository = cacheStore.getRepositories().get(cacheRepositoryKey);
                         // TODO if there are page changes in multiple commits they will not be handled
                         String commitId = pushCommitEvent.headCommit.id;
                         for (String modifiedFile : pushCommitEvent.headCommit.modifiedList) {
-                            executorService.queue(new FetchContentsTask(configuration, executorService, cacheStore, cacheKey, repository.contentsURL, modifiedFile, commitId));
+                            executorService.queue(new FetchGitHubContentsTask(configuration, executorService, cacheStore, cacheKey, repository.apiContentsURL, modifiedFile, commitId));
                         }
                     }
                 }

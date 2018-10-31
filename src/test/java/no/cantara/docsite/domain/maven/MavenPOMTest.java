@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.maven;
 
 import no.cantara.docsite.client.HttpRequests;
 import no.cantara.docsite.commands.GetGitHubCommand;
-import no.cantara.docsite.domain.github.contents.RepositoryContents;
+import no.cantara.docsite.domain.github.contents.GitHubRepositoryContents;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
@@ -44,7 +44,7 @@ public class MavenPOMTest {
                 HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = command.execute();
         if (response.statusCode() == HTTP_OK) {
-            RepositoryContents repositoryContents = JsonbFactory.instance().fromJson(response.body(), RepositoryContents.class);
+            GitHubRepositoryContents repositoryContents = JsonbFactory.instance().fromJson(response.body(), GitHubRepositoryContents.class);
             MavenPOM mavenPom = FetchMavenPOMTask.parse(repositoryContents.content);
             LOG.trace("pom: {}\n{}", repositoryContents, mavenPom);
         }

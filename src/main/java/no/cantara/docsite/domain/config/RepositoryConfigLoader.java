@@ -1,11 +1,12 @@
 package no.cantara.docsite.domain.config;
 
-import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.repos.GitHubRepository;
 import no.cantara.docsite.domain.github.repos.RepositoryVisibility;
+import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -52,28 +53,31 @@ public class RepositoryConfigLoader {
 
     public void load() {
         List<GitHubRepository> result = getOrganizationRepos(cacheStore.getRepositoryConfig().gitHub.organization);
+        for (RepositoryConfigBinding.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
 
-        for(RepositoryConfig.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
+            /*
+                issue: group all repos -- not all repos has defaultGroupRepo. What to do?
+
+                reositories<CacheRepositoryKey, ScmRepository> <- key contains isGroup. A set needs to be built the ScmRepositoryService
+                in order to use Map<CacheRepositoryKey, Set<ScmRepository>> groupedRepositories
+             */
+
             Pattern pattern = Pattern.compile(repoConfig.repo);
             for (GitHubRepository repo : result) {
                 String repoName = repo.name;
+                boolean isGroup = repoName.equalsIgnoreCase(repoConfig.defaultGroupRepo);
                 Matcher matcher = pattern.matcher(repoName);
                 if (matcher.find()) {
                     CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repoName, repoConfig.branch);
-                    String rawRepoURL = String.format("https://raw.githubusercontent.com/%s/%s/%s/", cacheKey.organization, cacheKey.repoName, cacheKey.branch);
-                    String readmeURL = String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", cacheKey.organization, cacheKey.repoName, cacheKey.branch);
-                    String contentsURL = String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", cacheKey.organization, cacheKey.repoName, "%s", "%s");
-                    CacheGroupKey cacheGroupKey = CacheGroupKey.of(cacheKey, repoConfig.groupId);
-//                    LOG.info("Cache cacheGroupKey: {}", cacheGroupKey);
-                    cacheStore.getCacheKeys().put(cacheKey, cacheGroupKey);
-                    cacheStore.getCacheGroupKeys().put(cacheGroupKey, cacheKey);
-                    // copy relevant repo info to Repository instance
-                    Repository repository = new Repository(cacheKey, repo.id, repo.name, repoConfig.defaultGroupRepo, repo.description, repo.htmlUrl, rawRepoURL, readmeURL, contentsURL);
-                    cacheStore.getRepositoryGroups().put(cacheGroupKey, repository);
+                    CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repoName, repoConfig.branch, repoConfig.groupId, isGroup);
+                    cacheStore.getCacheKeys().put(cacheKey, cacheRepositoryKey);
+                    cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
+                    cacheStore.getCacheGroupKeys().put(cacheRepositoryKey.asCacheGroupKey(), cacheRepositoryKey.groupId);
+                    ScmRepository scmRepository = ScmRepository.of(configuration, cacheRepositoryKey, repoConfig.displayName, repoConfig.description,
+                            repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
+                    cacheStore.getRepositories().put(cacheRepositoryKey, scmRepository);
                 }
             }
         }
-
     }
-
 }
