@@ -4,6 +4,7 @@ import no.cantara.docsite.util.JsonbFactory;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GitHubPushCommitEvent {
@@ -40,7 +41,7 @@ public class GitHubPushCommitEvent {
         public String id;
         public @JsonbProperty("tree_id") String treeId;
         public String message;
-        public @JsonbProperty("modified") List<String> modifiedList;
+        public @JsonbProperty("modified") List<String> modifiedList = new ArrayList<>();
     }
 
     public static class Commit {
@@ -51,6 +52,7 @@ public class GitHubPushCommitEvent {
 
     @JsonbTransient
     public boolean isPageCommit() {
+        if (headCommit == null) return false;
         boolean isValidReadme = false;
         for (String modified : headCommit.modifiedList) {
             if (!headCommit.modifiedList.isEmpty() && (modified.toLowerCase().endsWith(".md") || modified.toLowerCase().endsWith(".ad") || modified.toLowerCase().endsWith(".adoc"))) {
