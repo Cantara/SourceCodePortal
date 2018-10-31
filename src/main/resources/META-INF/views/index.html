@@ -43,10 +43,10 @@
                         <h5 class="card-title">
                             <a style="text-decoration: none;" th:href="${('/group/')+key.groupId}" class="card-link"
                                th:text="${model.displayName}">Show</a>&#160;
-                            <a style="text-decoration: none;" th:href="${model.repository.repoURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                            <a style="text-decoration: none;" th:href="${model.repository.repoURL.externalURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
                                                                                               src="/img/github-logo.svg"/></a>
                             <a style="text-decoration: none;" th:if="${model.repository.apiReadmeURL != null}"
-                               th:href="${model.repository.apiReadmeURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
+                               th:href="${model.repository.apiReadmeURL.internalURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"
                                                                  src="/img/doc.svg"/></a>
                             <a style="text-decoration: none;"
                                th:href="${('/commits/')+key.groupId}"><img style="border: 0px; margin-top: 0; max-width: 16px;"

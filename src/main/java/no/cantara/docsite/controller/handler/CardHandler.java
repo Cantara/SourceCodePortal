@@ -41,72 +41,10 @@ public class CardHandler implements WebHandler {
         Map.Entry<CacheRepositoryKey, Set<ScmRepository>> repositoryGroups = service.getRepositoryGroups(groupId);
         CacheRepositoryKey key = repositoryGroups.getKey();
         Set<ScmRepository> repos = repositoryGroups.getValue();
-
-        ScmRepositoryGroup<Set<ScmRepository>> scmRepositoryGroup = new ScmRepositoryGroup<Set<ScmRepository>>(repos, repositoryConfig.displayName, repositoryConfig.description, repos.size());
-        Map.Entry<CacheRepositoryKey, ScmRepositoryGroup<Set<ScmRepository>>> repositoryGroupEntry = new Map.Entry<>() {
-            @Override
-            public CacheRepositoryKey getKey() {
-                return key;
-            }
-
-            @Override
-            public ScmRepositoryGroup<Set<ScmRepository>> getValue() {
-                return scmRepositoryGroup;
-            }
-
-            @Override
-            public ScmRepositoryGroup<Set<ScmRepository>> setValue(ScmRepositoryGroup<Set<ScmRepository>> value) {
-                throw new UnsupportedOperationException("Not supported");
-            }
-        };
-
-        templateVariables.put("repositoryGroups", repositoryGroupEntry);
-
-
-
-//        templateVariables.put("repositoryConfig", repositoryConfig);
-//        List<ScmRepository> repositories = cacheStore.getRepositoryGroupsByGroupId(repositoryConfig.groupId);
-//        templateVariables.put("repositoryGroup", repositories);
-
-//        CardModel model = new CardModel();
-
-//        // TODO this is bit expensive per view. Investigate how JCache can provide a sorted tree map
-//        {
-//            Cache<CacheShaKey, ScmCommitRevision> commitRevisions = cacheStore.getCommits();
-//            Map<CacheShaKey, ScmCommitRevision> commitRevisionMap = new LinkedHashMap<>();
-//            for(Cache.Entry<CacheShaKey, ScmCommitRevision> commitRevision : commitRevisions) {
-//                if (commitRevision.getKey().groupId.equals(repositoryConfig.groupId)) {
-//                    commitRevisionMap.put(commitRevision.getKey(), commitRevision.getValue());
-//                }
-//            }
-//            Map<CacheShaKey, ScmCommitRevision> sortedMap = sortByValue(commitRevisionMap);
-//
-//            int n = 0;
-//            for (ScmCommitRevision scmCommitRevision : sortedMap.values()) {
-//                if (n > configuration.evaluateToInt("render.max.group.commits")) break;
-//                model.lastCommitRevisions.add(scmCommitRevision);
-//                n++;
-//            }
-//        }
-
-//        for(ScmRepository repo : repositories) {
-//            boolean hasReadme = cacheStore.getReadmeContents().containsKey(repo.cacheRepositoryKey.asCacheKey());
-//            DashboardModel.Group group = new DashboardModel.Group(
-//                    cacheStore.getRepositoryConfig().gitHub.organization,
-//                    repo.cacheRepositoryKey.repoName,
-//                    repositoryConfig.defaultGroupRepo,
-//                    repo.cacheRepositoryKey.branch,
-//                    repositoryConfig.groupId,
-//                    repo.description,
-//                    repo.description,
-//                    hasReadme,
-//                    (hasReadme ? String.format("/contents/%s/%s", repo.cacheRepositoryKey.repoName, repo.cacheRepositoryKey.branch) : repo.repoURL.getExternalURL()),
-//                    String.format("/group/%s", repositoryConfig.groupId),
-//                    repo.repoURL.getExternalURL());
-//            model.groups.add(group);
-//        }
-//
-//        templateVariables.put("model", model);
+        ScmRepositoryGroup<Set<ScmRepository>> scmRepositoryGroup = new ScmRepositoryGroup<>(repos, repositoryConfig.displayName, repositoryConfig.description, repos.size());
+        templateVariables.put("lastCommitRevisions", lastCommitRevisions);
+        templateVariables.put("cacheKey", key);
+        templateVariables.put("repositoryGroup", scmRepositoryGroup);
 
         if (ThymeleafViewEngineProcessor.processView(exchange, cacheStore, webContext.asTemplateResource(), templateVariables)) {
             return true;

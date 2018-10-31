@@ -6,6 +6,8 @@ import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheService;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepositoryConfigBinding;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.cache.Cache;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -26,6 +29,7 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class ScmRepositoryService implements CacheService<CacheRepositoryKey, ScmRepository> {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ScmRepositoryService.class);
     private final CacheStore cacheStore;
 
     public ScmRepositoryService(CacheStore cacheStore) {
@@ -147,12 +151,19 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
     }
 
     public Map.Entry<CacheRepositoryKey, Set<ScmRepository>> getRepositoryGroups(String groupId) {
-        for(Map.Entry<CacheRepositoryKey, Set<ScmRepository>> group : sortedGroupedEntrySet().entrySet()) {
-            if (groupId.equals(group.getKey().groupId)) {
-                return group;
+        Set<ScmRepository> set = new LinkedHashSet<>();
+        CacheRepositoryKey defaultRepo = null;
+
+        for(Cache.Entry<CacheRepositoryKey, ScmRepository> group : cacheStore.getRepositories()) {
+            if (group.getKey().groupId.equals(groupId)) {
+                if (group.getKey().isGroup()) defaultRepo = group.getKey();
+                set.add(group.getValue());
             }
         }
-        return null;
+        Map<CacheRepositoryKey, Set<ScmRepository>> map = new LinkedHashMap<>();
+        Objects.requireNonNull(defaultRepo);
+        map.put(defaultRepo, set);
+        return map.entrySet().iterator().next();
     }
 
 }

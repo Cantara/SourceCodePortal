@@ -18,6 +18,10 @@ public class GitHubApiReadmeURL extends ExternalURL<ScmRepository> {
         return KEY;
     }
 
+    public String getInternalURL() {
+        return String.format("/contents/%s/%s", internal.cacheRepositoryKey.repoName, internal.cacheRepositoryKey.branch);
+    }
+
     @Override
     public String getExternalURL() {
         return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.cacheRepositoryKey.organization, internal.cacheRepositoryKey.repoName, internal.cacheRepositoryKey.branch);
