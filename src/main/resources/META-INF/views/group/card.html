@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-sm-2" th:text="${#dates.format(commitRevision.date, 'yyyy-MM-dd HH:mm')}">col-sm</div>
                 <div class="col-sm-3" th:text="${commitRevision.projectId}">col-sm</div>
-                <div class="col-sm-5"><a th:href="${commitRevision.htmlUrl}" th:text="${commitRevision.message}">col-sm</a></div>
+                <div class="col-sm-5"><a th:href="${commitRevision.htmlUrl}" th:text="${#strings.abbreviate(commitRevision.message,60)}">col-sm</a></div>
             </div>
         </div>
         <p class="lead" style="margin-top: 12px; margin-bottom: 24px">
@@ -50,7 +50,7 @@
             <tbody>
             <tr th:each="group : ${repositoryGroup.repository}">
                 <td>
-                    <a th:href="${group.apiReadmeURL.externalURL}" th:text="${group.cacheRepositoryKey.repoName}"></a>
+                    <a th:href="${group.apiReadmeURL.internalURL}" th:text="${group.cacheRepositoryKey.repoName}"></a>
                 </td>
                 <td>
                     <a style="text-decoration: none;" th:href="${group.repoURL.externalURL}"><img style="border: 0px; margin-top: 0; max-width: 16px;"

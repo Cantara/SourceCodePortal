@@ -28,7 +28,7 @@
                     <div class="col-sm-2" th:text="${#dates.format(commitRevision.date, 'yyyy-MM-dd HH:mm')}">col-sm</div>
                     <div class="col-sm-3" th:text="${commitRevision.projectId}">col-sm</div>
                     <div class="col-sm-4"><a th:href="${commitRevision.htmlUrl}"
-                                             th:text="${commitRevision.message}">col-sm</a></div>
+                                             th:text="${#strings.abbreviate(commitRevision.message,60)}">col-sm</a></div>
                 </div>
             </div>
             <p class="lead" style="margin-top: 12px; margin-bottom: 24px">
