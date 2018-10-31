@@ -58,7 +58,6 @@ public class ScmCommitRevisionService implements CacheService<CacheShaKey, ScmCo
         return CacheHelper.cacheSize(cacheStore.getCommits());
     }
 
-    // OK
     // returns the first found group key
     public CacheRepositoryKey getCacheRepositoryKey(CacheKey cacheKey) {
         Set<CacheRepositoryKey> groupKeys = StreamSupport.stream(cacheStore.getCacheRepositoryKeys().spliterator(), true)
