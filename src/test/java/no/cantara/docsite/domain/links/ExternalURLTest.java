@@ -1,4 +1,4 @@
-package no.cantara.docsite.domain.external;
+package no.cantara.docsite.domain.links;
 
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.domain.scm.ScmRepository;
@@ -25,7 +25,7 @@ public class ExternalURLTest {
     @Test
     public void testURLs() {
         DynamicConfiguration configuration = configuration();
-        List<ExternalURL<?>> list = new ArrayList<>();
+        List<LinkURL<?>> list = new ArrayList<>();
 
         list.add(new GitHubRawRepoURL(ScmRepository.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1", false),
                 "dn", "cd", "id", "desc", "group", "http://example.com")));

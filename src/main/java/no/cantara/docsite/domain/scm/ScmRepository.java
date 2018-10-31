@@ -2,18 +2,18 @@ package no.cantara.docsite.domain.scm;
 
 import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
-import no.cantara.docsite.domain.external.ExternalURL;
-import no.cantara.docsite.domain.external.GitHubApiContentsURL;
-import no.cantara.docsite.domain.external.GitHubApiReadmeURL;
-import no.cantara.docsite.domain.external.GitHubHtmlURL;
-import no.cantara.docsite.domain.external.GitHubRawRepoURL;
-import no.cantara.docsite.domain.external.JenkinsURL;
-import no.cantara.docsite.domain.external.ShieldsIOGitHubIssuesURL;
-import no.cantara.docsite.domain.external.ShieldsIOGroupCommitURL;
-import no.cantara.docsite.domain.external.ShieldsIOGroupReleaseURL;
-import no.cantara.docsite.domain.external.ShieldsIOReposURL;
-import no.cantara.docsite.domain.external.SnykIOTestBadgeURL;
-import no.cantara.docsite.domain.external.SnykIOTestURL;
+import no.cantara.docsite.domain.links.GitHubApiContentsURL;
+import no.cantara.docsite.domain.links.GitHubApiReadmeURL;
+import no.cantara.docsite.domain.links.GitHubHtmlURL;
+import no.cantara.docsite.domain.links.GitHubRawRepoURL;
+import no.cantara.docsite.domain.links.JenkinsURL;
+import no.cantara.docsite.domain.links.LinkURL;
+import no.cantara.docsite.domain.links.ShieldsIOGitHubIssuesURL;
+import no.cantara.docsite.domain.links.ShieldsIOGroupCommitURL;
+import no.cantara.docsite.domain.links.ShieldsIOGroupReleaseURL;
+import no.cantara.docsite.domain.links.ShieldsIOReposURL;
+import no.cantara.docsite.domain.links.SnykIOTestBadgeURL;
+import no.cantara.docsite.domain.links.SnykIOTestURL;
 import no.cantara.docsite.util.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 
@@ -27,7 +27,7 @@ import java.util.Objects;
 
 // https://confluence.atlassian.com/bitbucket/manage-webhooks-735643732.html
 
-// TODO refactor GitHub URLs into a group of urls when adding support for Bitbucket, GitLab etc. Or use ExternalURL all over and add formatter to abstract class. Throw UnsupOp for those urls that has concrete external form
+// TODO refactor GitHub URLs into a group of urls when adding support for Bitbucket, GitLab etc. Or use LinkURL all over and add formatter to abstract class. Throw UnsupOp for those urls that has concrete external form
 
 /**
  * A repository definition contains information about the repo, the group it belongs to and service urls
@@ -45,7 +45,7 @@ public class ScmRepository implements Serializable {
     public final GitHubRawRepoURL rawRepoURL;
     public final GitHubApiReadmeURL apiReadmeURL;
     public final GitHubApiContentsURL apiContentsURL;
-    public final Map<String, ExternalURL> externalLinks = new LinkedHashMap<>(); // not immutable
+    public final Map<String, LinkURL> externalLinks = new LinkedHashMap<>(); // not immutable
 
     ScmRepository(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, String configDisplayName, String configDescription, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
         this.config = new Config(configDisplayName, configDescription);

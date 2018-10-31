@@ -1,6 +1,6 @@
-package no.cantara.docsite.domain.external;
+package no.cantara.docsite.domain.links;
 
-public class ShieldsIOReposURL extends ExternalURL<String> {
+public class ShieldsIOReposURL extends LinkURL<String> {
 
     private static final long serialVersionUID = 6181011109234091890L;
     public static final String KEY = "shieldRepos";

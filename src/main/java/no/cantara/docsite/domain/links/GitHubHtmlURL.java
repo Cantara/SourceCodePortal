@@ -1,6 +1,6 @@
-package no.cantara.docsite.domain.external;
+package no.cantara.docsite.domain.links;
 
-public class GitHubHtmlURL extends ExternalURL<String> {
+public class GitHubHtmlURL extends LinkURL<String> {
 
     private static final long serialVersionUID = 9155136624089496877L;
     public static final String KEY = "gitHubHtmlURL";

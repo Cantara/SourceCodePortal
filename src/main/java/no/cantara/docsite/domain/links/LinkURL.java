@@ -1,4 +1,4 @@
-package no.cantara.docsite.domain.external;
+package no.cantara.docsite.domain.links;
 
 import no.cantara.docsite.util.JsonbFactory;
 
@@ -10,16 +10,16 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-abstract public class ExternalURL<T> implements Serializable {
+abstract public class LinkURL<T> implements Serializable {
 
     protected final @JsonbTransient T internal;
 
-    public ExternalURL(T internal) {
+    public LinkURL(T internal) {
         this.internal = internal;
     }
 
-    public static ExternalURL<String> VOID() {
-        return new ExternalURL<>("") {
+    public static LinkURL<String> VOID() {
+        return new LinkURL<>("") {
             @Override
             public String getKey() {
                 return "void";
@@ -43,8 +43,8 @@ abstract public class ExternalURL<T> implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ExternalURL)) return false;
-        ExternalURL<?> that = (ExternalURL<?>) o;
+        if (!(o instanceof LinkURL)) return false;
+        LinkURL<?> that = (LinkURL<?>) o;
         return Objects.equals(internal, that.internal) &&
                 Objects.equals(getKey(), that.getKey()) &&
                 Objects.equals(getExternalURL(), that.getExternalURL());

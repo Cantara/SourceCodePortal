@@ -3,7 +3,7 @@ package no.cantara.docsite.domain.github.contents;
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetGitHubCommand;
-import no.cantara.docsite.domain.external.GitHubApiContentsURL;
+import no.cantara.docsite.domain.links.GitHubApiContentsURL;
 import no.cantara.docsite.domain.renderer.DocumentRenderer;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;

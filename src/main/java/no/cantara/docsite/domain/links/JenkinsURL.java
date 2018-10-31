@@ -1,11 +1,11 @@
-package no.cantara.docsite.domain.external;
+package no.cantara.docsite.domain.links;
 
 import no.cantara.docsite.domain.scm.ScmRepository;
 import no.ssb.config.DynamicConfiguration;
 
 import java.util.Objects;
 
-public class JenkinsURL extends ExternalURL<ScmRepository> {
+public class JenkinsURL extends LinkURL<ScmRepository> {
 
     private static final long serialVersionUID = -3316821555454748209L;
     public static final String KEY = "jenkins";
