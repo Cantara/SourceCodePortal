@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
-public class ExternalURLTest {
+public class LinkURLTest {
 
     static DynamicConfiguration configuration() {
         DynamicConfiguration configuration = new StoreBasedDynamicConfiguration.Builder()
