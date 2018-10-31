@@ -7,7 +7,7 @@ import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.scm.GroupByDateIterator;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
-import no.cantara.docsite.domain.view.CommitRevisionsModel;
+import no.cantara.docsite.domain.scm.ScmCommitRevisionService;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
 import no.cantara.docsite.web.WebContext;
@@ -59,11 +59,12 @@ public class CommitsHandler implements WebHandler {
 
             boolean renderAll = (resourceContext.getTuples().size() == 1 && resourceContext.getLast().get().id == null);
 
-            Map<CacheShaKey, ScmCommitRevision> commitRevisionMap = new LinkedHashMap<>();
-            Cache<CacheShaKey, ScmCommitRevision> commitRevisions = cacheStore.getCommits();
+            ScmCommitRevisionService commitRevisionService = new ScmCommitRevisionService(cacheStore);
+
+
             if (renderAll) {
-                // all view
-                commitRevisions.iterator().forEachRemaining(a -> commitRevisionMap.put(a.getKey(), a.getValue()));
+                Map<CacheShaKey, ScmCommitRevision> commitRevisions = commitRevisionService.entrySet();
+                templateVariables.put("commitRevisions", new GroupByDateIterator(new ArrayList<>(commitRevisions.values())));
                 templateVariables.put("displayName", String.format("All %s repos", cacheStore.getRepositoryConfig().gitHub.organization));
 
             } else {
@@ -83,7 +84,16 @@ public class CommitsHandler implements WebHandler {
                     }
                 }
 
-                for (Cache.Entry<CacheShaKey, ScmCommitRevision> entry : commitRevisions) {
+                Map<CacheShaKey, ScmCommitRevision> commitRevisionMap = new LinkedHashMap<>();
+
+                Map<CacheShaKey, ScmCommitRevision> cacheStoreCommitsMap = new LinkedHashMap<>();
+                {
+                    Cache<CacheShaKey, ScmCommitRevision> cacheStoreCommits = cacheStore.getCommits();
+                    cacheStoreCommits.iterator().forEachRemaining(a -> cacheStoreCommitsMap .put(a.getKey(), a.getValue()));
+                }
+
+                for (Map.Entry<CacheShaKey, ScmCommitRevision> entry : cacheStoreCommitsMap.entrySet()) {
+//                for (Map.Entry<CacheShaKey, ScmCommitRevision> entry : commitRevisionService.entrySet().entrySet()) {
                     CacheShaKey key = entry.getKey();
                     ScmCommitRevision value = entry.getValue();
                     // group view
@@ -95,14 +105,14 @@ public class CommitsHandler implements WebHandler {
                         commitRevisionMap.put(key, value);
                     }
                 }
+
+                LOG.trace("CommitRevisions-size: {}", commitRevisionMap.size());
+
+                Map<CacheShaKey, ScmCommitRevision> sortedMap = sortByValue(commitRevisionMap);
+                GroupByDateIterator groupByDateIterator = new GroupByDateIterator(new ArrayList<>(sortedMap.values()));
+
+                templateVariables.put("commitRevisions", groupByDateIterator);
             }
-
-            Map<CacheShaKey, ScmCommitRevision> sortedMap = sortByValue(commitRevisionMap);
-            GroupByDateIterator groupByDateIterator = new GroupByDateIterator(new ArrayList<>(sortedMap.values()));
-
-            CommitRevisionsModel model = new CommitRevisionsModel(groupByDateIterator);
-
-            templateVariables.put("model", model);
 
             if (ThymeleafViewEngineProcessor.processView(exchange, cacheStore, webContext.asTemplateResource(), templateVariables)) {
                 return true;

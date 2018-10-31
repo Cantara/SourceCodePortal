@@ -14,9 +14,9 @@
         <article>
             <div class="container-fluid">
                 <h1 th:text="${displayName}"></h1>
-                <h4 style="padding-top: 0.5em;" class="display-6">Commit log: [[${model.commitRevisions.size}]] revisions</h4>
-                <div th:each="commitRevision : ${model.commitRevisions}">
-                    <div class="row>" th:remove="${model.commitRevisions.isNewDateGroup ? null : 'all'}">
+                <h4 style="padding-top: 0.5em;" class="display-6">Commit log: [[${commitRevisions.size}]] revisions</h4>
+                <div th:each="commitRevision : ${commitRevisions}">
+                    <div class="row>" th:remove="${commitRevisions.isNewDateGroup ? null : 'all'}">
                         <div>&nbsp;</div>
                         <div style="font-weight: bold" th:text="${#dates.format(commitRevision.date, 'yyyy-MM-dd')}">col-sm</div>
                         <div>&nbsp;</div>
