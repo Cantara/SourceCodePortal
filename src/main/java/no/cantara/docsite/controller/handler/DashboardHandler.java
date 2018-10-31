@@ -5,7 +5,8 @@ import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.scm.ScmCommitRevisionService;
-import no.cantara.docsite.domain.scm.ScmGroupRepository;
+import no.cantara.docsite.domain.scm.ScmRepository;
+import no.cantara.docsite.domain.scm.ScmRepositoryGroup;
 import no.cantara.docsite.domain.scm.ScmRepositoryService;
 import no.cantara.docsite.web.ResourceContext;
 import no.cantara.docsite.web.ThymeleafViewEngineProcessor;
@@ -29,8 +30,8 @@ public class DashboardHandler implements WebHandler {
         templateVariables.put("lastCommitRevisions", lastCommitRevisions);
 
         ScmRepositoryService scmRepositoryService = new ScmRepositoryService(cacheStore);
-        Map<CacheRepositoryKey, ScmGroupRepository> groupedRepositories = scmRepositoryService.defaultRepositoryGroups();
-        templateVariables.put("repositoryGroups", groupedRepositories);
+        Map<CacheRepositoryKey, ScmRepositoryGroup<ScmRepository>> repositoryGroups = scmRepositoryService.defaultRepositoryGroups();
+        templateVariables.put("repositoryGroups", repositoryGroups);
 
         if (ThymeleafViewEngineProcessor.processView(exchange, cacheStore, webContext.asTemplateResource(), templateVariables)) {
             return true;

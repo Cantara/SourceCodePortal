@@ -85,7 +85,16 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
                 .collect(groupingBy(ScmRepository::getCacheGroupKey, Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(c -> c.cacheRepositoryKey.repoName)))));
     }
 
-    public List<RepositoryConfigBinding.Repo> getGroups() {
+    public Map<CacheRepositoryKey, Set<ScmRepository>> sortedGroupedEntrySet() {
+        Stream<Cache.Entry<CacheRepositoryKey, ScmRepository>> stream = StreamSupport.stream(cacheStore.getRepositories().spliterator(), false);
+        return stream
+                .collect(Collectors.toMap(Cache.Entry::getKey, Cache.Entry::getValue, (oldValue, newValue) -> newValue, () -> new TreeMap<>(Comparator.comparing(c -> c.repoName))))
+                .values().stream()
+                .sorted(Comparator.comparing(entry -> entry.cacheRepositoryKey.groupId))
+                .collect(groupingBy(ScmRepository::getCacheRepositoryKey, Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(c -> c.cacheRepositoryKey.repoName)))));
+    }
+
+    private List<RepositoryConfigBinding.Repo> getGroups() {
         List<RepositoryConfigBinding.Repo> groups = new ArrayList<>();
         cacheStore.getRepositoryConfig().gitHub.repos.forEach(repo -> {
             groups.add(repo);
@@ -93,7 +102,7 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
         return groups;
     }
 
-    public Set<ScmRepository> getRepositoryGroupsByGroupId(String groupId) {
+    private Set<ScmRepository> getRepositoryGroupsByGroupId(String groupId) {
         Set<ScmRepository> repositories = new LinkedHashSet<>();
         cacheStore.getRepositories().forEach(a -> {
             if (a.getKey().compareTo(groupId)) {
@@ -114,17 +123,36 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
         return groupedRepositories;
     }
 
-    public Map<CacheRepositoryKey, ScmGroupRepository> defaultRepositoryGroups() {
-        Map<CacheRepositoryKey, ScmGroupRepository> groupedRepositories = new LinkedHashMap<>();
+    public Map<CacheRepositoryKey, ScmRepositoryGroup<ScmRepository>> defaultRepositoryGroups() {
+        Map<CacheRepositoryKey, ScmRepositoryGroup<ScmRepository>> groupedRepositories = new LinkedHashMap<>();
         for(RepositoryConfigBinding.Repo repo : getGroups()) {
             CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultGroupRepo, repo.branch, repo.groupId, true);
             ScmRepository scmRepository = entrySet().get(cacheRepositoryKey);
             int numberOfRepos = getRepositoryGroupsByGroupId(cacheRepositoryKey.groupId).size();
             String displayName = repo.displayName;
             String description = repo.description;
-            groupedRepositories.put(cacheRepositoryKey, new ScmGroupRepository(scmRepository, displayName, description, numberOfRepos));
+            groupedRepositories.put(cacheRepositoryKey, new ScmRepositoryGroup<>(scmRepository, displayName, description, numberOfRepos));
         }
         return groupedRepositories;
+    }
+
+    public RepositoryConfigBinding.Repo getGroupRepoConfig(String groupId) {
+        RepositoryConfigBinding.Repo groupRepo = null;
+        for(RepositoryConfigBinding.Repo repo : getGroups()) {
+            if (groupId.equals(repo.groupId)) {
+                return repo;
+            }
+        }
+        return null;
+    }
+
+    public Map.Entry<CacheRepositoryKey, Set<ScmRepository>> getRepositoryGroups(String groupId) {
+        for(Map.Entry<CacheRepositoryKey, Set<ScmRepository>> group : sortedGroupedEntrySet().entrySet()) {
+            if (groupId.equals(group.getKey().groupId)) {
+                return group;
+            }
+        }
+        return null;
     }
 
 }
