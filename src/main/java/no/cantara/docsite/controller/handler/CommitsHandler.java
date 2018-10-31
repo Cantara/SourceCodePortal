@@ -92,7 +92,8 @@ public class CommitsHandler implements WebHandler {
                     cacheStoreCommits.iterator().forEachRemaining(a -> cacheStoreCommitsMap .put(a.getKey(), a.getValue()));
                 }
 
-                for (Map.Entry<CacheShaKey, ScmCommitRevision> entry : cacheStoreCommitsMap.entrySet()) {
+//                for (Map.Entry<CacheShaKey, ScmCommitRevision> entry : cacheStoreCommitsMap.entrySet()) {
+                for (Cache.Entry<CacheShaKey, ScmCommitRevision> entry : cacheStore.getCommits()) {
 //                for (Map.Entry<CacheShaKey, ScmCommitRevision> entry : commitRevisionService.entrySet().entrySet()) {
                     CacheShaKey key = entry.getKey();
                     ScmCommitRevision value = entry.getValue();
