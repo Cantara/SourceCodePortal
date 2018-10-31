@@ -129,7 +129,7 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
 
     public Map<CacheRepositoryKey, ScmRepositoryGroup<ScmRepository>> defaultRepositoryGroups() {
         Map<CacheRepositoryKey, ScmRepositoryGroup<ScmRepository>> groupedRepositories = new LinkedHashMap<>();
-        for(RepositoryConfigBinding.Repo repo : getGroups()) {
+        for(RepositoryConfigBinding.Repo repo : getGroups().stream().sorted(Comparator.comparing(c -> c.groupId.toLowerCase())).collect(Collectors.toList())) {
             CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultGroupRepo, repo.branch, repo.groupId, true);
             ScmRepository scmRepository = entrySet().get(cacheRepositoryKey);
             int numberOfRepos = getRepositoryGroupsByGroupId(cacheRepositoryKey.groupId).size();

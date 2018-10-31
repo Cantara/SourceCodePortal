@@ -15,7 +15,9 @@ import no.cantara.docsite.web.WebContext;
 import no.cantara.docsite.web.WebHandler;
 import no.ssb.config.DynamicConfiguration;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -40,7 +42,7 @@ public class CardHandler implements WebHandler {
 
         Map.Entry<CacheRepositoryKey, Set<ScmRepository>> repositoryGroups = service.getRepositoryGroups(groupId);
         CacheRepositoryKey key = repositoryGroups.getKey();
-        Set<ScmRepository> repos = repositoryGroups.getValue();
+        Set<ScmRepository> repos = repositoryGroups.getValue().stream().sorted(Comparator.comparing(c -> c.cacheRepositoryKey.repoName.toLowerCase())).collect(Collectors.toCollection(LinkedHashSet::new));
         ScmRepositoryGroup<Set<ScmRepository>> scmRepositoryGroup = new ScmRepositoryGroup<>(repos, repositoryConfig.displayName, repositoryConfig.description, repos.size());
         templateVariables.put("lastCommitRevisions", lastCommitRevisions);
         templateVariables.put("cacheKey", key);
