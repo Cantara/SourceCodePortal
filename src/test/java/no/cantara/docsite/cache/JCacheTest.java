@@ -15,10 +15,8 @@ import javax.cache.configuration.MutableConfiguration;
 import javax.cache.spi.CachingProvider;
 import java.util.Random;
 import java.util.Spliterator;
-import java.util.concurrent.atomic.AtomicLong;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 //@Listeners(TestServerListener.class)
@@ -48,8 +46,6 @@ public class JCacheTest {
         assertTrue(k1.equals(k2));
         assertEquals(k1, k2);
         assertEquals(k1.hashCode(), k2.hashCode());
-        cacheStore.getRepositoryGroup().put(k1, new AtomicLong(0));
-        assertNotNull(cacheStore.getRepositoryGroup().get(k2));
     }
 
     @Ignore

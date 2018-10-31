@@ -78,7 +78,7 @@ public class CommitsHandler implements WebHandler {
 
                 String groupIdIfRenderRepo = null;
                 if (!renderGroupOrRepo) {
-                    CacheRepositoryKey cacheRepositoryKey = cacheStore.getCacheRepositoryKey(CacheKey.of(organization, groupIdOrRepoName, branchOrNull));
+                    CacheRepositoryKey cacheRepositoryKey = commitRevisionService.getCacheRepositoryKey(CacheKey.of(organization, groupIdOrRepoName, branchOrNull));
                     if (cacheRepositoryKey != null) {
                         groupIdIfRenderRepo = cacheRepositoryKey.groupId;
                     }

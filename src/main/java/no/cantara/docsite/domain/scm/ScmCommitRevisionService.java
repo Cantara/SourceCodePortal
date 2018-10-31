@@ -1,6 +1,8 @@
 package no.cantara.docsite.domain.scm;
 
 import no.cantara.docsite.cache.CacheHelper;
+import no.cantara.docsite.cache.CacheKey;
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheService;
 import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.cache.CacheStore;
@@ -55,4 +57,17 @@ public class ScmCommitRevisionService implements CacheService<CacheShaKey, ScmCo
     public long size() {
         return CacheHelper.cacheSize(cacheStore.getCommits());
     }
+
+    // OK
+    // returns the first found group key
+    public CacheRepositoryKey getCacheRepositoryKey(CacheKey cacheKey) {
+        Set<CacheRepositoryKey> groupKeys = StreamSupport.stream(cacheStore.getCacheRepositoryKeys().spliterator(), true)
+                .filter(entry -> entry.getValue().equals(cacheKey))
+                .map(Cache.Entry::getKey)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+        return groupKeys.stream().filter(entry -> entry.repoName.toLowerCase().contains(entry.groupId.toLowerCase())).findFirst()
+                .orElse(groupKeys.iterator().hasNext() ? groupKeys.iterator().next() : null);
+    }
+
+
 }
