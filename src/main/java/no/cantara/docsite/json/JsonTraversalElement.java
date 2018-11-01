@@ -7,12 +7,20 @@ import java.util.stream.Collectors;
 
 public class JsonTraversalElement {
 
+    public final JsonTraversalElement parent;
     public final String key;
     public final JsonValue value;
+    public final int arrayPos;
 
-    public JsonTraversalElement(String key, JsonValue value) {
+    public JsonTraversalElement(JsonTraversalElement parent, String key, JsonValue value) {
+        this(parent, key, value, -1);
+    }
+
+    public JsonTraversalElement(JsonTraversalElement parent, String key, JsonValue value, int arrayPos) {
+        this.parent = parent;
         this.key = key;
         this.value = value;
+        this.arrayPos = arrayPos;
     }
 
     static String ensureNoPrefixSlash(Object value) {
@@ -27,7 +35,8 @@ public class JsonTraversalElement {
             path[i++] = element.key;
         }
 
-        path[i++] = key;
+        path[i++] = (isArrayElement() ? value.toString() : key);
+//        path[i++] = key;
         return path;
     }
 
@@ -39,4 +48,16 @@ public class JsonTraversalElement {
         return Arrays.asList(uri(ancestors)).stream().collect(Collectors.joining("/"));
     }
 
+    public boolean isArrayElement() {
+        return arrayPos > -1;
+    }
+
+    @Override
+    public String toString() {
+        return "JsonTraversalElement{" +
+                "key='" + key + '\'' +
+                ", arrayPos=" + arrayPos +
+                ", isArrayElement=" + isArrayElement()+
+                '}';
+    }
 }
