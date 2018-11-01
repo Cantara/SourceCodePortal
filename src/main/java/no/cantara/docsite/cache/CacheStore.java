@@ -6,7 +6,7 @@ import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

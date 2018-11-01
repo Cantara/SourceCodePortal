@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.github.commits;
 
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;

@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.config;
 
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;

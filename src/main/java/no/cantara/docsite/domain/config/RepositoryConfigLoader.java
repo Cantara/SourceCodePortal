@@ -7,7 +7,7 @@ import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.repos.GitHubRepository;
 import no.cantara.docsite.domain.github.repos.RepositoryVisibility;
 import no.cantara.docsite.domain.scm.ScmRepository;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

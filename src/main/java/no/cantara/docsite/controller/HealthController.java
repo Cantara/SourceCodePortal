@@ -10,7 +10,7 @@ import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.ScheduledExecutorService;
 import no.cantara.docsite.health.GitHubRateLimit;
 import no.cantara.docsite.health.HealthResource;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 import no.cantara.docsite.web.ResourceContext;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;

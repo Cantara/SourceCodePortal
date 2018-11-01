@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.links;
 
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;

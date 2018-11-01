@@ -14,7 +14,7 @@ import no.cantara.docsite.domain.links.ShieldsIOGroupReleaseURL;
 import no.cantara.docsite.domain.links.ShieldsIOReposURL;
 import no.cantara.docsite.domain.links.SnykIOTestBadgeURL;
 import no.cantara.docsite.domain.links.SnykIOTestURL;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 
 import javax.json.bind.annotation.JsonbTransient;

@@ -1,7 +1,7 @@
 package no.cantara.docsite.domain.github.repos;
 
 import no.cantara.docsite.commands.GetGitHubCommand;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;

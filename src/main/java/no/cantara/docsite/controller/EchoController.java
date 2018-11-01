@@ -4,7 +4,7 @@ import io.undertow.io.Receiver;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;

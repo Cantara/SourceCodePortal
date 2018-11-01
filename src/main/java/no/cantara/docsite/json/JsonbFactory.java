@@ -1,4 +1,4 @@
-package no.cantara.docsite.util;
+package no.cantara.docsite.json;
 
 import javax.json.Json;
 import javax.json.JsonArray;

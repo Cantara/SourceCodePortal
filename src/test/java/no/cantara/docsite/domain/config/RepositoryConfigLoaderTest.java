@@ -4,7 +4,7 @@ import no.cantara.docsite.cache.CacheInitializer;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.github.repos.GitHubRepository;
 import no.cantara.docsite.executor.ExecutorService;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
