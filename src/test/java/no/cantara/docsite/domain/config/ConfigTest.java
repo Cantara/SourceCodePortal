@@ -14,6 +14,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
+import static org.wildfly.common.Assert.assertNotNull;
+
 public class ConfigTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfigTest.class);
@@ -28,9 +30,9 @@ public class ConfigTest {
             }
         }
 
-        JsonDocumentTraversal.walk(jsonDocument, (ancestors, jte) -> LOG.trace("{}[{}] {} isNewSibling: {} - isArray: {} - isArrayElement: {} -> {}: {} -> {}",
+        JsonDocumentTraversal.walk(jsonDocument, (ancestors, jte) -> LOG.trace("{}[{}] {} isArray: {} - isNewSibling: {} - isArrayElement: {} -> {}: {} -> {}",
                 ancestors.stream().map(m -> " ").collect(Collectors.joining()), jte.uri(ancestors).length, jte.value.getValueType(),
-                jte.isNewSibling(), jte.isArray(), jte.isArrayElement(),
+                jte.isArray(), jte.isNewSibling(), jte.isArrayElement(),
                 jte.path(ancestors), jte.key, jte.value));
     }
 
@@ -39,8 +41,8 @@ public class ConfigTest {
     public void testName() {
         Config config = Config.newBuilder("Title")
                 .withProvider(Config.ScmProvider.GITHUB)
-                        .withGroup(Config.newScmGroupBuilder("g1").build())
+                .withGroup(Config.newScmGroupBuilder("g1").build())
                 .build();
-//        assertNotNull(config);
+        assertNotNull(config);
     }
 }
