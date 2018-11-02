@@ -11,6 +11,17 @@ image:https://snyk.io/test/github/Cantara/SourceCodePortal/badge.svg[Known Vulne
 SourceCode Dashboard Portal is an Organisational and group dashboard organizing status and documentation from GitHub repositories. It is designed for small to medium sized organizations (<2500 commits/hour). If you need support for higher commit-volumes
 please contact the authors and we'll help you configure the system to your volumes/needs.
 
+
+[source,xml]
+-----------------
+<dependency>
+    <groupId>no.cantara.docsite</groupId>
+    <artifactId>source-code-portal</artifactId>
+    <version>0.7.10-SNAPSHOT</version>
+</dependency>
+-----------------
+
+
 SCP Key features:
 ^^^^^^^^^^^^^^^^^
 

@@ -14,6 +14,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
+import static org.testng.Assert.assertNotNull;
+
 public class ConfigTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfigTest.class);
@@ -36,12 +38,10 @@ public class ConfigTest {
 
     @Test
     public void testName() {
-        // Scm(github).withOrg("cantara").with(ScmRepo)
-
-        new Config.SCM(Config.Provider.GITHUB).groupId("groupId");
-
-//        Config.Builder builder = Config.newBuilder("Cantara Source Code Portal")
-//                .withScm(Config.Provider.GITHUB).withOrganization("Cantara");
-//        Config config = builder.build();
+        Config config = Config.newBuilder("Title")
+                .withProvider(Config.ScmProvider.GITHUB)
+                        .withGroup(Config.newScmGroupBuilder("g1"))
+                .build();
+        assertNotNull(config);
     }
 }
