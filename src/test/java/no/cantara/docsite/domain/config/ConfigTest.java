@@ -14,8 +14,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
-import static org.testng.Assert.assertNotNull;
-
 public class ConfigTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfigTest.class);
@@ -42,6 +40,6 @@ public class ConfigTest {
                 .withProvider(Config.ScmProvider.GITHUB)
                         .withGroup(Config.newScmGroupBuilder("g1").build())
                 .build();
-        assertNotNull(config);
+//        assertNotNull(config);
     }
 }
