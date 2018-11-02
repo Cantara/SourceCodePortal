@@ -40,7 +40,7 @@ public class ConfigTest {
     public void testName() {
         Config config = Config.newBuilder("Title")
                 .withProvider(Config.ScmProvider.GITHUB)
-                        .withGroup(Config.newScmGroupBuilder("g1"))
+                        .withGroup(Config.newScmGroupBuilder("g1").build())
                 .build();
         assertNotNull(config);
     }
