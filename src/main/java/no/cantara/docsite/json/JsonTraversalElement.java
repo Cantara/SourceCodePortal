@@ -10,7 +10,8 @@ public class JsonTraversalElement {
     public final JsonTraversalElement parent;
     public final String key;
     public final JsonValue value;
-    public final int arrayPos;
+    private final int arrayPos;
+    boolean newSibling;
 
     public JsonTraversalElement(JsonTraversalElement parent, String key, JsonValue value) {
         this(parent, key, value, -1);
@@ -36,28 +37,41 @@ public class JsonTraversalElement {
         }
 
         path[i++] = (isArrayElement() ? value.toString() : key);
-//        path[i++] = key;
         return path;
     }
 
     public int depth(Deque<JsonTraversalElement> ancestors) {
-        return ancestors.size()-1;
+        return ancestors.size() - 1;
     }
 
     public String path(Deque<JsonTraversalElement> ancestors) {
         return Arrays.asList(uri(ancestors)).stream().collect(Collectors.joining("/"));
     }
 
+    public int getArrayPos() {
+        return (isArrayElement() ? parent.arrayPos : arrayPos);
+    }
+
+    public boolean isNewSibling() {
+        return newSibling;
+    }
+
+    public boolean isArray() {
+        return JsonValue.ValueType.ARRAY.equals(value.getValueType());
+    }
+
     public boolean isArrayElement() {
-        return arrayPos > -1;
+        return (parent != null && parent.arrayPos > -1);
     }
 
     @Override
     public String toString() {
         return "JsonTraversalElement{" +
                 "key='" + key + '\'' +
-                ", arrayPos=" + arrayPos +
-                ", isArrayElement=" + isArrayElement()+
+                ", newSibling=" + newSibling +
+                ", arrayPos=" + getArrayPos() +
+                ", isArray=" + isArray() +
+                ", isArrayElement=" + isArrayElement() +
                 '}';
     }
 }

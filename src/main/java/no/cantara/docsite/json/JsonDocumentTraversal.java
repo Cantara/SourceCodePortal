@@ -36,7 +36,9 @@ public class JsonDocumentTraversal {
                 JsonTraversalElement te = new JsonTraversalElement(parent, key, value);
                 visitor.accept(ancestors, te);
                 ancestors.addLast(te);
-                walkJsonObject((JsonObject) value, te);
+                {
+                    walkJsonObject((JsonObject) value, te);
+                }
                 ancestors.removeLast();
 
             } else if (value.getValueType() == JsonValue.ValueType.ARRAY) {
@@ -49,10 +51,16 @@ public class JsonDocumentTraversal {
 
                     if (arrayElement.getValueType() == JsonValue.ValueType.OBJECT) {
                         ancestors.addLast(te);
-                        JsonTraversalElement arrayJte = new JsonTraversalElement(te, pos.toString(), Json.createValue(pos.toString()), pos);
-                        ancestors.addLast(arrayJte);
-                        walkJsonObject(arrayElement.asJsonObject(), arrayJte);
-                        ancestors.removeLast();
+                        {
+                            JsonTraversalElement arrayJte = new JsonTraversalElement(te, pos.toString(), Json.createValue(pos), pos);
+                            arrayJte.newSibling = true;
+                            visitor.accept(ancestors, arrayJte);
+                            ancestors.addLast(arrayJte);
+                            {
+                                walkJsonObject(arrayElement.asJsonObject(), arrayJte);
+                            }
+                            ancestors.removeLast();
+                        }
                         ancestors.removeLast();
 
                     } else if (arrayElement.getValueType() == JsonValue.ValueType.ARRAY) {
