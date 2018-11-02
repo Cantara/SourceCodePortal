@@ -3,7 +3,6 @@ package no.cantara.docsite.json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
@@ -52,7 +51,7 @@ public class JsonDocumentTraversal {
                     if (arrayElement.getValueType() == JsonValue.ValueType.OBJECT) {
                         ancestors.addLast(te);
                         {
-                            JsonTraversalElement arrayJte = new JsonTraversalElement(te, pos.toString(), Json.createValue(pos), pos);
+                            JsonTraversalElement arrayJte = new JsonTraversalElement(te, pos.toString(), arrayElement, pos);
                             arrayJte.newSibling = true;
                             visitor.accept(ancestors, arrayJte);
                             ancestors.addLast(arrayJte);

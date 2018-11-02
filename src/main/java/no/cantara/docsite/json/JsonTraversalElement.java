@@ -36,7 +36,7 @@ public class JsonTraversalElement {
             path[i++] = element.key;
         }
 
-        path[i++] = (isArrayElement() ? value.toString() : key);
+        path[i++] = key;
         return path;
     }
 
@@ -57,11 +57,11 @@ public class JsonTraversalElement {
     }
 
     public boolean isArray() {
-        return JsonValue.ValueType.ARRAY.equals(value.getValueType());
+        return JsonValue.ValueType.ARRAY.equals(value.getValueType()) || isNewSibling();
     }
 
     public boolean isArrayElement() {
-        return (parent != null && parent.arrayPos > -1);
+        return (parent != null && parent.arrayPos > -1) || isNewSibling();
     }
 
     @Override

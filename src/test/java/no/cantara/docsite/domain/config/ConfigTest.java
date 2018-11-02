@@ -32,7 +32,8 @@ public class ConfigTest {
             StringBuffer buf = new StringBuffer();
             for(int n=0; n<jte.depth(ancestors); n++) buf.append(" ");
             LOG.trace("{}[{}] {} isNewSibling: {} - isArray: {} - isArrayElement: {} -> {}: {} -> {}", buf.toString(), jte.uri(ancestors).length, jte.value.getValueType(),
-                    jte.isNewSibling(), jte.isArray(), jte.isArrayElement(), jte.path(ancestors), jte.key, jte.value);
+                    jte.isNewSibling(), jte.isArray(), jte.isArrayElement(),
+                    jte.path(ancestors), jte.key, jte.value);
         };
         JsonDocumentTraversal.walk(jsonObject, visitor);
     }
