@@ -1,9 +1,9 @@
 package no.cantara.docsite.domain.config;
 
 import no.cantara.docsite.json.JsonDocumentTraversal;
-import no.cantara.docsite.json.JsonTraversalElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import javax.json.Json;
@@ -12,34 +12,32 @@ import javax.json.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Deque;
-import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class ConfigTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfigTest.class);
 
+    @Ignore
     @Test
     public void testJsonDocumentTraversal() throws IOException {
-        JsonObject jsonObject;
+        JsonObject jsonDocument;
         try (InputStream in = ClassLoader.getSystemResourceAsStream("conf/config.json")) {
             try (JsonReader reader = Json.createReader(new InputStreamReader(in))) {
-                jsonObject = reader.readObject();
+                jsonDocument = reader.readObject();
             }
         }
 
-        BiConsumer<Deque<JsonTraversalElement>, JsonTraversalElement> visitor = (ancestors, jte) -> {
-            StringBuffer buf = new StringBuffer();
-            for(int n=0; n<jte.depth(ancestors); n++) buf.append(" ");
-            LOG.trace("{}[{}] {} isNewSibling: {} - isArray: {} - isArrayElement: {} -> {}: {} -> {}", buf.toString(), jte.uri(ancestors).length, jte.value.getValueType(),
-                    jte.isNewSibling(), jte.isArray(), jte.isArrayElement(),
-                    jte.path(ancestors), jte.key, jte.value);
-        };
-        JsonDocumentTraversal.walk(jsonObject, visitor);
+        JsonDocumentTraversal.walk(jsonDocument, (ancestors, jte) -> LOG.trace("{}[{}] {} isNewSibling: {} - isArray: {} - isArrayElement: {} -> {}: {} -> {}",
+                ancestors.stream().map(m -> " ").collect(Collectors.joining()), jte.uri(ancestors).length, jte.value.getValueType(),
+                jte.isNewSibling(), jte.isArray(), jte.isArrayElement(),
+                jte.path(ancestors), jte.key, jte.value));
     }
 
     @Test
     public void testName() {
+        // Scm(github).withOrg("cantara").with(ScmRepo)
+
 //        Config.Builder builder = Config.newBuilder("Cantara Source Code Portal")
 //                .withScm(Config.Provider.GITHUB).withOrganization("Cantara");
 //        Config config = builder.build();

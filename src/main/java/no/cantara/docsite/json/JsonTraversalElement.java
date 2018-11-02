@@ -57,7 +57,7 @@ public class JsonTraversalElement {
     }
 
     public boolean isArray() {
-        return JsonValue.ValueType.ARRAY.equals(value.getValueType()) || isNewSibling();
+        return JsonValue.ValueType.ARRAY.equals(value.getValueType());
     }
 
     public boolean isArrayElement() {
