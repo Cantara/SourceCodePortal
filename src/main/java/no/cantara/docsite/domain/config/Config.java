@@ -22,7 +22,7 @@ public class Config {
     }
 
     public final String title;
-    public final Deque<Scm> scm = new LinkedList<>();
+    public final Deque<Scm_> scm = new LinkedList<>();
 
     public Config(String title) {
         this.title = title;
@@ -74,7 +74,7 @@ public class Config {
             return new Config(title);
         }
 
-        public Scm withScm(Provider github) {
+        public Scm_ withScm(Provider github) {
 //            return new Scm(github);
             return null;
         }
@@ -91,7 +91,7 @@ public class Config {
 
     }
 
-    public static class Scm {
+    public static class Scm_ {
         public final String organization;
         public final String repoPattern;
         public final String branchPattern;
@@ -100,7 +100,7 @@ public class Config {
         public final String description;
         public final String defaultGroupRepo;
 
-        public Scm(String organization, String repoPattern, String branchPattern, String groupId, String displayName, String description, String defaultGroupRepo) {
+        public Scm_(String organization, String repoPattern, String branchPattern, String groupId, String displayName, String description, String defaultGroupRepo) {
             this.organization = organization;
             this.repoPattern = repoPattern;
             this.branchPattern = branchPattern;
@@ -108,6 +108,19 @@ public class Config {
             this.displayName = displayName;
             this.description = description;
             this.defaultGroupRepo = defaultGroupRepo;
+        }
+    }
+
+    public static class SCM {
+        private final Provider service;
+        private Map<String,String> props = new LinkedHashMap<>();
+
+        public SCM(Provider service) {
+            this.service = service;
+        }
+
+        public void groupId(String groupId) {
+            props.put("groupId", groupId);
         }
     }
 }

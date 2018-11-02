@@ -38,6 +38,8 @@ public class ConfigTest {
     public void testName() {
         // Scm(github).withOrg("cantara").with(ScmRepo)
 
+        new Config.SCM(Config.Provider.GITHUB).groupId("groupId");
+
 //        Config.Builder builder = Config.newBuilder("Cantara Source Code Portal")
 //                .withScm(Config.Provider.GITHUB).withOrganization("Cantara");
 //        Config config = builder.build();
