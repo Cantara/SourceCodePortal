@@ -34,6 +34,7 @@ public class ConfigTest {
                 jte.path(ancestors), jte.key, jte.value));
     }
 
+    @Ignore
     @Test
     public void testName() {
         Config config = Config.newBuilder("Title")
