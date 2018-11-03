@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
-import static org.wildfly.common.Assert.assertNotNull;
+import static org.testng.Assert.assertNotNull;
 
 public class ConfigTest {
 
@@ -36,13 +36,14 @@ public class ConfigTest {
                 jte.path(ancestors), jte.key, jte.value));
     }
 
-    @Ignore
     @Test
     public void testName() {
         Config config = Config.newBuilder("Title")
-                .withProvider(Config.ScmProvider.GITHUB)
-                .withGroup(Config.newScmGroupBuilder("g1").build())
+                .withProvider(Config.ScmProvider.GITHUB, "Cantara")
+                .withRepo(Config.newRepoBuilder("SourceCodePortal").repo("SourceCodePortal*").displayName("heading").description("desc").defaultGroupRepo("SourceCodePortal").branch("master"))
+                .withRepo(Config.newRepoBuilder("Whydah").repo("Whydah*").displayName("heading").description("desc").defaultGroupRepo("Whydah").branch("master"))
                 .build();
         assertNotNull(config);
+        LOG.trace("config: {}", config);
     }
 }
