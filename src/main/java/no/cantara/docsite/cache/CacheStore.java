@@ -139,7 +139,7 @@ public class CacheStore {
 
     public String getConfiguredRepositories() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
-        for (RepoConfig.Repo repo : getGroups()) {
+        for (RepoConfig.Repo repo : repositoryConfig.getConfig().repos.get(RepoConfig.ScmProvider.GITHUB)) {
             JsonArrayBuilder groupBuilder = Json.createArrayBuilder();
             List<ScmRepository> repositories = getRepositoryGroupsByGroupId(repo.groupId);
             for (ScmRepository repository : repositories) {
@@ -157,10 +157,6 @@ public class CacheStore {
 
     public RepoConfigService getRepositoryConfig() {
         return repositoryConfig;
-    }
-
-    public List<RepoConfig.Repo> getGroups() {
-        return repositoryConfig.getConfig().repos.get(RepoConfig.ScmProvider.GITHUB);
     }
 
     public Cache<CacheKey, CacheRepositoryKey> getCacheKeys() {

@@ -67,7 +67,7 @@ public class RepoConfig {
 
     public static class Repo {
         public final String organization;
-        public final Pattern repoPattern;
+        public final Pattern repoPattern; // TODO add config support with regex array and expand the matcher
         public final String branchPattern;
         public final String groupId;
         public final String displayName;
