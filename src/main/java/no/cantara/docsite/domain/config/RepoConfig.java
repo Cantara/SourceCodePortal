@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class RepoConfig {
 
@@ -66,7 +67,7 @@ public class RepoConfig {
 
     public static class Repo {
         public final String organization;
-        public final String repoPattern;
+        public final Pattern repoPattern;
         public final String branchPattern;
         public final String groupId;
         public final String displayName;
@@ -75,7 +76,7 @@ public class RepoConfig {
 
         public Repo(String organization, String repoPattern, String branchPattern, String groupId, String displayName, String description, String defaultGroupRepo) {
             this.organization = organization;
-            this.repoPattern = repoPattern;
+            this.repoPattern = Pattern.compile(repoPattern);
             this.branchPattern = branchPattern;
             this.groupId = groupId;
             this.displayName = displayName;

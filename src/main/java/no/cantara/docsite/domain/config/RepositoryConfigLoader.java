@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -62,11 +61,10 @@ public class RepositoryConfigLoader {
                 in order to use Map<CacheRepositoryKey, Set<ScmRepository>> groupedRepositories
              */
 
-            Pattern pattern = Pattern.compile(repoConfig.repoPattern);
             for (GitHubRepository repo : result) {
                 String repoName = repo.name;
                 boolean isGroup = repoName.equalsIgnoreCase(repoConfig.defaultGroupRepo);
-                Matcher matcher = pattern.matcher(repoName);
+                Matcher matcher = repoConfig.repoPattern.matcher(repoName);
                 if (matcher.find()) {
                     CacheKey cacheKey = CacheKey.of(repoConfig.organization, repoName, repoConfig.branchPattern);
                     CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(repoConfig.organization, repoName, repoConfig.branchPattern, repoConfig.groupId, isGroup);
