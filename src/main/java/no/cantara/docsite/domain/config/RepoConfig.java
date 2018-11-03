@@ -13,10 +13,11 @@ import java.util.regex.Pattern;
 public class RepoConfig {
 
     public final String title;
-    public final Map<ScmProvider,List<Repo>> repos = new LinkedHashMap<>();
+    public final Map<ScmProvider,List<Repo>> repos;
 
-    public RepoConfig(String title) {
+    public RepoConfig(String title, Map<ScmProvider,List<Repo>> repos) {
         this.title = title;
+        this.repos = repos;
     }
 
     @Override
@@ -127,7 +128,7 @@ public class RepoConfig {
         }
 
         public RepoConfig build() {
-            RepoConfig repoConfig = new RepoConfig(title);
+            Map<ScmProvider,List<Repo>> repos = new LinkedHashMap<>();
             for (Map.Entry<ScmProvider, GroupBuilder> entry : configBuilderProps.entrySet()) {
                 //GroupBuilder groupBuilder = configBuilderProps.get(entry.getKey());
                 //String organization = groupBuilder.organization;
@@ -137,9 +138,9 @@ public class RepoConfig {
                         repoList.add(repoBuilder.build());
                     }
                 }
-                repoConfig.repos.put(entry.getKey(), Collections.unmodifiableList(repoList));
+                repos.put(entry.getKey(), Collections.unmodifiableList(repoList));
             }
-            return repoConfig;
+            return new RepoConfig(title, Collections.unmodifiableMap(repos));
         }
 
         public GroupBuilder withProvider(ScmProvider provider, String organization) {
