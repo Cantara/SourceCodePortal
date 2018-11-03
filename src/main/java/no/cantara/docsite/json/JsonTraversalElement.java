@@ -52,6 +52,10 @@ public class JsonTraversalElement {
         return (isArrayElement() ? parent.arrayPos : arrayPos);
     }
 
+    public boolean isRoot() {
+        return parent == null;
+    }
+
     public boolean isNewSibling() {
         return newSibling;
     }

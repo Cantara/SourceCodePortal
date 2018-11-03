@@ -40,8 +40,8 @@ public class Config {
         return new Builder(title);
     }
 
-    public static RepoBuilder newRepoBuilder(String groupId) {
-        return new RepoBuilder(groupId);
+    public static RepoBuilder newRepoBuilder() {
+        return new RepoBuilder();
     }
 
     public enum ScmProvider {
@@ -178,8 +178,12 @@ public class Config {
         private final Map<String, String> props = new LinkedHashMap<>();
         private GroupBuilder parent;
 
-        public RepoBuilder(String groupId) {
+        public RepoBuilder() {
+        }
+
+        RepoBuilder groupId(String groupId) {
             props.put("groupId", groupId);
+            return this;
         }
 
         RepoBuilder repo(String repoPattern) {
@@ -205,10 +209,6 @@ public class Config {
         RepoBuilder defaultGroupRepo(String defaultGroupRepo) {
             props.put("defaultGroupRepo", defaultGroupRepo);
             return this;
-        }
-
-        public Builder done() {
-            return parent.parent;
         }
 
         Repo build() {

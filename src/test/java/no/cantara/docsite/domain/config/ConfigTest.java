@@ -37,13 +37,19 @@ public class ConfigTest {
     }
 
     @Test
-    public void testName() {
+    public void testConfigBuilder() {
         Config config = Config.newBuilder("Title")
                 .withProvider(Config.ScmProvider.GITHUB, "Cantara")
-                .withRepo(Config.newRepoBuilder("SourceCodePortal").repo("SourceCodePortal*").displayName("heading").description("desc").defaultGroupRepo("SourceCodePortal").branch("master"))
-                .withRepo(Config.newRepoBuilder("Whydah").repo("Whydah*").displayName("heading").description("desc").defaultGroupRepo("Whydah").branch("master"))
+                .withRepo(Config.newRepoBuilder().groupId("SourceCodePortal").repo("SourceCodePortal*").displayName("heading").description("desc").defaultGroupRepo("SourceCodePortal").branch("master"))
+                .withRepo(Config.newRepoBuilder().groupId("Whydah").repo("Whydah*").displayName("heading").description("desc").defaultGroupRepo("Whydah").branch("master"))
                 .build();
         assertNotNull(config);
         LOG.trace("config: {}", config);
+    }
+
+    @Test
+    public void testLoadConfig() throws IOException {
+        RepoConfigService configService = new RepoConfigService("conf/config.json");
+        LOG.trace("config: {}", configService.getConfig());
     }
 }
