@@ -41,6 +41,13 @@ public class RepoConfigService {
         return repoConfig;
     }
 
+    public String getOrganization(RepoConfig.ScmProvider provider) {
+        if (repoConfig.repos.containsKey(provider) && repoConfig.repos.get(provider).iterator().hasNext()) {
+            return repoConfig.repos.get(provider).iterator().next().organization;
+        }
+        return null;
+    }
+
     static class Loader implements BiConsumer<Deque<JsonTraversalElement>, JsonTraversalElement> {
 
         private RepoConfig.Builder builder;

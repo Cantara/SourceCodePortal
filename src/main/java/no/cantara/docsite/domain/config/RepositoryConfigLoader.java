@@ -52,8 +52,8 @@ public class RepositoryConfigLoader {
 
 
     public void load() {
-        List<GitHubRepository> result = getOrganizationRepos(cacheStore.getRepositoryConfig().gitHub.organization);
-        for (RepositoryConfigBinding.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
+        List<GitHubRepository> result = getOrganizationRepos(cacheStore.getRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB));
+        for (RepoConfig.Repo repoConfig : cacheStore.getRepositoryConfig().getConfig().repos.get(RepoConfig.ScmProvider.GITHUB)) {
 
             /*
                 issue: group all repos -- not all repos has defaultGroupRepo. What to do?
@@ -62,14 +62,14 @@ public class RepositoryConfigLoader {
                 in order to use Map<CacheRepositoryKey, Set<ScmRepository>> groupedRepositories
              */
 
-            Pattern pattern = Pattern.compile(repoConfig.repo);
+            Pattern pattern = Pattern.compile(repoConfig.repoPattern);
             for (GitHubRepository repo : result) {
                 String repoName = repo.name;
                 boolean isGroup = repoName.equalsIgnoreCase(repoConfig.defaultGroupRepo);
                 Matcher matcher = pattern.matcher(repoName);
                 if (matcher.find()) {
-                    CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repoName, repoConfig.branch);
-                    CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repoName, repoConfig.branch, repoConfig.groupId, isGroup);
+                    CacheKey cacheKey = CacheKey.of(repoConfig.organization, repoName, repoConfig.branchPattern);
+                    CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(repoConfig.organization, repoName, repoConfig.branchPattern, repoConfig.groupId, isGroup);
                     cacheStore.getCacheKeys().put(cacheKey, cacheRepositoryKey);
                     cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
                     cacheStore.getCacheGroupKeys().put(cacheRepositoryKey.asCacheGroupKey(), cacheRepositoryKey.groupId);

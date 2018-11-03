@@ -118,7 +118,7 @@ public class RepoConfig {
 
     public static class Builder {
         private final String title;
-        private final Map<ScmProvider, GroupBuilder> builderMap = new LinkedHashMap<>();
+        private final Map<ScmProvider, GroupBuilder> configBuilderProps = new LinkedHashMap<>();
 
         public Builder(String title) {
             this.title = title;
@@ -126,9 +126,11 @@ public class RepoConfig {
 
         public RepoConfig build() {
             RepoConfig repoConfig = new RepoConfig(title);
-            for (Map.Entry<ScmProvider, GroupBuilder> entry : builderMap.entrySet()) {
+            for (Map.Entry<ScmProvider, GroupBuilder> entry : configBuilderProps.entrySet()) {
+                //GroupBuilder groupBuilder = configBuilderProps.get(entry.getKey());
+                //String organization = groupBuilder.organization;
                 List<Repo> repoList = new ArrayList<>();
-                for (List<RepoBuilder> repoBuilderList : entry.getValue().builderMap.values()) {
+                for (List<RepoBuilder> repoBuilderList : entry.getValue().groupBuilderProps.values()) {
                     for(RepoBuilder repoBuilder : repoBuilderList) {
                         repoList.add(repoBuilder.build());
                     }
@@ -139,14 +141,14 @@ public class RepoConfig {
         }
 
         public GroupBuilder withProvider(ScmProvider provider, String organization) {
-            if (!builderMap.containsKey(provider)) builderMap.put(provider, new GroupBuilder(this, organization));
-            return builderMap.get(provider);
+            if (!configBuilderProps.containsKey(provider)) configBuilderProps.put(provider, new GroupBuilder(this, organization));
+            return configBuilderProps.get(provider);
         }
     }
 
     public static class GroupBuilder {
 
-        private final Map<String, List<RepoBuilder>> builderMap = new LinkedHashMap<>();
+        private final Map<String, List<RepoBuilder>> groupBuilderProps = new LinkedHashMap<>();
         private final Builder parent;
         private final String organization;
 
@@ -156,13 +158,13 @@ public class RepoConfig {
         }
 
         public GroupBuilder withRepo(RepoBuilder group) {
-            if (!builderMap.containsKey(group.props.get("groupId"))) {
+            if (!groupBuilderProps.containsKey(group.repoBulderProps.get("groupId"))) {
                 group.parent = this;
                 List<RepoBuilder> repoBuilderList = new ArrayList<>();
                 repoBuilderList.add(group);
-                builderMap.put(group.props.get("groupId"), repoBuilderList);
+                groupBuilderProps.put(group.repoBulderProps.get("groupId"), repoBuilderList);
             } else {
-                List<RepoBuilder> repoBuilderList = builderMap.get(group.props.get("groupId"));
+                List<RepoBuilder> repoBuilderList = groupBuilderProps.get(group.repoBulderProps.get("groupId"));
                 group.parent = this;
                 repoBuilderList.add(group);
             }
@@ -175,44 +177,44 @@ public class RepoConfig {
     }
 
     public static class RepoBuilder {
-        private final Map<String, String> props = new LinkedHashMap<>();
+        private final Map<String, String> repoBulderProps = new LinkedHashMap<>();
         private GroupBuilder parent;
 
         public RepoBuilder() {
         }
 
         RepoBuilder groupId(String groupId) {
-            props.put("groupId", groupId);
+            repoBulderProps.put("groupId", groupId);
             return this;
         }
 
         RepoBuilder repo(String repoPattern) {
-            props.put("repoPattern", repoPattern);
+            repoBulderProps.put("repoPattern", repoPattern);
             return this;
         }
 
         RepoBuilder branch(String branchPattern) {
-            props.put("branchPattern", branchPattern);
+            repoBulderProps.put("branchPattern", branchPattern);
             return this;
         }
 
         RepoBuilder displayName(String displayName) {
-            props.put("displayName", displayName);
+            repoBulderProps.put("displayName", displayName);
             return this;
         }
 
         RepoBuilder description(String description) {
-            props.put("description", description);
+            repoBulderProps.put("description", description);
             return this;
         }
 
         RepoBuilder defaultGroupRepo(String defaultGroupRepo) {
-            props.put("defaultGroupRepo", defaultGroupRepo);
+            repoBulderProps.put("defaultGroupRepo", defaultGroupRepo);
             return this;
         }
 
         Repo build() {
-            return new Repo(parent.organization, props.get("repoPattern"), props.get("branchPattern"), props.get("groupId"), props.get("displayName"), props.get("description"), props.get("defaultGroupRepo"));
+            return new Repo(parent.organization, repoBulderProps.get("repoPattern"), repoBulderProps.get("branchPattern"), repoBulderProps.get("groupId"), repoBulderProps.get("displayName"), repoBulderProps.get("description"), repoBulderProps.get("defaultGroupRepo"));
         }
     }
 }

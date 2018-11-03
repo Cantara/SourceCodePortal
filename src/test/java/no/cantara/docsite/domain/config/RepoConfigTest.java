@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 
 import static org.testng.Assert.assertNotNull;
 
-public class ConfigTest {
+public class RepoConfigTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ConfigTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RepoConfigTest.class);
 
     @Ignore
     @Test

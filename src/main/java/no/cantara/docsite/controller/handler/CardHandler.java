@@ -3,7 +3,7 @@ package no.cantara.docsite.controller.handler;
 import io.undertow.server.HttpServerExchange;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.config.RepositoryConfigBinding;
+import no.cantara.docsite.domain.config.RepoConfig;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.scm.ScmCommitRevisionService;
 import no.cantara.docsite.domain.scm.ScmRepository;
@@ -31,7 +31,7 @@ public class CardHandler implements WebHandler {
 
         String groupId = resourceContext.getLast().get().id;
         ScmRepositoryService service = new ScmRepositoryService(cacheStore);
-        RepositoryConfigBinding.Repo repositoryConfig = service.getGroupRepoConfig(groupId);
+        RepoConfig.Repo repositoryConfig = service.getGroupRepoConfig(groupId);
         if (repositoryConfig == null) {
             return false;
         }
