@@ -8,22 +8,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Config {
+public class RepoConfig {
 
     public final String title;
     public final Map<ScmProvider,List<Repo>> repos = new LinkedHashMap<>();
 
-    public Config(String title) {
+    public RepoConfig(String title) {
         this.title = title;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Config)) return false;
-        Config config = (Config) o;
-        return Objects.equals(title, config.title) &&
-                Objects.equals(repos, config.repos);
+        if (!(o instanceof RepoConfig)) return false;
+        RepoConfig repoConfig = (RepoConfig) o;
+        return Objects.equals(title, repoConfig.title) &&
+                Objects.equals(repos, repoConfig.repos);
     }
 
     @Override
@@ -124,8 +124,8 @@ public class Config {
             this.title = title;
         }
 
-        public Config build() {
-            Config config = new Config(title);
+        public RepoConfig build() {
+            RepoConfig repoConfig = new RepoConfig(title);
             for (Map.Entry<ScmProvider, GroupBuilder> entry : builderMap.entrySet()) {
                 List<Repo> repoList = new ArrayList<>();
                 for (List<RepoBuilder> repoBuilderList : entry.getValue().builderMap.values()) {
@@ -133,9 +133,9 @@ public class Config {
                         repoList.add(repoBuilder.build());
                     }
                 }
-                config.repos.put(entry.getKey(), repoList);
+                repoConfig.repos.put(entry.getKey(), repoList);
             }
-            return config;
+            return repoConfig;
         }
 
         public GroupBuilder withProvider(ScmProvider provider, String organization) {
@@ -169,7 +169,7 @@ public class Config {
             return this;
         }
 
-        public Config build() {
+        public RepoConfig build() {
             return parent.build();
         }
     }

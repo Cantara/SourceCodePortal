@@ -16,14 +16,14 @@ import java.util.function.BiConsumer;
 public class RepoConfigService {
 
     private final String configResourceName;
-    private final Config config;
+    private final RepoConfig repoConfig;
 
     public RepoConfigService(String configResourceName) {
         this.configResourceName = configResourceName;
-        config = load();
+        repoConfig = load();
     }
 
-    Config load() {
+    RepoConfig load() {
         JsonObject jsonDocument;
         try (InputStream in = ClassLoader.getSystemResourceAsStream(configResourceName)) {
             try (JsonReader reader = Json.createReader(new InputStreamReader(in))) {
@@ -37,29 +37,29 @@ public class RepoConfigService {
         return loader.builder.build();
     }
 
-    public Config getConfig() {
-        return config;
+    public RepoConfig getConfig() {
+        return repoConfig;
     }
 
     static class Loader implements BiConsumer<Deque<JsonTraversalElement>, JsonTraversalElement> {
 
-        private Config.Builder builder;
-        private Config.GroupBuilder groupBuilder;
-        private Config.RepoBuilder currentRepoBuilder;
+        private RepoConfig.Builder builder;
+        private RepoConfig.GroupBuilder groupBuilder;
+        private RepoConfig.RepoBuilder currentRepoBuilder;
 
         @Override
         public void accept(Deque<JsonTraversalElement> ancestors, JsonTraversalElement jte) {
             if (jte.isRoot()) {
-                builder = Config.newBuilder(jte.key);
+                builder = RepoConfig.newBuilder(jte.key);
 
-            } else if ((Config.ScmProvider.GITHUB.provider() + "/organization").equals(jte.path(ancestors))) {
-                groupBuilder = builder.withProvider(Config.ScmProvider.GITHUB, ((JsonString) jte.value).getString());
+            } else if ((RepoConfig.ScmProvider.GITHUB.provider() + "/organization").equals(jte.path(ancestors))) {
+                groupBuilder = builder.withProvider(RepoConfig.ScmProvider.GITHUB, ((JsonString) jte.value).getString());
 
-            } else if ((Config.ScmProvider.BITBUCKET.provider() + "/organization").equals(jte.path(ancestors))) {
-                groupBuilder = builder.withProvider(Config.ScmProvider.BITBUCKET, ((JsonString) jte.value).getString());
+            } else if ((RepoConfig.ScmProvider.BITBUCKET.provider() + "/organization").equals(jte.path(ancestors))) {
+                groupBuilder = builder.withProvider(RepoConfig.ScmProvider.BITBUCKET, ((JsonString) jte.value).getString());
 
             } else if (jte.isNewSibling()) {
-                currentRepoBuilder = Config.newRepoBuilder();
+                currentRepoBuilder = RepoConfig.newRepoBuilder();
                 groupBuilder.withRepo(currentRepoBuilder); // TODO need a repo instance so we can map values onto map
 
             } else {
