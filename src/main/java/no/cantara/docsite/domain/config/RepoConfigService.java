@@ -67,7 +67,7 @@ public class RepoConfigService {
 
             } else if (jte.isNewSibling()) {
                 currentRepoBuilder = RepoConfig.newRepoBuilder();
-                groupBuilder.withRepo(currentRepoBuilder); // TODO need a repo instance so we can map values onto map
+                groupBuilder.withRepo(currentRepoBuilder);
 
             } else {
                 if ("groupId".equals(jte.key)) currentRepoBuilder.groupId(((JsonString) jte.value).getString());
