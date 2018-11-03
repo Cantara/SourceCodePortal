@@ -51,7 +51,7 @@ public class RepoConfigService {
     static class Loader implements BiConsumer<Deque<JsonTraversalElement>, JsonTraversalElement> {
 
         private RepoConfig.Builder builder;
-        private RepoConfig.GroupBuilder groupBuilder;
+        private RepoConfig.GroupBuilder currentGroupBuilder;
         private RepoConfig.RepoBuilder currentRepoBuilder;
 
         @Override
@@ -60,14 +60,14 @@ public class RepoConfigService {
                 builder = RepoConfig.newBuilder(jte.key);
 
             } else if ((RepoConfig.ScmProvider.GITHUB.provider() + "/organization").equals(jte.path(ancestors))) {
-                groupBuilder = builder.withProvider(RepoConfig.ScmProvider.GITHUB, ((JsonString) jte.value).getString());
+                currentGroupBuilder = builder.withProvider(RepoConfig.ScmProvider.GITHUB, ((JsonString) jte.value).getString());
 
             } else if ((RepoConfig.ScmProvider.BITBUCKET.provider() + "/organization").equals(jte.path(ancestors))) {
-                groupBuilder = builder.withProvider(RepoConfig.ScmProvider.BITBUCKET, ((JsonString) jte.value).getString());
+                currentGroupBuilder = builder.withProvider(RepoConfig.ScmProvider.BITBUCKET, ((JsonString) jte.value).getString());
 
             } else if (jte.isNewSibling()) {
                 currentRepoBuilder = RepoConfig.newRepoBuilder();
-                groupBuilder.withRepo(currentRepoBuilder);
+                currentGroupBuilder.withRepo(currentRepoBuilder);
 
             } else {
                 if ("groupId".equals(jte.key)) currentRepoBuilder.groupId(((JsonString) jte.value).getString());
