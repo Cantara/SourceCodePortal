@@ -3,6 +3,7 @@ package no.cantara.docsite.domain.config;
 import no.cantara.docsite.json.JsonbFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,7 +137,7 @@ public class RepoConfig {
                         repoList.add(repoBuilder.build());
                     }
                 }
-                repoConfig.repos.put(entry.getKey(), repoList);
+                repoConfig.repos.put(entry.getKey(), Collections.unmodifiableList(repoList));
             }
             return repoConfig;
         }

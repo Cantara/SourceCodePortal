@@ -49,7 +49,6 @@ public class RepoConfigService {
     }
 
     static class Loader implements BiConsumer<Deque<JsonTraversalElement>, JsonTraversalElement> {
-
         private RepoConfig.Builder builder;
         private RepoConfig.GroupBuilder currentGroupBuilder;
         private RepoConfig.RepoBuilder currentRepoBuilder;
