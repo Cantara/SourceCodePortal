@@ -60,6 +60,6 @@ public class FetchCantaraWikiTask extends WorkerTask {
 
     @Override
     public String toString() {
-        return "FetchCantaraWikiTask: " + JsonbFactory.asCompactString(JsonbFactory.asJsonObject(cacheKey));
+        return String.format("%s: %s", getClass().getSimpleName(), JsonbFactory.asCompactString(JsonbFactory.asJsonObject(cacheKey)));
     }
 }

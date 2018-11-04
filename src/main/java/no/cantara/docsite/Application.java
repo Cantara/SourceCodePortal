@@ -12,7 +12,7 @@ import no.cantara.docsite.executor.ScheduledExecutorService;
 import no.cantara.docsite.executor.ScheduledWorker;
 import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.json.JsonbFactory;
-import no.cantara.docsite.prefetch.PreFetchRepositoryContents;
+import no.cantara.docsite.prefetch.PreFetchData;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,8 +120,8 @@ public class Application {
             enableConfigLoader();
         }
         if (configuration.evaluateToBoolean("cache.prefetch")) {
-            PreFetchRepositoryContents preFetchRepositoryContents = new PreFetchRepositoryContents(configuration, executorService, cacheStore);
-            preFetchRepositoryContents.fetch();
+            PreFetchData preFetchData = new PreFetchData(configuration, executorService, cacheStore);
+            preFetchData.fetch();
         }
     }
 
