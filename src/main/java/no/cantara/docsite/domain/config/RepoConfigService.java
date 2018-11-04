@@ -64,13 +64,13 @@ public class RepoConfigService {
             } else if ((RepoConfig.ScmProvider.BITBUCKET.provider() + "/organization").equals(jte.path(ancestors))) {
                 currentGroupBuilder = builder.withProvider(RepoConfig.ScmProvider.BITBUCKET, ((JsonString) jte.value).getString());
 
-            } else if (jte.isNewSibling()) {
+            } else if (jte.isNewSibling() && jte.depth(ancestors) == 1) {
                 currentRepoBuilder = RepoConfig.newRepoBuilder();
                 currentGroupBuilder.withRepo(currentRepoBuilder);
 
             } else {
                 if ("groupId".equals(jte.key)) currentRepoBuilder.groupId(((JsonString) jte.value).getString());
-                if ("repo".equals(jte.key)) currentRepoBuilder.repo(((JsonString) jte.value).getString());
+                if (jte.parent.isArray() && "repo".equals(jte.parent.key)) currentRepoBuilder.repoPattern(((JsonString) jte.value).getString());
                 if ("branch".equals(jte.key)) currentRepoBuilder.branch(((JsonString) jte.value).getString());
                 if ("display-name".equals(jte.key))
                     currentRepoBuilder.displayName(((JsonString) jte.value).getString());

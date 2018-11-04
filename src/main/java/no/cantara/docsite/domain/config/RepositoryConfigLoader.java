@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -64,16 +65,18 @@ public class RepositoryConfigLoader {
             for (GitHubRepository repo : result) {
                 String repoName = repo.name;
                 boolean isGroup = repoName.equalsIgnoreCase(repoConfig.defaultGroupRepo);
-                Matcher matcher = repoConfig.repoPattern.matcher(repoName);
-                if (matcher.find()) {
-                    CacheKey cacheKey = CacheKey.of(repoConfig.organization, repoName, repoConfig.branchPattern);
-                    CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(repoConfig.organization, repoName, repoConfig.branchPattern, repoConfig.groupId, isGroup);
-                    cacheStore.getCacheKeys().put(cacheKey, cacheRepositoryKey);
-                    cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
-                    cacheStore.getCacheGroupKeys().put(cacheRepositoryKey.asCacheGroupKey(), cacheRepositoryKey.groupId);
-                    ScmRepository scmRepository = ScmRepository.of(configuration, cacheRepositoryKey, repoConfig.displayName, repoConfig.description,
-                            repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
-                    cacheStore.getRepositories().put(cacheRepositoryKey, scmRepository);
+                for (Pattern repoPattern : repoConfig.repoPatterns) {
+                    Matcher matcher = repoPattern.matcher(repoName);
+                    if (matcher.find()) {
+                        CacheKey cacheKey = CacheKey.of(repoConfig.organization, repoName, repoConfig.branchPattern);
+                        CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(repoConfig.organization, repoName, repoConfig.branchPattern, repoConfig.groupId, isGroup);
+                        cacheStore.getCacheKeys().put(cacheKey, cacheRepositoryKey);
+                        cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
+                        cacheStore.getCacheGroupKeys().put(cacheRepositoryKey.asCacheGroupKey(), cacheRepositoryKey.groupId);
+                        ScmRepository scmRepository = ScmRepository.of(configuration, cacheRepositoryKey, repoConfig.displayName, repoConfig.description,
+                                repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
+                        cacheStore.getRepositories().put(cacheRepositoryKey, scmRepository);
+                    }
                 }
             }
         }

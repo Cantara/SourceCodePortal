@@ -3,7 +3,6 @@ package no.cantara.docsite.domain.config;
 import no.cantara.docsite.json.JsonDocumentTraversal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import javax.json.Json;
@@ -20,7 +19,7 @@ public class RepoConfigTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RepoConfigTest.class);
 
-    @Ignore
+//    @Ignore
     @Test
     public void testJsonDocumentTraversal() throws IOException {
         JsonObject jsonDocument;
@@ -31,7 +30,7 @@ public class RepoConfigTest {
         }
 
         JsonDocumentTraversal.walk(jsonDocument, (ancestors, jte) -> LOG.trace("{}[{}] {} isArray: {} - isNewSibling: {} - isArrayElement: {} -> {}: {} -> {}",
-                ancestors.stream().map(m -> " ").collect(Collectors.joining()), jte.uri(ancestors).length, jte.value.getValueType(),
+                ancestors.stream().map(m -> " ").collect(Collectors.joining()), jte.depth(ancestors), jte.value.getValueType(),
                 jte.isArray(), jte.isNewSibling(), jte.isArrayElement(),
                 jte.path(ancestors), jte.key, jte.value));
     }
@@ -40,8 +39,8 @@ public class RepoConfigTest {
     public void testConfigBuilder() {
         RepoConfig repoConfig = RepoConfig.newBuilder("Title")
                 .withProvider(RepoConfig.ScmProvider.GITHUB, "Cantara")
-                .withRepo(RepoConfig.newRepoBuilder().groupId("SourceCodePortal").repo("SourceCodePortal*").displayName("heading").description("desc").defaultGroupRepo("SourceCodePortal").branch("master"))
-                .withRepo(RepoConfig.newRepoBuilder().groupId("Whydah").repo("Whydah*").displayName("heading").description("desc").defaultGroupRepo("Whydah").branch("master"))
+                .withRepo(RepoConfig.newRepoBuilder().groupId("SourceCodePortal").repoPattern("SourceCodePortal*").displayName("heading").description("desc").defaultGroupRepo("SourceCodePortal").branch("master"))
+                .withRepo(RepoConfig.newRepoBuilder().groupId("Whydah").repoPattern("Whydah*").displayName("heading").description("desc").defaultGroupRepo("Whydah").branch("master"))
                 .build();
         assertNotNull(repoConfig);
         LOG.trace("config: {}", repoConfig);

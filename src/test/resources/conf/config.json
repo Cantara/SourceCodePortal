@@ -7,7 +7,7 @@
         "groupId": "SourceCodePortal",
         "display-name": "Source Code Portal",
         "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
-        "repo": "SourceCodePortal",
+        "repo": ["SourceCodePortal", "SCP2"],
         "branch": "master",
         "default-group-repo": "SourceCodePortal"
       },
@@ -15,7 +15,7 @@
         "groupId": "Whydah",
         "display-name": "Whydah IAM and SSO Platform",
         "description": "Defcon 5 grade IAM and SSO security solution",
-        "repo": "Whydah*",
+        "repo": ["Whydah*", "JAUDah"],
         "branch": "master",
         "default-group-repo": "Whydah-SecurityTokenService"
       }
