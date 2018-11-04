@@ -7,7 +7,7 @@ import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.repos.GitHubRepository;
 import no.cantara.docsite.domain.github.repos.RepositoryVisibility;
 import no.cantara.docsite.domain.scm.ScmRepository;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,8 +52,8 @@ public class RepositoryConfigLoader {
 
 
     public void load() {
-        List<GitHubRepository> result = getOrganizationRepos(cacheStore.getRepositoryConfig().gitHub.organization);
-        for (RepositoryConfigBinding.Repo repoConfig : cacheStore.getRepositoryConfig().gitHub.repos) {
+        List<GitHubRepository> result = getOrganizationRepos(cacheStore.getRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB));
+        for (RepoConfig.Repo repoConfig : cacheStore.getRepositoryConfig().getConfig().repos.get(RepoConfig.ScmProvider.GITHUB)) {
 
             /*
                 issue: group all repos -- not all repos has defaultGroupRepo. What to do?
@@ -62,20 +62,21 @@ public class RepositoryConfigLoader {
                 in order to use Map<CacheRepositoryKey, Set<ScmRepository>> groupedRepositories
              */
 
-            Pattern pattern = Pattern.compile(repoConfig.repo);
             for (GitHubRepository repo : result) {
                 String repoName = repo.name;
                 boolean isGroup = repoName.equalsIgnoreCase(repoConfig.defaultGroupRepo);
-                Matcher matcher = pattern.matcher(repoName);
-                if (matcher.find()) {
-                    CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repoName, repoConfig.branch);
-                    CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repoName, repoConfig.branch, repoConfig.groupId, isGroup);
-                    cacheStore.getCacheKeys().put(cacheKey, cacheRepositoryKey);
-                    cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
-                    cacheStore.getCacheGroupKeys().put(cacheRepositoryKey.asCacheGroupKey(), cacheRepositoryKey.groupId);
-                    ScmRepository scmRepository = ScmRepository.of(configuration, cacheRepositoryKey, repoConfig.displayName, repoConfig.description,
-                            repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
-                    cacheStore.getRepositories().put(cacheRepositoryKey, scmRepository);
+                for (Pattern repoPattern : repoConfig.repoPatterns) {
+                    Matcher matcher = repoPattern.matcher(repoName);
+                    if (matcher.find()) {
+                        CacheKey cacheKey = CacheKey.of(repoConfig.organization, repoName, repoConfig.branchPattern);
+                        CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(repoConfig.organization, repoName, repoConfig.branchPattern, repoConfig.groupId, isGroup);
+                        cacheStore.getCacheKeys().put(cacheKey, cacheRepositoryKey);
+                        cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
+                        cacheStore.getCacheGroupKeys().put(cacheRepositoryKey.asCacheGroupKey(), cacheRepositoryKey.groupId);
+                        ScmRepository scmRepository = ScmRepository.of(configuration, cacheRepositoryKey, repoConfig.displayName, repoConfig.description,
+                                repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
+                        cacheStore.getRepositories().put(cacheRepositoryKey, scmRepository);
+                    }
                 }
             }
         }

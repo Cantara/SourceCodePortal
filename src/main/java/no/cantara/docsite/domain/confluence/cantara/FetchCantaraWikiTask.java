@@ -5,7 +5,7 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.HttpGetCommand;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;

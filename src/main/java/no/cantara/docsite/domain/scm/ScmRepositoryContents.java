@@ -1,7 +1,7 @@
 package no.cantara.docsite.domain.scm;
 
 import no.cantara.docsite.cache.CacheKey;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 
 import java.io.Serializable;
 import java.util.Objects;

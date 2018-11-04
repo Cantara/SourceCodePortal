@@ -1,6 +1,6 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 
 import java.io.Serializable;
 import java.util.Objects;

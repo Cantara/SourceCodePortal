@@ -1,12 +1,13 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.domain.config.RepositoryConfigBinding;
+import no.cantara.docsite.domain.config.RepoConfig;
+import no.cantara.docsite.domain.config.RepoConfigService;
 import no.cantara.docsite.domain.github.releases.GitHubCreatedTagEvent;
 import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +18,6 @@ import javax.cache.configuration.MutableConfiguration;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -42,7 +41,7 @@ public class CacheStore {
 
     final DynamicConfiguration configuration;
     final CacheManager cacheManager;
-    final RepositoryConfigBinding repositoryConfig;
+    final RepoConfigService repositoryConfig;
 
     CacheStore(DynamicConfiguration configuration, CacheManager cacheManager) {
         this.configuration = configuration;
@@ -50,12 +49,8 @@ public class CacheStore {
         this.repositoryConfig = load();
     }
 
-    RepositoryConfigBinding load() {
-        try (InputStream json = ClassLoader.getSystemResourceAsStream("conf/config.json")) {
-            return JsonbFactory.instance().fromJson(json, RepositoryConfigBinding.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    RepoConfigService load() {
+        return new RepoConfigService("conf/config.json");
     }
 
     void initialize() {
@@ -144,7 +139,7 @@ public class CacheStore {
 
     public String getConfiguredRepositories() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
-        for (RepositoryConfigBinding.Repo repo : getGroups()) {
+        for (RepoConfig.Repo repo : repositoryConfig.getConfig().repos.get(RepoConfig.ScmProvider.GITHUB)) {
             JsonArrayBuilder groupBuilder = Json.createArrayBuilder();
             List<ScmRepository> repositories = getRepositoryGroupsByGroupId(repo.groupId);
             for (ScmRepository repository : repositories) {
@@ -160,16 +155,8 @@ public class CacheStore {
         return cacheManager;
     }
 
-    public RepositoryConfigBinding getRepositoryConfig() {
+    public RepoConfigService getRepositoryConfig() {
         return repositoryConfig;
-    }
-
-    public List<RepositoryConfigBinding.Repo> getGroups() {
-        List<RepositoryConfigBinding.Repo> groups = new ArrayList<>();
-        repositoryConfig.gitHub.repos.forEach(r -> {
-            groups.add(r);
-        });
-        return groups;
     }
 
     public Cache<CacheKey, CacheRepositoryKey> getCacheKeys() {

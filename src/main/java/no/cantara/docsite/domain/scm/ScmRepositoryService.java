@@ -5,12 +5,11 @@ import no.cantara.docsite.cache.CacheHelper;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheService;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.domain.config.RepositoryConfigBinding;
+import no.cantara.docsite.domain.config.RepoConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.cache.Cache;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -98,12 +97,8 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
                 .collect(groupingBy(ScmRepository::getCacheRepositoryKey, Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(c -> c.cacheRepositoryKey.repoName)))));
     }
 
-    private List<RepositoryConfigBinding.Repo> getGroups() {
-        List<RepositoryConfigBinding.Repo> groups = new ArrayList<>();
-        cacheStore.getRepositoryConfig().gitHub.repos.forEach(repo -> {
-            groups.add(repo);
-        });
-        return groups;
+    private List<RepoConfig.Repo> getGroups() {
+        return cacheStore.getRepositoryConfig().getConfig().repos.get(RepoConfig.ScmProvider.GITHUB);
     }
 
     private Set<ScmRepository> getRepositoryGroupsByGroupId(String groupId) {
@@ -118,9 +113,9 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
 
     public Map<CacheRepositoryKey, Set<ScmRepository>> groupedRepositories() {
         Map<CacheRepositoryKey, Set<ScmRepository>> groupedRepositories = new LinkedHashMap<>();
-        for(RepositoryConfigBinding.Repo repo : getGroups()) {
+        for (RepoConfig.Repo repo : getGroups()) {
             // create default repo key
-            CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultGroupRepo, repo.branch, repo.groupId, true);
+            CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(repo.organization, repo.defaultGroupRepo, repo.branchPattern, repo.groupId, true);
             Set<ScmRepository> repositories = getRepositoryGroupsByGroupId(repo.groupId);
             groupedRepositories.put(cacheRepositoryKey, repositories);
         }
@@ -129,8 +124,8 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
 
     public Map<CacheRepositoryKey, ScmRepositoryGroup<ScmRepository>> defaultRepositoryGroups() {
         Map<CacheRepositoryKey, ScmRepositoryGroup<ScmRepository>> groupedRepositories = new LinkedHashMap<>();
-        for(RepositoryConfigBinding.Repo repo : getGroups().stream().sorted(Comparator.comparing(c -> c.groupId.toLowerCase())).collect(Collectors.toList())) {
-            CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheStore.getRepositoryConfig().gitHub.organization, repo.defaultGroupRepo, repo.branch, repo.groupId, true);
+        for (RepoConfig.Repo repo : getGroups().stream().sorted(Comparator.comparing(c -> c.groupId.toLowerCase())).collect(Collectors.toList())) {
+            CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(repo.organization, repo.defaultGroupRepo, repo.branchPattern, repo.groupId, true);
             ScmRepository scmRepository = entrySet().get(cacheRepositoryKey);
             int numberOfRepos = getRepositoryGroupsByGroupId(cacheRepositoryKey.groupId).size();
             String displayName = repo.displayName;
@@ -140,9 +135,8 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
         return groupedRepositories;
     }
 
-    public RepositoryConfigBinding.Repo getGroupRepoConfig(String groupId) {
-        RepositoryConfigBinding.Repo groupRepo = null;
-        for(RepositoryConfigBinding.Repo repo : getGroups()) {
+    public RepoConfig.Repo getGroupRepoConfig(String groupId) {
+        for (RepoConfig.Repo repo : getGroups()) {
             if (groupId.equals(repo.groupId)) {
                 return repo;
             }
@@ -154,7 +148,7 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
         Set<ScmRepository> set = new LinkedHashSet<>();
         CacheRepositoryKey defaultRepo = null;
 
-        for(Cache.Entry<CacheRepositoryKey, ScmRepository> group : cacheStore.getRepositories()) {
+        for (Cache.Entry<CacheRepositoryKey, ScmRepository> group : cacheStore.getRepositories()) {
             if (group.getKey().groupId.equals(groupId)) {
                 if (group.getKey().isGroup()) defaultRepo = group.getKey();
                 set.add(group.getValue());

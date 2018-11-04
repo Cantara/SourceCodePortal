@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.github.contents;
 
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
-import no.cantara.docsite.util.JsonbFactory;
+import no.cantara.docsite.json.JsonbFactory;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;

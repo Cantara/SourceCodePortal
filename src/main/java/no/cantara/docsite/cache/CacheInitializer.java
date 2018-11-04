@@ -14,7 +14,7 @@ public class CacheInitializer {
 
     public static CacheStore initialize(DynamicConfiguration configuration) {
         CachingProvider cachingProvider = Caching.getCachingProvider();
-        LOG.info("Initializing JCache Provider: {}", cachingProvider.getDefaultURI());
+        LOG.info("Initializing JCache ScmProvider: {}", cachingProvider.getDefaultURI());
         CacheManager cacheManager = cachingProvider.getCacheManager();
         CacheStore cacheStore = new CacheStore(configuration, cacheManager);
         cacheStore.initialize();
