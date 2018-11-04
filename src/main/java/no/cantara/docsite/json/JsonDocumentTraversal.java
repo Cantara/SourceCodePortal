@@ -45,6 +45,7 @@ public class JsonDocumentTraversal {
                 JsonTraversalElement te = new JsonTraversalElement(parent, key, value, -1);
                 visitor.accept(ancestors, te);
                 JsonArray arrayObject = value.asJsonArray();
+                boolean isNewPrimitiveArraySibling = true;
                 for (Iterator<JsonValue> it = arrayObject.iterator(); it.hasNext(); ) {
                     JsonValue arrayElement = it.next();
 
@@ -66,7 +67,14 @@ public class JsonDocumentTraversal {
                         throw new UnsupportedOperationException("Unsupported data type: " + arrayElement.getClass());
 
                     } else {
-                        throw new UnsupportedOperationException("Unsupported data type: " + arrayElement.getClass());
+                        ancestors.addLast(te);
+                        JsonTraversalElement primitiveArrayJte = new JsonTraversalElement(te, pos.toString(), arrayElement, pos);
+                        if (isNewPrimitiveArraySibling) {
+                            primitiveArrayJte.newSibling = true;
+                            isNewPrimitiveArraySibling = false;
+                        }
+                        visitor.accept(ancestors, primitiveArrayJte);
+                        ancestors.removeLast();
                     }
                     pos++;
                 }

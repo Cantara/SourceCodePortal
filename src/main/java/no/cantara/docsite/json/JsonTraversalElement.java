@@ -3,6 +3,7 @@ package no.cantara.docsite.json;
 import javax.json.JsonValue;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class JsonTraversalElement {
@@ -64,8 +65,13 @@ public class JsonTraversalElement {
         return JsonValue.ValueType.ARRAY.equals(value.getValueType());
     }
 
+    public boolean isPrimitiveValueType() {
+        List<JsonValue.ValueType> valueTypes = List.of(JsonValue.ValueType.STRING, JsonValue.ValueType.NUMBER, JsonValue.ValueType.TRUE, JsonValue.ValueType.FALSE); // JsonValue.ValueType.NULL
+        return valueTypes.stream().anyMatch(m -> m.equals(value.getValueType()));
+    }
+
     public boolean isArrayElement() {
-        return (parent != null && parent.arrayPos > -1) || isNewSibling();
+        return (parent != null && parent.arrayPos > -1) || (parent != null && parent.isArray() && isPrimitiveValueType() && arrayPos > -1) || isNewSibling();
     }
 
     @Override
