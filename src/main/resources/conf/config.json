@@ -77,7 +77,7 @@
       },
       {
         "groupId": "Cantara-All",
-        "display-name": "Cantara GitHub",
+        "display-name": "Cantara GitHub, complete list og repos",
         "description": "All Cantara projects on GitHub",
         "repo": ["[^\\s]*"],
         "branch": "master",
