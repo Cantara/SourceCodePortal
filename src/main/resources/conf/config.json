@@ -76,6 +76,17 @@
         "default-group-repo": "microservice-baseline"
       },
       {
+        "groupId": "ACS",
+        "display-name": "Awesome Competence System",
+        "description": "The best competenece system",
+        "repo": [
+          "ACS",
+          "Awesome"
+        ],
+        "branch": "master",
+        "default-group-repo": "Awesome-Competence-System"
+      },
+      {
         "groupId": "Cantara-All",
         "display-name": "Cantara GitHub, complete list og repos",
         "description": "All Cantara projects on GitHub",
