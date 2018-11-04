@@ -9,8 +9,8 @@ public class SnykIOTestBadgeURL extends LinkURL<ScmRepository> {
     private static final long serialVersionUID = 8890035117418785973L;
     public static final String KEY = "snykIOTestBadgeURL";
 
-    public SnykIOTestBadgeURL(ScmRepository internal) {
-        super(internal);
+    public SnykIOTestBadgeURL(ScmRepository repository) {
+        super(repository);
     }
 
     @Override

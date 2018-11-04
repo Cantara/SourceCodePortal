@@ -9,8 +9,8 @@ public class ShieldsIOGroupCommitURL extends LinkURL<ScmRepository> {
     private static final long serialVersionUID = 201847051522984036L;
     public static final String KEY = "shieldsGroupCommit";
 
-    public ShieldsIOGroupCommitURL(ScmRepository internal) {
-        super(internal);
+    public ShieldsIOGroupCommitURL(ScmRepository repository) {
+        super(repository);
     }
 
     @Override

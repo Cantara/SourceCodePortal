@@ -9,8 +9,8 @@ public class SnykIOTestURL extends LinkURL<ScmRepository> {
     private static final long serialVersionUID = 8890035117418785973L;
     public static final String KEY = "snykIOTestURL";
 
-    public SnykIOTestURL(ScmRepository internal) {
-        super(internal);
+    public SnykIOTestURL(ScmRepository repository) {
+        super(repository);
     }
 
     @Override

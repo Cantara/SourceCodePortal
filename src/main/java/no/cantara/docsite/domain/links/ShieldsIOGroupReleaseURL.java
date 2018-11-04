@@ -9,8 +9,8 @@ public class ShieldsIOGroupReleaseURL extends LinkURL<ScmRepository> {
     private static final long serialVersionUID = 5485906572024332485L;
     public static final String KEY = "shieldsGroupRelease";
 
-    public ShieldsIOGroupReleaseURL(ScmRepository internal) {
-        super(internal);
+    public ShieldsIOGroupReleaseURL(ScmRepository repository) {
+        super(repository);
     }
 
     @Override

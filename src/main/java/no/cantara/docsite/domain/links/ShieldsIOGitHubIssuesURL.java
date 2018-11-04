@@ -9,8 +9,8 @@ public class ShieldsIOGitHubIssuesURL extends LinkURL<ScmRepository> {
     private static final long serialVersionUID = 6817528366457367770L;
     public static final String KEY = "shieldsIOGitHubIssuesURL";
 
-    public ShieldsIOGitHubIssuesURL(ScmRepository internal) {
-        super(internal);
+    public ShieldsIOGitHubIssuesURL(ScmRepository repository) {
+        super(repository);
     }
 
     @Override

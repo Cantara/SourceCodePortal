@@ -9,8 +9,8 @@ public class GitHubApiReadmeURL extends LinkURL<ScmRepository> {
     private static final long serialVersionUID = -4310813562270437275L;
     public static final String KEY = "gitHubApiReadmeURL";
 
-    public GitHubApiReadmeURL(ScmRepository repositoryInfo) {
-        super(repositoryInfo);
+    public GitHubApiReadmeURL(ScmRepository repository) {
+        super(repository);
     }
 
     @Override

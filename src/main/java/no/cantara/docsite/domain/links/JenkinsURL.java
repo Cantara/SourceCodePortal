@@ -11,8 +11,8 @@ public class JenkinsURL extends LinkURL<ScmRepository> {
     public static final String KEY = "jenkins";
     private final String baseURL;
 
-    public JenkinsURL(DynamicConfiguration configuration, ScmRepository repositoryInfo) {
-        super(repositoryInfo);
+    public JenkinsURL(DynamicConfiguration configuration, ScmRepository repository) {
+        super(repository);
         this.baseURL = configuration.evaluateToString("jenkins.baseUrl");
     }
 

@@ -9,8 +9,8 @@ public class GitHubRawRepoURL extends LinkURL<ScmRepository> {
     private static final long serialVersionUID = -5712528210551460515L;
     public static final String KEY = "gitHubRawRepoURL";
 
-    public GitHubRawRepoURL(ScmRepository repositoryInfo) {
-        super(repositoryInfo);
+    public GitHubRawRepoURL(ScmRepository repository) {
+        super(repository);
     }
 
     @Override

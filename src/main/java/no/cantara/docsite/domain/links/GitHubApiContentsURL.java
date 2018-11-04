@@ -10,8 +10,8 @@ public class GitHubApiContentsURL extends LinkURL<ScmRepository> {
     private static final long serialVersionUID = 6542826512042618912L;
     public static final String KEY = "gitHubApiContentsURL";
 
-    public GitHubApiContentsURL(ScmRepository repositoryInfo) {
-        super(repositoryInfo);
+    public GitHubApiContentsURL(ScmRepository repository) {
+        super(repository);
     }
 
     @Override
