@@ -23,7 +23,11 @@
         "groupId": "ConfigService",
         "display-name": "The ConfigService and JAU Toolchain",
         "description": "Provision configuration to agents",
-        "repo": ["ConfigService*"],
+        "repo": [
+          "ConfigService*",
+          "JAU",
+          "Java-Auto-Update"
+        ],
         "branch": "master",
         "default-group-repo": "ConfigService"
       },
@@ -63,7 +67,11 @@
         "groupId": "BaselineProjects",
         "display-name": "Cantara Baseline Codebases",
         "description": "Cantara Baseline projects for Java and Docker",
-        "repo": ["[^\\s]*aseline*"],
+        "repo": [
+          "[^\\s]*aseline*",
+          "BaseCommands",
+          "BaseJDBCCommands"
+        ],
         "branch": "master",
         "default-group-repo": "microservice-baseline"
       },
