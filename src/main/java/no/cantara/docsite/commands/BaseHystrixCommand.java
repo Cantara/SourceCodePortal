@@ -5,9 +5,19 @@ import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandProperties;
 import com.netflix.hystrix.HystrixThreadPoolProperties;
 
+import javax.net.ssl.SSLSession;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
+import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Optional;
 
 abstract public class BaseHystrixCommand<R> extends HystrixCommand<R> {
+
+    private static String url;
 
     protected BaseHystrixCommand(String groupKey) {
         super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey))
@@ -45,6 +55,54 @@ abstract public class BaseHystrixCommand<R> extends HystrixCommand<R> {
             throw new RuntimeException("Excepted statusCode: " + anyOf + " but actual statusCode was " + response.statusCode());
         }
         return response;
+    }
+
+    static <R> HttpResponse<R> getNullResponse(String url) {
+        return new HttpResponse<>() {
+            @Override
+            public int statusCode() {
+                return 500;
+            }
+
+            @Override
+            public HttpRequest request() {
+                return HttpRequest.newBuilder().build();
+            }
+
+            @Override
+            public Optional<HttpResponse<R>> previousResponse() {
+                return Optional.empty();
+            }
+
+            @Override
+            public HttpHeaders headers() {
+                return HttpHeaders.of(new HashMap<>(), (s1, s2) -> false);
+            }
+
+            @Override
+            public R body() {
+                return null;
+            }
+
+            @Override
+            public Optional<SSLSession> sslSession() {
+                return Optional.empty();
+            }
+
+            @Override
+            public URI uri() {
+                try {
+                    return new URI(url);
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public HttpClient.Version version() {
+                return HttpClient.Version.HTTP_2;
+            }
+        };
     }
 
 }

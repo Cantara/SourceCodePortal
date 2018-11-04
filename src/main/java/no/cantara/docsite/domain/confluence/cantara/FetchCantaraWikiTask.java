@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.confluence.cantara;
 
 import no.cantara.docsite.cache.CacheCantaraWikiKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.commands.HttpGetCommand;
+import no.cantara.docsite.commands.GetCommand;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
 import no.cantara.docsite.json.JsonbFactory;
@@ -30,7 +30,7 @@ public class FetchCantaraWikiTask extends WorkerTask {
 
     @Override
     public void execute() {
-        HttpGetCommand<String> cmd = new HttpGetCommand<>("cantaraWiki", getConfiguration(), Optional.of(this),
+        GetCommand<String> cmd = new GetCommand<>("cantaraWiki", getConfiguration(), Optional.of(this),
                 String.format("https://wiki.cantara.no/pages/viewpage.action?pageId=%s", cacheKey.contentId), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (response.statusCode() == HTTP_OK) {

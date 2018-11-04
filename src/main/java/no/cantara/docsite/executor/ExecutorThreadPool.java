@@ -11,11 +11,11 @@ import java.util.concurrent.TimeUnit;
 public class ExecutorThreadPool implements ExecutorService {
 
     private static Logger LOG = LoggerFactory.getLogger(ExecutorService.class);
-    private final BlockingQueue internalEventsQueue;
+    private final BlockingQueue<WorkerTask> internalEventsQueue;
     private final ThreadPoolExecutor executorThreadPool;
 
     ExecutorThreadPool() {
-        this.internalEventsQueue = new ArrayBlockingQueue(BLOCKING_QUEUE_SIZE);
+        this.internalEventsQueue = new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE);
         this.executorThreadPool = new ThreadPoolExecutor(
                 8, // core size
                 50, // max size
@@ -37,7 +37,7 @@ public class ExecutorThreadPool implements ExecutorService {
                 LOG.info("Starting ExecutorService..");
                 while (!executorThreadPool.isTerminated()) {
                     try {
-                        WorkerTask workerTask = (WorkerTask) internalEventsQueue.take();
+                        WorkerTask workerTask = internalEventsQueue.take();
                         int retryCount = workerTask.incrementCount();
                         if (retryCount < MAX_RETRIES) {
                             if (retryCount > 0) LOG.warn("RetryCount: {} for {}", retryCount, workerTask.toString());
