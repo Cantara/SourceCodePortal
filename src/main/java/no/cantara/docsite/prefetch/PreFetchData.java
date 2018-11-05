@@ -27,7 +27,6 @@ public class PreFetchData {
         this.cacheStore = cacheStore;
     }
 
-    // TODO repositories should be maintained in a repo only and not bound to a group.
     public void fetch() {
         LOG.info("Pre-fetch data..");
         cacheStore.getCacheKeys().iterator().forEachRemaining(entry -> {
