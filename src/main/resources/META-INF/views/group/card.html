@@ -79,8 +79,7 @@
                 <td>In development</td>
                 <td>
                     <img src="../img/license-asl2.svg"/>
-                    <img th:src="${group.externalLinks['jenkins'].externalURL}"
-                         onerror="if (this.src != 'error.jpg') this.src = '/img/build-unknown.svg';"/>
+                    <img th:src="${group.externalLinks['jenkins'].internalURL}" />
                 </td>
             </tr>
             </tbody>

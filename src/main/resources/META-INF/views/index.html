@@ -82,8 +82,7 @@
                                          onerror="if (this.src != 'error.jpg') this.src = 'img/release-unknown.svg';"/>
                                 </td>
                                 <td>
-                                    <img th:src="${model.repository.externalLinks['jenkins'].getExternalGroupURL}"
-                                         onerror="if (this.src != 'error.jpg') this.src = 'img/build-unknown.svg';"/>
+                                    <img th:src="${model.repository.externalLinks['jenkins'].getInternalGroupURL}" />
                                 </td>
                             </tr>
                             </tbody>

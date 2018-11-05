@@ -5,6 +5,7 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import io.undertow.util.StatusCodes;
 import no.cantara.docsite.cache.CacheStore;
+import no.cantara.docsite.controller.handler.BadgeResourceHandler;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.ScheduledExecutorService;
 import no.cantara.docsite.web.ResourceContext;
@@ -89,6 +90,11 @@ public class ApplicationController implements HttpHandler {
 
         if (resourceContext.subMatch("/img") || resourceContext.exactMatch("/favicon.ico")) {
             new ImageResourceController(configuration, "META-INF/views").handleRequest(exchange);
+            return;
+        }
+
+        if (resourceContext.subMatch("/badge")) {
+            new BadgeResourceHandler(configuration, cacheStore, resourceContext, "META-INF/views").handleRequest(exchange);
             return;
         }
 

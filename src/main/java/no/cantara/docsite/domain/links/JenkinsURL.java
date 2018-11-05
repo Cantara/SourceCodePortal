@@ -28,6 +28,16 @@ public class JenkinsURL extends LinkURL<CacheKey> {
         return KEY;
     }
 
+    public String getInternalURL() {
+        return String.format("/badge/jenkins/%s/%s", internal.repoName, internal.branch);
+    }
+
+    public String getInternalGroupURL() {
+        Objects.requireNonNull(repository);
+        Objects.requireNonNull(repository.defaultGroupRepoName);
+        return String.format("/badge/jenkins/%s/%s", repository.defaultGroupRepoName, repository.cacheRepositoryKey.branch);
+    }
+
     @Override
     public String getExternalURL() {
         return String.format("%s/buildStatus/icon?job=%s", baseURL, internal.repoName);
