@@ -41,7 +41,6 @@ public class JenkinsBuildStatusBadgeTest {
 
     @Test
     public void testName() throws ParserConfigurationException, SAXException, JAXBException {
-        LOG.trace("raw: {}", SVG);
         SAXParserFactory sax = SAXParserFactory.newInstance();
         sax.setNamespaceAware(false);
         sax.setValidating(false);

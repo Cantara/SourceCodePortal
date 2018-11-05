@@ -57,7 +57,7 @@ public class ScmRepository implements Serializable {
         this.apiReadmeURL = new GitHubApiReadmeURL(cacheRepositoryKey.asCacheKey(), this);
         this.rawRepoURL = new GitHubRawRepoURL(this);
         this.apiContentsURL = new GitHubApiContentsURL(cacheRepositoryKey.asCacheKey(), this);
-        externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, this));
+        externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, cacheRepositoryKey.asCacheKey(), this));
         externalLinks.put(ShieldsIOReposURL.KEY, new ShieldsIOReposURL(""));
         externalLinks.put(ShieldsIOGroupCommitURL.KEY, new ShieldsIOGroupCommitURL(this));
         externalLinks.put(ShieldsIOGroupReleaseURL.KEY, new ShieldsIOGroupReleaseURL(this));

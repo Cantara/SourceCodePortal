@@ -7,6 +7,7 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.controller.ApplicationController;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.confluence.cantara.FetchCantaraWikiTask;
+import no.cantara.docsite.domain.jenkins.QueueJenkinsStatusTask;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.ScheduledExecutorService;
 import no.cantara.docsite.executor.ScheduledWorker;
@@ -100,7 +101,11 @@ public class Application {
         scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
         scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
         scheduledExecutorService.queue(scheduledWorker);
-        // initate wiki task ScheduledJenkinsTasks
+
+        ScheduledWorker jenkinsScheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.check.jenkins.build.status.interval"), TimeUnit.MILLISECONDS);
+        jenkinsScheduledWorker.queue(new QueueJenkinsStatusTask(configuration, executorService, cacheStore));
+        scheduledExecutorService.queue(jenkinsScheduledWorker);
+
         // initate wiki task ScheduledSnykTasks
 
         scheduledExecutorService.start();

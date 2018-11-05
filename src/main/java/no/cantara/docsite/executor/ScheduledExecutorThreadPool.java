@@ -9,6 +9,7 @@ import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
 
@@ -37,6 +38,7 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
     public void start() {
         LOG.info("Starting ScheduledExecutorService..");
         for (ScheduledWorker scheduledWorker : scheduledWorkers) {
+            LOG.info("Scheduled worker task: {}", scheduledWorker.workerTaskList.stream().map(m -> m.getClass().getSimpleName()).collect(Collectors.toList()));
             scheduledExecutorService.scheduleAtFixedRate(new ScheduledThread(scheduledWorker), scheduledWorker.initialDelay, scheduledWorker.period, scheduledWorker.timeUnit);
         }
     }

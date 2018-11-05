@@ -3,7 +3,7 @@ package no.cantara.docsite.cache;
 import no.cantara.docsite.domain.config.RepoConfig;
 import no.cantara.docsite.domain.config.RepoConfigService;
 import no.cantara.docsite.domain.github.releases.GitHubCreatedTagEvent;
-import no.cantara.docsite.domain.jenkins.JenkinsBuildStatusBadge;
+import no.cantara.docsite.domain.jenkins.JenkinsBuildStatus;
 import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.scm.ScmRepository;
@@ -129,8 +129,8 @@ public class CacheStore {
         }
 
         if (cacheManager.getCache(JENKINS_BUILD_STATUS) == null) {
-            LOG.info("Creating Cantara Wiki cache");
-            MutableConfiguration<CacheKey, JenkinsBuildStatusBadge> cacheConfig = new MutableConfiguration<>();
+            LOG.info("Creating Jenkins Build Status cache");
+            MutableConfiguration<CacheKey, JenkinsBuildStatus> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache(JENKINS_BUILD_STATUS, cacheConfig);
@@ -213,7 +213,7 @@ public class CacheStore {
         return cacheManager.getCache(CANTARA_WIKI);
     }
 
-    public Cache<CacheKey, JenkinsBuildStatusBadge> getJenkinsBuildStatus() {
+    public Cache<CacheKey, JenkinsBuildStatus> getJenkinsBuildStatus() {
         return cacheManager.getCache(JENKINS_BUILD_STATUS);
     }
 
