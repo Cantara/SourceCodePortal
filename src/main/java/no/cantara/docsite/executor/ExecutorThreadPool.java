@@ -11,17 +11,19 @@ import java.util.concurrent.TimeUnit;
 public class ExecutorThreadPool implements ExecutorService {
 
     private static Logger LOG = LoggerFactory.getLogger(ExecutorService.class);
-    private final BlockingQueue<WorkerTask> internalEventsQueue;
+    private final BlockingQueue<WorkerTask> workerTaskQueue;
+    private final ArrayBlockingQueue<Runnable> workQueue;
     private final ThreadPoolExecutor executorThreadPool;
 
     ExecutorThreadPool() {
-        this.internalEventsQueue = new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE);
+        this.workerTaskQueue = new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE);
+        this.workQueue = new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE);
         this.executorThreadPool = new ThreadPoolExecutor(
                 8, // core size
                 50, // max size
                 10 * 60, // idle timeout
                 TimeUnit.SECONDS,
-                new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE)); // queue with a size;
+                workQueue); // queue with a size;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class ExecutorThreadPool implements ExecutorService {
                 LOG.info("Starting ExecutorService..");
                 while (!executorThreadPool.isTerminated()) {
                     try {
-                        WorkerTask workerTask = internalEventsQueue.take();
+                        WorkerTask workerTask = workerTaskQueue.take();
                         int retryCount = workerTask.incrementCount();
                         if (retryCount < MAX_RETRIES) {
                             if (retryCount > 0) LOG.warn("RetryCount: {} for {}", retryCount, workerTask.toString());
@@ -86,7 +88,7 @@ public class ExecutorThreadPool implements ExecutorService {
 
     @Override
     public void queue(WorkerTask workerTask) {
-        internalEventsQueue.add(workerTask);
+        workerTaskQueue.add(workerTask);
     }
 
     @Override
@@ -96,12 +98,17 @@ public class ExecutorThreadPool implements ExecutorService {
 
     @Override
     public int queued() {
-        return internalEventsQueue.size();
+        return workerTaskQueue.size();
     }
 
     @Override
     public int countActiveThreads() {
         return executorThreadPool.getActiveCount();
+    }
+
+    @Override
+    public int countRemainingWorkerTasks() {
+        return workQueue.size();
     }
 
 }

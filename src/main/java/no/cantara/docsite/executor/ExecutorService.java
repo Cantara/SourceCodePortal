@@ -24,6 +24,8 @@ public interface ExecutorService {
 
     int countActiveThreads();
 
+    int countRemainingWorkerTasks();
+
     static ExecutorService create() {
         return new ExecutorThreadPool();
     }

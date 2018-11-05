@@ -1,16 +1,23 @@
 package no.cantara.docsite.domain.links;
 
+import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.domain.scm.ScmRepository;
 
 import java.util.Objects;
 
-public class GitHubApiReadmeURL extends LinkURL<ScmRepository> {
+public class GitHubApiReadmeURL extends LinkURL<CacheKey> {
 
     private static final long serialVersionUID = -4310813562270437275L;
     public static final String KEY = "gitHubApiReadmeURL";
+    private final ScmRepository repository;
 
-    public GitHubApiReadmeURL(ScmRepository repository) {
-        super(repository);
+    public GitHubApiReadmeURL(CacheKey cacheKey) {
+        this(cacheKey, null);
+    }
+
+    public GitHubApiReadmeURL(CacheKey cacheKey, ScmRepository repository) {
+        super(cacheKey);
+        this.repository = repository;
     }
 
     @Override
@@ -19,17 +26,18 @@ public class GitHubApiReadmeURL extends LinkURL<ScmRepository> {
     }
 
     public String getInternalURL() {
-        return String.format("/contents/%s/%s", internal.cacheRepositoryKey.repoName, internal.cacheRepositoryKey.branch);
+        return String.format("/contents/%s/%s", internal.repoName, internal.branch);
     }
 
     @Override
     public String getExternalURL() {
-        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.cacheRepositoryKey.organization, internal.cacheRepositoryKey.repoName, internal.cacheRepositoryKey.branch);
+        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.organization, internal.repoName, internal.branch);
     }
 
     public String getExternalGroupURL() {
-        Objects.requireNonNull(internal.defaultGroupRepoName);
-        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", internal.cacheRepositoryKey.organization, internal.defaultGroupRepoName, internal.cacheRepositoryKey.branch);
+        Objects.requireNonNull(repository);
+        Objects.requireNonNull(repository.cacheRepositoryKey);
+        return String.format("https://api.github.com/repos/%s/%s/readme?ref=%s", repository.cacheRepositoryKey.organization, repository.defaultGroupRepoName, repository.cacheRepositoryKey.branch);
     }
 
 }
