@@ -40,6 +40,7 @@ public class ExecutorThreadPool implements ExecutorService {
                 while (!executorThreadPool.isTerminated()) {
                     try {
                         WorkerTask workerTask = workerTaskQueue.take();
+                        // re-queueing occurs in hystrix command
                         int retryCount = workerTask.incrementCount();
                         if (retryCount < MAX_RETRIES) {
                             if (retryCount > 0) LOG.warn("RetryCount: {} for {}", retryCount, workerTask.toString());
