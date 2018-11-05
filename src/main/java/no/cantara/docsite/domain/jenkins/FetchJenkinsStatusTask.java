@@ -37,6 +37,7 @@ public class FetchJenkinsStatusTask extends WorkerTask {
         HttpResponse<String> response = cmd.execute();
         if (response.statusCode() == HTTP_OK) {
             // TODO implement jenkins cache
+
         } else {
             LOG.trace("{} -- {} -- {}", jenkinsURL.getExternalURL(), response.statusCode(), response.body());
         }
