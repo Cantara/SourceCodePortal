@@ -48,8 +48,6 @@ public class BadgeResourceHandler implements HttpHandler {
         String repoName = resourceContext.getLast().get().resource;
         String branch = resourceContext.getLast().get().id;
 
-        LOG.info("resourcePath: {}/{}/{}/{}", resourceName, badgeCategory, repoName, branch);
-
         CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB), repoName, branch);
 
         if ("jenkins".equalsIgnoreCase(badgeCategory)) {
