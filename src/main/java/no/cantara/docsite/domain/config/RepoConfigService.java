@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Deque;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 public class RepoConfigService {
@@ -39,6 +40,10 @@ public class RepoConfigService {
 
     public RepoConfig getConfig() {
         return repoConfig;
+    }
+
+    public List<RepoConfig.Repo> getRepositories(RepoConfig.ScmProvider provider) {
+        return repoConfig.repos.get(provider);
     }
 
     public String getOrganization(RepoConfig.ScmProvider provider) {
@@ -76,6 +81,13 @@ public class RepoConfigService {
                     currentRepoBuilder.displayName(((JsonString) jte.value).getString());
                 if ("default-group-repo".equals(jte.key))
                     currentRepoBuilder.defaultGroupRepo(((JsonString) jte.value).getString());
+
+                if ("jenkins".equalsIgnoreCase(jte.parent.key)) {
+                    currentRepoBuilder.withExternal("jenkins").set(jte.key, ((JsonString) jte.value).getString());
+                }
+                if ("snyk".equalsIgnoreCase(jte.parent.key)) {
+                    currentRepoBuilder.withExternal("snyk").set(jte.key, ((JsonString) jte.value).getString());
+                }
             }
         }
     }

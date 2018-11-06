@@ -43,7 +43,8 @@ public class RepoConfigTest {
                 .withRepo(
                         RepoConfig.newRepoBuilder()
                                 .groupId("Whydah").repoPattern("Whydah*").displayName("heading").description("desc").defaultGroupRepo("Whydah").branch("master")
-//                                .withExternal().snyk()
+                                .withExternal(RepoConfig.newJenkinsBuilder().prefix("Cantara-"))
+                                .withExternal(RepoConfig.newSnykBuilder().prefix("Cantara"))
                 )
                 .build();
         assertNotNull(repoConfig);
@@ -54,5 +55,7 @@ public class RepoConfigTest {
     public void testLoadConfig() {
         RepoConfigService configService = new RepoConfigService("conf/config.json");
         LOG.trace("config: {}", configService.getConfig());
+        RepoConfig.Jenkins jenkins = configService.getRepositories(RepoConfig.ScmProvider.GITHUB).get(0).getService(RepoConfig.Jenkins.class);
+        LOG.trace("--> {}", jenkins.jenkinsPrefix);
     }
 }

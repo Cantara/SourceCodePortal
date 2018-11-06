@@ -11,6 +11,9 @@
         "branch": "master",
         "default-group-repo": "SourceCodePortal",
         "external": {
+          "jenkins": {
+            "jenkins-job-prefix": "Cantara-"
+          },
           "snyk": {
             "snyk-test-prefix": "Cantara"
           }
