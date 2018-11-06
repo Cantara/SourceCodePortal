@@ -12,16 +12,6 @@ SourceCode Dashboard Portal is an Organisational and group dashboard organizing 
 please contact the authors and we'll help you configure the system to your volumes/needs.
 
 
-[source,xml]
------------------
-<dependency>
-    <groupId>no.cantara.docsite</groupId>
-    <artifactId>source-code-portal</artifactId>
-    <version>0.8.1-SNAPSHOT</version>
-</dependency>
------------------
-
-
 SCP Key features:
 ^^^^^^^^^^^^^^^^^
 
