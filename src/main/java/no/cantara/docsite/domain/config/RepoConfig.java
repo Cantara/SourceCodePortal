@@ -185,6 +185,7 @@ public class RepoConfig {
     public static class RepoBuilder {
         private final Map<String, String> repoBuilderProps = new LinkedHashMap<>();
         private final List<String> repoPatternProps = new ArrayList<>();
+        private final ExternalBuilder externalBuilder = new ExternalBuilder();
         private GroupBuilder parent;
 
         public RepoBuilder() {
@@ -220,8 +221,23 @@ public class RepoConfig {
             return this;
         }
 
+        ExternalBuilder withExternal() {
+            return externalBuilder;
+        }
+
         Repo build() {
             return new Repo(parent.organization, repoPatternProps, repoBuilderProps.get("branchPattern"), repoBuilderProps.get("groupId"), repoBuilderProps.get("displayName"), repoBuilderProps.get("description"), repoBuilderProps.get("defaultGroupRepo"));
         }
+    }
+
+    public static class ExternalBuilder {
+        private Map<String,Object> externalBuilderProps = new LinkedHashMap<>();
+
+    }
+
+    public static class Snyk {
+        private Map<String,String> snykBuilderProps = new LinkedHashMap<>();
+
+
     }
 }

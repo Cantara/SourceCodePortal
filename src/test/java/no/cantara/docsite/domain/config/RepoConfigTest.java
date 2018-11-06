@@ -40,7 +40,11 @@ public class RepoConfigTest {
         RepoConfig repoConfig = RepoConfig.newBuilder("Title")
                 .withProvider(RepoConfig.ScmProvider.GITHUB, "Cantara")
                 .withRepo(RepoConfig.newRepoBuilder().groupId("SourceCodePortal").repoPattern("SourceCodePortal*").displayName("heading").description("desc").defaultGroupRepo("SourceCodePortal").branch("master"))
-                .withRepo(RepoConfig.newRepoBuilder().groupId("Whydah").repoPattern("Whydah*").displayName("heading").description("desc").defaultGroupRepo("Whydah").branch("master"))
+                .withRepo(
+                        RepoConfig.newRepoBuilder()
+                                .groupId("Whydah").repoPattern("Whydah*").displayName("heading").description("desc").defaultGroupRepo("Whydah").branch("master")
+//                                .withExternal().snyk()
+                )
                 .build();
         assertNotNull(repoConfig);
         LOG.trace("config: {}", repoConfig);
