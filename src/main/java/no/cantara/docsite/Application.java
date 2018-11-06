@@ -8,6 +8,7 @@ import no.cantara.docsite.controller.ApplicationController;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.confluence.cantara.FetchCantaraWikiTask;
 import no.cantara.docsite.domain.jenkins.QueueJenkinsStatusTask;
+import no.cantara.docsite.domain.snyk.QueueSnykTestTask;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.ScheduledExecutorService;
 import no.cantara.docsite.executor.ScheduledWorker;
@@ -102,9 +103,13 @@ public class Application {
         scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
         scheduledExecutorService.queue(scheduledWorker);
 
-        ScheduledWorker jenkinsScheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.check.jenkins.build.status.interval"), TimeUnit.MILLISECONDS);
+        ScheduledWorker jenkinsScheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.check.jenkins.build.status.interval"), TimeUnit.MINUTES);
         jenkinsScheduledWorker.queue(new QueueJenkinsStatusTask(configuration, executorService, cacheStore));
         scheduledExecutorService.queue(jenkinsScheduledWorker);
+
+        ScheduledWorker snykTestScheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.check.snyk.test.status.interval"), TimeUnit.MINUTES);
+        snykTestScheduledWorker.queue(new QueueSnykTestTask(configuration, executorService, cacheStore));
+        scheduledExecutorService.queue(snykTestScheduledWorker);
 
         // initate wiki task ScheduledSnykTasks
 

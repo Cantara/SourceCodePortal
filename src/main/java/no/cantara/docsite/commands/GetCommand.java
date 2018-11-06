@@ -40,11 +40,10 @@ public class GetCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
 
     @Override
     protected HttpResponse<R> getFallback() {
+        LOG.error("{} -> {}", getExecutionEvents(), getFailedExecutionException().getMessage());
         if (worker.isPresent()) {
             worker.get().getExecutor().queue(worker.get());
         }
         return getNullResponse(url);
     }
-
-
 }

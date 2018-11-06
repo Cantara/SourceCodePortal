@@ -10,6 +10,7 @@ import no.cantara.docsite.domain.jenkins.FetchJenkinsStatusTask;
 import no.cantara.docsite.domain.links.GitHubApiContentsURL;
 import no.cantara.docsite.domain.links.GitHubApiReadmeURL;
 import no.cantara.docsite.domain.maven.FetchMavenPOMTask;
+import no.cantara.docsite.domain.snyk.FetchSnykTestTask;
 import no.cantara.docsite.executor.ExecutorService;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -35,6 +36,7 @@ public class PreFetchData {
             executorService.queue(new FetchGitHubReadmeTask(configuration, executorService, cacheStore, entry.getKey(), new GitHubApiReadmeURL(entry.getKey())));
             executorService.queue(new FetchGitHubCommitRevisionsTask(configuration, executorService, cacheStore, entry.getKey()));
             executorService.queue(new FetchJenkinsStatusTask(configuration, executorService, cacheStore, entry.getKey()));
+            executorService.queue(new FetchSnykTestTask(configuration, executorService, cacheStore, entry.getKey()));
 
         });
         LOG.info("Pre-fetch done queuing tasks - remaining: {}", executorService.countRemainingWorkerTasks());

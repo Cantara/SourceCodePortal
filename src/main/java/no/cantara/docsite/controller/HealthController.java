@@ -130,6 +130,7 @@ public class HealthController implements HttpHandler {
             cacheBuilder.add("releases", CacheHelper.cacheSize(cacheStore.getReleases()));
             cacheBuilder.add("confluence-pages", CacheHelper.cacheSize(cacheStore.getCantaraWiki()));
             cacheBuilder.add("jenkins-build-status", CacheHelper.cacheSize(cacheStore.getJenkinsBuildStatus()));
+            cacheBuilder.add("snyk-test-status", CacheHelper.cacheSize(cacheStore.getSnykTestStatus()));
         }
 
         builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());

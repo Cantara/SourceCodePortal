@@ -7,6 +7,7 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepoConfig;
 import no.cantara.docsite.domain.jenkins.JenkinsBuildStatus;
+import no.cantara.docsite.domain.snyk.SnykTestStatus;
 import no.cantara.docsite.web.ResourceContext;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -57,6 +58,26 @@ public class BadgeResourceHandler implements HttpHandler {
                 bytes = buildStatus.svg.getBytes();
             } else {
                 URL url = ClassLoader.getSystemResource(String.format("%s/img/%s", resourcePath, "build-unknown.svg"));
+                try (InputStream in = url.openStream()) {
+                    bytes = in.readAllBytes();
+                }
+            }
+
+            exchange.setStatusCode(200);
+            exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "image/svg+xml");
+            ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+            exchange.setResponseContentLength(bytes.length);
+            exchange.getResponseSender().send(byteBuffer);
+            return;
+        }
+
+        if ("snyk".equalsIgnoreCase(badgeCategory)) {
+            byte[] bytes;
+            if (cacheStore.getSnykTestStatus().containsKey(cacheKey)) {
+                SnykTestStatus snykTestStatus = cacheStore.getSnykTestStatus().get(cacheKey);
+                bytes = snykTestStatus.svg.getBytes();
+            } else {
+                URL url = ClassLoader.getSystemResource(String.format("%s/img/%s", resourcePath, "snyk-unknown-lightgrey.svg"));
                 try (InputStream in = url.openStream()) {
                     bytes = in.readAllBytes();
                 }

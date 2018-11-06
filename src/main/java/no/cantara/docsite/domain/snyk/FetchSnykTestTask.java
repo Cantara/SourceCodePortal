@@ -1,9 +1,9 @@
-package no.cantara.docsite.domain.jenkins;
+package no.cantara.docsite.domain.snyk;
 
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetCommand;
-import no.cantara.docsite.domain.links.JenkinsURL;
+import no.cantara.docsite.domain.links.SnykIOTestBadgeURL;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
 import no.cantara.docsite.json.JsonbFactory;
@@ -27,20 +27,20 @@ import java.util.Optional;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class FetchJenkinsStatusTask extends WorkerTask {
+public class FetchSnykTestTask extends WorkerTask {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FetchJenkinsStatusTask.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FetchSnykTestTask.class);
 
     private final CacheStore cacheStore;
     private final CacheKey cacheKey;
 
-    public FetchJenkinsStatusTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey) {
+    public FetchSnykTestTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey) {
         super(configuration, executor);
         this.cacheStore = cacheStore;
         this.cacheKey = cacheKey;
     }
 
-    JenkinsBuildStatusBadge getBuildStatus(String svgXml) {
+    SnykTestBadge getBuildStatus(String svgXml) {
         try {
             SAXParserFactory sax = SAXParserFactory.newInstance();
             sax.setNamespaceAware(false);
@@ -48,9 +48,9 @@ public class FetchJenkinsStatusTask extends WorkerTask {
             XMLReader reader = sax.newSAXParser().getXMLReader();
             Source er = new SAXSource(reader, new InputSource(new StringReader(svgXml)));
 
-            JAXBContext context = JAXBContext.newInstance(JenkinsBuildStatusBadge.class);
+            JAXBContext context = JAXBContext.newInstance(SnykTestBadge.class);
             Unmarshaller um = context.createUnmarshaller();
-            JenkinsBuildStatusBadge badge = (JenkinsBuildStatusBadge) um.unmarshal(er);
+            SnykTestBadge badge = (SnykTestBadge) um.unmarshal(er);
             return badge;
 
         } catch (ParserConfigurationException | JAXBException | SAXException e) {
@@ -60,16 +60,16 @@ public class FetchJenkinsStatusTask extends WorkerTask {
 
     @Override
     public void execute() {
-        JenkinsURL jenkinsURL = new JenkinsURL(getConfiguration(), cacheKey);
-        GetCommand<String> cmd = new GetCommand<>("jenkinsStatus", getConfiguration(), Optional.of(this), jenkinsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
+        SnykIOTestBadgeURL snykURL = new SnykIOTestBadgeURL(cacheKey);
+        GetCommand<String> cmd = new GetCommand<>("snykTestStatus", getConfiguration(), Optional.of(this), snykURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (response.statusCode() == HTTP_OK) {
             String body = response.body();
-            JenkinsBuildStatus buildStatus = new JenkinsBuildStatus(body, getBuildStatus(body));
-            cacheStore.getJenkinsBuildStatus().put(cacheKey, buildStatus);
+            SnykTestStatus snykTestStatus = new SnykTestStatus(body, getBuildStatus(body));
+            cacheStore.getSnykTestStatus().put(cacheKey, snykTestStatus);
 
         } else {
-            LOG.warn("{} -- {}", jenkinsURL.getExternalURL(), response.statusCode());
+            LOG.warn("{} -- {}", snykURL.getExternalURL(), response.statusCode());
         }
     }
 

@@ -72,8 +72,7 @@
                 <td><img th:src="${group.externalLinks['shieldsGroupCommit'].externalURL}"/></td>
                 <td>
                     <a th:href="${group.externalLinks['snykIOTestURL'].externalURL}">
-                        <img th:src="${group.externalLinks['snykIOTestBadgeURL'].externalURL}"
-                             onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/snyk-unknown-lightgrey.svg';" />
+                        <img th:src="${group.externalLinks['snykIOTestBadgeURL'].internalURL}" />
                     </a>
                 </td>
                 <td>In development</td>

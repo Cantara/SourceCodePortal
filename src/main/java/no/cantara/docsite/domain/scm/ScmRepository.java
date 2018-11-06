@@ -63,7 +63,7 @@ public class ScmRepository implements Serializable {
         externalLinks.put(ShieldsIOGroupReleaseURL.KEY, new ShieldsIOGroupReleaseURL(this));
         externalLinks.put(ShieldsIOGitHubIssuesURL.KEY, new ShieldsIOGitHubIssuesURL(this));
         externalLinks.put(SnykIOTestURL.KEY, new SnykIOTestURL(this));
-        externalLinks.put(SnykIOTestBadgeURL.KEY, new SnykIOTestBadgeURL(this));
+        externalLinks.put(SnykIOTestBadgeURL.KEY, new SnykIOTestBadgeURL(cacheRepositoryKey.asCacheKey(), this));
     }
 
     public static class Config implements Serializable {

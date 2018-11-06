@@ -8,6 +8,7 @@ import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
+import no.cantara.docsite.domain.snyk.SnykTestStatus;
 import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ public class CacheStore {
     public static final String RELEASES = "releases";
     public static final String CANTARA_WIKI = "cantaraWiki";
     public static final String JENKINS_BUILD_STATUS = "jenkinsBuildStatus";
+    public static final String SNYK_TEST_STATUS = "snykTestStatus";
 
     private static final Logger LOG = LoggerFactory.getLogger(CacheStore.class);
 
@@ -135,6 +137,14 @@ public class CacheStore {
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache(JENKINS_BUILD_STATUS, cacheConfig);
         }
+
+        if (cacheManager.getCache(SNYK_TEST_STATUS) == null) {
+            LOG.info("Creating Snyk Test Status cache");
+            MutableConfiguration<CacheKey, SnykTestStatus> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            cacheManager.createCache(SNYK_TEST_STATUS, cacheConfig);
+        }
     }
 
     public List<ScmRepository> getRepositoryGroupsByGroupId(String groupId) {
@@ -215,6 +225,10 @@ public class CacheStore {
 
     public Cache<CacheKey, JenkinsBuildStatus> getJenkinsBuildStatus() {
         return cacheManager.getCache(JENKINS_BUILD_STATUS);
+    }
+
+    public Cache<CacheKey, SnykTestStatus> getSnykTestStatus() {
+        return cacheManager.getCache(SNYK_TEST_STATUS);
     }
 
 }

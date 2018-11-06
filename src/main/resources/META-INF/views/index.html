@@ -67,8 +67,7 @@
                                 </td>
                                 <td>
                                     <a th:href="${model.repository.externalLinks['snykIOTestURL'].getExternalGroupURL}">
-                                        <img th:src="${model.repository.externalLinks['snykIOTestBadgeURL'].getExternalGroupURL}"
-                                             onerror="if (this.src != 'error.jpg') this.src = 'https://img.shields.io/badge/snyk-unknown-lightgrey.svg';" />
+                                        <img th:src="${model.repository.externalLinks['snykIOTestBadgeURL'].getInternalGroupURL}" />
                                     </a>
                                 </td>
                             </tr>

@@ -23,7 +23,7 @@ abstract public class BaseHystrixCommand<R> extends HystrixCommand<R> {
         super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey))
                 .andCommandPropertiesDefaults(
                         HystrixCommandProperties.Setter()
-                                .withExecutionTimeoutInMilliseconds(10000)
+                                .withExecutionTimeoutInMilliseconds(45000)
                                 .withExecutionIsolationSemaphoreMaxConcurrentRequests(25))
                 .andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
                         .withMaxQueueSize(100)
