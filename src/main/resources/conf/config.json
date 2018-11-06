@@ -53,7 +53,7 @@
         "description": "Getting started with dropwizard",
         "repo": ["dropwizard*"],
         "branch": "master",
-        "default-group-repo": "HTTPLoadTest-Baseline"
+        "default-group-repo": "dropwizarde"
       },
       {
         "groupId": "Flow",
