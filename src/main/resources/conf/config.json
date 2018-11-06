@@ -9,7 +9,12 @@
         "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
         "repo": ["SourceCodePortal"],
         "branch": "master",
-        "default-group-repo": "SourceCodePortal"
+        "default-group-repo": "SourceCodePortal",
+        "external": {
+          "snyk": {
+            "snyk-test-prefix": "Cantara"
+          }
+        }
       },
       {
         "groupId": "Whydah",
