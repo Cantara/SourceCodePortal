@@ -130,6 +130,7 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
             int numberOfRepos = getRepositoryGroupsByGroupId(cacheRepositoryKey.groupId).size();
             String displayName = repo.displayName;
             String description = repo.description;
+            if (scmRepository == null) throw new RuntimeException("Wrong: " + scmRepository + " => " + cacheRepositoryKey);
             groupedRepositories.put(cacheRepositoryKey, new ScmRepositoryGroup<>(scmRepository, displayName, description, numberOfRepos));
         }
         return groupedRepositories;

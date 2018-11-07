@@ -1,5 +1,7 @@
 package no.cantara.docsite.domain.links;
 
+import javax.json.bind.annotation.JsonbTransient;
+
 public class ShieldsIOReposURL extends LinkURL<String> {
 
     private static final long serialVersionUID = 6181011109234091890L;
@@ -19,6 +21,7 @@ public class ShieldsIOReposURL extends LinkURL<String> {
         return "https://img.shields.io/badge/repos-0-lightgrey.svg";
     }
 
+    @JsonbTransient
     public String getNumberOfReposURL(int number) {
         return String.format("https://img.shields.io/badge/repos-%s-blue.svg", number);
     }

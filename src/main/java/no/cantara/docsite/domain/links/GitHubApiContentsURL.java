@@ -31,7 +31,6 @@ public class GitHubApiContentsURL extends LinkURL<CacheKey> {
         return String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", internal.organization, internal.repoName, "%s", "%s");
     }
 
-    @JsonbTransient
     public String getExternalURL(String relativeFilePath, String commitId) {
         return String.format(getExternalURL(), relativeFilePath, commitId);
     }

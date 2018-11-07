@@ -2,7 +2,10 @@ package no.cantara.docsite.domain.config;
 
 import no.cantara.docsite.json.JsonbFactory;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -28,6 +31,14 @@ public class RepoConfig {
 
     public static RepoBuilder newRepoBuilder() {
         return new RepoBuilder();
+    }
+
+    public static JenkinsBuilder newJenkinsBuilder() {
+        return new JenkinsBuilder();
+    }
+
+    public static SnykBuilder newSnykBuilder() {
+        return new SnykBuilder();
     }
 
     @Override
@@ -69,6 +80,22 @@ public class RepoConfig {
         }
     }
 
+    public interface ExternalBuilder<T> {
+        static <T> ExternalBuilder<T> create(Class<? extends ExternalBuilder<T>> clazz) {
+            try {
+                return clazz.getDeclaredConstructor(null).newInstance(null);
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        String getConfigKey(); // the key that is found in the repo config.json
+
+        ExternalBuilder<T> set(String key, String value);
+
+        T build();
+    }
+
     public static class Repo {
         public final String organization;
         public final @JsonbTypeAdapter(JsonbPatternAdapter.class) Pattern[] repoPatterns;
@@ -77,6 +104,7 @@ public class RepoConfig {
         public final String displayName;
         public final String description;
         public final String defaultGroupRepo;
+        private final Map<Class<?>, Object> services = new LinkedHashMap<>();
 
         public Repo(String organization, List<String> repoPatterns, String branchPattern, String groupId, String displayName, String description, String defaultGroupRepo) {
             this.organization = organization;
@@ -86,6 +114,22 @@ public class RepoConfig {
             this.displayName = displayName;
             this.description = description;
             this.defaultGroupRepo = defaultGroupRepo;
+        }
+
+
+        // TODO should be hidden but rendered by json result
+        public Map<String, Object> getServices() {
+            return services.entrySet().stream().collect(Collectors.toMap(entry -> entry.getKey().getSimpleName().toLowerCase(), entry -> entry.getValue()));
+        }
+
+        @JsonbTransient
+        public Map<Class<?>, Object> getExternalServices() {
+            return services;
+        }
+
+        @JsonbTransient
+        public <R> R getService(Class<R> clazz) {
+            return (R) services.get(clazz);
         }
 
         @Override
@@ -185,7 +229,7 @@ public class RepoConfig {
     public static class RepoBuilder {
         private final Map<String, String> repoBuilderProps = new LinkedHashMap<>();
         private final List<String> repoPatternProps = new ArrayList<>();
-        private final ExternalBuilder externalBuilder = new ExternalBuilder();
+        private final ExternalBuilders externalBuilders = new ExternalBuilders();
         private GroupBuilder parent;
 
         public RepoBuilder() {
@@ -221,23 +265,118 @@ public class RepoConfig {
             return this;
         }
 
-        ExternalBuilder withExternal() {
+        RepoBuilder withExternal(ExternalBuilder<?> externalBuilder) {
+            externalBuilders.externalBuilderProps.put(externalBuilder.getConfigKey(), externalBuilder);
+            return this;
+        }
+
+        ExternalBuilder<?> withExternal(String configKey) {
+            if (externalBuilders.externalBuilderProps.containsKey(configKey)) {
+                return externalBuilders.externalBuilderProps.get(configKey);
+            }
+
+            ExternalBuilder<Object> externalBuilder = ExternalBuilders.getExternalBuilder(configKey);
+            externalBuilders.externalBuilderProps.put(externalBuilder.getConfigKey(), externalBuilder);
             return externalBuilder;
         }
 
         Repo build() {
-            return new Repo(parent.organization, repoPatternProps, repoBuilderProps.get("branchPattern"), repoBuilderProps.get("groupId"), repoBuilderProps.get("displayName"), repoBuilderProps.get("description"), repoBuilderProps.get("defaultGroupRepo"));
+            Repo repo = new Repo(parent.organization, repoPatternProps, repoBuilderProps.get("branchPattern"), repoBuilderProps.get("groupId"),
+                    repoBuilderProps.get("displayName"), repoBuilderProps.get("description"), repoBuilderProps.get("defaultGroupRepo"));
+
+            for (ExternalBuilder<?> externalBuilder : externalBuilders.externalBuilderProps.values()) {
+                Object build = externalBuilder.build();
+                repo.services.put(build.getClass(), build);
+            }
+
+            return repo;
         }
     }
 
-    public static class ExternalBuilder {
-        private Map<String,Object> externalBuilderProps = new LinkedHashMap<>();
+    public static class ExternalBuilders {
+        private static final Map<String, Class<? extends ExternalBuilder<?>>> EXTERNAL_BUILDERS = new LinkedHashMap<>();
 
+        static {
+            ExternalBuilders.EXTERNAL_BUILDERS.put("jenkins", JenkinsBuilder.class);
+            ExternalBuilders.EXTERNAL_BUILDERS.put("snyk", SnykBuilder.class);
+        }
+
+        private Map<String, ExternalBuilder<?>> externalBuilderProps = new LinkedHashMap<>();
+
+        public static <R> ExternalBuilder<R> getExternalBuilder(String configKey) {
+            Class<? extends ExternalBuilder<R>> externalBuilderClass = (Class<? extends ExternalBuilder<R>>) EXTERNAL_BUILDERS.get(configKey);
+            return ExternalBuilder.create(externalBuilderClass);
+        }
     }
 
-    public static class Snyk {
-        private Map<String,String> snykBuilderProps = new LinkedHashMap<>();
+    public static class Jenkins implements Serializable {
+        private static final long serialVersionUID = -5456273290552851349L;
+
+        public final String jenkinsPrefix;
+
+        public Jenkins(String jenkinsPrefix) {
+            this.jenkinsPrefix = jenkinsPrefix;
+        }
+    }
+
+    public static class JenkinsBuilder implements ExternalBuilder<Jenkins> {
+        private Map<String, String> jenkinsBuilderProps = new LinkedHashMap<>();
+
+        @Override
+        public String getConfigKey() {
+            return "jenkins";
+        }
+
+        @Override
+        public ExternalBuilder<Jenkins> set(String key, String value) {
+            jenkinsBuilderProps.put(key, value);
+            return this;
+        }
 
 
+        public JenkinsBuilder prefix(String jenkinsPrefix) {
+            jenkinsBuilderProps.put("jenkins-job-prefix", jenkinsPrefix);
+            return this;
+        }
+
+        @Override
+        public Jenkins build() {
+            return new Jenkins(jenkinsBuilderProps.get("jenkins-job-prefix"));
+        }
+    }
+
+    public static class Snyk implements Serializable {
+        private static final long serialVersionUID = -440454858480551064L;
+
+        public final String snykTestPrefix;
+
+        public Snyk(String snykTestPrefix) {
+            this.snykTestPrefix = snykTestPrefix;
+        }
+    }
+
+    public static class SnykBuilder implements ExternalBuilder<Snyk> {
+        private Map<String, String> snykBuilderProps = new LinkedHashMap<>();
+
+        @Override
+        public String getConfigKey() {
+            return "snyk";
+        }
+
+        @Override
+        public ExternalBuilder<Snyk> set(String key, String value) {
+            snykBuilderProps.put(key, value);
+            return this;
+        }
+
+        public SnykBuilder prefix(String snykTestPrefix) {
+            snykBuilderProps.put("snyk-test-prefix", snykTestPrefix);
+            return this;
+        }
+
+        @Override
+        public Snyk build() {
+            return new Snyk(snykBuilderProps.get("snyk-test-prefix"));
+        }
     }
 }
