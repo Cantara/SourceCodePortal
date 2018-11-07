@@ -63,8 +63,7 @@ public class ScmRepository implements Serializable {
         RepoConfig.Jenkins jenkins = (RepoConfig.Jenkins) externalServices.get(RepoConfig.Jenkins.class);
         String jenkinsPrefix = (jenkins != null ? jenkins.jenkinsPrefix : "");
         externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, cacheRepositoryKey.asCacheKey(), this, jenkinsPrefix));
-        externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, cacheRepositoryKey.asCacheKey(), this, ""));
-//
+
         externalLinks.put(ShieldsIOReposURL.KEY, new ShieldsIOReposURL(""));
         externalLinks.put(ShieldsIOGroupCommitURL.KEY, new ShieldsIOGroupCommitURL(this));
         externalLinks.put(ShieldsIOGroupReleaseURL.KEY, new ShieldsIOGroupReleaseURL(this));
@@ -99,7 +98,7 @@ public class ScmRepository implements Serializable {
 
 
     public static ScmRepository of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String configDisplayName, String configDescription, Map<Class<?>, Object> externalServices, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
-        return new ScmRepository(configuration, repositoryDefinition, configDisplayName, configDescription, externalServices, id, description, defaultGroupRepo, htmlRepoURL);
+        return new ScmRepository(configuration, repositoryDefinition, configDisplayName, configDescription, (externalServices == null ? new LinkedHashMap<>() : externalServices), id, description, defaultGroupRepo, htmlRepoURL);
     }
 
     @JsonbTransient

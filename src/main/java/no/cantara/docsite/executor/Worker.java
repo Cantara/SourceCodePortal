@@ -12,7 +12,7 @@ public class Worker implements Runnable {
     public void run() {
         try {
             task.execute();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
