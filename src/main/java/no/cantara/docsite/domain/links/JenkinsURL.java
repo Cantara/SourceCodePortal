@@ -12,15 +12,17 @@ public class JenkinsURL extends LinkURL<CacheKey> {
     public static final String KEY = "jenkins";
     private final String baseURL;
     private final ScmRepository repository;
+    private final String jobPrefix;
 
-    public JenkinsURL(DynamicConfiguration configuration, CacheKey cacheKey) {
-        this(configuration, cacheKey, null);
+    public JenkinsURL(DynamicConfiguration configuration, CacheKey cacheKey, String jobPrefix) {
+        this(configuration, cacheKey, null, jobPrefix);
     }
 
-    public JenkinsURL(DynamicConfiguration configuration, CacheKey cacheKey, ScmRepository repository) {
+    public JenkinsURL(DynamicConfiguration configuration, CacheKey cacheKey, ScmRepository repository, String jobPrefix) {
         super(cacheKey);
         this.baseURL = configuration.evaluateToString("jenkins.baseUrl");
         this.repository = repository;
+        this.jobPrefix = (jobPrefix != null ? jobPrefix : "");
     }
 
     @Override
@@ -40,12 +42,12 @@ public class JenkinsURL extends LinkURL<CacheKey> {
 
     @Override
     public String getExternalURL() {
-        return String.format("%s/buildStatus/icon?job=%s", baseURL, internal.repoName);
+        return String.format("%s/buildStatus/icon?job=%s%s", baseURL, jobPrefix, internal.repoName);
     }
 
     public String getExternalGroupURL() {
         Objects.requireNonNull(repository);
         Objects.requireNonNull(repository.defaultGroupRepoName);
-        return String.format("%s/buildStatus/icon?job=%s", baseURL, repository.defaultGroupRepoName);
+        return String.format("%s/buildStatus/icon?job=%s%s", baseURL, jobPrefix, repository.defaultGroupRepoName);
     }
 }

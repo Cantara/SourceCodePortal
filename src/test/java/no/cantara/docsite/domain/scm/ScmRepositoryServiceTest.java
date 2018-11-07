@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
+import java.util.LinkedHashMap;
+
 public class ScmRepositoryServiceTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ScmRepositoryServiceTest.class);
@@ -77,16 +79,16 @@ public class ScmRepositoryServiceTest {
         cacheStore.getCacheGroupKeys().put(groupKey2, groupKey2.groupId);
 
         CacheRepositoryKey key1 = CacheRepositoryKey.of("Cantara", "repo1", "master", "g1", false);
-        cacheStore.getRepositories().put(key1, ScmRepository.of(configuration, key1, "dn", "cd", "id1", "desc", "g1", "http://example.com"));
+        cacheStore.getRepositories().put(key1, ScmRepository.of(configuration, key1, "dn", "cd", new LinkedHashMap<>(), "id1", "desc", "g1", "http://example.com"));
 
         CacheRepositoryKey key2 = CacheRepositoryKey.of("Cantara", "repo2", "master", "g2", false);
-        cacheStore.getRepositories().put(key2, ScmRepository.of(configuration, key2, "dn", "cd", "id2", "desc", "g1", "http://example.com"));
+        cacheStore.getRepositories().put(key2, ScmRepository.of(configuration, key2, "dn", "cd", new LinkedHashMap<>(), "id2", "desc", "g1", "http://example.com"));
 
         CacheRepositoryKey key3 = CacheRepositoryKey.of("Cantara", "repo3", "master", "g3", false);
-        cacheStore.getRepositories().put(key3, ScmRepository.of(configuration, key3, "dn", "cd", "id3", "desc", "g1", "http://example.com"));
+        cacheStore.getRepositories().put(key3, ScmRepository.of(configuration, key3, "dn", "cd", new LinkedHashMap<>(), "id3", "desc", "g1", "http://example.com"));
 
         CacheRepositoryKey key4 = CacheRepositoryKey.of("Cantara", "repo4", "master", "g1", false);
-        cacheStore.getRepositories().put(key4, ScmRepository.of(configuration, key4, "dn", "cd", "id4", "desc", "g2", "http://example.com"));
+        cacheStore.getRepositories().put(key4, ScmRepository.of(configuration, key4, "dn", "cd", new LinkedHashMap<>(), "id4", "desc", "g2", "http://example.com"));
 
         ScmRepositoryService service = new ScmRepositoryService(cacheStore);
         LOG.trace("{}", service.get(key1));

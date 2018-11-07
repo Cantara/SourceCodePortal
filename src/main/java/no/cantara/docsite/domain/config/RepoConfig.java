@@ -4,6 +4,7 @@ import no.cantara.docsite.json.JsonbFactory;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -119,6 +120,11 @@ public class RepoConfig {
         // TODO should be hidden but rendered by json result
         public Map<String, Object> getServices() {
             return services.entrySet().stream().collect(Collectors.toMap(entry -> entry.getKey().getSimpleName().toLowerCase(), entry -> entry.getValue()));
+        }
+
+        @JsonbTransient
+        public Map<Class<?>, Object> getExternalServices() {
+            return services;
         }
 
         @JsonbTransient
@@ -303,7 +309,7 @@ public class RepoConfig {
         }
     }
 
-    public static class Jenkins {
+    public static class Jenkins implements Serializable {
         public final String jenkinsPrefix;
 
         public Jenkins(String jenkinsPrefix) {
@@ -337,7 +343,7 @@ public class RepoConfig {
         }
     }
 
-    public static class Snyk {
+    public static class Snyk implements Serializable {
         public final String snykTestPrefix;
 
         public Snyk(String snykTestPrefix) {

@@ -2,6 +2,7 @@ package no.cantara.docsite.domain.scm;
 
 import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
+import no.cantara.docsite.domain.config.RepoConfig;
 import no.cantara.docsite.domain.links.GitHubApiContentsURL;
 import no.cantara.docsite.domain.links.GitHubApiReadmeURL;
 import no.cantara.docsite.domain.links.GitHubHtmlURL;
@@ -20,6 +21,7 @@ import no.ssb.config.DynamicConfiguration;
 import javax.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -47,8 +49,8 @@ public class ScmRepository implements Serializable {
     public final GitHubApiContentsURL apiContentsURL;
     public final Map<String, LinkURL> externalLinks = new LinkedHashMap<>(); // not immutable
 
-    ScmRepository(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, String configDisplayName, String configDescription, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
-        this.config = new Config(configDisplayName, configDescription);
+    ScmRepository(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, String configDisplayName, String configDescription, Map<Class<?>, Object> externalServices, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
+        this.config = new Config(configDisplayName, configDescription, externalServices);
         this.cacheRepositoryKey = cacheRepositoryKey;
         this.id = id;
         this.description = description;
@@ -57,7 +59,12 @@ public class ScmRepository implements Serializable {
         this.apiReadmeURL = new GitHubApiReadmeURL(cacheRepositoryKey.asCacheKey(), this);
         this.rawRepoURL = new GitHubRawRepoURL(this);
         this.apiContentsURL = new GitHubApiContentsURL(cacheRepositoryKey.asCacheKey(), this);
-        externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, cacheRepositoryKey.asCacheKey(), this));
+
+        // TODO this should not be done in constructor
+        RepoConfig.Jenkins jenkins = (RepoConfig.Jenkins) externalServices.get(RepoConfig.Jenkins.class);
+        String jenkinsPrefix = (jenkins != null ? jenkins.jenkinsPrefix : "");
+        externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, cacheRepositoryKey.asCacheKey(), this, jenkinsPrefix));
+
         externalLinks.put(ShieldsIOReposURL.KEY, new ShieldsIOReposURL(""));
         externalLinks.put(ShieldsIOGroupCommitURL.KEY, new ShieldsIOGroupCommitURL(this));
         externalLinks.put(ShieldsIOGroupReleaseURL.KEY, new ShieldsIOGroupReleaseURL(this));
@@ -71,16 +78,26 @@ public class ScmRepository implements Serializable {
 
         public final String displayName;
         public final String description;
+        private final Map<Class<?>, Object> externalServices;
 
-        public Config(String displayName, String description) {
+        public Config(String displayName, String description, Map<Class<?>, Object> externalServices) {
             this.displayName = displayName;
             this.description = description;
+            this.externalServices = externalServices;
+        }
+
+        public boolean hasService(Class<?> clazz) {
+            return externalServices.containsKey(clazz);
+        }
+
+        public <R> R getService(Class<R> clazz) {
+            return (R) externalServices.get(clazz);
         }
     }
 
 
-    public static ScmRepository of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String configDisplayName, String configDescription,String id, String description, String defaultGroupRepo, String htmlRepoURL) {
-        return new ScmRepository(configuration, repositoryDefinition, configDisplayName, configDescription, id, description, defaultGroupRepo, htmlRepoURL);
+    public static ScmRepository of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String configDisplayName, String configDescription, Map<Class<?>, Object> configExternalServices, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
+        return new ScmRepository(configuration, repositoryDefinition, configDisplayName, configDescription, configExternalServices, id, description, defaultGroupRepo, htmlRepoURL);
     }
 
     @JsonbTransient
