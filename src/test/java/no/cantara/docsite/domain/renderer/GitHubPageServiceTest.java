@@ -9,6 +9,7 @@ import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 public class GitHubPageServiceTest {
@@ -27,6 +28,7 @@ public class GitHubPageServiceTest {
         return CacheInitializer.initialize(configuration);
     }
 
+    @Ignore
     @Test //(enabled = false)
     public void testName() {
         ExecutorService executorService = ExecutorService.create();
