@@ -21,7 +21,6 @@ import no.ssb.config.DynamicConfiguration;
 import javax.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -64,7 +63,8 @@ public class ScmRepository implements Serializable {
         RepoConfig.Jenkins jenkins = (RepoConfig.Jenkins) externalServices.get(RepoConfig.Jenkins.class);
         String jenkinsPrefix = (jenkins != null ? jenkins.jenkinsPrefix : "");
         externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, cacheRepositoryKey.asCacheKey(), this, jenkinsPrefix));
-
+        externalLinks.put(JenkinsURL.KEY, new JenkinsURL(configuration, cacheRepositoryKey.asCacheKey(), this, ""));
+//
         externalLinks.put(ShieldsIOReposURL.KEY, new ShieldsIOReposURL(""));
         externalLinks.put(ShieldsIOGroupCommitURL.KEY, new ShieldsIOGroupCommitURL(this));
         externalLinks.put(ShieldsIOGroupReleaseURL.KEY, new ShieldsIOGroupReleaseURL(this));
@@ -80,24 +80,26 @@ public class ScmRepository implements Serializable {
         public final String description;
         private final Map<Class<?>, Object> externalServices;
 
-        public Config(String displayName, String description, Map<Class<?>, Object> externalServices) {
+        Config(String displayName, String description, Map<Class<?>, Object> externalServices) {
             this.displayName = displayName;
             this.description = description;
             this.externalServices = externalServices;
         }
 
+        @JsonbTransient
         public boolean hasService(Class<?> clazz) {
             return externalServices.containsKey(clazz);
         }
 
+        @JsonbTransient
         public <R> R getService(Class<R> clazz) {
             return (R) externalServices.get(clazz);
         }
     }
 
 
-    public static ScmRepository of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String configDisplayName, String configDescription, Map<Class<?>, Object> configExternalServices, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
-        return new ScmRepository(configuration, repositoryDefinition, configDisplayName, configDescription, configExternalServices, id, description, defaultGroupRepo, htmlRepoURL);
+    public static ScmRepository of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String configDisplayName, String configDescription, Map<Class<?>, Object> externalServices, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
+        return new ScmRepository(configuration, repositoryDefinition, configDisplayName, configDescription, externalServices, id, description, defaultGroupRepo, htmlRepoURL);
     }
 
     @JsonbTransient

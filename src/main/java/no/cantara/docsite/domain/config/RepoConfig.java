@@ -310,6 +310,8 @@ public class RepoConfig {
     }
 
     public static class Jenkins implements Serializable {
+        private static final long serialVersionUID = -5456273290552851349L;
+
         public final String jenkinsPrefix;
 
         public Jenkins(String jenkinsPrefix) {
@@ -344,6 +346,8 @@ public class RepoConfig {
     }
 
     public static class Snyk implements Serializable {
+        private static final long serialVersionUID = -440454858480551064L;
+
         public final String snykTestPrefix;
 
         public Snyk(String snykTestPrefix) {

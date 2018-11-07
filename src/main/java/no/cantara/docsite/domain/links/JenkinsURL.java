@@ -4,6 +4,7 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.domain.scm.ScmRepository;
 import no.ssb.config.DynamicConfiguration;
 
+import javax.json.bind.annotation.JsonbTransient;
 import java.util.Objects;
 
 public class JenkinsURL extends LinkURL<CacheKey> {
@@ -34,6 +35,7 @@ public class JenkinsURL extends LinkURL<CacheKey> {
         return String.format("/badge/jenkins/%s/%s", internal.repoName, internal.branch);
     }
 
+    @JsonbTransient
     public String getInternalGroupURL() {
         Objects.requireNonNull(repository);
         Objects.requireNonNull(repository.defaultGroupRepoName);
@@ -45,6 +47,7 @@ public class JenkinsURL extends LinkURL<CacheKey> {
         return String.format("%s/buildStatus/icon?job=%s%s", baseURL, jobPrefix, internal.repoName);
     }
 
+    @JsonbTransient
     public String getExternalGroupURL() {
         Objects.requireNonNull(repository);
         Objects.requireNonNull(repository.defaultGroupRepoName);

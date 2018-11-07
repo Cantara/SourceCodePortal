@@ -3,6 +3,7 @@ package no.cantara.docsite.domain.links;
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.domain.scm.ScmRepository;
 
+import javax.json.bind.annotation.JsonbTransient;
 import java.util.Objects;
 
 public class SnykIOTestBadgeURL extends LinkURL<CacheKey> {
@@ -37,11 +38,11 @@ public class SnykIOTestBadgeURL extends LinkURL<CacheKey> {
         return String.format("/badge/snyk/%s/%s", repository.defaultGroupRepoName, repository.cacheRepositoryKey.branch);
     }
 
-    @Override
     public String getExternalURL() {
         return String.format("https://snyk.io/test/github/%s/%s/badge.svg", cacheKey.organization, cacheKey.repoName);
     }
 
+    @JsonbTransient
     public String getExternalGroupURL() {
         Objects.requireNonNull(repository);
         Objects.requireNonNull(repository.defaultGroupRepoName);
