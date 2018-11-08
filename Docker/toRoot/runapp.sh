@@ -2,7 +2,7 @@
 
 
 APP=source-code-portal.jar
-JAVA_PARAMS="-Dlogback.configurationFile=./config_override/logback-default.xml -Xms64m -Xmx512m --illegal-access=deny"
+JAVA_PARAMS="-Dlogback.configurationFile=./config_override/logback-default.xml -Djdk.internal.httpclient.disableHostnameVerification -Xms64m -Xmx512m --illegal-access=deny"
 
 
 ./update-service.sh --group-id=no.cantara.docsite --artifact-id=source-code-portal --version-pattern=SNAPSHOT
