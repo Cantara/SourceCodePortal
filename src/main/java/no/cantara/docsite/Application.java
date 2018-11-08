@@ -8,6 +8,7 @@ import no.cantara.docsite.controller.ApplicationController;
 import no.cantara.docsite.domain.config.RepositoryConfigLoader;
 import no.cantara.docsite.domain.confluence.cantara.FetchCantaraWikiTask;
 import no.cantara.docsite.domain.jenkins.QueueJenkinsStatusTask;
+import no.cantara.docsite.domain.shields.QueueShieldsStatusTask;
 import no.cantara.docsite.domain.snyk.QueueSnykTestTask;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.ScheduledExecutorService;
@@ -111,7 +112,9 @@ public class Application {
         snykTestScheduledWorker.queue(new QueueSnykTestTask(configuration, executorService, cacheStore));
         scheduledExecutorService.queue(snykTestScheduledWorker);
 
-        // initate wiki task ScheduledSnykTasks
+        ScheduledWorker shieldsScheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.check.shields.status.interval"), TimeUnit.MINUTES);
+        shieldsScheduledWorker.queue(new QueueShieldsStatusTask(configuration, executorService, cacheStore));
+        scheduledExecutorService.queue(shieldsScheduledWorker);
 
         scheduledExecutorService.start();
     }

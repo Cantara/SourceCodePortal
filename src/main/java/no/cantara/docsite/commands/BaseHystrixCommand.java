@@ -57,7 +57,7 @@ abstract public class BaseHystrixCommand<R> extends HystrixCommand<R> {
         return response;
     }
 
-    static <R> HttpResponse<R> getNullResponse(String url) {
+    public static <R> HttpResponse<R> getNullResponse(String url) {
         return new HttpResponse<>() {
             @Override
             public int statusCode() {

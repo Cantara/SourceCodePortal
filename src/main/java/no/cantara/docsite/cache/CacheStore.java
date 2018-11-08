@@ -8,6 +8,7 @@ import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
+import no.cantara.docsite.domain.shields.ShieldsStatus;
 import no.cantara.docsite.domain.snyk.SnykTestStatus;
 import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
@@ -40,6 +41,9 @@ public class CacheStore {
     public static final String CANTARA_WIKI = "cantaraWiki";
     public static final String JENKINS_BUILD_STATUS = "jenkinsBuildStatus";
     public static final String SNYK_TEST_STATUS = "snykTestStatus";
+    public static final String GITHUB_ISSUES_STATUS = "githubIssueStatus";
+    public static final String GITHUB_COMMITS_STATUS = "githubCommitsStatus";
+    public static final String GITHUB_RELEASE_STATUS = "gitHubReleaseStatus";
 
     private static final Logger LOG = LoggerFactory.getLogger(CacheStore.class);
 
@@ -145,6 +149,30 @@ public class CacheStore {
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache(SNYK_TEST_STATUS, cacheConfig);
         }
+
+        if (cacheManager.getCache(GITHUB_ISSUES_STATUS) == null) {
+            LOG.info("Creating Shields Issues Status cache");
+            MutableConfiguration<CacheKey, ShieldsStatus> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            cacheManager.createCache(GITHUB_ISSUES_STATUS, cacheConfig);
+        }
+
+        if (cacheManager.getCache(GITHUB_COMMITS_STATUS) == null) {
+            LOG.info("Creating Shields Commits Status cache");
+            MutableConfiguration<CacheKey, ShieldsStatus> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            cacheManager.createCache(GITHUB_COMMITS_STATUS, cacheConfig);
+        }
+
+        if (cacheManager.getCache(GITHUB_RELEASE_STATUS) == null) {
+            LOG.info("Creating Shields Releases Status cache");
+            MutableConfiguration<CacheKey, ShieldsStatus> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            cacheManager.createCache(GITHUB_RELEASE_STATUS, cacheConfig);
+        }
     }
 
     public List<ScmRepository> getRepositoryGroupsByGroupId(String groupId) {
@@ -229,6 +257,18 @@ public class CacheStore {
 
     public Cache<CacheKey, SnykTestStatus> getSnykTestStatus() {
         return cacheManager.getCache(SNYK_TEST_STATUS);
+    }
+
+    public Cache<CacheKey, ShieldsStatus> getSheildIssuesStatus() {
+        return cacheManager.getCache(GITHUB_ISSUES_STATUS);
+    }
+
+    public Cache<CacheKey, ShieldsStatus> getSheildCommitsStatus() {
+        return cacheManager.getCache(GITHUB_COMMITS_STATUS);
+    }
+
+    public Cache<CacheKey, ShieldsStatus> getShieldReleasesStatus() {
+        return cacheManager.getCache(GITHUB_RELEASE_STATUS);
     }
 
 }

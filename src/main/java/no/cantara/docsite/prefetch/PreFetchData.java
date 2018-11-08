@@ -10,6 +10,7 @@ import no.cantara.docsite.domain.jenkins.FetchJenkinsStatusTask;
 import no.cantara.docsite.domain.links.GitHubApiContentsURL;
 import no.cantara.docsite.domain.links.GitHubApiReadmeURL;
 import no.cantara.docsite.domain.maven.FetchMavenPOMTask;
+import no.cantara.docsite.domain.shields.FetchShieldsStatusTask;
 import no.cantara.docsite.domain.snyk.FetchSnykTestTask;
 import no.cantara.docsite.executor.ExecutorService;
 import no.ssb.config.DynamicConfiguration;
@@ -37,6 +38,9 @@ public class PreFetchData {
             executorService.queue(new FetchGitHubCommitRevisionsTask(configuration, executorService, cacheStore, entry.getKey()));
             executorService.queue(new FetchJenkinsStatusTask(configuration, executorService, cacheStore, entry.getKey()));
             executorService.queue(new FetchSnykTestTask(configuration, executorService, cacheStore, entry.getKey()));
+            executorService.queue(new FetchShieldsStatusTask(configuration, executorService, cacheStore, entry.getKey(), FetchShieldsStatusTask.Fetch.ISSUES));
+            executorService.queue(new FetchShieldsStatusTask(configuration, executorService, cacheStore, entry.getKey(), FetchShieldsStatusTask.Fetch.COMMITS));
+            executorService.queue(new FetchShieldsStatusTask(configuration, executorService, cacheStore, entry.getKey(), FetchShieldsStatusTask.Fetch.RELEASES));
 
         });
         LOG.info("Pre-fetch done queuing tasks - remaining: {}", executorService.countRemainingWorkerTasks());

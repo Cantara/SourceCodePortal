@@ -9,6 +9,7 @@ import no.cantara.docsite.domain.config.RepoConfig;
 import no.cantara.docsite.domain.jenkins.JenkinsBuildStatus;
 import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryService;
+import no.cantara.docsite.domain.shields.ShieldsStatus;
 import no.cantara.docsite.domain.snyk.SnykTestStatus;
 import no.cantara.docsite.web.ResourceContext;
 import no.ssb.config.DynamicConfiguration;
@@ -107,6 +108,29 @@ public class BadgeResourceHandler implements HttpHandler {
                 bytes = snykTestStatus.svg.getBytes();
             } else {
                 bytes = readBadge("snyk-unknown-lightgrey.svg");
+            }
+
+            exchange.setStatusCode(200);
+            exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "image/svg+xml");
+            ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+            exchange.setResponseContentLength(bytes.length);
+            exchange.getResponseSender().send(byteBuffer);
+            return;
+        }
+
+        if ("shields-issues".equalsIgnoreCase(badgeCategory) || "shields-commits".equalsIgnoreCase(badgeCategory) || "shields-releases".equalsIgnoreCase(badgeCategory)) {
+            byte[] bytes = new byte[0];
+            if ("shields-issues".equalsIgnoreCase(badgeCategory)) {
+                ShieldsStatus shieldsStatus = cacheStore.getSheildIssuesStatus().get(cacheKey);
+                bytes = (shieldsStatus == null ? readBadge("issues-zero.svg") : shieldsStatus.svg.getBytes());
+
+            } else if ("shields-commits".equalsIgnoreCase(badgeCategory)) {
+                ShieldsStatus shieldsStatus = cacheStore.getSheildCommitsStatus().get(cacheKey);
+                bytes = (shieldsStatus == null ? readBadge("commit-unknown.svg") : shieldsStatus.svg.getBytes());
+
+            } else if ("shields-releases".equalsIgnoreCase(badgeCategory)) {
+                ShieldsStatus shieldsStatus = cacheStore.getShieldReleasesStatus().get(cacheKey);;
+                bytes = (shieldsStatus == null ? readBadge("release-unknown.svg") : shieldsStatus.svg.getBytes());
             }
 
             exchange.setStatusCode(200);

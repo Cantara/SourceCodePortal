@@ -65,11 +65,11 @@
                 </td>
                 <td>
                     <a th:href="${('https://github.com/')+group.cacheRepositoryKey.organization+('/')+group.cacheRepositoryKey.repoName+('/issues')}">
-                        <img th:src="${group.externalLinks['shieldsIOGitHubIssuesURL'].externalURL}"/>
+                        <img th:src="${group.externalLinks['shieldsIOGitHubIssuesURL'].internalURL}"/>
                     </a>
                 </td>
-                <td><img th:src="${group.externalLinks['shieldsGroupRelease'].externalURL}"/></td>
-                <td><img th:src="${group.externalLinks['shieldsGroupCommit'].externalURL}"/></td>
+                <td><img th:src="${group.externalLinks['shieldsGroupRelease'].internalURL}"/></td>
+                <td><img th:src="${group.externalLinks['shieldsGroupCommit'].internalURL}"/></td>
                 <td>
                     <a th:href="${group.externalLinks['snykIOTestURL'].externalURL}">
                         <img th:src="${group.externalLinks['snykIOTestBadgeURL'].internalURL}" />
