@@ -129,7 +129,7 @@ public class CommonUtil {
         return list;
     }
 
-    public static String captureStackTrace(Exception e) {
+    public static String captureStackTrace(Throwable e) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);

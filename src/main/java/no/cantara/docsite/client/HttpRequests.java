@@ -60,7 +60,7 @@ public class HttpRequests {
             if (headers != null && headers.length > 0) builder.headers(headers);
             HttpRequest request = builder.GET().build();
             return HTTP_CLIENT.send(request, bodyHandler);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOG.error("HttpRequest Error: {} => {}", uri, captureStackTrace(e));
             throw new RuntimeException(e);
         }
