@@ -43,7 +43,14 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
                     configuration.evaluateToString("github.oauth2.client.clientSecret"));
             url = (url.contains("?") ? url + "&" + clientIdAndSecret : url + "?" + clientIdAndSecret);
         }
-        return HttpRequests.get(url, bodyHandler, authToken);
+        try {
+            return HttpRequests.get(url, bodyHandler, authToken);
+        } catch (Throwable e) {
+            if (!(e instanceof InterruptedException)) {
+                throw new RuntimeException(e);
+            }
+        }
+        return getNullResponse(url);
     }
 
     @Override

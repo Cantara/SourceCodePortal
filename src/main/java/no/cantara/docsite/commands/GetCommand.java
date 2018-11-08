@@ -34,8 +34,15 @@ public class GetCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
 
     @Override
     protected HttpResponse<R> run() throws Exception {
-        HttpResponse<R> response = get(url);
-        return response;
+        try {
+            HttpResponse<R> response = get(url);
+            return response;
+        } catch (Throwable e) {
+            if (!(e instanceof InterruptedException)) {
+                throw new RuntimeException(e);
+            }
+        }
+        return getNullResponse(url);
     }
 
     @Override
