@@ -28,7 +28,7 @@ public class HttpRequests {
             HttpRequest request = builder.GET().build();
             return HTTP_CLIENT.send(request, bodyHandler);
         } catch (Exception e) {
-            LOG.error("HttpRequest Error: {}", captureStackTrace(e));
+            LOG.error("HttpRequest Error: {} => {}", uri, captureStackTrace(e));
             throw new RuntimeException(e);
         }
     }
@@ -44,7 +44,7 @@ public class HttpRequests {
             HttpRequest request = builder.POST(bodyPublisher).build();
             return HTTP_CLIENT.send(request, bodyHandler);
         } catch (Exception e) {
-            LOG.error("Error: {}", captureStackTrace(e));
+            LOG.error("HttpRequest Error: {} => {}", uri, captureStackTrace(e));
             throw new RuntimeException(e);
         }
     }
