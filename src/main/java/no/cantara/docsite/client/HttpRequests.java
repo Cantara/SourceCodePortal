@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLParameters;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.net.URI;
@@ -47,7 +48,10 @@ public class HttpRequests {
             throw new RuntimeException(e);
         }
 
-        HTTP_CLIENT = HttpClient.newBuilder().sslContext(sc).build();
+        SSLParameters sslParameters = new SSLParameters();
+        sslParameters.setEndpointIdentificationAlgorithm("");
+
+        HTTP_CLIENT = HttpClient.newBuilder().sslContext(sc).sslParameters(sslParameters).build();
     }
 
     public static HttpResponse<String> get(String uri, String... headers) {
