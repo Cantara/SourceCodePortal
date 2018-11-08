@@ -29,14 +29,16 @@ public class LinkURLTest {
         DynamicConfiguration configuration = configuration();
         List<LinkURL<?>> list = new ArrayList<>();
 
-        list.add(new GitHubRawRepoURL(ScmRepository.of(configuration, CacheRepositoryKey.of("Cantara", "repo1", "master", "group1", false),
-                "dn", "cd", new LinkedHashMap<>(),"id", "desc", "group", "http://example.com")));
+        list.add(new GitHubRawRepoURL(ScmRepository.of(configuration,
+                CacheRepositoryKey.of("Cantara", "repo1", "master", "group1", false),
+                "dn", "cd", new LinkedHashMap<>(),"id", "desc", "group", "Apache-2.0", "http://example.com")));
 
         CacheRepositoryKey key1 = CacheRepositoryKey.of("Cantara", "repo1", "master", "group1", false);
-        list.add(new GitHubApiReadmeURL(key1.asCacheKey(), ScmRepository.of(configuration, key1,"dn", "cd", new LinkedHashMap<>(),"id", "desc", "group", "http://example.com")));
+        list.add(new GitHubApiReadmeURL(key1.asCacheKey(),
+                ScmRepository.of(configuration, key1,"dn", "cd", new LinkedHashMap<>(),"id", "desc", "group", "Apache-2.0", "http://example.com")));
 
         CacheRepositoryKey key2 = CacheRepositoryKey.of("Cantara", "repo1", "master", "group1", false);
-        list.add(new GitHubApiContentsURL(key2.asCacheKey(), ScmRepository.of(configuration, key2, "dn", "cd", new LinkedHashMap<>(),"id", "desc", "group", "http://example.com")));
+        list.add(new GitHubApiContentsURL(key2.asCacheKey(), ScmRepository.of(configuration, key2, "dn", "cd", new LinkedHashMap<>(),"id", "desc", "group", "Apache-2.0", "http://example.com")));
 
         list.add(new GitHubHtmlURL("http://example.com"));
 

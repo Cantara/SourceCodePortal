@@ -74,7 +74,7 @@ public class RepositoryConfigLoader {
                         cacheStore.getCacheRepositoryKeys().put(cacheRepositoryKey, cacheKey);
                         cacheStore.getCacheGroupKeys().put(cacheRepositoryKey.asCacheGroupKey(), cacheRepositoryKey.groupId);
                         ScmRepository scmRepository = ScmRepository.of(configuration, cacheRepositoryKey, repoConfig.displayName, repoConfig.description, repoConfig.getExternalServices(),
-                                repo.id, repo.description, repoConfig.defaultGroupRepo, repo.htmlUrl);
+                                repo.id, repo.description, repoConfig.defaultGroupRepo, (repo.license != null ? repo.license.spdxId : null), repo.htmlUrl);
                         cacheStore.getRepositories().put(cacheRepositoryKey, scmRepository);
                     }
                 }

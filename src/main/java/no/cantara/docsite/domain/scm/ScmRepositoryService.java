@@ -2,6 +2,7 @@ package no.cantara.docsite.domain.scm;
 
 import no.cantara.docsite.cache.CacheGroupKey;
 import no.cantara.docsite.cache.CacheHelper;
+import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheService;
 import no.cantara.docsite.cache.CacheStore;
@@ -109,6 +110,16 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
             }
         });
         return repositories;
+    }
+
+    // TODO this is a workaround because of wrong modelling
+    public ScmRepository getFirst(CacheKey cacheKey) {
+        Set<CacheRepositoryKey> repo = cacheStore.getCacheRepositoryKeys(cacheKey);
+        if (repo != null && repo.iterator().hasNext()) {
+            CacheRepositoryKey cacheRepositoryKey = repo.iterator().next();
+            return cacheStore.getRepositories().get(cacheRepositoryKey);
+        }
+        return null;
     }
 
     public Map<CacheRepositoryKey, Set<ScmRepository>> groupedRepositories() {

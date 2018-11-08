@@ -17,7 +17,7 @@
             "jenkins-job-prefix": "Cantara-"
           },
           "snyk": {
-            "snyk-test-prefix": "Cantara"
+            "snyk-test-prefix": ""
           }
         }
       },

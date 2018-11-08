@@ -7,12 +7,15 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.domain.config.RepoConfig;
 import no.cantara.docsite.domain.jenkins.JenkinsBuildStatus;
+import no.cantara.docsite.domain.scm.ScmRepository;
+import no.cantara.docsite.domain.scm.ScmRepositoryService;
 import no.cantara.docsite.domain.snyk.SnykTestStatus;
 import no.cantara.docsite.web.ResourceContext;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -33,6 +36,15 @@ public class BadgeResourceHandler implements HttpHandler {
     }
 
 
+    private byte[] readBadge(String badgeResourceName) throws IOException {
+        byte[] bytes;
+        URL url = ClassLoader.getSystemResource(String.format("%s/img/%s", resourcePath, badgeResourceName));
+        try (InputStream in = url.openStream()) {
+            bytes = in.readAllBytes();
+        }
+        return bytes;
+    }
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         if (exchange.isInIoThread()) {
@@ -51,16 +63,33 @@ public class BadgeResourceHandler implements HttpHandler {
 
         CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB), repoName, branch);
 
+        if ("license".equalsIgnoreCase(badgeCategory)) {
+            byte[] bytes;
+            ScmRepository scmRepository = new ScmRepositoryService(cacheStore).getFirst(cacheKey);
+            if (scmRepository == null || (scmRepository != null && scmRepository.licenseURL.getLicenseSpdxId() == null)) {
+                bytes = readBadge("license-invalid.svg");
+            } else {
+                String svg = new String(readBadge("license-asl2.svg"));
+                if (!"Apache-2.0".equalsIgnoreCase(scmRepository.licenseURL.getLicenseSpdxId())) {
+                    svg = svg.replace("Apache 2", scmRepository.licenseURL.getLicenseSpdxId());
+                }
+                bytes = svg.getBytes();
+            }
+            exchange.setStatusCode(200);
+            exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "image/svg+xml");
+            ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+            exchange.setResponseContentLength(bytes.length);
+            exchange.getResponseSender().send(byteBuffer);
+            return;
+        }
+
         if ("jenkins".equalsIgnoreCase(badgeCategory)) {
             byte[] bytes;
             if (cacheStore.getJenkinsBuildStatus().containsKey(cacheKey)) {
                 JenkinsBuildStatus buildStatus = cacheStore.getJenkinsBuildStatus().get(cacheKey);
                 bytes = buildStatus.svg.getBytes();
             } else {
-                URL url = ClassLoader.getSystemResource(String.format("%s/img/%s", resourcePath, "build-unknown.svg"));
-                try (InputStream in = url.openStream()) {
-                    bytes = in.readAllBytes();
-                }
+                bytes = readBadge("build-unknown.svg");
             }
 
             exchange.setStatusCode(200);
@@ -77,10 +106,7 @@ public class BadgeResourceHandler implements HttpHandler {
                 SnykTestStatus snykTestStatus = cacheStore.getSnykTestStatus().get(cacheKey);
                 bytes = snykTestStatus.svg.getBytes();
             } else {
-                URL url = ClassLoader.getSystemResource(String.format("%s/img/%s", resourcePath, "snyk-unknown-lightgrey.svg"));
-                try (InputStream in = url.openStream()) {
-                    bytes = in.readAllBytes();
-                }
+                bytes = readBadge("snyk-unknown-lightgrey.svg");
             }
 
             exchange.setStatusCode(200);

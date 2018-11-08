@@ -1,11 +1,12 @@
 package no.cantara.docsite.domain.jenkins;
 
 import no.cantara.docsite.cache.CacheKey;
-import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetCommand;
 import no.cantara.docsite.domain.config.RepoConfig;
 import no.cantara.docsite.domain.links.JenkinsURL;
+import no.cantara.docsite.domain.scm.ScmRepository;
+import no.cantara.docsite.domain.scm.ScmRepositoryService;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
 import no.cantara.docsite.json.JsonbFactory;
@@ -25,18 +26,9 @@ import javax.xml.transform.Source;
 import javax.xml.transform.sax.SAXSource;
 import java.io.StringReader;
 import java.net.http.HttpResponse;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.net.HttpURLConnection.HTTP_OK;
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toList;
 
 public class FetchJenkinsStatusTask extends WorkerTask {
 
@@ -71,19 +63,8 @@ public class FetchJenkinsStatusTask extends WorkerTask {
 
     @Override
     public void execute() {
-        String jobPrefix = "";
-        // TODO this is a workaround because of wrong modelling
-        {
-            Set<CacheRepositoryKey> repo = cacheStore.getCacheRepositoryKeys(cacheKey);
-            if (repo != null && repo.iterator().hasNext()) {
-                CacheRepositoryKey cacheRepositoryKey = repo.iterator().next();
-                RepoConfig.Jenkins jenkins = cacheStore.getRepositories().get(cacheRepositoryKey).config.getService(RepoConfig.Jenkins.class);
-                if (jenkins != null) {
-                    jobPrefix = jenkins.jenkinsPrefix;
-                }
-            }
-        }
-
+        ScmRepository scmRepository = new ScmRepositoryService(cacheStore).getFirst(cacheKey);
+        String jobPrefix = (scmRepository == null ? "" : scmRepository.config.getService(RepoConfig.Jenkins.class) != null ? scmRepository.config.getService(RepoConfig.Jenkins.class).jenkinsPrefix : "");
         JenkinsURL jenkinsURL = new JenkinsURL(getConfiguration(), cacheKey, jobPrefix);
         GetCommand<String> cmd = new GetCommand<>("jenkinsStatus", getConfiguration(), Optional.of(this), jenkinsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();

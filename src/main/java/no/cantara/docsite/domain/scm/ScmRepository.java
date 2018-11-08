@@ -8,6 +8,7 @@ import no.cantara.docsite.domain.links.GitHubApiReadmeURL;
 import no.cantara.docsite.domain.links.GitHubHtmlURL;
 import no.cantara.docsite.domain.links.GitHubRawRepoURL;
 import no.cantara.docsite.domain.links.JenkinsURL;
+import no.cantara.docsite.domain.links.LicenseURL;
 import no.cantara.docsite.domain.links.LinkURL;
 import no.cantara.docsite.domain.links.ShieldsIOGitHubIssuesURL;
 import no.cantara.docsite.domain.links.ShieldsIOGroupCommitURL;
@@ -47,8 +48,9 @@ public class ScmRepository implements Serializable {
     public final GitHubApiReadmeURL apiReadmeURL;
     public final GitHubApiContentsURL apiContentsURL;
     public final Map<String, LinkURL> externalLinks = new LinkedHashMap<>(); // not immutable
+    public final LicenseURL licenseURL;
 
-    ScmRepository(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, String configDisplayName, String configDescription, Map<Class<?>, Object> externalServices, String id, String description, String defaultGroupRepoName, String htmlRepoURL) {
+    ScmRepository(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, String configDisplayName, String configDescription, Map<Class<?>, Object> externalServices, String id, String description, String defaultGroupRepoName, String licenseSpdxId, String htmlRepoURL) {
         this.config = new Config(configDisplayName, configDescription, externalServices);
         this.cacheRepositoryKey = cacheRepositoryKey;
         this.id = id;
@@ -58,6 +60,7 @@ public class ScmRepository implements Serializable {
         this.apiReadmeURL = new GitHubApiReadmeURL(cacheRepositoryKey.asCacheKey(), this);
         this.rawRepoURL = new GitHubRawRepoURL(this);
         this.apiContentsURL = new GitHubApiContentsURL(cacheRepositoryKey.asCacheKey(), this);
+        this.licenseURL = new LicenseURL(this, licenseSpdxId);
 
         // TODO this should not be done in constructor
         RepoConfig.Jenkins jenkins = (RepoConfig.Jenkins) externalServices.get(RepoConfig.Jenkins.class);
@@ -97,8 +100,13 @@ public class ScmRepository implements Serializable {
     }
 
 
-    public static ScmRepository of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String configDisplayName, String configDescription, Map<Class<?>, Object> externalServices, String id, String description, String defaultGroupRepo, String htmlRepoURL) {
-        return new ScmRepository(configuration, repositoryDefinition, configDisplayName, configDescription, (externalServices == null ? new LinkedHashMap<>() : externalServices), id, description, defaultGroupRepo, htmlRepoURL);
+    public static ScmRepository of(DynamicConfiguration configuration, CacheRepositoryKey repositoryDefinition, String configDisplayName,
+                                   String configDescription, Map<Class<?>, Object> externalServices,
+                                   String id, String description, String defaultGroupRepo, String licenseSpdxId, String htmlRepoURL)
+    {
+        return new ScmRepository(configuration, repositoryDefinition, configDisplayName, configDescription,
+                (externalServices == null ? new LinkedHashMap<>() : externalServices),
+                id, description, defaultGroupRepo, licenseSpdxId, htmlRepoURL);
     }
 
     @JsonbTransient
@@ -130,12 +138,13 @@ public class ScmRepository implements Serializable {
                 Objects.equals(rawRepoURL, that.rawRepoURL) &&
                 Objects.equals(apiReadmeURL, that.apiReadmeURL) &&
                 Objects.equals(apiContentsURL, that.apiContentsURL) &&
-                Objects.equals(externalLinks, that.externalLinks);
+                Objects.equals(externalLinks, that.externalLinks) &&
+                Objects.equals(licenseURL, that.licenseURL);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(config, getCacheRepositoryKey(), id, description, defaultGroupRepoName, repoURL, rawRepoURL, apiReadmeURL, apiContentsURL, externalLinks);
+        return Objects.hash(config, getCacheRepositoryKey(), id, description, defaultGroupRepoName, repoURL, rawRepoURL, apiReadmeURL, apiContentsURL, externalLinks, licenseURL);
     }
 
     @Override
