@@ -21,7 +21,7 @@ public class HttpRequests {
     static {
         HTTP_CLIENT = HttpClient.newBuilder().build();
 
-        ForceHostnameVerificationSSLContext ctx = new ForceHostnameVerificationSSLContext("img.shields.io", 443);
+        ForceHostnameVerificationSSLContext ctx = new ForceHostnameVerificationSSLContext("sni89405.cloudflaressl.com", 443);
         HTTP_CLIENT_SHIELDS = HttpClient.newBuilder().sslContext(ctx).sslParameters(ctx.getParametersForSNI()).followRedirects(HttpClient.Redirect.ALWAYS).build();
     }
 
