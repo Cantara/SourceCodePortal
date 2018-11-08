@@ -12,7 +12,14 @@ import no.cantara.docsite.domain.scm.ScmRepositoryService;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
 import no.cantara.docsite.json.JsonbFactory;
+import no.cantara.docsite.util.CommonUtil;
 import no.ssb.config.DynamicConfiguration;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
@@ -26,8 +33,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.sax.SAXSource;
+import java.io.IOException;
 import java.io.StringReader;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -39,12 +48,6 @@ public class FetchShieldsStatusTask extends WorkerTask {
     private final CacheStore cacheStore;
     private final CacheKey cacheKey;
     private final Fetch fetch;
-
-    public enum Fetch {
-        ISSUES,
-        COMMITS,
-        RELEASES;
-    }
 
     public FetchShieldsStatusTask(DynamicConfiguration configuration, ExecutorService executor, CacheStore cacheStore, CacheKey cacheKey, Fetch fetch) {
         super(configuration, executor);
@@ -85,6 +88,55 @@ public class FetchShieldsStatusTask extends WorkerTask {
             throw new UnsupportedOperationException();
         }
 
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpGet httpGet = new HttpGet(shieldsURL.getExternalURL());
+            CloseableHttpResponse response = httpclient.execute(httpGet);
+            if (response.getStatusLine().getStatusCode() == HTTP_OK) {
+                String body;
+                try {
+                    HttpEntity entity = response.getEntity();
+                    body = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+                    EntityUtils.consume(entity);
+                } finally {
+                    response.close();
+                }
+
+                ShieldsStatus shieldsStatus = new ShieldsStatus(body, getBuildStatus(body));
+
+                if (fetch == Fetch.ISSUES) {
+                    cacheStore.getSheildIssuesStatus().put(cacheKey, shieldsStatus);
+                } else if (fetch == Fetch.COMMITS) {
+                    cacheStore.getSheildCommitsStatus().put(cacheKey, shieldsStatus);
+                } else if (fetch == Fetch.RELEASES) {
+                    cacheStore.getShieldReleasesStatus().put(cacheKey, shieldsStatus);
+                } else {
+                    throw new UnsupportedOperationException();
+                }
+
+            } else {
+                LOG.warn("{} -- {}", shieldsURL.getExternalURL(), response.getStatusLine().getStatusCode());
+            }
+        } catch (IOException e) {
+            LOG.error("Error fetching shields badge: {}", CommonUtil.captureStackTrace(e));
+            throw new RuntimeException(e);
+        }
+    }
+
+    //    @Override
+    public void executeCommand() {
+        ScmRepository scmRepository = new ScmRepositoryService(cacheStore).getFirst(cacheKey);
+        LinkURL shieldsURL;
+        if (fetch == Fetch.ISSUES) {
+            shieldsURL = new ShieldsIOGitHubIssuesURL(scmRepository);
+        } else if (fetch == Fetch.COMMITS) {
+            shieldsURL = new ShieldsIOGroupCommitURL(scmRepository);
+        } else if (fetch == Fetch.RELEASES) {
+            shieldsURL = new ShieldsIOGroupReleaseURL(scmRepository);
+        } else {
+            throw new UnsupportedOperationException();
+        }
+
         GetShieldsCommand<String> cmd = new GetShieldsCommand<>("shieldsStatus", getConfiguration(), Optional.of(this), shieldsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
 
@@ -110,6 +162,12 @@ public class FetchShieldsStatusTask extends WorkerTask {
     @Override
     public String toString() {
         return String.format("%s: %s", getClass().getSimpleName(), JsonbFactory.asCompactString(JsonbFactory.asJsonObject(cacheKey)));
+    }
+
+    public enum Fetch {
+        ISSUES,
+        COMMITS,
+        RELEASES;
     }
 
 }
