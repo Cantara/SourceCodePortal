@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.shields;
 
 import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.cache.CacheStore;
-import no.cantara.docsite.commands.GetCommand;
+import no.cantara.docsite.commands.GetShieldsCommand;
 import no.cantara.docsite.domain.links.LinkURL;
 import no.cantara.docsite.domain.links.ShieldsIOGitHubIssuesURL;
 import no.cantara.docsite.domain.links.ShieldsIOGroupCommitURL;
@@ -85,7 +85,7 @@ public class FetchShieldsStatusTask extends WorkerTask {
             throw new UnsupportedOperationException();
         }
 
-        GetCommand<String> cmd = new GetCommand<>("shieldsStatus", getConfiguration(), Optional.of(this), shieldsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
+        GetShieldsCommand<String> cmd = new GetShieldsCommand<>("shieldsStatus", getConfiguration(), Optional.of(this), shieldsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
 
         if (response.statusCode() == HTTP_OK) {
