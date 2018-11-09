@@ -110,6 +110,7 @@ public class HealthController implements HttpHandler {
             executorServiceBuilder.add("largest-pool-size", executorService.getThreadPool().getLargestPoolSize());
             executorServiceBuilder.add("blocking-queue-size", executorService.getThreadPool().getQueue().size());
             executorServiceBuilder.add("max-blocking-queue-size", ExecutorService.BLOCKING_QUEUE_SIZE);
+            executorServiceBuilder.add("worker-queue-remaining", executorService.countRemainingWorkerTasks());
             executorServiceBuilder.add("max-worker-retries", ExecutorService.MAX_RETRIES);
         }
 
