@@ -70,9 +70,10 @@ public class FetchSnykTestTask extends WorkerTask {
             SnykTestStatus snykTestStatus = new SnykTestStatus(body, getBuildStatus(body));
             cacheStore.getSnykTestStatus().put(cacheKey, snykTestStatus);
 
-        } else {
-            LOG.warn("{} -- {}", snykURL.getExternalURL(), response.statusCode());
         }
+//        else {
+//            LOG.warn("{} -- {}", snykURL.getExternalURL(), response.statusCode());
+//        }
     }
 
     @Override

@@ -75,9 +75,10 @@ public class FetchJenkinsStatusTask extends WorkerTask {
             JenkinsBuildStatus buildStatus = new JenkinsBuildStatus(body, getBuildStatus(body));
             cacheStore.getJenkinsBuildStatus().put(cacheKey, buildStatus);
 
-        } else {
-            LOG.warn("{} -- {}", jenkinsURL.getExternalURL(), response.statusCode());
         }
+//        else {
+//            LOG.warn("{} -- {}", jenkinsURL.getExternalURL(), response.statusCode());
+//        }
     }
 
     @Override
