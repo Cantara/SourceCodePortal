@@ -139,7 +139,7 @@ public class FetchShieldsStatusTask extends WorkerTask {
             throw new UnsupportedOperationException();
         }
 
-        GetShieldsCommand<String> cmd = new GetShieldsCommand<>("shieldsStatus", getConfiguration(), Optional.of(this), shieldsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
+        GetShieldsCommand<String> cmd = new GetShieldsCommand<>("shieldsStatus", configuration(), Optional.of(this), shieldsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         HealthResource.instance().markShieldsLastSeen();
 

@@ -84,7 +84,7 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
         @Override
         public void run() {
             for (WorkerTask workerTask : scheduledWorkers.workerTaskList) {
-                workerTask.getExecutor().queue(workerTask);
+                workerTask.executor().queue(workerTask);
             }
             HealthResource.instance().markScheduledWorkerLastSeen(scheduledWorkers.id);
         }

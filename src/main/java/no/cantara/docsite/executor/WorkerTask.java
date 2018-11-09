@@ -15,11 +15,11 @@ abstract public class WorkerTask implements Task {
         this.executor = executor;
     }
 
-    public DynamicConfiguration getConfiguration() {
+    public DynamicConfiguration configuration() {
         return configuration;
     }
 
-    public ExecutorService getExecutor() {
+    public ExecutorService executor() {
         return executor;
     }
 

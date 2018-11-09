@@ -34,7 +34,7 @@ public class FetchGitHubReadmeTask extends WorkerTask {
 
     @Override
     public void execute() {
-        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), repoReadmeURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
+        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", configuration(), Optional.of(this), repoReadmeURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
             GitHubRepositoryContents readmeContents = JsonbFactory.instance().fromJson(response.body(), GitHubRepositoryContents.class);

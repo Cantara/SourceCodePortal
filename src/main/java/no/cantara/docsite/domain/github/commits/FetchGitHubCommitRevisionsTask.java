@@ -31,7 +31,7 @@ public class FetchGitHubCommitRevisionsTask extends WorkerTask {
     @Override
     public void execute() {
         String url = String.format("https://api.github.com/repos/%s/%s/commits", cacheKey.organization, cacheKey.repoName);
-        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), url, HttpResponse.BodyHandlers.ofString());
+        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", configuration(), Optional.of(this), url, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
             GitHubCommitRevision[] commitRevision = JsonbFactory.instance().fromJson(response.body(), GitHubCommitRevision[].class);

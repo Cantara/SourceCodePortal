@@ -65,7 +65,7 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
     @Override
     protected HttpResponse<R> getFallback() {
         if (worker.isPresent()) {
-            worker.get().getExecutor().queue(worker.get());
+            worker.get().executor().queue(worker.get());
         }
         return getNullResponse(url);
     }

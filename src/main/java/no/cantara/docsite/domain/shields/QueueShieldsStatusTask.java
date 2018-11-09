@@ -22,7 +22,7 @@ public class QueueShieldsStatusTask extends WorkerTask {
     public void execute() {
         cacheStore.getCacheKeys().iterator().forEachRemaining(entry -> {
             for(FetchShieldsStatusTask.Fetch fetch : FetchShieldsStatusTask.Fetch.values()) {
-                getExecutor().queue(new FetchShieldsStatusTask(getConfiguration(), getExecutor(), cacheStore, entry.getKey(), fetch));
+                executor().queue(new FetchShieldsStatusTask(configuration(), executor(), cacheStore, entry.getKey(), fetch));
             }
         });
     }

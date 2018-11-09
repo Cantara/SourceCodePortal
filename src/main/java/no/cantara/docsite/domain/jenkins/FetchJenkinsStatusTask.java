@@ -66,8 +66,8 @@ public class FetchJenkinsStatusTask extends WorkerTask {
     public void execute() {
         ScmRepository scmRepository = new ScmRepositoryService(cacheStore).getFirst(cacheKey);
         String jobPrefix = (scmRepository == null ? "" : scmRepository.config.getService(RepoConfig.Jenkins.class) != null ? scmRepository.config.getService(RepoConfig.Jenkins.class).jenkinsPrefix : "");
-        JenkinsURL jenkinsURL = new JenkinsURL(getConfiguration(), cacheKey, jobPrefix);
-        GetCommand<String> cmd = new GetCommand<>("jenkinsStatus", getConfiguration(), Optional.of(this), jenkinsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
+        JenkinsURL jenkinsURL = new JenkinsURL(configuration(), cacheKey, jobPrefix);
+        GetCommand<String> cmd = new GetCommand<>("jenkinsStatus", configuration(), Optional.of(this), jenkinsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         HealthResource.instance().markJenkinsLastSeen();
         if (response.statusCode() == HTTP_OK) {

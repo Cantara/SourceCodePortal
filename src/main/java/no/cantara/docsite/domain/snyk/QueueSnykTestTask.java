@@ -21,7 +21,7 @@ public class QueueSnykTestTask extends WorkerTask {
     @Override
     public void execute() {
         cacheStore.getCacheKeys().iterator().forEachRemaining(entry -> {
-            getExecutor().queue(new FetchSnykTestTask(getConfiguration(), getExecutor(), cacheStore, entry.getKey()));
+            executor().queue(new FetchSnykTestTask(configuration(), executor(), cacheStore, entry.getKey()));
         });
     }
 

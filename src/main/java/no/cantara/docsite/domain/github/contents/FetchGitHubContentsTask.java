@@ -38,7 +38,7 @@ public class FetchGitHubContentsTask extends WorkerTask {
 
     @Override
     public void execute() {
-        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this),
+        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", configuration(), Optional.of(this),
                 contentsURL.getExternalGroupURL(relativeFilePath, commitId), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {

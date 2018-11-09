@@ -21,7 +21,7 @@ public class QueueJenkinsStatusTask extends WorkerTask {
     @Override
     public void execute() {
         cacheStore.getCacheKeys().iterator().forEachRemaining(entry -> {
-            getExecutor().queue(new FetchJenkinsStatusTask(getConfiguration(), getExecutor(), cacheStore, entry.getKey()));
+            executor().queue(new FetchJenkinsStatusTask(configuration(), executor(), cacheStore, entry.getKey()));
         });
     }
 

@@ -49,7 +49,7 @@ public class GetCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
     protected HttpResponse<R> getFallback() {
         LOG.error("{} -> {}", getExecutionEvents(), getFailedExecutionException().getMessage());
         if (worker.isPresent()) {
-            worker.get().getExecutor().queue(worker.get());
+            worker.get().executor().queue(worker.get());
         }
         return getNullResponse(url);
     }

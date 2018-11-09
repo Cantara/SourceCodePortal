@@ -60,7 +60,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
 
     @Override
     public void execute() {
-        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", getConfiguration(), Optional.of(this), repoContentsURL.getExternalURL("pom.xml", cacheKey.branch), HttpResponse.BodyHandlers.ofString());
+        GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", configuration(), Optional.of(this), repoContentsURL.getExternalURL("pom.xml", cacheKey.branch), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         if (GetGitHubCommand.anyOf(response, 200)) {
             GitHubRepositoryContents mavenPOMContents = JsonbBuilder.create().fromJson(response.body(), GitHubRepositoryContents.class);

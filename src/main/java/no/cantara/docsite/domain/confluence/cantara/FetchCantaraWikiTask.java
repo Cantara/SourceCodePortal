@@ -31,7 +31,7 @@ public class FetchCantaraWikiTask extends WorkerTask {
 
     @Override
     public void execute() {
-        GetCommand<String> cmd = new GetCommand<>("cantaraWiki", getConfiguration(), Optional.of(this),
+        GetCommand<String> cmd = new GetCommand<>("cantaraWiki", configuration(), Optional.of(this),
                 String.format("https://wiki.cantara.no/pages/viewpage.action?pageId=%s", cacheKey.contentId), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         HealthResource.instance().markCantaraWikiLastSeen();

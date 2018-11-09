@@ -17,7 +17,7 @@ public class PreFetchDoneTask extends WorkerTask {
 
     @Override
     public void execute() {
-        while(getExecutor().getThreadPool().getActiveCount() > 2) {
+        while(executor().getThreadPool().getActiveCount() > 2) {
             try {
                 TimeUnit.MILLISECONDS.sleep(100);
             } catch (InterruptedException e) {

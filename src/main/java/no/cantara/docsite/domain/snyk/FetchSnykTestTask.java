@@ -62,7 +62,7 @@ public class FetchSnykTestTask extends WorkerTask {
     @Override
     public void execute() {
         SnykIOTestBadgeURL snykURL = new SnykIOTestBadgeURL(cacheKey);
-        GetCommand<String> cmd = new GetCommand<>("snykTestStatus", getConfiguration(), Optional.of(this), snykURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
+        GetCommand<String> cmd = new GetCommand<>("snykTestStatus", configuration(), Optional.of(this), snykURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
         HealthResource.instance().markSnykLastSeen();
         if (response.statusCode() == HTTP_OK) {
