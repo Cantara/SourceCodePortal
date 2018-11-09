@@ -11,6 +11,7 @@ import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryService;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
+import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.json.JsonbFactory;
 import no.cantara.docsite.util.CommonUtil;
 import no.ssb.config.DynamicConfiguration;
@@ -92,6 +93,7 @@ public class FetchShieldsStatusTask extends WorkerTask {
             CloseableHttpClient httpclient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(shieldsURL.getExternalURL());
             CloseableHttpResponse response = httpclient.execute(httpGet);
+            HealthResource.instance().markShieldsLastSeen();
             if (response.getStatusLine().getStatusCode() == HTTP_OK) {
                 String body;
                 try {
@@ -139,6 +141,7 @@ public class FetchShieldsStatusTask extends WorkerTask {
 
         GetShieldsCommand<String> cmd = new GetShieldsCommand<>("shieldsStatus", getConfiguration(), Optional.of(this), shieldsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        HealthResource.instance().markShieldsLastSeen();
 
         if (response.statusCode() == HTTP_OK) {
             String body = response.body();

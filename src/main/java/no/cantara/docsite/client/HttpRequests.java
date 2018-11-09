@@ -1,5 +1,6 @@
 package no.cantara.docsite.client;
 
+import no.cantara.docsite.commands.BaseHystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +64,9 @@ public class HttpRequests {
             HttpRequest request = builder.GET().build();
             return HTTP_CLIENT.send(request, bodyHandler);
         } catch (Throwable e) {
+            if (e instanceof InterruptedException) {
+                return BaseHystrixCommand.getNullResponse(uri);
+            }
             LOG.error("HttpRequest Error: {} => {}", uri, captureStackTrace(e));
             throw new RuntimeException(e);
         }
@@ -75,6 +79,9 @@ public class HttpRequests {
             HttpRequest request = builder.GET().build();
             return HTTP_CLIENT_SHIELDS.send(request, bodyHandler);
         } catch (Throwable e) {
+            if (e instanceof InterruptedException) {
+                return BaseHystrixCommand.getNullResponse(uri);
+            }
             LOG.error("HttpRequest Error: {} => {}", uri, captureStackTrace(e));
             throw new RuntimeException(e);
         }
@@ -91,6 +98,9 @@ public class HttpRequests {
             HttpRequest request = builder.POST(bodyPublisher).build();
             return HTTP_CLIENT.send(request, bodyHandler);
         } catch (Exception e) {
+            if (e instanceof InterruptedException) {
+                return BaseHystrixCommand.getNullResponse(uri);
+            }
             LOG.error("HttpRequest Error: {} => {}", uri, captureStackTrace(e));
             throw new RuntimeException(e);
         }

@@ -5,7 +5,11 @@ import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Comparator;
 import java.util.Deque;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -59,6 +63,13 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
     @Override
     public java.util.concurrent.ScheduledExecutorService getThreadPool() {
         return scheduledExecutorService;
+    }
+
+    @Override
+    public Set<ScheduledWorker> getScheduledWorkers() {
+        SortedSet<ScheduledWorker> sortedSet = new TreeSet<>(Comparator.comparing((k -> k.id)));
+        sortedSet.addAll(scheduledWorkers);
+        return sortedSet;
     }
 
     static class ScheduledThread implements Runnable {

@@ -6,6 +6,7 @@ import no.cantara.docsite.commands.GetCommand;
 import no.cantara.docsite.domain.links.SnykIOTestBadgeURL;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
+import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -63,6 +64,7 @@ public class FetchSnykTestTask extends WorkerTask {
         SnykIOTestBadgeURL snykURL = new SnykIOTestBadgeURL(cacheKey);
         GetCommand<String> cmd = new GetCommand<>("snykTestStatus", getConfiguration(), Optional.of(this), snykURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        HealthResource.instance().markSnykLastSeen();
         if (response.statusCode() == HTTP_OK) {
             String body = response.body();
             SnykTestStatus snykTestStatus = new SnykTestStatus(body, getBuildStatus(body));

@@ -9,11 +9,13 @@ import java.util.concurrent.TimeUnit;
 public class ScheduledWorker {
 
     final Deque<WorkerTask> workerTaskList = new ConcurrentLinkedDeque<>();
+    public final String id;
     public final long initialDelay;
     public final long period;
     public final TimeUnit timeUnit;
 
-    public ScheduledWorker(long initialDelay, long period, @NotNull TimeUnit timeUnit) {
+    public ScheduledWorker(String id, long initialDelay, long period, @NotNull TimeUnit timeUnit) {
+        this.id = id;
         this.initialDelay = initialDelay;
         this.period = period;
         this.timeUnit = timeUnit;
@@ -21,6 +23,10 @@ public class ScheduledWorker {
 
     public void queue(WorkerTask workerTask) {
         workerTaskList.add(workerTask);
+    }
+
+    public int getTaskCount() {
+        return workerTaskList.size();
     }
 
 }

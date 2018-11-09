@@ -94,6 +94,9 @@ public class HealthController implements HttpHandler {
             serviceStatusBuilder.add("scheduled-executor-service", healthyScheduledExecutorService ? "up" : "terminated");
             serviceStatusBuilder.add("cache-store", healthyExecutorService ? "up" : "down");
             serviceStatusBuilder.add("github-last-seen", Instant.ofEpochMilli(HealthResource.instance().getGitHubLastSeen()).toString());
+            serviceStatusBuilder.add("jenkins-last-seen", Instant.ofEpochMilli(HealthResource.instance().getJenkinLastSeen()).toString());
+            serviceStatusBuilder.add("snyk-last-seen", Instant.ofEpochMilli(HealthResource.instance().getSnykLastSeen()).toString());
+            serviceStatusBuilder.add("shields-last-seen", Instant.ofEpochMilli(HealthResource.instance().getShieldsLastSeen()).toString());
         }
 
         builder.add("service-status", serviceStatusBuilder);
@@ -115,6 +118,23 @@ public class HealthController implements HttpHandler {
         }
 
         builder.add("thread-pool", executorServiceBuilder);
+
+
+        JsonObjectBuilder scheduledExecutorServiceBuilder = Json.createObjectBuilder();
+
+        {
+            scheduledExecutorService.getScheduledWorkers().forEach(scheduledWorker -> {
+                JsonObjectBuilder scheduledWorkedBuilder = Json.createObjectBuilder();
+                scheduledWorkedBuilder.add("initial-delay", scheduledWorker.initialDelay);
+                scheduledWorkedBuilder.add("period", scheduledWorker.period);
+                scheduledWorkedBuilder.add("time-unit", scheduledWorker.timeUnit.name());
+                scheduledWorkedBuilder.add("worker-task-count", scheduledWorker.getTaskCount());
+                scheduledExecutorServiceBuilder.add(scheduledWorker.id, scheduledWorkedBuilder);
+            });
+
+        }
+
+        builder.add("scheduled-thread-pool", scheduledExecutorServiceBuilder);
 
 
         JsonObjectBuilder cacheBuilder = Json.createObjectBuilder();

@@ -25,6 +25,9 @@ public class HealthResource {
     }
 
     private final AtomicLong gitHubLastSeen = new AtomicLong(0);
+    private final AtomicLong jenkinsLastSeen = new AtomicLong(0);
+    private final AtomicLong snykLastSeen = new AtomicLong(0);
+    private final AtomicLong shieldsLastSeen = new AtomicLong(0);
 
     public void markGitHubLastSeen() {
         gitHubLastSeen.set(System.currentTimeMillis());
@@ -32,6 +35,30 @@ public class HealthResource {
 
     public long getGitHubLastSeen() {
         return gitHubLastSeen.get();
+    }
+
+    public void markJenkinsLastSeen() {
+        jenkinsLastSeen.set(System.currentTimeMillis());
+    }
+
+    public long getJenkinLastSeen() {
+        return jenkinsLastSeen.get();
+    }
+
+    public void markSnykLastSeen() {
+        snykLastSeen.set(System.currentTimeMillis());
+    }
+
+    public long getSnykLastSeen() {
+        return snykLastSeen.get();
+    }
+
+    public void markShieldsLastSeen() {
+        shieldsLastSeen.set(System.currentTimeMillis());
+    }
+
+    public long getShieldsLastSeen() {
+        return shieldsLastSeen.get();
     }
 
     public String getRunningSince() {

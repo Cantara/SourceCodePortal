@@ -99,20 +99,20 @@ public class Application {
     }
 
     public void enableScheduledExecutorService() {
-        ScheduledWorker scheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.tasks.interval"), TimeUnit.SECONDS);
+        ScheduledWorker scheduledWorker = new ScheduledWorker("cantara-wiki", 0, configuration.evaluateToInt("scheduled.tasks.interval"), TimeUnit.SECONDS);
         scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
         scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
         scheduledExecutorService.queue(scheduledWorker);
 
-        ScheduledWorker jenkinsScheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.check.jenkins.build.status.interval"), TimeUnit.MINUTES);
+        ScheduledWorker jenkinsScheduledWorker = new ScheduledWorker("jenkins", 0, configuration.evaluateToInt("scheduled.check.jenkins.build.status.interval"), TimeUnit.MINUTES);
         jenkinsScheduledWorker.queue(new QueueJenkinsStatusTask(configuration, executorService, cacheStore));
         scheduledExecutorService.queue(jenkinsScheduledWorker);
 
-        ScheduledWorker snykTestScheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.check.snyk.test.status.interval"), TimeUnit.MINUTES);
+        ScheduledWorker snykTestScheduledWorker = new ScheduledWorker("snyk", 0, configuration.evaluateToInt("scheduled.check.snyk.test.status.interval"), TimeUnit.MINUTES);
         snykTestScheduledWorker.queue(new QueueSnykTestTask(configuration, executorService, cacheStore));
         scheduledExecutorService.queue(snykTestScheduledWorker);
 
-        ScheduledWorker shieldsScheduledWorker = new ScheduledWorker(0, configuration.evaluateToInt("scheduled.check.shields.status.interval"), TimeUnit.MINUTES);
+        ScheduledWorker shieldsScheduledWorker = new ScheduledWorker("shields", 0, configuration.evaluateToInt("scheduled.check.shields.status.interval"), TimeUnit.MINUTES);
         shieldsScheduledWorker.queue(new QueueShieldsStatusTask(configuration, executorService, cacheStore));
         scheduledExecutorService.queue(shieldsScheduledWorker);
 

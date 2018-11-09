@@ -9,6 +9,7 @@ import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryService;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
+import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -68,6 +69,7 @@ public class FetchJenkinsStatusTask extends WorkerTask {
         JenkinsURL jenkinsURL = new JenkinsURL(getConfiguration(), cacheKey, jobPrefix);
         GetCommand<String> cmd = new GetCommand<>("jenkinsStatus", getConfiguration(), Optional.of(this), jenkinsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        HealthResource.instance().markJenkinsLastSeen();
         if (response.statusCode() == HTTP_OK) {
             String body = response.body();
             JenkinsBuildStatus buildStatus = new JenkinsBuildStatus(body, getBuildStatus(body));
