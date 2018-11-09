@@ -100,7 +100,7 @@ public class HealthController implements HttpHandler {
                 serviceStatusBuilder.add(scheduledWorker.id + "-last-run", Instant.ofEpochMilli(scheduledWorkerLastSeen).toString());
 
                 if ("cantara-wiki".equals(scheduledWorker.id)) {
-                    serviceStatusBuilder.add("cantara-last-seen", Instant.ofEpochMilli(HealthResource.instance().getCantaraWikiLastSeen()).toString());
+                    serviceStatusBuilder.add("cantara-wiki-last-seen", Instant.ofEpochMilli(HealthResource.instance().getCantaraWikiLastSeen()).toString());
                 } else if ("jenkins".equals(scheduledWorker.id)) {
                     serviceStatusBuilder.add("jenkins-last-seen", Instant.ofEpochMilli(HealthResource.instance().getJenkinLastSeen()).toString());
                 } else if ("snyk".equals(scheduledWorker.id)) {
