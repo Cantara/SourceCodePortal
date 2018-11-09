@@ -1,6 +1,8 @@
 #FROM statisticsnorway/alpine-jdk11-buildtools:latest as build
 #MAINTAINER Totto <totto@totto.org>
 
+# jlink is causing and issue with ssl handshake on strong crypto and use SNI certs
+
 #RUN ["jlink", "--strip-debug", "--no-header-files", "--no-man-pages", "--compress=2", "--module-path", "/opt/jdk/jmods", "--output", "/linked",\
 # "--add-modules", "jdk.unsupported,java.base,java.management,java.net.http,java.xml,java.naming,java.desktop"]
 
