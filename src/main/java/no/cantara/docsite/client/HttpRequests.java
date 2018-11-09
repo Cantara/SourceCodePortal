@@ -3,17 +3,11 @@ package no.cantara.docsite.client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 
 import static no.cantara.docsite.util.CommonUtil.captureStackTrace;
 
@@ -24,6 +18,7 @@ public class HttpRequests {
     static final HttpClient HTTP_CLIENT_SHIELDS;
 
     static {
+        /*
         TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
                     public java.security.cert.X509Certificate[] getAcceptedIssuers() {
@@ -48,11 +43,13 @@ public class HttpRequests {
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
             throw new RuntimeException(e);
         }
+        */
 
         HTTP_CLIENT = HttpClient.newBuilder().build();
 
-        ForceHostnameVerificationSSLContext ctx = new ForceHostnameVerificationSSLContext("sni89405.cloudflaressl.com", 443);
-        HTTP_CLIENT_SHIELDS = HttpClient.newBuilder().sslContext(ctx).sslParameters(ctx.getParametersForSNI()).followRedirects(HttpClient.Redirect.ALWAYS).build();
+//        ForceHostnameVerificationSSLContext ctx = new ForceHostnameVerificationSSLContext("sni89405.cloudflaressl.com", 443);
+//        HTTP_CLIENT_SHIELDS = HttpClient.newBuilder().sslContext(ctx).sslParameters(ctx.getParametersForSNI()).followRedirects(HttpClient.Redirect.ALWAYS).build();
+        HTTP_CLIENT_SHIELDS = HttpClient.newBuilder().build();
     }
 
     public static HttpResponse<String> get(String uri, String... headers) {

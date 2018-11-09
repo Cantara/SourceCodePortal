@@ -74,8 +74,8 @@ public class FetchShieldsStatusTask extends WorkerTask {
         }
     }
 
-    @Override
-    public void execute() {
+//    @Override
+    public void executeApacheHttpClient() {
         ScmRepository scmRepository = new ScmRepositoryService(cacheStore).getFirst(cacheKey);
         LinkURL shieldsURL;
         if (fetch == Fetch.ISSUES) {
@@ -123,8 +123,8 @@ public class FetchShieldsStatusTask extends WorkerTask {
         }
     }
 
-    //    @Override
-    public void executeCommand() {
+    @Override
+    public void execute() {
         ScmRepository scmRepository = new ScmRepositoryService(cacheStore).getFirst(cacheKey);
         LinkURL shieldsURL;
         if (fetch == Fetch.ISSUES) {

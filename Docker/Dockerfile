@@ -1,11 +1,12 @@
-FROM statisticsnorway/alpine-jdk11-buildtools:latest as build
-MAINTAINER Totto <totto@totto.org>
+#FROM statisticsnorway/alpine-jdk11-buildtools:latest as build
+#MAINTAINER Totto <totto@totto.org>
 
-RUN ["jlink", "--strip-debug", "--no-header-files", "--no-man-pages", "--compress=2", "--module-path", "/opt/jdk/jmods", "--output", "/linked",\
- "--add-modules", "jdk.unsupported,java.base,java.management,java.net.http,java.xml,java.naming,java.desktop"]
+#RUN ["jlink", "--strip-debug", "--no-header-files", "--no-man-pages", "--compress=2", "--module-path", "/opt/jdk/jmods", "--output", "/linked",\
+# "--add-modules", "jdk.unsupported,java.base,java.management,java.net.http,java.xml,java.naming,java.desktop"]
 
-FROM alpine:latest
-COPY --from=build /linked /opt/jdk/
+#FROM alpine:latest
+FROM statisticsnorway/alpine-jdk11-buildtools:latest
+#COPY --from=build /linked /opt/jdk/
 ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV CHROME_PATH=/usr/lib/chromium/
 ENV PATH=/opt/jdk/bin:$PATH
