@@ -8,7 +8,9 @@ import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class HealthResource {
@@ -25,9 +27,11 @@ public class HealthResource {
     }
 
     private final AtomicLong gitHubLastSeen = new AtomicLong(0);
+    private final AtomicLong cantaraWikiLastSeen = new AtomicLong(0);
     private final AtomicLong jenkinsLastSeen = new AtomicLong(0);
     private final AtomicLong snykLastSeen = new AtomicLong(0);
     private final AtomicLong shieldsLastSeen = new AtomicLong(0);
+    private final Map<String,Long> scheduledWorkersLastSeen = new ConcurrentHashMap<>();
 
     public void markGitHubLastSeen() {
         gitHubLastSeen.set(System.currentTimeMillis());
@@ -35,6 +39,14 @@ public class HealthResource {
 
     public long getGitHubLastSeen() {
         return gitHubLastSeen.get();
+    }
+
+    public void markCantaraWikiLastSeen() {
+        cantaraWikiLastSeen.set(System.currentTimeMillis());
+    }
+
+    public long getCantaraWikiLastSeen() {
+        return cantaraWikiLastSeen.get();
     }
 
     public void markJenkinsLastSeen() {
@@ -60,6 +72,15 @@ public class HealthResource {
     public long getShieldsLastSeen() {
         return shieldsLastSeen.get();
     }
+
+    public void markScheduledWorkerLastSeen(String id) {
+        scheduledWorkersLastSeen.put(id, System.currentTimeMillis());
+    }
+
+    public Long getScheduledWorkerLastSeen(String id) {
+        return scheduledWorkersLastSeen.put(id, System.currentTimeMillis());
+    }
+
 
     public String getRunningSince() {
         long uptimeInMillis = ManagementFactory.getRuntimeMXBean().getUptime();

@@ -94,9 +94,24 @@ public class HealthController implements HttpHandler {
             serviceStatusBuilder.add("scheduled-executor-service", healthyScheduledExecutorService ? "up" : "terminated");
             serviceStatusBuilder.add("cache-store", healthyExecutorService ? "up" : "down");
             serviceStatusBuilder.add("github-last-seen", Instant.ofEpochMilli(HealthResource.instance().getGitHubLastSeen()).toString());
-            serviceStatusBuilder.add("jenkins-last-seen", Instant.ofEpochMilli(HealthResource.instance().getJenkinLastSeen()).toString());
-            serviceStatusBuilder.add("snyk-last-seen", Instant.ofEpochMilli(HealthResource.instance().getSnykLastSeen()).toString());
-            serviceStatusBuilder.add("shields-last-seen", Instant.ofEpochMilli(HealthResource.instance().getShieldsLastSeen()).toString());
+
+            scheduledExecutorService.getScheduledWorkers().forEach(scheduledWorker -> {
+                Long scheduledWorkerLastSeen = HealthResource.instance().getScheduledWorkerLastSeen(scheduledWorker.id);
+                serviceStatusBuilder.add(scheduledWorker.id + "-last-run", Instant.ofEpochMilli(scheduledWorkerLastSeen).toString());
+
+                if ("cantara-wiki".equals(scheduledWorker.id)) {
+                    serviceStatusBuilder.add("cantara-last-seen", Instant.ofEpochMilli(HealthResource.instance().getCantaraWikiLastSeen()).toString());
+                } else if ("jenkins".equals(scheduledWorker.id)) {
+                    serviceStatusBuilder.add("jenkins-last-seen", Instant.ofEpochMilli(HealthResource.instance().getJenkinLastSeen()).toString());
+                } else if ("snyk".equals(scheduledWorker.id)) {
+                    serviceStatusBuilder.add("snyk-last-seen", Instant.ofEpochMilli(HealthResource.instance().getSnykLastSeen()).toString());
+                } else if ("shields".equals(scheduledWorker.id)) {
+                    serviceStatusBuilder.add("shields-last-seen", Instant.ofEpochMilli(HealthResource.instance().getShieldsLastSeen()).toString());
+                }
+
+                Long nextRun = scheduledWorkerLastSeen + scheduledWorker.timeUnit.toMillis(scheduledWorker.timeUnit.convert(scheduledWorker.period, scheduledWorker.timeUnit));
+                serviceStatusBuilder.add(scheduledWorker.id + "-next-run", Instant.ofEpochMilli(nextRun).toString());
+            });
         }
 
         builder.add("service-status", serviceStatusBuilder);

@@ -5,6 +5,7 @@ import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.commands.GetCommand;
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;
+import no.cantara.docsite.health.HealthResource;
 import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.jsoup.Jsoup;
@@ -33,6 +34,7 @@ public class FetchCantaraWikiTask extends WorkerTask {
         GetCommand<String> cmd = new GetCommand<>("cantaraWiki", getConfiguration(), Optional.of(this),
                 String.format("https://wiki.cantara.no/pages/viewpage.action?pageId=%s", cacheKey.contentId), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        HealthResource.instance().markCantaraWikiLastSeen();
         if (response.statusCode() == HTTP_OK) {
             String html = response.body();
             org.jsoup.nodes.Document doc = Jsoup.parse(html);

@@ -1,4 +1,4 @@
-package no.cantara.docsite.prefetch;
+package no.cantara.docsite.fetch;
 
 import no.cantara.docsite.executor.ExecutorService;
 import no.cantara.docsite.executor.WorkerTask;

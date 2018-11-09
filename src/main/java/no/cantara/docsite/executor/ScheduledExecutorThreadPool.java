@@ -1,6 +1,7 @@
 package no.cantara.docsite.executor;
 
 import no.cantara.docsite.cache.CacheStore;
+import no.cantara.docsite.health.HealthResource;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,6 +86,7 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
             for (WorkerTask workerTask : scheduledWorkers.workerTaskList) {
                 workerTask.getExecutor().queue(workerTask);
             }
+            HealthResource.instance().markScheduledWorkerLastSeen(scheduledWorkers.id);
         }
     }
 }

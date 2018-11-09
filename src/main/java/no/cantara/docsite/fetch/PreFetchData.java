@@ -1,4 +1,4 @@
-package no.cantara.docsite.prefetch;
+package no.cantara.docsite.fetch;
 
 import no.cantara.docsite.cache.CacheCantaraWikiKey;
 import no.cantara.docsite.cache.CacheStore;
