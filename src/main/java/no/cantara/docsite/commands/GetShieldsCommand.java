@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
+import static java.net.HttpURLConnection.HTTP_OK;
+
 public class GetShieldsCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetShieldsCommand.class);
@@ -36,6 +38,9 @@ public class GetShieldsCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
     protected HttpResponse<R> run() throws Exception {
         try {
             HttpResponse<R> response = get(url);
+            if (configuration.evaluateToBoolean("http.hystrix.writeToFile") && response.statusCode() == HTTP_OK) {
+                ifDumpToFile(url, (HttpResponse<String>) response);
+            }
             return response;
         } catch (Throwable e) {
             if (!(e instanceof InterruptedException)) {

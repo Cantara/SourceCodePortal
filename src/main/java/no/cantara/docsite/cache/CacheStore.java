@@ -58,7 +58,7 @@ public class CacheStore {
     }
 
     RepoConfigService load() {
-        return new RepoConfigService("conf/config.json");
+        return new RepoConfigService(configuration.evaluateToString("cache.config"));
     }
 
     void initialize() {

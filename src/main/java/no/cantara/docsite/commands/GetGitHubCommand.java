@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
+import static java.net.HttpURLConnection.HTTP_OK;
+
 public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetGitHubCommand.class);
@@ -58,6 +60,9 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
         HttpResponse<R> response = get(url);
         if (HealthResource.instance().getGitHubLastSeen() == 0) {
             HealthResource.instance().markGitHubLastSeen();
+        }
+        if (configuration.evaluateToBoolean("http.hystrix.writeToFile") && response.statusCode() == HTTP_OK) {
+            ifDumpToFile(url, (HttpResponse<String>) response);
         }
         return response;
     }
