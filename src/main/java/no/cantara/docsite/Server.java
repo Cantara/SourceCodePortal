@@ -8,13 +8,32 @@ import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.crypto.Cipher;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.logging.Level;
+
+import static org.jsoup.helper.Validate.fail;
 
 /**
  * TODO refactor the webapp to its own web project after project split between core, thymeleaf web, etc.
  */
 public class Server {
+
+    static {
+        try {
+            if (Cipher.getMaxAllowedKeyLength("AES") < 256) {
+                Field field = Class.forName("javax.crypto.JceSecurity").
+                        getDeclaredField("isRestricted");
+                field.setAccessible(true);
+                field.set(null, java.lang.Boolean.FALSE);
+            }
+        } catch (Exception e) {
+            fail("Could not override JCE cryptography strength policy setting");
+            fail(e.getMessage());
+        }
+
+    }
 
     private static final Logger LOG = LoggerFactory.getLogger(Server.class);
 
