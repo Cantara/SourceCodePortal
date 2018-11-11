@@ -1,5 +1,6 @@
 package no.cantara.docsite.commands;
 
+import com.netflix.hystrix.HystrixEventType;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import no.cantara.docsite.client.HttpRequests;
 import no.cantara.docsite.executor.WorkerTask;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.http.HttpResponse;
+import java.util.List;
 import java.util.Optional;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -69,11 +71,9 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
 
     @Override
     protected HttpResponse<R> getFallback() {
-        try {
-            LOG.error("{} -> {}", getExecutionEvents(), getFailedExecutionException().getMessage());
-        } catch (Throwable e) {
-            LOG.error("Error logging fallback");
-        }
+        List<HystrixEventType> executionEvents = getExecutionEvents();
+        Throwable failedExecutionException = getFailedExecutionException();
+        LOG.error("Retry {} due to {}{}", worker.get().getClass().getSimpleName(), executionEvents, (failedExecutionException != null ? " -> "+failedExecutionException.getMessage() : ""));
         if (worker.isPresent()) {
             worker.get().executor().queue(worker.get());
         }
