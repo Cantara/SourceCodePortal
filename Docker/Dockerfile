@@ -8,12 +8,13 @@
 
 #FROM alpine:latest
 FROM statisticsnorway/alpine-jdk11-buildtools:latest
-MAINTAINER Totto <totto@totto.org>
+#MAINTAINER Totto <totto@totto.org>
 #COPY --from=build /linked /opt/jdk/
 ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV CHROME_PATH=/usr/lib/chromium/
 ENV PATH=/opt/jdk/bin:$PATH
 
+RUN echo Build
 RUN apk add --update \
     groff \
     python \
