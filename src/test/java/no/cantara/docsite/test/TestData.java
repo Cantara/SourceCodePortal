@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -88,17 +89,7 @@ public class TestData {
             return;
         }
 
-        for (CacheKey cacheKey : repoKeys("Cantara")) {
-            CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheKey, "groupId", false);
-            for (GitHubRepository repo : repos("Cantara")) {
-                if ((cacheKey.organization+"/"+cacheKey.repoName).equals(repo.fullName) && cacheKey.branch.equals(repo.defaultBranch)) {
-                    ScmRepository scmRepository = ScmRepository.of(configuration, cacheRepositoryKey, "displayName", "description", new LinkedHashMap<>(),
-                            repo.id, repo.description, "groupId", (repo.license != null ? repo.license.spdxId : null), repo.htmlUrl);
-                    cacheStore.getRepositories().put(cacheRepositoryKey, scmRepository);
-
-                }
-            }
-        }
+        repos(configuration, (key,repo) -> cacheStore.getRepositories().put(key, repo));
 
         Map<CacheShaKey, GitHubCommitRevision> commitRevisions = commitRevisions("Cantara");
         commitRevisions.entrySet().iterator().forEachRemaining(entry -> cacheStore.getCommits().put(entry.getKey(), entry.getValue().asCommitRevision(entry.getKey())));
@@ -146,6 +137,20 @@ public class TestData {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void repos(DynamicConfiguration configuration, BiConsumer<CacheRepositoryKey,ScmRepository> visitor) {
+        for (CacheKey cacheKey : repoKeys("Cantara")) {
+            CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheKey, "groupId", false);
+            for (GitHubRepository repo : repos("Cantara")) {
+                if ((cacheKey.organization+"/"+cacheKey.repoName).equals(repo.fullName) && cacheKey.branch.equals(repo.defaultBranch)) {
+                    ScmRepository scmRepository = ScmRepository.of(configuration, cacheRepositoryKey, "displayName", "description", new LinkedHashMap<>(),
+                            repo.id, repo.description, "groupId", (repo.license != null ? repo.license.spdxId : null), repo.htmlUrl);
+                    visitor.accept(cacheRepositoryKey, scmRepository);
+                }
+            }
+        }
+
     }
 
     public List<GitHubCommitRevision> commitRevisions(CacheKey cacheKey) {
