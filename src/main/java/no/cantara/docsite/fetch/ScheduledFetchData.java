@@ -28,10 +28,10 @@ public class ScheduledFetchData {
     }
 
     public void run() {
-        ScheduledWorker scheduledWorker = new ScheduledWorker("cantara-wiki", 0, configuration.evaluateToInt("scheduled.tasks.interval"), TimeUnit.SECONDS);
-        scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
-        scheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
-        scheduledExecutorService.queue(scheduledWorker);
+        ScheduledWorker confluenceScheduledWorker = new ScheduledWorker("cantara-wiki", 0, configuration.evaluateToInt("scheduled.tasks.interval"), TimeUnit.SECONDS);
+        confluenceScheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
+        confluenceScheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
+        scheduledExecutorService.queue(confluenceScheduledWorker);
 
         ScheduledWorker jenkinsScheduledWorker = new ScheduledWorker("jenkins", 0, configuration.evaluateToInt("scheduled.check.jenkins.build.status.interval"), TimeUnit.MINUTES);
         jenkinsScheduledWorker.queue(new QueueJenkinsStatusTask(configuration, executorService, cacheStore));

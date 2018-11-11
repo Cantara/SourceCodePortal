@@ -67,11 +67,11 @@ public class Server {
 
             application.enableExecutorService();
 
-            application.enableScheduledExecutorService();
-
             application.enableConfigLoader();
 
             application.enablePreFetch();
+
+            application.enableScheduledExecutorService();
 
             application.start();
 

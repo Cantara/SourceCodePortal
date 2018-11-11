@@ -31,7 +31,7 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
         this.executorService = executorService;
         this.cacheStore = cacheStore;
         this.scheduledWorkers = new ConcurrentLinkedDeque<>();
-        this.scheduledExecutorService = Executors.newScheduledThreadPool(1);
+        this.scheduledExecutorService = Executors.newScheduledThreadPool(1, runnable -> new Thread(new ThreadGroup("ScheduledThreadGroup"), runnable));
     }
 
     @Override
@@ -44,7 +44,8 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
         LOG.info("Starting ScheduledExecutorService..");
         for (ScheduledWorker scheduledWorker : scheduledWorkers) {
             LOG.info("Scheduled worker task: {}", scheduledWorker.workerTaskList.stream().map(m -> m.getClass().getSimpleName()).collect(Collectors.toList()));
-            scheduledExecutorService.scheduleAtFixedRate(new ScheduledThread(scheduledWorker), scheduledWorker.initialDelay, scheduledWorker.period, scheduledWorker.timeUnit);
+            ScheduledThread thread = new ScheduledThread(scheduledWorker);
+            scheduledExecutorService.scheduleAtFixedRate(thread, scheduledWorker.initialDelay, scheduledWorker.period, scheduledWorker.timeUnit);
         }
     }
 
@@ -83,6 +84,7 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
 
         @Override
         public void run() {
+            LOG.info("Running scheduled worker: {}", scheduledWorkers.id);
             for (WorkerTask workerTask : scheduledWorkers.workerTaskList) {
                 workerTask.executor().queue(workerTask);
             }

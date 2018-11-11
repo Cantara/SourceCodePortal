@@ -1,5 +1,7 @@
 package no.cantara.docsite.cache;
 
+import no.cantara.docsite.json.JsonbFactory;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -38,7 +40,7 @@ public class CacheKey implements Serializable {
 
     @Override
     public String toString() {
-        return toPath();
+        return JsonbFactory.asString(this);
     }
 
     @Deprecated

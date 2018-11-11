@@ -3,6 +3,8 @@ package no.cantara.docsite.health;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
@@ -10,6 +12,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -81,6 +84,28 @@ public class HealthResource {
         return scheduledWorkersLastSeen.put(id, System.currentTimeMillis());
     }
 
+    public JsonObjectBuilder getThreadInfo() {
+        Set<Thread> threads = Thread.getAllStackTraces().keySet();
+
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+
+        for (Thread t : threads) {
+            String name = t.getName();
+            Thread.State state = t.getState();
+            int priority = t.getPriority();
+            String type = t.isDaemon() ? "Daemon" : "Normal";
+            JsonObjectBuilder threadBuilder = Json.createObjectBuilder();
+            threadBuilder.add("id", t.getId());
+            threadBuilder.add("state", state.toString());
+            threadBuilder.add("priority", priority);
+            threadBuilder.add("alive", t.isAlive());
+            threadBuilder.add("interrupted", t.isInterrupted());
+            threadBuilder.add("type", type);
+            builder.add(name, threadBuilder);
+        }
+
+        return builder;
+    }
 
     public String getRunningSince() {
         long uptimeInMillis = ManagementFactory.getRuntimeMXBean().getUptime();

@@ -1,0 +1,5 @@
+Features:
+
+* Grupper gjelder views og ikke cache. Derfor må dette ut av cache scope og inn i group iterator
+* Legg til eviction cache
+*

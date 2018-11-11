@@ -180,6 +180,8 @@ public class HealthController implements HttpHandler {
             builder.add("github-rate-limit", JsonbFactory.asJsonObject(rateLimitJson.toString()));
         }
 
+        builder.add("threads", HealthResource.instance().getThreadInfo());
+
         exchange.setStatusCode(HTTP_OK);
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
         exchange.getResponseSender().send(JsonbFactory.prettyPrint(JsonbFactory.instance().toJson(builder.build())));
