@@ -150,7 +150,6 @@ public class TestData {
                 }
             }
         }
-
     }
 
     public List<GitHubCommitRevision> commitRevisions(CacheKey cacheKey) {

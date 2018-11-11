@@ -66,6 +66,10 @@ public class HealthController implements HttpHandler {
         return resourceContext.exactMatch("/health/github");
     }
 
+    boolean isThreadHealtEndpoint(HttpServerExchange exchange) {
+        return resourceContext.exactMatch("/health/threads");
+    }
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         Future<HttpResponse<String>> futureGitHubRateLimit = null;
@@ -180,7 +184,9 @@ public class HealthController implements HttpHandler {
             builder.add("github-rate-limit", JsonbFactory.asJsonObject(rateLimitJson.toString()));
         }
 
-        builder.add("threads", HealthResource.instance().getThreadInfo());
+        if (isThreadHealtEndpoint(exchange)) {
+            builder.add("threads", HealthResource.instance().getThreadInfo());
+        }
 
         exchange.setStatusCode(HTTP_OK);
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
