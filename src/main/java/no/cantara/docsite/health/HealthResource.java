@@ -81,7 +81,7 @@ public class HealthResource {
     }
 
     public Long getScheduledWorkerLastSeen(String id) {
-        return scheduledWorkersLastSeen.put(id, System.currentTimeMillis());
+        return scheduledWorkersLastSeen.get(id);
     }
 
     public JsonObjectBuilder getThreadInfo() {
