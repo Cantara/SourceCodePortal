@@ -14,7 +14,6 @@ ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV CHROME_PATH=/usr/lib/chromium/
 ENV PATH=/opt/jdk/bin:$PATH
 
-RUN echo Build
 RUN apk add --update \
     groff \
     python \
