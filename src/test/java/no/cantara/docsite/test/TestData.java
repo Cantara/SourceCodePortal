@@ -84,7 +84,7 @@ public class TestData {
     }
 
     public void populateCacheStore(DynamicConfiguration configuration, CacheStore cacheStore) {
-        if (CacheHelper.cacheSize(cacheStore.getRepositories()) > 0) {
+        if (CacheHelper.cacheSize(cacheStore.getRepositories()) > 70) {
             return;
         }
 
