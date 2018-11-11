@@ -1,7 +1,5 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.json.JsonbFactory;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -17,6 +15,10 @@ public class CacheKey implements Serializable {
         this.organization = organization;
         this.repoName = repoName;
         this.branch = branch;
+    }
+
+    public String toPath() {
+        return String.format("%s/%s/%s", organization, repoName, branch);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class CacheKey implements Serializable {
 
     @Override
     public String toString() {
-        return JsonbFactory.asString(this);
+        return toPath();
     }
 
     @Deprecated

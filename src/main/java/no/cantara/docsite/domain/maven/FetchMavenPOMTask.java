@@ -41,7 +41,7 @@ public class FetchMavenPOMTask extends WorkerTask  {
         this.repoContentsURL = repoContentsURL;
     }
 
-    static MavenPOM parse(String xml) {
+    public static MavenPOM parse(String xml) {
         try {
             SAXParserFactory sax = SAXParserFactory.newInstance();
             sax.setNamespaceAware(false);

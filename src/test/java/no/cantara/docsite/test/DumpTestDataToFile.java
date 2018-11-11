@@ -1,4 +1,4 @@
-package no.cantara.docsite.domain;
+package no.cantara.docsite.test;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.joran.util.ConfigurationWatchListUtil;
@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class DumpDataToFile {
+public class DumpTestDataToFile {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DumpDataToFile.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DumpTestDataToFile.class);
 
     public static void main(String[] args) throws Exception {
         long now = System.currentTimeMillis();
