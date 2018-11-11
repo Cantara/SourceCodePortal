@@ -69,6 +69,11 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
 
     @Override
     protected HttpResponse<R> getFallback() {
+        try {
+            LOG.error("{} -> {}", getExecutionEvents(), getFailedExecutionException().getMessage());
+        } catch (Throwable e) {
+            LOG.error("Error logging fallback");
+        }
         if (worker.isPresent()) {
             worker.get().executor().queue(worker.get());
         }
