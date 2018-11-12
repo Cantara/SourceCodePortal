@@ -26,6 +26,7 @@ import java.io.StringReader;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 public class FetchSnykTestTask extends WorkerTask {
@@ -60,10 +61,13 @@ public class FetchSnykTestTask extends WorkerTask {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         SnykIOTestBadgeURL snykURL = new SnykIOTestBadgeURL(cacheKey);
         GetCommand<String> cmd = new GetCommand<>("snykTestStatus", configuration(), Optional.of(this), snykURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        if (response.statusCode() == HTTP_INTERNAL_ERROR) {
+            return false;
+        }
         HealthResource.instance().markSnykLastSeen();
         if (response.statusCode() == HTTP_OK) {
             String body = response.body();
@@ -74,6 +78,7 @@ public class FetchSnykTestTask extends WorkerTask {
 //        else {
 //            LOG.warn("{} -- {}", snykURL.getExternalURL(), response.statusCode());
 //        }
+        return true;
     }
 
     @Override

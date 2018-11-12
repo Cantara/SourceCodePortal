@@ -34,11 +34,12 @@ public class ExecutorThreadPool implements ExecutorService {
                 while (!executorThreadPool.isTerminated()) {
                     try {
                         Worker worker = workerQueue.take();
-                        // re-queueing occurs in hystrix command
                         int retryCount = worker.incrementCount();
                         if (retryCount < MAX_RETRIES) {
-                            if (retryCount > 0) LOG.warn("RetryCount: {} for {}", retryCount, worker.toString());
-                            executorThreadPool.execute(new WorkerRunner(worker));
+                            if (retryCount > 0) {
+                                LOG.warn("RetryCount: {} for {}", worker.retryCount(), worker.getTask().toString());
+                            }
+                            executorThreadPool.execute(new WorkerRunner(this, worker));
                         }
 
                     } catch (InterruptedException e) {
@@ -84,6 +85,11 @@ public class ExecutorThreadPool implements ExecutorService {
     @Override
     public void queue(WorkerTask workerTask) {
         workerQueue.add(new Worker(workerTask));
+    }
+
+    @Override
+    public void requeue(Worker worker) {
+        workerQueue.add(worker);
     }
 
     @Override

@@ -20,6 +20,8 @@ public interface ExecutorService {
 
     void queue(WorkerTask workerTask);
 
+    void requeue(Worker worker);
+
     int queued();
 
     int countActiveThreads();

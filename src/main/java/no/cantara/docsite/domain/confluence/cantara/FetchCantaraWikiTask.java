@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 public class FetchCantaraWikiTask extends WorkerTask {
@@ -30,10 +31,13 @@ public class FetchCantaraWikiTask extends WorkerTask {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         GetCommand<String> cmd = new GetCommand<>("cantaraWiki", configuration(), Optional.of(this),
                 String.format("https://wiki.cantara.no/pages/viewpage.action?pageId=%s", cacheKey.contentId), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        if (response.statusCode() == HTTP_INTERNAL_ERROR) {
+            return false;
+        }
         HealthResource.instance().markCantaraWikiLastSeen();
         if (response.statusCode() == HTTP_OK) {
             String html = response.body();
@@ -58,6 +62,7 @@ public class FetchCantaraWikiTask extends WorkerTask {
         } else {
             LOG.trace("{} -- {} -- {}", cacheKey.contentId, response.statusCode(), response.body());
         }
+        return true;
     }
 
     @Override

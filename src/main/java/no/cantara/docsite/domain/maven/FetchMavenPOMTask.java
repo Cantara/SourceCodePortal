@@ -27,6 +27,8 @@ import java.io.StringReader;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+
 public class FetchMavenPOMTask extends WorkerTask  {
 
     private static final Logger LOG = LoggerFactory.getLogger(FetchMavenPOMTask.class);
@@ -59,14 +61,18 @@ public class FetchMavenPOMTask extends WorkerTask  {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", configuration(), Optional.of(this), repoContentsURL.getExternalURL("pom.xml", cacheKey.branch), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        if (response.statusCode() == HTTP_INTERNAL_ERROR) {
+            return false;
+        }
         if (GetGitHubCommand.anyOf(response, 200)) {
             GitHubRepositoryContents mavenPOMContents = JsonbBuilder.create().fromJson(response.body(), GitHubRepositoryContents.class);
             MavenPOM mavenPOM = parse(mavenPOMContents.content);
             cacheStore.getMavenProjects().put(cacheKey, mavenPOM);
         }
+        return true;
     }
 
 }

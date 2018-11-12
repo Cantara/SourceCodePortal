@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+
 /**
  * This task is used during pull
  */
@@ -33,9 +35,12 @@ public class FetchGitHubReadmeTask extends WorkerTask {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", configuration(), Optional.of(this), repoReadmeURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        if (response.statusCode() == HTTP_INTERNAL_ERROR) {
+            return false;
+        }
         if (GetGitHubCommand.anyOf(response, 200)) {
             GitHubRepositoryContents readmeContents = JsonbFactory.instance().fromJson(response.body(), GitHubRepositoryContents.class);
             readmeContents.renderedHtml = DocumentRenderer.render(readmeContents.name, readmeContents.content);
@@ -43,5 +48,6 @@ public class FetchGitHubReadmeTask extends WorkerTask {
         } else {
             LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());
         }
+        return true;
     }
 }

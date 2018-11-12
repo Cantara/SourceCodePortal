@@ -16,7 +16,7 @@ public class PreFetchDoneTask extends WorkerTask {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         while(executor().getThreadPool().getActiveCount() > 2) {
             try {
                 TimeUnit.MILLISECONDS.sleep(100);
@@ -24,5 +24,6 @@ public class PreFetchDoneTask extends WorkerTask {
             }
         }
         LOG.info("Pre-fetch completed!");
+        return true;
     }
 }

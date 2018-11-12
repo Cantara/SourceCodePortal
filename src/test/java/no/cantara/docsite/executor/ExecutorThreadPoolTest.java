@@ -20,8 +20,9 @@ public class ExecutorThreadPoolTest {
         }
 
         @Override
-        public void execute() {
+        public boolean execute() {
             System.out.println("I am a dummy task -- "  + Thread.currentThread().getName());
+            return true;
         }
     }
 

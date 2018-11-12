@@ -2,6 +2,11 @@ package no.cantara.docsite.executor;
 
 public interface Task {
 
-    void execute();
+    /**
+     * Executes a task
+     *
+     * @return true is success and otherwise failure
+     */
+    boolean execute();
 
 }

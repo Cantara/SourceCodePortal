@@ -73,10 +73,7 @@ public class GetGitHubCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
     protected HttpResponse<R> getFallback() {
         List<HystrixEventType> executionEvents = getExecutionEvents();
         Throwable failedExecutionException = getFailedExecutionException();
-        LOG.error("Retry {} due to {}{}", worker.get().getClass().getSimpleName(), executionEvents, (failedExecutionException != null ? " -> "+failedExecutionException.getMessage() : ""));
-        if (worker.isPresent()) {
-            worker.get().executor().queue(worker.get());
-        }
+        LOG.error("{} failed due to {}{}", worker.get().getClass().getSimpleName(), executionEvents, (failedExecutionException != null ? " -> "+failedExecutionException.getMessage() : ""));
         return getNullResponse(url);
     }
 }

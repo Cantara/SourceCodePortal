@@ -19,10 +19,9 @@ public class QueueSnykTestTask extends WorkerTask {
     }
 
     @Override
-    public void execute() {
-        cacheStore.getCacheKeys().iterator().forEachRemaining(entry -> {
-            executor().queue(new FetchSnykTestTask(configuration(), executor(), cacheStore, entry.getKey()));
-        });
+    public boolean execute() {
+        cacheStore.getCacheKeys().iterator().forEachRemaining(entry -> executor().queue(new FetchSnykTestTask(configuration(), executor(), cacheStore, entry.getKey())));
+        return true;
     }
 
     @Override

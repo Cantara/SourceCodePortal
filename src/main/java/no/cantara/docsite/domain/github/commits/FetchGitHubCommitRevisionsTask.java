@@ -16,6 +16,8 @@ import java.net.http.HttpResponse;
 import java.util.Optional;
 import java.util.Set;
 
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+
 public class FetchGitHubCommitRevisionsTask extends WorkerTask {
 
     private static final Logger LOG = LoggerFactory.getLogger(FetchGitHubCommitRevisionsTask.class);
@@ -29,10 +31,13 @@ public class FetchGitHubCommitRevisionsTask extends WorkerTask {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         String url = String.format("https://api.github.com/repos/%s/%s/commits", cacheKey.organization, cacheKey.repoName);
         GetGitHubCommand<String> cmd = new GetGitHubCommand<>("githubPage", configuration(), Optional.of(this), url, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        if (response.statusCode() == HTTP_INTERNAL_ERROR) {
+            return false;
+        }
         if (GetGitHubCommand.anyOf(response, 200)) {
             GitHubCommitRevision[] commitRevision = JsonbFactory.instance().fromJson(response.body(), GitHubCommitRevision[].class);
             for (int n = 0; n < commitRevision.length; n++) {
@@ -46,5 +51,6 @@ public class FetchGitHubCommitRevisionsTask extends WorkerTask {
         } else {
             LOG.warn("Resource not found: {} ({})", response.uri(), response.statusCode());
         }
+        return true;
     }
 }

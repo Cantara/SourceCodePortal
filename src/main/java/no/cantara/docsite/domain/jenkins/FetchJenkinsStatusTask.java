@@ -29,6 +29,7 @@ import java.io.StringReader;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 public class FetchJenkinsStatusTask extends WorkerTask {
@@ -63,12 +64,15 @@ public class FetchJenkinsStatusTask extends WorkerTask {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         ScmRepository scmRepository = new ScmRepositoryService(cacheStore).getFirst(cacheKey);
         String jobPrefix = (scmRepository == null ? "" : scmRepository.config.getService(RepoConfig.Jenkins.class) != null ? scmRepository.config.getService(RepoConfig.Jenkins.class).jenkinsPrefix : "");
         JenkinsURL jenkinsURL = new JenkinsURL(configuration(), cacheKey, jobPrefix);
         GetCommand<String> cmd = new GetCommand<>("jenkinsStatus", configuration(), Optional.of(this), jenkinsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        if (response.statusCode() == HTTP_INTERNAL_ERROR) {
+            return false;
+        }
         HealthResource.instance().markJenkinsLastSeen();
         if (response.statusCode() == HTTP_OK) {
             String body = response.body();
@@ -79,6 +83,7 @@ public class FetchJenkinsStatusTask extends WorkerTask {
 //        else {
 //            LOG.warn("{} -- {}", jenkinsURL.getExternalURL(), response.statusCode());
 //        }
+        return true;
     }
 
     @Override

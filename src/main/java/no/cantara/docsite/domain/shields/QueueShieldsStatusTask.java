@@ -19,12 +19,13 @@ public class QueueShieldsStatusTask extends WorkerTask {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         cacheStore.getCacheKeys().iterator().forEachRemaining(entry -> {
             for(FetchShieldsStatusTask.Fetch fetch : FetchShieldsStatusTask.Fetch.values()) {
                 executor().queue(new FetchShieldsStatusTask(configuration(), executor(), cacheStore, entry.getKey(), fetch));
             }
         });
+        return true;
     }
 
     @Override

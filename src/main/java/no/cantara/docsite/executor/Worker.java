@@ -15,6 +15,10 @@ public class Worker {
         return task;
     }
 
+    public int retryCount() {
+        return retryCount.get();
+    }
+
     public int incrementCount() {
         return retryCount.incrementAndGet();
     }

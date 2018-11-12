@@ -40,6 +40,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 public class FetchShieldsStatusTask extends WorkerTask {
@@ -126,7 +127,7 @@ public class FetchShieldsStatusTask extends WorkerTask {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         ScmRepository scmRepository = new ScmRepositoryService(cacheStore).getFirst(cacheKey);
         LinkURL shieldsURL;
         if (fetch == Fetch.ISSUES) {
@@ -141,6 +142,9 @@ public class FetchShieldsStatusTask extends WorkerTask {
 
         GetShieldsCommand<String> cmd = new GetShieldsCommand<>("shieldsStatus", configuration(), Optional.of(this), shieldsURL.getExternalURL(), HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response = cmd.execute();
+        if (response.statusCode() == HTTP_INTERNAL_ERROR) {
+            return false;
+        }
         HealthResource.instance().markShieldsLastSeen();
 
         if (response.statusCode() == HTTP_OK) {
@@ -160,6 +164,7 @@ public class FetchShieldsStatusTask extends WorkerTask {
         } else {
             LOG.warn("{} -- {}", shieldsURL.getExternalURL(), response.statusCode());
         }
+        return true;
     }
 
     @Override
