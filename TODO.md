@@ -1,7 +1,9 @@
 # TODO
 
-* Worker
-* HystrixGetCommand that support retries (3 times)
-* JCache(K,V) and e.g. interfaces for Date support?
-* GitHub WebHook
-* Documentation-, Log- and Release pages
+1) Lage nytt config system og en ny gruppe definisjon
+2) aggregated status for group 
+3) Repo Branches
+4) Release Tags
+5) Embedde JavaDocs
+6) Kompilere AsciiDoclets for Asciidoc (trengs i SSB)
+7) Modularisering (skille ut core, providers og webapp) (edited)

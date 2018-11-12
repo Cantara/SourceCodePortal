@@ -1,5 +1,6 @@
 Features:
 
-* Grupper gjelder views og ikke cache. Derfor må dette ut av cache scope og inn i group iterator
-* Legg til eviction cache
-*
+* Skrive ny config fil.
+* Redefiner repos og groups
+* Legg til eviction cache på onCreate handler
+* Lag ny paralelle caches som kan swappe ut de eksistrrende
