@@ -11,10 +11,6 @@ public class Worker {
         this.task = task;
     }
 
-    public void execute() {
-        task.execute();
-    }
-
     public Task getTask() {
         return task;
     }

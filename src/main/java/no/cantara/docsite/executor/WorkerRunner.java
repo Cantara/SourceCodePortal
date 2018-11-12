@@ -16,7 +16,7 @@ public class WorkerRunner implements Runnable {
     @Override
     public void run() {
         try {
-            worker.execute();
+            worker.getTask().execute();
         } catch (Throwable e) {
             if ((e instanceof HystrixRuntimeException)) {
                 LOG.error("{} -- {}", worker.getTask(), e.getMessage());
