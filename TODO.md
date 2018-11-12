@@ -1,9 +1,9 @@
 # TODO
 
-1) Lage nytt config system og en ny gruppe definisjon
+1) Create a new config system woth more flexible group-mechanisms
 2) aggregated status for group 
 3) Repo Branches
 4) Release Tags
-5) Embedde JavaDocs
-6) Kompilere AsciiDoclets for Asciidoc (trengs i SSB)
-7) Modularisering (skille ut core, providers og webapp) (edited)
+5) Embedd JavaDocs
+6) Compile AsciiDoclets for Asciidoc (used by SSB)
+7) Modularisering (split core, providers and webapp) (edited)
