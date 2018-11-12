@@ -86,7 +86,7 @@ public class ScheduledExecutorThreadPool implements ScheduledExecutorService {
         public void run() {
             LOG.info("Running scheduled worker: {}", scheduledWorkers.id);
             for (WorkerTask workerTask : scheduledWorkers.workerTaskList) {
-                workerTask.executor().queue(workerTask);
+                workerTask.executor().queue((workerTask));
             }
             HealthResource.instance().markScheduledWorkerLastSeen(scheduledWorkers.id);
         }

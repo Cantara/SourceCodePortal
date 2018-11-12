@@ -2,11 +2,8 @@ package no.cantara.docsite.executor;
 
 import no.ssb.config.DynamicConfiguration;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 abstract public class WorkerTask implements Task {
 
-    private final AtomicInteger retryCount = new AtomicInteger(-1);
     private final DynamicConfiguration configuration;
     private final ExecutorService executor;
 
@@ -21,10 +18,6 @@ abstract public class WorkerTask implements Task {
 
     public ExecutorService executor() {
         return executor;
-    }
-
-    public int incrementCount() {
-       return retryCount.incrementAndGet();
     }
 
 }

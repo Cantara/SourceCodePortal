@@ -54,13 +54,9 @@ public class GetCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
 
     @Override
     protected HttpResponse<R> getFallback() {
-        try {
-            List<HystrixEventType> executionEvents = getExecutionEvents();
-            Throwable failedExecutionException = getFailedExecutionException();
-            LOG.error("{} -> {}", executionEvents, (failedExecutionException != null ? failedExecutionException.getMessage() : "No failedExecutionException"));
-        } catch (Throwable e) {
-            LOG.error("Error logging fallback");
-        }
+        List<HystrixEventType> executionEvents = getExecutionEvents();
+        Throwable failedExecutionException = getFailedExecutionException();
+        LOG.error("Retry {} due to {}{}", worker.get().getClass().getSimpleName(), executionEvents, (failedExecutionException != null ? " -> "+failedExecutionException.getMessage() : ""));
         if (worker.isPresent()) {
             worker.get().executor().queue(worker.get());
         }

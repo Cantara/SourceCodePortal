@@ -11,12 +11,12 @@ import java.util.concurrent.TimeUnit;
 public class ExecutorThreadPool implements ExecutorService {
 
     private static Logger LOG = LoggerFactory.getLogger(ExecutorService.class);
-    private final BlockingQueue<WorkerTask> workerTaskQueue;
+    private final BlockingQueue<Worker> workerQueue;
     private final ArrayBlockingQueue<Runnable> workQueue;
     private final ThreadPoolExecutor executorThreadPool;
 
     ExecutorThreadPool() {
-        this.workerTaskQueue = new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE);
+        this.workerQueue = new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE);
         this.workQueue = new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE);
         this.executorThreadPool = new ThreadPoolExecutor(
                 8, // core size
@@ -29,22 +29,16 @@ public class ExecutorThreadPool implements ExecutorService {
     @Override
     public void start() {
         try {
-//            executorThreadPool.setRejectedExecutionHandler(new RejectedExecutionHandler() {
-//                @Override
-//                public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-//                    LOG.trace("Rejected: {}", r.getClass().getName());
-//                }
-//            });
             executorThreadPool.execute(() -> {
                 LOG.info("Starting ExecutorService..");
                 while (!executorThreadPool.isTerminated()) {
                     try {
-                        WorkerTask workerTask = workerTaskQueue.take();
+                        Worker worker = workerQueue.take();
                         // re-queueing occurs in hystrix command
-                        int retryCount = workerTask.incrementCount();
+                        int retryCount = worker.incrementCount();
                         if (retryCount < MAX_RETRIES) {
-                            if (retryCount > 0) LOG.warn("RetryCount: {} for {}", retryCount, workerTask.toString());
-                            executorThreadPool.execute(new Worker(workerTask));
+                            if (retryCount > 0) LOG.warn("RetryCount: {} for {}", retryCount, worker.toString());
+                            executorThreadPool.execute(new WorkerRunner(worker));
                         }
 
                     } catch (InterruptedException e) {
@@ -89,7 +83,7 @@ public class ExecutorThreadPool implements ExecutorService {
 
     @Override
     public void queue(WorkerTask workerTask) {
-        workerTaskQueue.add(workerTask);
+        workerQueue.add(new Worker(workerTask));
     }
 
     @Override
@@ -99,7 +93,7 @@ public class ExecutorThreadPool implements ExecutorService {
 
     @Override
     public int queued() {
-        return workerTaskQueue.size();
+        return workerQueue.size();
     }
 
     @Override
