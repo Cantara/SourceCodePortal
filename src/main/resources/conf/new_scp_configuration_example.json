@@ -1,0 +1,140 @@
+{
+  "title": "Cantara Source Code Portal",
+  "github": {
+    "organization": "Cantara",
+    "group": [
+      {
+        "groupId": "SourceCodePortal",
+        "display-name": "Source Code Portal",
+        "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
+        "repository-match": [
+          "SourceCodePortal"
+        ],
+        "branch": "master",
+        "default-group-repository": "SourceCodePortal"
+      },
+      {
+        "groupId": "Whydah",
+        "display-name": "Whydah IAM and SSO Platform",
+        "description": "Defcon 5 grade IAM and SSO security solution",
+        "repository-match": [
+          "Whydah*"
+        ],
+        "branch": "master",
+        "default-group-repository": "Whydah-SecurityTokenService"
+      },
+      {
+        "groupId": "ConfigService",
+        "display-name": "The ConfigService and JAU Toolchain",
+        "description": "Provision configuration to agents",
+        "repository-match": [
+          "ConfigService*",
+          "JAU",
+          "Java-Auto-Update"
+        ],
+        "branch": "master",
+        "default-group-repository": "ConfigService"
+      },
+      {
+        "groupId": "IOT",
+        "display-name": "Cantara IOT platform projects",
+        "description": "Bulding blocks to create IOT platforms",
+        "repository-match": [
+          "IoT*"
+        ],
+        "branch": "master",
+        "default-group-repository": "IoT-Service"
+      },
+      {
+        "groupId": "ValueReporter",
+        "display-name": "ValueReporter Toolchain",
+        "description": "Toolchain to measure and detect valuable and dead parts of solutions",
+        "repository-match": [
+          "Value*"
+        ],
+        "branch": "master",
+        "default-group-repository": "Valuereporter"
+      },
+      {
+        "groupId": "dropwizard",
+        "display-name": "dropwizard examples",
+        "description": "Getting started with dropwizard",
+        "repository-match": [
+          "dropwizard*"
+        ],
+        "branch": "master",
+        "default-group-repository": "dropwizarde"
+      },
+      {
+        "groupId": "Flow",
+        "display-name": "Cantara Flow",
+        "description": "Graphics tracing and visualization of long-running processes",
+        "repository-match": [
+          "Flow*"
+        ],
+        "branch": "master",
+        "default-group-repository": "FlowLogger"
+      },
+      {
+        "groupId": "BaselineProjects",
+        "display-name": "Cantara Baseline Codebases",
+        "description": "Cantara Baseline projects for Java and Docker",
+        "repository-match": [
+          "[^\\s]*aseline*",
+          "BaseCommands",
+          "BaseJDBCCommands"
+        ],
+        "branch": "master",
+        "default-group-repository": "microservice-baseline"
+      },
+      {
+        "groupId": "ACS",
+        "display-name": "Awesome Competence System",
+        "description": "The best competenece system",
+        "repository-match": [
+          "ACS",
+          "Awesome"
+        ],
+        "branch": "master",
+        "default-group-repository": "Awesome-Competence-System"
+      },
+      {
+        "groupId": "Cantara-All",
+        "display-name": "Cantara GitHub, complete list of reposositories",
+        "description": "All Cantara projects on GitHub",
+        "repository-match": [
+          "[^\\s]*"
+        ],
+        "branch": "master",
+        "default-group-repository": "PathWatcher"
+      },
+      {
+        "groupId": "ratpack",
+        "display-name": "ratpack examples",
+        "description": "Getting started with ratpack",
+        "repository-match": [
+          "ratpack*"
+        ],
+        "branch": "master",
+        "default-group-repository": "ratpack-websockets"
+      }
+    ]
+  },
+  "repository-overrides": [
+    {
+      "repoId": "SourceCodePortal",
+      "display-name": "Source Code Portal",
+      "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
+      "repository": "github:SSB/SourceCodePortal",
+      "branch": "master",
+      "external": {
+        "snyk": {
+          "snyk-badge-prefix": "Cantara-"
+        },
+        "jenkins": {
+          "jenkins-badge-prefix": "Cantara-"
+        }
+      }
+    }
+  ]
+}
