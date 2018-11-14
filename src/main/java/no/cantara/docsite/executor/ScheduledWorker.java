@@ -1,7 +1,5 @@
 package no.cantara.docsite.executor;
 
-import com.sun.istack.NotNull;
-
 import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
@@ -14,7 +12,7 @@ public class ScheduledWorker {
     public final long period;
     public final TimeUnit timeUnit;
 
-    public ScheduledWorker(String id, long initialDelay, long period, @NotNull TimeUnit timeUnit) {
+    public ScheduledWorker(String id, long initialDelay, long period, TimeUnit timeUnit) {
         this.id = id;
         this.initialDelay = initialDelay;
         this.period = period;
