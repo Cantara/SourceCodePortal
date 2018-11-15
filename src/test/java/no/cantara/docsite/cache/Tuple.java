@@ -1,28 +1,33 @@
 package no.cantara.docsite.cache;
 
-import java.util.Objects;
+public class Tuple<L, R> {
 
-public class Tuple {
+    private final L left;
+    private final R right;
 
-    private final String a;
-    private final String b;
-
-    public Tuple(String a, String b) {
-        this.a = a;
-        this.b = b;
+    public Tuple(L left, R right) {
+        this.left = left;
+        this.right = right;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Tuple)) return false;
-        Tuple tuple = (Tuple) o;
-        return Objects.equals(a, tuple.a) &&
-                Objects.equals(b, tuple.b);
+    public L getLeft() {
+        return left;
+    }
+
+    public R getRight() {
+        return right;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(a) & Objects.hashCode(b);
+        return 31 * (left.hashCode() + right.hashCode());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Tuple)) return false;
+        Tuple pairo = (Tuple) o;
+        return this.left.equals(pairo.getLeft()) &&
+                this.right.equals(pairo.getRight());
     }
 }
