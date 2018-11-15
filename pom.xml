@@ -234,13 +234,7 @@
         <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
-            <version>1.5.7</version>
-        </dependency>
-        <!--
-        <dependency>
-            <groupId>org.asciidoctor</groupId>
-            <artifactId>asciidoctorj</artifactId>
-            <version>1.6.0-alpha.7</version>
+            <version>1.6.0-RC.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jruby</groupId>
@@ -248,14 +242,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.jruby</groupId>
-            <artifactId>jruby-complete</artifactId>
-            <version>9.2.0.0</version>
-            <type>compile</type>
+            <artifactId>jruby</artifactId>
+            <version>9.2.4.0</version>
+            <scope>compile</scope>
         </dependency>
-        -->
 
         <dependency>
             <groupId>org.slf4j</groupId>
