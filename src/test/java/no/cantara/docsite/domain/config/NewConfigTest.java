@@ -39,8 +39,12 @@ public class NewConfigTest {
         NewRepoConfig.Builder builder = NewRepoConfig.newBuilder("Title")
                 .withProvider(
                         NewRepoConfig.newScmBuilder(NewRepoConfig.ScmProvider.GITHUB)
-                            .matchRepository(NewRepoConfig.newMatchRepositoryBuilder().repositoryPattern("SourceCodePortal*").branch("master"))
-                            .matchRepository(NewRepoConfig.newMatchRepositoryBuilder().repositoryPattern("Whydah*").branch("master"))
+                            .matchRepository(
+                                    NewRepoConfig.newMatchRepositoryBuilder().repositoryPattern("SourceCodePortal*").branch("master")
+                            )
+                            .matchRepository(
+                                    NewRepoConfig.newMatchRepositoryBuilder().repositoryPattern("Whydah*").branch("master")
+                            )
                 )
                 .withRepositoryOverride(
                         NewRepoConfig.newScmRepositoryOverrideBuilder()
@@ -49,8 +53,12 @@ public class NewConfigTest {
                             .description("The SCP gathers")
                             .repository("github:Cantara/SourceCodePortal*")
                             .branch("master")
-                            .withExternal(NewRepoConfig.newJenkinsBuilder().prefix("Cantara-"))
-                            .withExternal(NewRepoConfig.newSnykBuilder().prefix("Cantara"))
+                            .withExternal(
+                                    NewRepoConfig.newJenkinsBuilder().prefix("Cantara-")
+                            )
+                            .withExternal(
+                                    NewRepoConfig.newSnykBuilder().prefix("Cantara")
+                            )
                 )
                 .withGroup(
                         NewRepoConfig.newGroupBuilder().groupId("SourceCodePortal").displayName("displayName").description("description")
