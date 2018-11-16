@@ -68,6 +68,10 @@ public class NewRepoConfig {
         return new ScmRepositoryOverrideBuilder();
     }
 
+    public static MatchRepositoryBuilder newMatchRepositoryBuilder() {
+        return new MatchRepositoryBuilder();
+    }
+
     public static class Builder {
         private final String title;
         private final Map<ScmProvider, ScmRepositoryBuilder> configBuilderProps = new LinkedHashMap<>();
@@ -99,7 +103,7 @@ public class NewRepoConfig {
         private Builder parent;
         private final ScmProvider provider;
         private final Map<String,String> scmBuilderProps = new LinkedHashMap<>();
-        private final List<MatchRepository> scmMatchRepositoryBuilderProps = new ArrayList<>();
+        private final List<MatchRepositoryBuilder> scmMatchRepositoryBuilderBuilderProps = new ArrayList<>();
 
         public ScmRepositoryBuilder(ScmProvider provider) {
             this.provider = provider;
@@ -110,19 +114,28 @@ public class NewRepoConfig {
             return this;
         }
 
-        public ScmRepositoryBuilder matchRepository(String repositoryPattern, String branch) {
-            scmMatchRepositoryBuilderProps.add(new MatchRepository(repositoryPattern, branch));
+        public ScmRepositoryBuilder matchRepository(MatchRepositoryBuilder matchRepositoryBuilder) {
+            matchRepositoryBuilder.parent = this;
+            scmMatchRepositoryBuilderBuilderProps.add(matchRepositoryBuilder);
             return this;
         }
     }
 
-    public static class MatchRepository {
-        private final String repositoryPattern;
-        private final String branch;
+    public static class MatchRepositoryBuilder {
+        private ScmRepositoryBuilder parent;
+        private final Map<String,String> scmMatchRepositoryBuilderProps = new LinkedHashMap<>();
 
-        public MatchRepository(String repositoryPattern, String branch) {
-            this.repositoryPattern = repositoryPattern;
-            this.branch = branch;
+        public MatchRepositoryBuilder() {
+        }
+
+        public MatchRepositoryBuilder repositoryPattern(String repositoryPattern) {
+            scmMatchRepositoryBuilderProps.put("repository-pattern", repositoryPattern);
+            return this;
+        }
+
+        public MatchRepositoryBuilder branch(String branch) {
+            scmMatchRepositoryBuilderProps.put("branch", branch);
+            return this;
         }
     }
 

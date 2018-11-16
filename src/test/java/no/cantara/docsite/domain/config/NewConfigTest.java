@@ -36,18 +36,19 @@ public class NewConfigTest {
 
     @Test
     public void testConfigBuilder() {
-        NewRepoConfig.Builder builder = NewRepoConfig.newBuilder("Title").withProvider(NewRepoConfig.newScmBuilder(NewRepoConfig.ScmProvider.GITHUB)
-                .matchRepository("SourceCodePortal*", "master")
-                .matchRepository("Whydah*", "master"))
+        NewRepoConfig.Builder builder = NewRepoConfig.newBuilder("Title")
+                .withProvider(NewRepoConfig.newScmBuilder(NewRepoConfig.ScmProvider.GITHUB)
+                    .matchRepository(NewRepoConfig.newMatchRepositoryBuilder().repositoryPattern("SourceCodePortal*").branch("master"))
+                    .matchRepository(NewRepoConfig.newMatchRepositoryBuilder().repositoryPattern("Whydah*").branch("master")))
                 .withRepositoryOverride(NewRepoConfig.newScmRepositoryOverrideBuilder()
-                        .repositoryId("SourceCodePortal")
-                        .displayName("Source Code Portal")
-                        .description("The SCP gathers")
-                        .repository("github:Cantara/SourceCodePortal*")
-                        .branch("master")
-                        .withExternal(NewRepoConfig.newJenkinsBuilder().prefix("Cantara-"))
-                        .withExternal(NewRepoConfig.newSnykBuilder().prefix("Cantara"))
-                )
+                    .repositoryId("SourceCodePortal")
+                    .displayName("Source Code Portal")
+                    .description("The SCP gathers")
+                    .repository("github:Cantara/SourceCodePortal*")
+                    .branch("master")
+                    .withExternal(NewRepoConfig.newJenkinsBuilder().prefix("Cantara-"))
+                    .withExternal(NewRepoConfig.newSnykBuilder().prefix("Cantara")))
+                // group
                 ;
     }
 
