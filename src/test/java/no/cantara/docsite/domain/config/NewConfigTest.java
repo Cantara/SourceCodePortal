@@ -49,6 +49,8 @@ public class NewConfigTest {
                     .withExternal(NewRepoConfig.newJenkinsBuilder().prefix("Cantara-"))
                     .withExternal(NewRepoConfig.newSnykBuilder().prefix("Cantara")))
                 // group
+                .withGroup(NewRepoConfig.newGroupBuilder().groupId("SourceCodePortal").displayName("displayName").description("description").defaultEntryRepository("defaultEntryRepository").repositorySelector("github:Cantara/SourceCodePortal*"))
+                .withGroup(NewRepoConfig.newGroupBuilder().groupId("WhyDah").displayName("displayName").description("description").defaultEntryRepository("defaultEntryRepository").repositorySelector("Whydah*").repositorySelector("ACS*"))
                 ;
     }
 

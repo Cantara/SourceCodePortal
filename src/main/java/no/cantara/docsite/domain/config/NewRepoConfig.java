@@ -76,6 +76,7 @@ public class NewRepoConfig {
         private final String title;
         private final Map<ScmProvider, ScmRepositoryBuilder> configBuilderProps = new LinkedHashMap<>();
         private final List<ScmRepositoryOverrideBuilder> repositoryOverrideBuilderProps = new ArrayList<>();
+        private final List<GroupBuilder> groupBuilderProps = new ArrayList<>();
 
         public Builder(String title) {
             this.title = title;
@@ -91,6 +92,11 @@ public class NewRepoConfig {
 
         public Builder withRepositoryOverride(ScmRepositoryOverrideBuilder scmRepositoryOverrideBuilder) {
             repositoryOverrideBuilderProps.add(scmRepositoryOverrideBuilder);
+            return this;
+        }
+
+        public Builder withGroup(GroupBuilder groupBuilder) {
+            groupBuilderProps.add(groupBuilder);
             return this;
         }
 
@@ -307,8 +313,13 @@ public class NewRepoConfig {
     // Group Builders
     // --------------------------------------------------------------------------------------------
 
+    public static GroupBuilder newGroupBuilder() {
+        return new GroupBuilder();
+    }
+
     public static class GroupBuilder {
         private Map<String, String> groupBuilderProps = new LinkedHashMap<>();
+        private RepositorySelectorBuilder repositorySelectorBuilder = new RepositorySelectorBuilder(this);
 
         public GroupBuilder groupId(String groupId) {
             groupBuilderProps.put("group-id", groupId);
@@ -330,7 +341,24 @@ public class NewRepoConfig {
             return this;
         }
 
-        // TODO add new list for repository-selector
+        public GroupBuilder repositorySelector(String repositorSelector) {
+            return repositorySelectorBuilder.repositorySelector(repositorSelector);
+        }
+
+    }
+
+    public static class RepositorySelectorBuilder {
+        private final GroupBuilder parent;
+        private final  List<String> repositorySelectorBuilderProps = new ArrayList<>();
+
+        RepositorySelectorBuilder(GroupBuilder parent) {
+            this.parent = parent;
+        }
+
+        public GroupBuilder repositorySelector(String repositorySelector) {
+            repositorySelectorBuilderProps.add(repositorySelector);
+            return parent;
+        }
     }
 
 }
