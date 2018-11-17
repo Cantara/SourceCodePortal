@@ -55,37 +55,80 @@ public class RepositoryConfigService {
 
     static class Loader implements BiConsumer<Deque<JsonTraversalElement>, JsonTraversalElement> {
         private RepositoryConfig.RepositoryConfigBuilder builder;
+        private RepositoryConfig.MatchRepositoryBuilder matchRepositoryBuilder;
+        private RepositoryConfig.RepositoryBuilder scmBuilder;
+        private RepositoryConfig.RepositoryOverrideBuilder repositoryOverrideBuilder;
+        private Jenkins.JenkinsBuilder jenkinsBuilder;
+        private Snyk.SnykBuilder snykBuilder;
+        private RepositoryConfig.GroupBuilder groupBuilder;
 
         @Override
         public void accept(Deque<JsonTraversalElement> ancestors, JsonTraversalElement jte) {
-            if (jte.isRoot()) {
-                builder = RepositoryConfig.newBuilder(jte.key);
 
-            } else if ((RepoConfig.ScmProvider.GITHUB.provider() + "/organization").equals(jte.path(ancestors))) {
-//                currentGroupBuilder = builder.withProvider(RepoConfig.ScmProvider.GITHUB, ((JsonString) jte.value).getString());
+            // create repository builder
+            if (jte.isRoot() && "title".equals(jte.key)) {
+                builder = RepositoryConfig.newBuilder(jte.asStringValue());
 
-            } else if ((RepoConfig.ScmProvider.BITBUCKET.provider() + "/organization").equals(jte.path(ancestors))) {
-//                currentGroupBuilder = builder.withProvider(RepoConfig.ScmProvider.BITBUCKET, ((JsonString) jte.value).getString());
+            // create scm provider builder
+            } else if (jte.isRoot() && jte.isArray() && RepositoryConfig.ScmProvider.isValid(jte.key)) {
+                scmBuilder = RepositoryConfig.newScmBuilder(RepositoryConfig.ScmProvider.valueOf(jte.key.toUpperCase()));
+                builder.withProvider(scmBuilder);
 
-            } else if (jte.isNewSibling() && jte.depth(ancestors) == 1) {
-//                currentRepoBuilder = RepoConfig.newRepoBuilder();
-//                currentGroupBuilder.withRepo(currentRepoBuilder);
+            // set organization to scm builder
+            } else if (jte.isArrayElement() && jte.depth(ancestors) == 1 && "organization".equals(jte.key)) {
+                scmBuilder.organization(jte.asStringValue());
 
-            } else {
-//                if ("groupId".equals(jte.key)) currentRepoBuilder.groupId(((JsonString) jte.value).getString());
-//                if (jte.parent.isArray() && "repo".equals(jte.parent.key)) currentRepoBuilder.repoPattern(((JsonString) jte.value).getString());
-//                if ("branch".equals(jte.key)) currentRepoBuilder.branch(((JsonString) jte.value).getString());
-//                if ("display-name".equals(jte.key))
-//                    currentRepoBuilder.displayName(((JsonString) jte.value).getString());
-//                if ("default-group-repo".equals(jte.key))
-//                    currentRepoBuilder.defaultGroupRepo(((JsonString) jte.value).getString());
-//
-//                if ("jenkins".equalsIgnoreCase(jte.parent.key)) {
-//                    currentRepoBuilder.withExternal("jenkins").set(jte.key, ((JsonString) jte.value).getString());
-//                }
-//                if ("snyk".equalsIgnoreCase(jte.parent.key)) {
-//                    currentRepoBuilder.withExternal("snyk").set(jte.key, ((JsonString) jte.value).getString());
-//                }
+            // create match repository builder
+            } else if (jte.parent != null && "match-repositories".equals(jte.parent.key) && jte.isNewSibling()) {
+                matchRepositoryBuilder = RepositoryConfig.newMatchRepositoryBuilder();
+                scmBuilder.matchRepository(matchRepositoryBuilder);
+
+            // set match repository properties
+            } else if (jte.parent != null && jte.parent.parent != null && "match-repositories".equals(jte.parent.parent.key) && jte.isArrayElement()) {
+                matchRepositoryBuilder.matchRepositoryBuilderProps.put(jte.key, jte.asStringValue());
+
+            // create repository override builder
+            } else if (jte.parent != null && jte.parent.isRoot() && jte.isNewSibling() && "repository-overrides".equals(jte.parent.key)) {
+                repositoryOverrideBuilder = RepositoryConfig.newScmRepositoryOverrideBuilder();
+                builder.withRepositoryOverride(repositoryOverrideBuilder);
+
+            // add repository override
+            } else if (jte.parent != null && jte.parent.parent != null && "repository-overrides".equals(jte.parent.parent.key) && jte.isArrayElement()) {
+                repositoryOverrideBuilder.overrideBuilderProps.put(jte.key, jte.asStringValue());
+
+            // add external service to repository override
+            } else if (jte.parent != null && jte.parent.parent != null && jte.parent.parent.parent != null && "repository-overrides".equals(jte.parent.parent.parent.key) && "external".equals(jte.parent.key) && jte.parent.isArrayElement() && jte.depth(ancestors) == 2) {
+                if ("jenkins".equals(jte.key)) {
+                    jenkinsBuilder = Jenkins.newJenkinsBuilder();
+                    repositoryOverrideBuilder.withExternal(jenkinsBuilder);
+
+                } else if ("snyk".equals(jte.key)) {
+                    snykBuilder = Snyk.newSnykBuilder();
+                    repositoryOverrideBuilder.withExternal(snykBuilder);
+                }
+
+            // set external badge prefix
+            } else if (jte.parent != null && jte.parent.parent != null && "external".equals(jte.parent.parent.key) && jte.depth(ancestors) == 3) {
+                if ("jenkins".equals(jte.parent.key)) {
+                    jenkinsBuilder.set(jte.key, jte.asStringValue());
+
+                } else if ("snyk".equals(jte.parent.key)) {
+                    snykBuilder.set(jte.key, jte.asStringValue());
+                }
+
+            // create group builder
+            } else if (jte.parent != null && jte.parent.isRoot() && jte.isNewSibling() && "groups".equals(jte.parent.key)) {
+                groupBuilder = RepositoryConfig.newGroupBuilder();
+                builder.withGroup(groupBuilder);
+
+            // set group key/values
+            } else if (jte.parent != null && jte.parent.parent != null && "groups".equals(jte.parent.parent.key) && jte.isArrayElement()) {
+                groupBuilder.groupBuilderProps.put(jte.key, jte.asStringValue());
+
+            // set group repositorySelector
+            } else if (jte.parent != null && jte.parent.parent != null && jte.parent.parent.parent != null && "groups".equals(jte.parent.parent.parent.key) && jte.isArrayElement() && "repository-selector".equals(jte.parent.key)) {
+                groupBuilder.repositorySelector(jte.asStringValue());
+
             }
         }
     }

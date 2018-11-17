@@ -2,7 +2,27 @@
   "title": "Cantara Source Code Portal",
   "github": [
     {
-      "organizaiton": "Cantara",
+      "organization": "Cantara",
+      "match-repositories": [
+        {
+          "repository-pattern": "*",
+          "branch": "master"
+        }
+      ]
+    },
+    {
+      "organization": "CantaraTest",
+      "match-repositories": [
+        {
+          "repository-pattern": "Whydah",
+          "branch": "master"
+        }
+      ]
+    }
+  ],
+  "bitbucket": [
+    {
+      "organization": "CantaraBucket",
       "match-repositories": [
         {
           "repository-pattern": "*",
@@ -24,6 +44,21 @@
         },
         "jenkins": {
           "badge-prefix": "Cantara-"
+        }
+      }
+    },
+    {
+      "repository-id": "Whydah",
+      "display-name": "Whydah",
+      "description": "Whydah description",
+      "repository": "github:Cantara/Whydah*",
+      "branch": "master",
+      "external": {
+        "snyk": {
+          "badge-prefix": "Whydah-"
+        },
+        "jenkins": {
+          "badge-prefix": "Whydah"
         }
       }
     }

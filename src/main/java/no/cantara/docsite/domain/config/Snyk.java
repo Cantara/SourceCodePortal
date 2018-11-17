@@ -32,13 +32,13 @@ public class Snyk implements Serializable {
         }
 
         public SnykBuilder prefix(String snykTestPrefix) {
-            snykBuilderProps.put("snyk-test-prefix", snykTestPrefix);
+            snykBuilderProps.put("badge-prefix", snykTestPrefix);
             return this;
         }
 
         @Override
         public Snyk build() {
-            return new Snyk(snykBuilderProps.get("snyk-test-prefix"));
+            return new Snyk(snykBuilderProps.get("badge-prefix"));
         }
     }
 

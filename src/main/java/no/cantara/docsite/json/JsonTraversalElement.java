@@ -1,5 +1,6 @@
 package no.cantara.docsite.json;
 
+import javax.json.JsonString;
 import javax.json.JsonValue;
 import java.util.Arrays;
 import java.util.Deque;
@@ -73,6 +74,11 @@ public class JsonTraversalElement {
     public boolean isArrayElement() {
         return (parent != null && parent.arrayPos > -1) || (parent != null && parent.isArray() && isPrimitiveValueType() && arrayPos > -1) || isNewSibling();
     }
+
+    public String asStringValue() {
+        return (value != null && value instanceof JsonString ? ((JsonString) value).getString() : value.toString());
+    }
+
 
     @Override
     public String toString() {

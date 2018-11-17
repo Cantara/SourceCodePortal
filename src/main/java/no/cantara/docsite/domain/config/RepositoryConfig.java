@@ -46,6 +46,16 @@ public class RepositoryConfig {
             this.provider = provider;
         }
 
+        public static boolean isValid(String name) {
+            if (name == null) return false;
+            for(ScmProvider value : values()) {
+                if (value.provider.equals(name)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public String provider() {
             return provider;
         }
@@ -268,7 +278,7 @@ public class RepositoryConfig {
 
     public static class MatchRepositoryBuilder {
         private RepositoryBuilder parent;
-        private final Map<String,String> matchRepositoryBuilderProps = new LinkedHashMap<>();
+        final Map<String,String> matchRepositoryBuilderProps = new LinkedHashMap<>();
 
         public MatchRepositoryBuilder() {
         }
@@ -286,7 +296,7 @@ public class RepositoryConfig {
 
     public static class RepositoryOverrideBuilder {
         private RepositoryConfigBuilder parent;
-        private final Map<String,String> overrideBuilderProps = new LinkedHashMap<>();
+        final Map<String,String> overrideBuilderProps = new LinkedHashMap<>();
         private final ExternalBuilders externalBuilders = new ExternalBuilders();
 
         public RepositoryOverrideBuilder() {
@@ -360,7 +370,7 @@ public class RepositoryConfig {
     }
 
     public static class GroupBuilder {
-        private final Map<String, String> groupBuilderProps = new LinkedHashMap<>();
+        final Map<String, String> groupBuilderProps = new LinkedHashMap<>();
         private final RepositorySelectorBuilder repositorySelectorBuilder = new RepositorySelectorBuilder(this);
 
         public GroupBuilder groupId(String groupId) {

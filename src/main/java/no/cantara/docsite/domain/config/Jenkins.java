@@ -34,13 +34,13 @@ public class Jenkins implements Serializable {
 
 
         public JenkinsBuilder prefix(String jenkinsPrefix) {
-            jenkinsBuilderProps.put("jenkins-job-prefix", jenkinsPrefix);
+            jenkinsBuilderProps.put("badge-prefix", jenkinsPrefix);
             return this;
         }
 
         @Override
         public Jenkins build() {
-            return new Jenkins(jenkinsBuilderProps.get("jenkins-job-prefix"));
+            return new Jenkins(jenkinsBuilderProps.get("badge-prefix"));
         }
     }
 
