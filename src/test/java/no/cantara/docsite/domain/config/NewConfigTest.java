@@ -36,37 +36,37 @@ public class NewConfigTest {
 
     @Test
     public void testConfigBuilder() {
-        NewRepoConfig.Builder builder = NewRepoConfig.newBuilder("Title")
+        RepositoryConfig.RepositoryConfigBuilder repositoryConfigBuilder = RepositoryConfig.newBuilder("Title")
                 .withProvider(
-                        NewRepoConfig.newScmBuilder(NewRepoConfig.ScmProvider.GITHUB)
+                        RepositoryConfig.newScmBuilder(RepositoryConfig.ScmProvider.GITHUB)
                             .matchRepository(
-                                    NewRepoConfig.newMatchRepositoryBuilder().repositoryPattern("SourceCodePortal*").branch("master")
+                                    RepositoryConfig.newMatchRepositoryBuilder().repositoryPattern("SourceCodePortal*").branch("master")
                             )
                             .matchRepository(
-                                    NewRepoConfig.newMatchRepositoryBuilder().repositoryPattern("Whydah*").branch("master")
+                                    RepositoryConfig.newMatchRepositoryBuilder().repositoryPattern("Whydah*").branch("master")
                             )
                 )
                 .withRepositoryOverride(
-                        NewRepoConfig.newScmRepositoryOverrideBuilder()
+                        RepositoryConfig.newScmRepositoryOverrideBuilder()
                             .repositoryId("SourceCodePortal")
                             .displayName("Source Code Portal")
                             .description("The SCP gathers")
                             .repository("github:Cantara/SourceCodePortal*")
                             .branch("master")
                             .withExternal(
-                                    NewRepoConfig.newJenkinsBuilder().prefix("Cantara-")
+                                    Jenkins.newJenkinsBuilder().prefix("Cantara-")
                             )
                             .withExternal(
-                                    NewRepoConfig.newSnykBuilder().prefix("Cantara")
+                                    Snyk.newSnykBuilder().prefix("Cantara")
                             )
                 )
                 .withGroup(
-                        NewRepoConfig.newGroupBuilder().groupId("SourceCodePortal").displayName("displayName").description("description")
+                        RepositoryConfig.newGroupBuilder().groupId("SourceCodePortal").displayName("displayName").description("description")
                                 .defaultEntryRepository("defaultEntryRepository")
                                 .repositorySelector("github:Cantara/SourceCodePortal*")
                 )
                 .withGroup(
-                        NewRepoConfig.newGroupBuilder().groupId("WhyDah").displayName("displayName").description("description")
+                        RepositoryConfig.newGroupBuilder().groupId("WhyDah").displayName("displayName").description("description")
                                 .defaultEntryRepository("defaultEntryRepository")
                                 .repositorySelector("Whydah*").repositorySelector("ACS*")
                 )
