@@ -111,4 +111,13 @@ public class RepositoryConfigTest {
         assertTrue(repositoryConfig.groups.stream().anyMatch(m -> "WhyDah".equals(m.groupId)));
     }
 
+    @Test
+    public void testLoadConfig() {
+        RepositoryConfigService configService = new RepositoryConfigService("conf/new_repo_config.json");
+        LOG.trace("config: {}", configService.getConfig());
+//        RepoConfig.Jenkins jenkins = configService.getRepositories(RepositoryConfig.ScmProvider.GITHUB).get(0).getService(RepoConfig.Jenkins.class);
+//        LOG.trace("--> {}", jenkins.jenkinsPrefix);
+    }
+
+
 }
