@@ -99,7 +99,8 @@ public class RepositoryConfig {
         }
 
         public RepositoryConfig build() {
-//            RepositoryConfig config = new RepositoryConfig()
+            RepositoryConfig config = new RepositoryConfig(title, null);
+
             return null;
         }
     }
