@@ -14,6 +14,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
+import static no.cantara.docsite.domain.config.RepositoryConfig.ScmProvider.GITHUB;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 public class RepositoryConfigTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RepoConfigTest.class);
@@ -38,12 +42,23 @@ public class RepositoryConfigTest {
     public void testConfigBuilder() {
         RepositoryConfig.RepositoryConfigBuilder repositoryConfigBuilder = RepositoryConfig.newBuilder("Title")
                 .withProvider(
-                        RepositoryConfig.newScmBuilder(RepositoryConfig.ScmProvider.GITHUB)
+                        RepositoryConfig.newScmBuilder(GITHUB)
+                            .organization("Cantara")
                             .matchRepository(
                                     RepositoryConfig.newMatchRepositoryBuilder().repositoryPattern("SourceCodePortal*").branch("master")
                             )
                             .matchRepository(
                                     RepositoryConfig.newMatchRepositoryBuilder().repositoryPattern("Whydah*").branch("master")
+                            )
+                )
+                .withProvider(
+                        RepositoryConfig.newScmBuilder(RepositoryConfig.ScmProvider.BITBUCKET)
+                            .organization("Cantara")
+                            .matchRepository(
+                                    RepositoryConfig.newMatchRepositoryBuilder().repositoryPattern("Repo1*").branch("master")
+                            )
+                            .matchRepository(
+                                    RepositoryConfig.newMatchRepositoryBuilder().repositoryPattern("Repo2*").branch("master")
                             )
                 )
                 .withRepositoryOverride(
@@ -61,16 +76,39 @@ public class RepositoryConfigTest {
                             )
                 )
                 .withGroup(
-                        RepositoryConfig.newGroupBuilder().groupId("SourceCodePortal").displayName("displayName").description("description")
+                        RepositoryConfig.newGroupBuilder()
+                                .groupId("SourceCodePortal")
+                                .displayName("displayName")
+                                .description("description")
                                 .defaultEntryRepository("defaultEntryRepository")
                                 .repositorySelector("github:Cantara/SourceCodePortal*")
                 )
                 .withGroup(
-                        RepositoryConfig.newGroupBuilder().groupId("WhyDah").displayName("displayName").description("description")
+                        RepositoryConfig.newGroupBuilder()
+                                .groupId("WhyDah")
+                                .displayName("displayName")
+                                .description("description")
                                 .defaultEntryRepository("defaultEntryRepository")
-                                .repositorySelector("Whydah*").repositorySelector("ACS*")
+                                .repositorySelector("github:Cantara/Whydah*").repositorySelector("github:Cantara/ACS*")
                 )
                 ;
+        RepositoryConfig repositoryConfig = repositoryConfigBuilder.build();
+        LOG.trace("config: {}", repositoryConfig);
+        assertEquals(repositoryConfig.title, "Title");
+
+        assertTrue(repositoryConfig.repositories.get(GITHUB).stream().anyMatch(m -> "Cantara".equals(m.organization)));
+        assertTrue(repositoryConfig.repositories.get(GITHUB).stream().anyMatch(m -> "SourceCodePortal*".equals(m.repositoryPattern)));
+        assertTrue(repositoryConfig.repositories.get(GITHUB).stream().anyMatch(m -> "Whydah*".equals(m.repositoryPattern)));
+        assertTrue(repositoryConfig.repositories.get(RepositoryConfig.ScmProvider.BITBUCKET).stream().anyMatch(m -> "Repo1*".equals(m.repositoryPattern)));
+        assertTrue(repositoryConfig.repositories.get(RepositoryConfig.ScmProvider.BITBUCKET).stream().anyMatch(m -> "Repo2*".equals(m.repositoryPattern)));
+
+        assertTrue(repositoryConfig.repositoryOverrides.stream().anyMatch(m -> GITHUB.equals(m.provider)));
+        assertTrue(repositoryConfig.repositoryOverrides.stream().anyMatch(m -> "Cantara".equals(m.organization)));
+        assertTrue(repositoryConfig.repositoryOverrides.stream().anyMatch(m -> "SourceCodePortal*".equals(m.repositoryPattern)));
+        assertTrue(repositoryConfig.repositoryOverrides.stream().anyMatch(m -> "master".equals(m.branch)));
+
+        assertTrue(repositoryConfig.groups.stream().anyMatch(m -> "SourceCodePortal".equals(m.groupId)));
+        assertTrue(repositoryConfig.groups.stream().anyMatch(m -> "WhyDah".equals(m.groupId)));
     }
 
 }
