@@ -52,6 +52,16 @@ public class RepositoryConfigTest {
                             )
                 )
                 .withProvider(
+                        RepositoryConfig.newScmBuilder(GITHUB)
+                            .organization("CantaraTest")
+                            .matchRepository(
+                                    RepositoryConfig.newMatchRepositoryBuilder().repositoryPattern("SourceCodePortal*").branch("master")
+                            )
+                            .matchRepository(
+                                    RepositoryConfig.newMatchRepositoryBuilder().repositoryPattern("Whydah*").branch("master")
+                            )
+                )
+                .withProvider(
                         RepositoryConfig.newScmBuilder(RepositoryConfig.ScmProvider.BITBUCKET)
                             .organization("Cantara")
                             .matchRepository(

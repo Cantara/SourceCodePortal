@@ -5,7 +5,7 @@
       "organization": "Cantara",
       "match-repositories": [
         {
-          "repository-pattern": "*",
+          "repository-pattern": ".*",
           "branch": "master"
         }
       ]
@@ -25,7 +25,7 @@
       "organization": "CantaraBucket",
       "match-repositories": [
         {
-          "repository-pattern": "*",
+          "repository-pattern": ".*",
           "branch": "master"
         }
       ]

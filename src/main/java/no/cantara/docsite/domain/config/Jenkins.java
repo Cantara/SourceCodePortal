@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.config;
 
+import javax.json.bind.annotation.JsonbProperty;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -8,7 +9,7 @@ import java.util.Map;
 public class Jenkins implements Serializable {
     private static final long serialVersionUID = 5882777423871329549L;
 
-    public final String jenkinsPrefix;
+    public final @JsonbProperty("badge-prefix") String jenkinsPrefix;
 
     public Jenkins(String jenkinsPrefix) {
         this.jenkinsPrefix = jenkinsPrefix;
@@ -19,7 +20,7 @@ public class Jenkins implements Serializable {
     }
 
     public static class JenkinsBuilder implements ExternalBuilder<Jenkins> {
-        private Map<String, String> jenkinsBuilderProps = new LinkedHashMap<>();
+        private final Map<String, String> jenkinsBuilderProps = new LinkedHashMap<>();
 
         @Override
         public String getConfigKey() {
@@ -32,7 +33,6 @@ public class Jenkins implements Serializable {
             return this;
         }
 
-
         public JenkinsBuilder prefix(String jenkinsPrefix) {
             jenkinsBuilderProps.put("badge-prefix", jenkinsPrefix);
             return this;
@@ -43,7 +43,6 @@ public class Jenkins implements Serializable {
             return new Jenkins(jenkinsBuilderProps.get("badge-prefix"));
         }
     }
-
 
 }
 

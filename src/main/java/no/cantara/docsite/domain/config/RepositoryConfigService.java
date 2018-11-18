@@ -55,12 +55,12 @@ public class RepositoryConfigService {
 
     static class Loader implements BiConsumer<Deque<JsonTraversalElement>, JsonTraversalElement> {
         private RepositoryConfig.RepositoryConfigBuilder builder;
-        private RepositoryConfig.MatchRepositoryBuilder matchRepositoryBuilder;
+        private RepositoryConfig.ScmProvider scmProvider;
         private RepositoryConfig.RepositoryBuilder scmBuilder;
+        private RepositoryConfig.MatchRepositoryBuilder matchRepositoryBuilder;
         private RepositoryConfig.RepositoryOverrideBuilder repositoryOverrideBuilder;
-        private Jenkins.JenkinsBuilder jenkinsBuilder;
-        private Snyk.SnykBuilder snykBuilder;
         private RepositoryConfig.GroupBuilder groupBuilder;
+        private ExternalBuilder<?> externalBuilder;
 
         @Override
         public void accept(Deque<JsonTraversalElement> ancestors, JsonTraversalElement jte) {
@@ -69,9 +69,13 @@ public class RepositoryConfigService {
             if (jte.isRoot() && "title".equals(jte.key)) {
                 builder = RepositoryConfig.newBuilder(jte.asStringValue());
 
-            // create scm provider builder
+            // set scm provider
             } else if (jte.isRoot() && jte.isArray() && RepositoryConfig.ScmProvider.isValid(jte.key)) {
-                scmBuilder = RepositoryConfig.newScmBuilder(RepositoryConfig.ScmProvider.valueOf(jte.key.toUpperCase()));
+                scmProvider = RepositoryConfig.ScmProvider.valueOf(jte.key.toUpperCase());
+
+            // create scm builder
+            } else if (jte.isArrayElement() && jte.isNewSibling() && jte.path(ancestors).startsWith(scmProvider.provider()) && jte.depth(ancestors) == 0) {
+                scmBuilder = RepositoryConfig.newScmBuilder(scmProvider);
                 builder.withProvider(scmBuilder);
 
             // set organization to scm builder
@@ -97,24 +101,14 @@ public class RepositoryConfigService {
                 repositoryOverrideBuilder.overrideBuilderProps.put(jte.key, jte.asStringValue());
 
             // add external service to repository override
-            } else if (jte.parent != null && jte.parent.parent != null && jte.parent.parent.parent != null && "repository-overrides".equals(jte.parent.parent.parent.key) && "external".equals(jte.parent.key) && jte.parent.isArrayElement() && jte.depth(ancestors) == 2) {
-                if ("jenkins".equals(jte.key)) {
-                    jenkinsBuilder = Jenkins.newJenkinsBuilder();
-                    repositoryOverrideBuilder.withExternal(jenkinsBuilder);
-
-                } else if ("snyk".equals(jte.key)) {
-                    snykBuilder = Snyk.newSnykBuilder();
-                    repositoryOverrideBuilder.withExternal(snykBuilder);
-                }
+            } else if (jte.parent != null && jte.parent.parent != null && jte.parent.parent.parent != null && "repository-overrides".equals(jte.parent.parent.parent.key)
+                    && "external".equals(jte.parent.key) && jte.parent.isArrayElement() && jte.depth(ancestors) == 2) {
+                externalBuilder = ExternalBuilders.getExternalBuilder(jte.key);
+                repositoryOverrideBuilder.withExternal(externalBuilder);
 
             // set external badge prefix
             } else if (jte.parent != null && jte.parent.parent != null && "external".equals(jte.parent.parent.key) && jte.depth(ancestors) == 3) {
-                if ("jenkins".equals(jte.parent.key)) {
-                    jenkinsBuilder.set(jte.key, jte.asStringValue());
-
-                } else if ("snyk".equals(jte.parent.key)) {
-                    snykBuilder.set(jte.key, jte.asStringValue());
-                }
+                externalBuilder.set(jte.key, jte.asStringValue());
 
             // create group builder
             } else if (jte.parent != null && jte.parent.isRoot() && jte.isNewSibling() && "groups".equals(jte.parent.key)) {

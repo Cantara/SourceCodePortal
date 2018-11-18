@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.config;
 
+import javax.json.bind.annotation.JsonbProperty;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 public class Snyk implements Serializable {
     private static final long serialVersionUID = 846214117299226186L;
 
-    public final String snykTestPrefix;
+    public final @JsonbProperty("badge-prefix") String snykTestPrefix;
 
     public Snyk(String snykTestPrefix) {
         this.snykTestPrefix = snykTestPrefix;
@@ -18,7 +19,7 @@ public class Snyk implements Serializable {
     }
 
     public static class SnykBuilder implements ExternalBuilder<Snyk> {
-        private Map<String, String> snykBuilderProps = new LinkedHashMap<>();
+        private final Map<String, String> snykBuilderProps = new LinkedHashMap<>();
 
         @Override
         public String getConfigKey() {

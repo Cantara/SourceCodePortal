@@ -5,10 +5,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.json.bind.annotation.JsonbTransient;
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
 public class RepositoryConfig {
@@ -22,9 +26,9 @@ public class RepositoryConfig {
 
     public RepositoryConfig(String title, Map<ScmProvider, List<Repository>> repositories, List<RepositoryOverride> repositoryOverrides, List<Group> groups) {
         this.title = title;
-        this.repositories = repositories;
-        this.repositoryOverrides = repositoryOverrides;
-        this.groups = groups;
+        this.repositories = Collections.unmodifiableMap(repositories);
+        this.repositoryOverrides = Collections.unmodifiableList(repositoryOverrides);
+        this.groups = Collections.unmodifiableList(groups);
     }
 
     public static RepositoryConfigBuilder newBuilder(String title) {
@@ -68,12 +72,12 @@ public class RepositoryConfig {
 
     public static class Repository {
         public final String organization;
-        public final String repositoryPattern;
+        public final @JsonbTypeAdapter(JsonbPatternAdapter2.class) Pattern repositoryPattern;
         public final String branch;
 
         public Repository(String organization, String repositoryPattern, String branch) {
             this.organization = organization;
-            this.repositoryPattern = repositoryPattern;
+            this.repositoryPattern = compilePattern(this, repositoryPattern);
             this.branch = branch;
         }
 
@@ -83,17 +87,25 @@ public class RepositoryConfig {
         }
     }
 
+    static Pattern compilePattern(Object obj, String pattern) {
+        try {
+            return Pattern.compile(pattern);
+        } catch (PatternSyntaxException e) {
+            throw new RuntimeException("Unable to compile " + obj.getClass().getSimpleName() + " pattern: '" + pattern + "' near " + obj);
+        }
+    }
+
     public static class RepositoryOverride {
         public final String repositoryId;
         public final ScmProvider provider;
         public final String organization;
-        public final String repositoryPattern;
+        public final @JsonbTypeAdapter(JsonbPatternAdapter2.class) Pattern repositoryPattern;
         public final String branch;
         public final String displayName;
         public final String description;
-        private final Map<Class<?>, Object> services = new LinkedHashMap<>();
+        private final Map<Class<?>, Object> services;
 
-        public RepositoryOverride(String repositoryId, String repository, String branch, String displayName, String description) {
+        public RepositoryOverride(String repositoryId, String repository, String branch, String displayName, String description,  Map<Class<?>, Object> externalServices) {
             this.repositoryId = repositoryId;
             if (repository == null || !repository.contains(":") || !repository.contains("/")) {
                 throw new RuntimeException("The repository must be format: 'github:Organization/RepositoryPattern' <- " + repository);
@@ -102,15 +114,16 @@ public class RepositoryConfig {
             String[] matchGroup2 = matchGroup1[1].split("/");
             this.provider = ScmProvider.valueOf(matchGroup1[0].toUpperCase());
             this.organization = matchGroup2[0];
-            this.repositoryPattern = matchGroup2[1];
             this.branch = branch;
             this.displayName = displayName;
             this.description = description;
+            this.services = Collections.unmodifiableMap(externalServices);
+            this.repositoryPattern = compilePattern(this, matchGroup2[1]);
         }
 
         // TODO should be hidden but rendered by json result
         public Map<String, Object> getServices() {
-            return services.entrySet().stream().collect(Collectors.toMap(entry -> entry.getKey().getSimpleName().toLowerCase(), entry -> entry.getValue()));
+            return services.entrySet().stream().collect(Collectors.toUnmodifiableMap(entry -> entry.getKey().getSimpleName().toLowerCase(), entry -> entry.getValue()));
         }
 
         @JsonbTransient
@@ -134,13 +147,14 @@ public class RepositoryConfig {
         public final String displayName;
         public final String description;
         public final String defaultEntryRepository;
-        public final List<RepositorySelector> repositorySelectors = new ArrayList<>();
+        public final List<RepositorySelector> repositorySelectors;
 
-        public Group(String groupId, String displayName, String description, String defaultEntryRepository) {
+        public Group(String groupId, String displayName, String description, String defaultEntryRepository, List<RepositorySelector> repositorySelectors) {
             this.groupId = groupId;
             this.displayName = displayName;
             this.description = description;
             this.defaultEntryRepository = defaultEntryRepository;
+            this.repositorySelectors = Collections.unmodifiableList(repositorySelectors);
         }
 
         @Override
@@ -152,7 +166,7 @@ public class RepositoryConfig {
     public static class RepositorySelector {
         public final ScmProvider provider;
         public final String organization;
-        public final String repositorySelector;
+        public final @JsonbTypeAdapter(JsonbPatternAdapter2.class) Pattern repositorySelector;
 
         public RepositorySelector(String repositorySelector) {
             if (repositorySelector == null || !repositorySelector.contains(":") || !repositorySelector.contains("/")) {
@@ -162,7 +176,7 @@ public class RepositoryConfig {
             String[] matchGroup2 = matchGroup1[1].split("/");
             this.provider = ScmProvider.valueOf(matchGroup1[0].toUpperCase());
             this.organization = matchGroup2[0];
-            this.repositorySelector = matchGroup2[1]; // should lookup and match with 'repositories'
+            this.repositorySelector = compilePattern(this, matchGroup2[1]); // should lookup and match with 'repositories'
         }
 
         @Override
@@ -189,7 +203,7 @@ public class RepositoryConfig {
 
     public static class RepositoryConfigBuilder {
         private final String title;
-        private final Map<ScmProvider, RepositoryBuilder> repositoryBuilderMap = new LinkedHashMap<>();
+        private final Map<ScmProvider, List<RepositoryBuilder>> repositoryBuilderMap = new LinkedHashMap<>();
         private final List<RepositoryOverrideBuilder> repositoryOverrideBuilderList = new ArrayList<>();
         private final List<GroupBuilder> groupBuilderList = new ArrayList<>();
 
@@ -200,7 +214,11 @@ public class RepositoryConfig {
         public RepositoryConfigBuilder withProvider(RepositoryBuilder repositoryBuilder) {
             if (!repositoryBuilderMap.containsKey(repositoryBuilder.provider)) {
                 repositoryBuilder.parent = this;
-                repositoryBuilderMap.put(repositoryBuilder.provider, repositoryBuilder);
+                List<RepositoryBuilder> repositoryBuilderList = new ArrayList<>();
+                repositoryBuilderList.add(repositoryBuilder);
+                repositoryBuilderMap.put(repositoryBuilder.provider, repositoryBuilderList);
+            } else {
+                repositoryBuilderMap.get(repositoryBuilder.provider).add(repositoryBuilder);
             }
             return this;
         }
@@ -217,14 +235,17 @@ public class RepositoryConfig {
 
         public RepositoryConfig build() {
             Map<ScmProvider, List<Repository>> allRepositories = new LinkedHashMap<>();
-            for(Map.Entry<ScmProvider, RepositoryBuilder> repository : repositoryBuilderMap.entrySet()) {
-                Map<ScmProvider, List<Repository>> repositoryMap = repository.getValue().build();
-                if (allRepositories.containsKey(repository.getKey())) {
-                    List<Repository> repositoryList = allRepositories.get(repository.getKey());
-                    repositoryList.addAll(repositoryMap.get(repository.getKey()));
+            for(Map.Entry<ScmProvider, List<RepositoryBuilder>> repository : repositoryBuilderMap.entrySet()) {
+                List<RepositoryBuilder> repositoryBuilderList = repository.getValue();
+                for (RepositoryBuilder repositoryBuilder : repositoryBuilderList) {
+                    Map<ScmProvider, List<Repository>> repositoryMap = repositoryBuilder.build();
+                    if (allRepositories.containsKey(repository.getKey())) {
+                        List<Repository> repositoryList = allRepositories.get(repository.getKey());
+                        repositoryList.addAll(repositoryMap.get(repository.getKey()));
 
-                } else {
-                    allRepositories.putAll(repositoryMap);
+                    } else {
+                        allRepositories.putAll(repositoryMap);
+                    }
                 }
             }
 
@@ -238,7 +259,7 @@ public class RepositoryConfig {
 
     public static class RepositoryBuilder {
         private RepositoryConfigBuilder parent;
-        private final ScmProvider provider;
+        final ScmProvider provider;
         private final Map<String,String> repositoryBuilderProps = new LinkedHashMap<>();
         private final List<MatchRepositoryBuilder> matchRepositoryBuilderList = new ArrayList<>();
 
@@ -344,20 +365,19 @@ public class RepositoryConfig {
         }
 
         public RepositoryOverride build() {
-            RepositoryOverride repositoryOverride = new RepositoryOverride(
+            Map<Class<?>, Object> externalServices = new LinkedHashMap<>();
+            for (ExternalBuilder<?> externalBuilder : externalBuilders.externalBuilderProps.values()) {
+                Object build = externalBuilder.build();
+                externalServices.put(build.getClass(), build);
+            }
+            return new RepositoryOverride(
                     overrideBuilderProps.get("repository-id"),
                     overrideBuilderProps.get("repository"),
                     overrideBuilderProps.get("branch"),
                     overrideBuilderProps.get("display-name"),
-                    overrideBuilderProps.get("description")
+                    overrideBuilderProps.get("description"),
+                    externalServices
             );
-
-            for (ExternalBuilder<?> externalBuilder : externalBuilders.externalBuilderProps.values()) {
-                Object build = externalBuilder.build();
-                repositoryOverride.services.put(build.getClass(), build);
-            }
-
-            return repositoryOverride;
         }
     }
 
@@ -398,16 +418,17 @@ public class RepositoryConfig {
         }
 
         public Group build() {
-            Group group = new Group(
+            List<RepositorySelector> repositorySelectorList = new ArrayList<>();
+            for(String repositorySelector : repositorySelectorBuilder.repositorySelectorBuilderList) {
+                repositorySelectorList.add(new RepositorySelector(repositorySelector));
+            }
+            return new Group(
                     groupBuilderProps.get("group-id"),
                     groupBuilderProps.get("display-name"),
                     groupBuilderProps.get("description"),
-                    groupBuilderProps.get("default-entry-repository")
+                    groupBuilderProps.get("default-entry-repository"),
+                    repositorySelectorList
             );
-            for(String repositorySelector : repositorySelectorBuilder.repositorySelectorBuilderList) {
-                group.repositorySelectors.add(new RepositorySelector(repositorySelector));
-            }
-            return group;
         }
     }
 
