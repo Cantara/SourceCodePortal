@@ -107,14 +107,14 @@ public class RepositoryConfigTest {
         assertEquals(repositoryConfig.title, "Title");
 
         assertTrue(repositoryConfig.repositories.get(GITHUB).stream().anyMatch(m -> "Cantara".equals(m.organization)));
-        assertTrue(repositoryConfig.repositories.get(GITHUB).stream().anyMatch(m -> "SourceCodePortal*".equals(m.repositoryPattern)));
-        assertTrue(repositoryConfig.repositories.get(GITHUB).stream().anyMatch(m -> "Whydah*".equals(m.repositoryPattern)));
-        assertTrue(repositoryConfig.repositories.get(RepositoryConfig.ScmProvider.BITBUCKET).stream().anyMatch(m -> "Repo1*".equals(m.repositoryPattern)));
-        assertTrue(repositoryConfig.repositories.get(RepositoryConfig.ScmProvider.BITBUCKET).stream().anyMatch(m -> "Repo2*".equals(m.repositoryPattern)));
+        assertTrue(repositoryConfig.repositories.get(GITHUB).stream().anyMatch(m -> "SourceCodePortal*".equals(m.repositoryPattern.pattern())));
+        assertTrue(repositoryConfig.repositories.get(GITHUB).stream().anyMatch(m -> "Whydah*".equals(m.repositoryPattern.pattern())));
+        assertTrue(repositoryConfig.repositories.get(RepositoryConfig.ScmProvider.BITBUCKET).stream().anyMatch(m -> "Repo1*".equals(m.repositoryPattern.pattern())));
+        assertTrue(repositoryConfig.repositories.get(RepositoryConfig.ScmProvider.BITBUCKET).stream().anyMatch(m -> "Repo2*".equals(m.repositoryPattern.pattern())));
 
         assertTrue(repositoryConfig.repositoryOverrides.stream().anyMatch(m -> GITHUB.equals(m.provider)));
         assertTrue(repositoryConfig.repositoryOverrides.stream().anyMatch(m -> "Cantara".equals(m.organization)));
-        assertTrue(repositoryConfig.repositoryOverrides.stream().anyMatch(m -> "SourceCodePortal*".equals(m.repositoryPattern)));
+        assertTrue(repositoryConfig.repositoryOverrides.stream().anyMatch(m -> "SourceCodePortal*".equals(m.repositoryPattern.pattern())));
         assertTrue(repositoryConfig.repositoryOverrides.stream().anyMatch(m -> "master".equals(m.branch)));
 
         assertTrue(repositoryConfig.groups.stream().anyMatch(m -> "SourceCodePortal".equals(m.groupId)));
