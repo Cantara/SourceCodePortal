@@ -85,7 +85,6 @@
         <connection>scm:git:git://github.com/Cantara/SourceCodePortal.git</connection>
         <developerConnection>scm:git:git@github.com:Cantara/SourceCodePortal.git</developerConnection>
         <url>https://wiki.cantara.no/</url>
-        <tag>source-code-portal-0.4.17</tag>
     </scm>
 
     <dependencies>
