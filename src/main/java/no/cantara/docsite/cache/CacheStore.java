@@ -2,6 +2,7 @@ package no.cantara.docsite.cache;
 
 import no.cantara.docsite.domain.config.RepoConfig;
 import no.cantara.docsite.domain.config.RepoConfigService;
+import no.cantara.docsite.domain.config.RepositoryConfigService;
 import no.cantara.docsite.domain.github.releases.GitHubCreatedTagEvent;
 import no.cantara.docsite.domain.jenkins.JenkinsBuildStatus;
 import no.cantara.docsite.domain.maven.MavenPOM;
@@ -50,21 +51,30 @@ public class CacheStore {
     final DynamicConfiguration configuration;
     final CacheManager cacheManager;
     final RepoConfigService repositoryConfig;
+    final RepositoryConfigService newRepositoryConfig;
 
     CacheStore(DynamicConfiguration configuration, CacheManager cacheManager) {
         this.configuration = configuration;
         this.cacheManager = cacheManager;
         this.repositoryConfig = load();
+        this.newRepositoryConfig = new RepositoryConfigService(configuration.evaluateToString("cache.config"));
     }
 
     RepoConfigService load() {
-        return new RepoConfigService(configuration.evaluateToString("cache.config"));
+        return new RepoConfigService("conf/config.json");
+    }
+
+    <V> Cache<String,V> createCache(String cacheName, Class<V> classValue) {
+        MutableConfiguration<String, V> cacheConfig = new MutableConfiguration<>();
+        cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+        cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+        return cacheManager.createCache(cacheName, cacheConfig);
     }
 
     void initialize() {
         if (cacheManager.getCache(CACHE_KEYS) == null) {
             LOG.info("Creating CacheKeys cache");
-            MutableConfiguration<CacheKey, CacheRepositoryKey> cacheConfig = new MutableConfiguration<>();
+            MutableConfiguration<CacheGroupKey, CacheRepositoryKey> cacheConfig = new MutableConfiguration<>();
             cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
             cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
             cacheManager.createCache(CACHE_KEYS, cacheConfig);

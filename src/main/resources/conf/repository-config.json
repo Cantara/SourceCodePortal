@@ -1,0 +1,132 @@
+{
+  "title": "Cantara Source Code Portal",
+  "github": [
+    {
+      "organization": "Cantara",
+      "match-repositories": [
+        {
+          "repository-pattern": ".*",
+          "branch": "master"
+        }
+      ]
+    }
+  ],
+  "repository-overrides": [
+    {
+      "repository-id": "SourceCodePortal",
+      "display-name": "Source Code Portal",
+      "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
+      "repository": "github:Cantara/SourceCodePortal*",
+      "branch": "master",
+      "external": {
+        "snyk": {
+          "badge-prefix": "Cantara-"
+        },
+        "jenkins": {
+          "badge-prefix": "Cantara-"
+        }
+      }
+    }
+  ],
+  "groups": [
+    {
+      "group-id": "SourceCodePortal",
+      "display-name": "Source Code Portal",
+      "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
+      "default-entry-repository": "github:Cantara/scp/SourceCodePortal",
+      "repository-selector": [
+        "github:Cantara/SourceCodePortal*"
+      ]
+    },
+    {
+      "group-id": "Whydah",
+      "display-name": "Whydah IAM and SSO Platform",
+      "description": "Defcon 5 grade IAM and SSO security solution",
+      "default-entry-repository": "github:Cantara/Whydah/Whydah-SecurityTokenService",
+      "repository-selector": [
+        "github:Cantara/Whydah"
+      ]
+    },
+    {
+      "group-id": "ConfigService",
+      "display-name": "The ConfigService and JAU Toolchain",
+      "description": "Provision configuration to agents",
+      "default-entry-repository": "github:Cantara/ConfigService/ConfigService",
+      "repository-selector": [
+        "github:Cantara/ConfigService"
+      ]
+    },
+    {
+      "group-id": "IOT",
+      "display-name": "Cantara IOT platform projects",
+      "description": "Bulding blocks to create IOT platforms",
+      "default-entry-repository": "github:Cantara/IOT/IoT-Service",
+      "repository-selector": [
+        "github:Cantara/IOT"
+      ]
+    },
+    {
+      "group-id": "ValueReporter",
+      "display-name": "ValueReporter Toolchain",
+      "description": "Toolchain to measure and detect valuable and dead parts of solutions",
+      "default-entry-repository": "github:Cantara/ValueReporter/ValueReporter",
+      "repository-selector": [
+        "github:Cantara/ValueReporter"
+      ]
+    },
+    {
+      "group-id": "dropwizard",
+      "display-name": "dropwizard examples",
+      "description": "Getting started with dropwizard",
+      "default-entry-repository": "github:Cantara/dropwizard/dropwizard-microservice-archetype",
+      "repository-selector": [
+        "github:Cantara/dropwizard"
+      ]
+    },
+    {
+      "group-id": "Flow",
+      "display-name": "Cantara Flow",
+      "description": "Graphics tracing and visualization of long-running processes",
+      "default-entry-repository": "github:Cantara/Flow/FlowLogger",
+      "repository-selector": [
+        "github:Cantara/Flow"
+      ]
+    },
+    {
+      "group-id": "BaselineProjects",
+      "display-name": "Cantara Baseline Codebases",
+      "description": "Cantara Baseline projects for Java and Docker",
+      "default-entry-repository": "github:Cantara/BaselineProjects/microservice-baseline",
+      "repository-selector": [
+        "github:Cantara/BaselineProjects"
+      ]
+    },
+    {
+      "group-id": "ACS",
+      "display-name": "Awesome Competence System",
+      "description": "The best competenece system",
+      "default-entry-repository": "github:Cantara/ACS/Awesome-Competence-System",
+      "repository-selector": [
+        "github:Cantara/ACS"
+      ]
+    },
+    {
+      "group-id": "Cantara-All",
+      "display-name": "Cantara GitHub, complete list of reposositories",
+      "description": "All Cantara projects on GitHub",
+      "default-entry-repository": "github:Cantara/Cantara-All/PathWatcher",
+      "repository-selector": [
+        "github:Cantara/Cantara-All"
+      ]
+    },
+    {
+      "group-id": "ratpack",
+      "display-name": "ratpack examples",
+      "description": "Getting started with ratpack",
+      "default-entry-repository": "github:Cantara/ratpack/ratpack-websockets",
+      "repository-selector": [
+        "github:Cantara/ratpack"
+      ]
+    }
+  ]
+}
