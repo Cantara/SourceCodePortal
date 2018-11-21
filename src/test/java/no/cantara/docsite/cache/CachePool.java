@@ -19,12 +19,18 @@ public class CachePool {
         this.repositoryConfig = new RepositoryConfigService(configuration.evaluateToString("cache.config"));
     }
 
-    <V> Cache<String,V> createCache(String cacheName, Class<V> classValue) {
+    public RepositoryConfigService getRepositoryConfigService() {
+        return repositoryConfig;
+    }
+
+    public <V> Cache<String,V> createCache(String cacheName, Class<V> classValue) {
         MutableConfiguration<String, V> cacheConfig = new MutableConfiguration<>();
         cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
         cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
         return cacheManager.createCache(cacheName, cacheConfig);
     }
 
-    
+    public static String asRepositoryPath(String organization, String repoName, String branch) {
+        return String.format("/%s/%s/%s", organization, repoName, branch);
+    }
 }
