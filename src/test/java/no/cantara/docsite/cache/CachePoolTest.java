@@ -16,6 +16,8 @@ import javax.cache.CacheManager;
 import javax.cache.Caching;
 import javax.cache.spi.CachingProvider;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class CachePoolTest {
 
@@ -49,19 +51,30 @@ public class CachePoolTest {
 
         List<RepositoryConfig.Repository> repos = config.repositories.get(RepositoryConfig.ScmProvider.GITHUB);
         for(RepositoryConfig.Repository repo : repos) {
-            LOG.trace("{}", repo.repositoryPattern.pattern());
+            LOG.trace("repoMatch: {}", repo.repositoryPattern.pattern());
         }
 
         List<RepositoryConfig.RepositoryOverride> repositoryOverrides = config.repositoryOverrides;
+        for(RepositoryConfig.RepositoryOverride repositoryOverride : repositoryOverrides) {
+            LOG.trace("override: {}", repositoryOverride.repositoryPattern);
+        }
 
         List<RepositoryConfig.Group> groups = config.groups;
+        for(RepositoryConfig.Group group : groups) {
+            LOG.trace("group: {}", group.repositorySelectors.stream().map(m -> m.repositorySelector.pattern()).collect(Collectors.toList()));
+        }
     }
 
     @Test
     public void testRepositoryCache() {
+        RepositoryConfig.ScmProvider scmProvider = RepositoryConfig.ScmProvider.GITHUB;
+        List<Pattern> matchers = cachePool.getRepositoryMatchers(scmProvider);
         Cache<String, ScmRepository> repositoryCache = cachePool.createCache("github/repository", ScmRepository.class);
         TestData.instance().repos(configuration, (key, repo) -> {
-            repositoryCache.put(CachePool.asRepositoryPath(key.organization, key.repoName, key.branch), repo);
+            if (matchers.stream().anyMatch(p -> p.matcher(key.repoName).find())) {
+                repositoryCache.put(CachePool.asRepositoryPath(key.organization, key.repoName, key.branch), repo);
+            }
+
         });
         repositoryCache.forEach(entry -> {
             LOG.trace("{}={}", entry.getKey(), entry.getValue().id);
