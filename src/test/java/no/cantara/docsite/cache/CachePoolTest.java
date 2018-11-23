@@ -194,7 +194,7 @@ public class CachePoolTest {
             cachePool.getRepositoryConfigService().onGroupMatch(entry.getValue(), visitor -> {
                 if (groupCache.get(visitor.groupId) != null) {
                     ScmGroup scmGroup = groupCache.get(visitor.groupId);
-                    scmGroup.addRepository(visitor.groupId);
+                    scmGroup.addRepository(entry.getKey());
                     groupCache.getAndPut(visitor.groupId, scmGroup);
                 } else {
                     ScmGroup scmGroup = new ScmGroup(visitor.groupId, visitor.displayName, visitor.description, visitor.defaultEntryRepository);
