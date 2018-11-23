@@ -6,7 +6,7 @@ public interface ExternalBuilder<T> {
 
     static ExternalBuilder<?> create(Class<? extends ExternalBuilder<?>> clazz) {
         try {
-            return clazz.getDeclaredConstructor(null).newInstance(null);
+            return clazz.getDeclaredConstructor(new Class[]{}).newInstance(new Object[]{});
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
@@ -16,6 +16,6 @@ public interface ExternalBuilder<T> {
 
     ExternalBuilder<T> set(String key, String value);
 
-    T build();
+    ExternalService<T> build();
 }
 

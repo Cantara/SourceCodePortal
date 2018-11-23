@@ -103,9 +103,9 @@ public class RepositoryConfig {
         public final String branch;
         public final String displayName;
         public final String description;
-        private final Map<Class<?>, Object> services;
+        private final Map<Class<?>, ExternalService<?>> services;
 
-        public RepositoryOverride(String repositoryId, String repository, String branch, String displayName, String description,  Map<Class<?>, Object> externalServices) {
+        public RepositoryOverride(String repositoryId, String repository, String branch, String displayName, String description,  Map<Class<?>, ExternalService<?>> externalServices) {
             this.repositoryId = repositoryId;
             if (repository == null || !repository.contains(":") || !repository.contains("/")) {
                 throw new RuntimeException("The repository must be format: 'github:Organization/RepositoryPattern' <- " + repository);
@@ -127,7 +127,7 @@ public class RepositoryConfig {
         }
 
         @JsonbTransient
-        public Map<Class<?>, Object> getExternalServices() {
+        public Map<Class<?>, ExternalService<?>> getExternalServices() {
             return services;
         }
 
@@ -365,9 +365,9 @@ public class RepositoryConfig {
         }
 
         public RepositoryOverride build() {
-            Map<Class<?>, Object> externalServices = new LinkedHashMap<>();
+            Map<Class<?>, ExternalService<?>> externalServices = new LinkedHashMap<>();
             for (ExternalBuilder<?> externalBuilder : externalBuilders.externalBuilderProps.values()) {
-                Object build = externalBuilder.build();
+                ExternalService<?> build = externalBuilder.build();
                 externalServices.put(build.getClass(), build);
             }
             return new RepositoryOverride(

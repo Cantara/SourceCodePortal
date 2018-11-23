@@ -1,15 +1,11 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.domain.config.RepositoryConfig;
 import no.cantara.docsite.domain.config.RepositoryConfigService;
 import no.ssb.config.DynamicConfiguration;
 
 import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.configuration.MutableConfiguration;
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class CachePool {
 
@@ -38,7 +34,4 @@ public class CachePool {
         return String.format("/%s/%s/%s", organization, repoName, branch);
     }
 
-    public List<Pattern> getRepositoryMatchers(RepositoryConfig.ScmProvider scmProvider) {
-        return repositoryConfigService.getConfig().repositories.get(scmProvider).stream().map(m -> m.repositoryPattern).collect(Collectors.toList());
-    }
 }

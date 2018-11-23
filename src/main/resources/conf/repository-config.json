@@ -35,7 +35,7 @@
       "description": "The SCP gathers all content from your GitHub repos and convey them in a easy grouped and readable form",
       "default-entry-repository": "github:Cantara/scp/SourceCodePortal",
       "repository-selector": [
-        "github:Cantara/SourceCodePortal*"
+        "github:Cantara/SourceCodePortal"
       ]
     },
     {
@@ -44,7 +44,7 @@
       "description": "Defcon 5 grade IAM and SSO security solution",
       "default-entry-repository": "github:Cantara/Whydah/Whydah-SecurityTokenService",
       "repository-selector": [
-        "github:Cantara/Whydah"
+        "github:Cantara/Whydah*"
       ]
     },
     {
@@ -53,7 +53,9 @@
       "description": "Provision configuration to agents",
       "default-entry-repository": "github:Cantara/ConfigService/ConfigService",
       "repository-selector": [
-        "github:Cantara/ConfigService"
+        "github:Cantara/ConfigService*",
+        "github:Cantara/JAU",
+        "github:Cantara/Java-Auto-Update"
       ]
     },
     {
@@ -62,7 +64,7 @@
       "description": "Bulding blocks to create IOT platforms",
       "default-entry-repository": "github:Cantara/IOT/IoT-Service",
       "repository-selector": [
-        "github:Cantara/IOT"
+        "github:Cantara/IOT*"
       ]
     },
     {
@@ -71,7 +73,7 @@
       "description": "Toolchain to measure and detect valuable and dead parts of solutions",
       "default-entry-repository": "github:Cantara/ValueReporter/ValueReporter",
       "repository-selector": [
-        "github:Cantara/ValueReporter"
+        "github:Cantara/Value*"
       ]
     },
     {
@@ -80,7 +82,7 @@
       "description": "Getting started with dropwizard",
       "default-entry-repository": "github:Cantara/dropwizard/dropwizard-microservice-archetype",
       "repository-selector": [
-        "github:Cantara/dropwizard"
+        "github:Cantara/dropwizard*"
       ]
     },
     {
@@ -89,7 +91,7 @@
       "description": "Graphics tracing and visualization of long-running processes",
       "default-entry-repository": "github:Cantara/Flow/FlowLogger",
       "repository-selector": [
-        "github:Cantara/Flow"
+        "github:Cantara/Flow*"
       ]
     },
     {
@@ -98,7 +100,9 @@
       "description": "Cantara Baseline projects for Java and Docker",
       "default-entry-repository": "github:Cantara/BaselineProjects/microservice-baseline",
       "repository-selector": [
-        "github:Cantara/BaselineProjects"
+        "github:Cantara/[^\\s]*aseline*",
+        "github:Cantara/BaseCommands",
+        "github:Cantara/BaseJDBCCommands"
       ]
     },
     {
@@ -107,7 +111,8 @@
       "description": "The best competenece system",
       "default-entry-repository": "github:Cantara/ACS/Awesome-Competence-System",
       "repository-selector": [
-        "github:Cantara/ACS"
+        "github:Cantara/ACS",
+        "github:Cantara/Awesome"
       ]
     },
     {
@@ -116,7 +121,7 @@
       "description": "All Cantara projects on GitHub",
       "default-entry-repository": "github:Cantara/Cantara-All/PathWatcher",
       "repository-selector": [
-        "github:Cantara/Cantara-All"
+        "github:Cantara/[^\\s]*"
       ]
     },
     {
@@ -125,7 +130,7 @@
       "description": "Getting started with ratpack",
       "default-entry-repository": "github:Cantara/ratpack/ratpack-websockets",
       "repository-selector": [
-        "github:Cantara/ratpack"
+        "github:Cantara/ratpack*"
       ]
     }
   ]

@@ -2,7 +2,13 @@ package no.cantara.docsite.cache;
 
 import no.cantara.docsite.domain.config.RepositoryConfig;
 import no.cantara.docsite.domain.config.RepositoryConfigService;
+import no.cantara.docsite.domain.github.commits.GitHubCommitRevision;
+import no.cantara.docsite.domain.github.contents.GitHubRepositoryContents;
+import no.cantara.docsite.domain.maven.MavenPOM;
+import no.cantara.docsite.domain.scm.ScmCommitRevision;
+import no.cantara.docsite.domain.scm.ScmGroup;
 import no.cantara.docsite.domain.scm.ScmRepository;
+import no.cantara.docsite.domain.scm.ScmRepositoryContents;
 import no.cantara.docsite.test.TestData;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
@@ -15,8 +21,9 @@ import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.Caching;
 import javax.cache.spi.CachingProvider;
+import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class CachePoolTest {
@@ -65,19 +72,156 @@ public class CachePoolTest {
         }
     }
 
+    public Cache<String, ScmRepository> getRepositoryCache() {
+        Cache<String, ScmRepository> repositoryCache = (cacheManager.getCache("github/repository") == null ? cachePool.createCache("github/repository", ScmRepository.class) : cacheManager.getCache("github/repository"));
+
+        // refactor so that the ScmRepos i create here and not in test data
+        // build repo cache and override
+        TestData.instance().repos(configuration, (key, repo) -> {
+            if (cachePool.getRepositoryConfigService().isRepositoryMatch(RepositoryConfig.ScmProvider.GITHUB, key.repoName)) {
+
+                ScmRepositoryBuilder scmRepositoryBuilder = ScmRepositoryBuilder.newBuilder();
+                scmRepositoryBuilder.path(key.organization, key.repoName, key.branch);
+                scmRepositoryBuilder.id(repo.id);
+                scmRepositoryBuilder.description(repo.description);
+                scmRepositoryBuilder.licenseSpdxId(repo.license != null ? repo.license.spdxId : null);
+                scmRepositoryBuilder.htmlUrl(repo.htmlUrl);
+
+                // match repo override
+                AtomicInteger c = new AtomicInteger(0);
+                cachePool.getRepositoryConfigService().onRepositoryOverrideMatch(RepositoryConfig.ScmProvider.GITHUB, key.organization, key.repoName, key.branch, (visitor) -> {
+                    scmRepositoryBuilder.configDisplayName(visitor.displayName);
+                    scmRepositoryBuilder.configDescription(visitor.description);
+                    c.incrementAndGet();
+
+                    scmRepositoryBuilder.externalServices(visitor.getExternalServices());
+
+                    visitor.getExternalServices().forEach((k,v) -> {
+                        v.getLinks(configuration, key.organization, key.repoName, key.branch).forEach(l -> {
+                            scmRepositoryBuilder.externalLinks.put(v.getId(), l);
+                        });
+                    });
+
+                });
+
+                repositoryCache.put(CachePool.asRepositoryPath(key.organization, key.repoName, key.branch), scmRepositoryBuilder.build(configuration));
+            }
+        });
+
+        return repositoryCache;
+    }
+
     @Test
     public void testRepositoryCache() {
-        RepositoryConfig.ScmProvider scmProvider = RepositoryConfig.ScmProvider.GITHUB;
-        List<Pattern> matchers = cachePool.getRepositoryMatchers(scmProvider);
-        Cache<String, ScmRepository> repositoryCache = cachePool.createCache("github/repository", ScmRepository.class);
-        TestData.instance().repos(configuration, (key, repo) -> {
-            if (matchers.stream().anyMatch(p -> p.matcher(key.repoName).find())) {
-                repositoryCache.put(CachePool.asRepositoryPath(key.organization, key.repoName, key.branch), repo);
-            }
+        Cache<String, ScmRepository> repositoryCache = getRepositoryCache();
 
-        });
+        // show all repos
         repositoryCache.forEach(entry -> {
             LOG.trace("{}={}", entry.getKey(), entry.getValue().id);
+            entry.getValue().externalLinks.forEach((k,v) -> LOG.trace("  link: {}", v.getExternalURL()));
         });
     }
+
+    @Test
+    public void testMavenProjects() {
+        Cache<String, MavenPOM> mavenProjectsCache = (cacheManager.getCache("github/mavenProjects") == null ?
+                cachePool.createCache("github/mavenProjects", MavenPOM.class) :
+                cacheManager.getCache("github/mavenProjects"));
+        Cache<String, ScmRepository> repositoryCache = getRepositoryCache();
+        repositoryCache.forEach(entry -> {
+            String repoPath = entry.getKey();
+            MavenPOM mavenPOM = TestData.instance().mavenPOM(CacheKey.of(entry.getValue().cacheRepositoryKey.organization, entry.getValue().cacheRepositoryKey.repoName, entry.getValue().cacheRepositoryKey.branch));
+            if (mavenPOM != null)
+                mavenProjectsCache.put(repoPath, mavenPOM);
+
+        });
+
+        mavenProjectsCache.forEach(entry -> {
+            LOG.trace("{} -> {}", entry.getKey(), entry.getValue().artifactId);
+        });
+    }
+
+    @Test
+    public void testContents() {
+        Cache<String, ScmRepositoryContents> readmeContentsCache = (cacheManager.getCache("github/contents") == null ?
+                cachePool.createCache("github/contents", ScmRepositoryContents.class) :
+                cacheManager.getCache("github/contents"));
+
+        Cache<String, ScmRepository> repositoryCache = getRepositoryCache();
+        repositoryCache.forEach(entry -> {
+            String repoPath = entry.getKey();
+            CacheKey cacheKey = CacheKey.of(entry.getValue().cacheRepositoryKey.organization, entry.getValue().cacheRepositoryKey.repoName, entry.getValue().cacheRepositoryKey.branch);
+            GitHubRepositoryContents readmeContents = TestData.instance().readmeContent(cacheKey);
+            readmeContentsCache.put(repoPath, readmeContents.asRepositoryContents(cacheKey));
+        });
+
+        readmeContentsCache.forEach(entry -> {
+            LOG.trace("{} -> {}", entry.getKey(), entry.getValue().contentUrl);
+        });
+    }
+
+    @Test
+    public void testCommits() {
+        Cache<String, ScmRepository> repositoryCache = getRepositoryCache();
+        for (Cache.Entry<String, ScmRepository> entry : repositoryCache) {
+            Cache<String, ScmCommitRevision> repoCommitRevisionsCache = cachePool.createCache(entry.getKey(), ScmCommitRevision.class);
+            CacheKey cacheKey = entry.getValue().cacheRepositoryKey.asCacheKey();
+            List<GitHubCommitRevision> commitRevisions = TestData.instance().commitRevisions(cacheKey);
+            commitRevisions.forEach(cr -> {
+                Date date = cr.commit.commitAuthor.date;
+                repoCommitRevisionsCache.put(String.format("/%s/%s", date.toInstant().toString(), cr.sha), cr.asCommitRevision(CacheShaKey.of(cacheKey, "groupId", cr.sha)));
+            });
+        }
+
+        for (Cache.Entry<String, ScmRepository> entry : repositoryCache) {
+            Cache<String, ScmCommitRevision> cache = cacheManager.getCache(entry.getKey());
+            LOG.trace("{}:", entry.getKey());
+            cache.forEach(cr -> {
+                LOG.trace("  {} -> {}", cr.getKey(), cr.getValue().message);
+            });
+
+        }
+    }
+
+    @Test
+    public void testGroups() {
+        Cache<String, ScmGroup> groupCache = (cacheManager.getCache("groups") == null ?
+                cachePool.createCache("groups", ScmGroup.class) :
+                cacheManager.getCache("groups"));
+
+        Cache<String, ScmRepository> repositoryCache = getRepositoryCache();
+        repositoryCache.forEach(entry -> {
+            cachePool.getRepositoryConfigService().onGroupMatch(entry.getValue(), visitor -> {
+                if (groupCache.get(visitor.groupId) != null) {
+                    ScmGroup scmGroup = groupCache.get(visitor.groupId);
+                    scmGroup.addRepository(visitor.groupId);
+                    groupCache.getAndPut(visitor.groupId, scmGroup);
+                } else {
+                    ScmGroup scmGroup = new ScmGroup(visitor.groupId, visitor.displayName, visitor.description, visitor.defaultEntryRepository);
+                    scmGroup.addRepository(entry.getKey());
+                    groupCache.put(visitor.groupId, scmGroup);
+                }
+            });
+        });
+
+        groupCache.forEach(entry -> {
+            LOG.trace("{} -> {}", entry.getKey(), entry.getValue().repositoryKeys());
+        });
+    }
+
+    /*
+        Cache plan:
+        - Repository (/org/repo/branch) (*)
+        - MavenProjects (/org/repo/branch/(subrepo) (sub modules contains pom and is part of a project. Should this be dealt with with in MavemPom or as subcontexts
+        - Contents (repo/branch)
+        - Commits (org/repo:/commitDate/sha) <- lookups commits per cache and add CacheListener that adds latest commits to Group
+
+
+        Build Groups:
+        - ScmGroup:
+
+     */
+
+
+
 }

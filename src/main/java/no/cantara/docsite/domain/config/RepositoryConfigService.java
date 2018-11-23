@@ -1,5 +1,6 @@
 package no.cantara.docsite.domain.config;
 
+import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.json.JsonDocumentTraversal;
 import no.cantara.docsite.json.JsonTraversalElement;
 
@@ -12,6 +13,7 @@ import java.io.InputStreamReader;
 import java.util.Deque;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class RepositoryConfigService {
 
@@ -41,16 +43,43 @@ public class RepositoryConfigService {
         return repoConfig;
     }
 
+    @Deprecated
     public List<RepositoryConfig> getRepositories(RepositoryConfig.ScmProvider provider) {
 //        return repoConfig.repos.get(provider);
         return null;
     }
 
+    @Deprecated
     public String getOrganization(RepositoryConfig.ScmProvider provider) {
 //        if (repoConfig.repos.containsKey(provider) && repoConfig.repos.get(provider).iterator().hasNext()) {
 //            return repoConfig.repos.get(provider).iterator().next().organization;
 //        }
         return null;
+    }
+
+    public boolean isRepositoryMatch(RepositoryConfig.ScmProvider scmProvider, String repoName) {
+        return repoConfig.repositories.get(scmProvider).stream().anyMatch(p -> p.repositoryPattern.matcher(repoName).find());
+    }
+
+    public boolean isRepositoryOverrideMatch(RepositoryConfig.ScmProvider scmProvider, String organization, String repoName, String branch) {
+        return repoConfig.repositoryOverrides.stream().anyMatch(p -> p.provider.equals(scmProvider) && p.organization.equals(organization) && p.repositoryPattern.matcher(repoName).find() && p.branch.equals(branch));
+    }
+
+    public void onRepositoryOverrideMatch(RepositoryConfig.ScmProvider scmProvider, String organization, String repoName, String branch, Consumer<RepositoryConfig.RepositoryOverride> visitor) {
+        repoConfig.repositoryOverrides.stream()
+                .filter(p -> p.provider.equals(scmProvider) && p.organization.equals(organization) && p.repositoryPattern.matcher(repoName).find() && p.branch.equals(branch))
+                .forEach(m -> visitor.accept(m));
+    }
+
+    public void onGroupMatch(ScmRepository repository, Consumer<RepositoryConfig.Group> visitor) {
+        for (RepositoryConfig.Group group : repoConfig.groups) {
+            for (RepositoryConfig.RepositorySelector repositorySelector : group.repositorySelectors) {
+                if (repositorySelector.repositorySelector.matcher(repository.cacheRepositoryKey.repoName).find()) {
+//                    System.out.println("MATCH: " + group.repositorySelectors);
+                    visitor.accept(group);
+                }
+            }
+        }
     }
 
     static class Loader implements BiConsumer<Deque<JsonTraversalElement>, JsonTraversalElement> {

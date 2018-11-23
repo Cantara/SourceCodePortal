@@ -9,6 +9,7 @@ import no.cantara.docsite.domain.github.commits.GitHubCommitRevision;
 import no.cantara.docsite.domain.github.contents.GitHubRepositoryContents;
 import no.cantara.docsite.domain.github.repos.GitHubRepository;
 import no.cantara.docsite.domain.maven.FetchMavenPOMTask;
+import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.json.JsonbFactory;
 import no.cantara.docsite.util.CommonUtil;
@@ -89,7 +90,7 @@ public class TestData {
             return;
         }
 
-        repos(configuration, (key,repo) -> cacheStore.getRepositories().put(key, repo));
+        reposToScmRepository(configuration, (key, repo) -> cacheStore.getRepositories().put(key, repo));
 
         Map<CacheShaKey, GitHubCommitRevision> commitRevisions = commitRevisions("Cantara");
         commitRevisions.entrySet().iterator().forEachRemaining(entry -> cacheStore.getCommits().put(entry.getKey(), entry.getValue().asCommitRevision(entry.getKey())));
@@ -139,17 +140,32 @@ public class TestData {
         }
     }
 
-    public void repos(DynamicConfiguration configuration, BiConsumer<CacheRepositoryKey,ScmRepository> visitor) {
+    public void repos(DynamicConfiguration configuration, BiConsumer<CacheRepositoryKey,GitHubRepository> visitor) {
         for (CacheKey cacheKey : repoKeys("Cantara")) {
             CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheKey, "groupId", false);
             for (GitHubRepository repo : repos("Cantara")) {
                 if ((cacheKey.organization+"/"+cacheKey.repoName).equals(repo.fullName) && cacheKey.branch.equals(repo.defaultBranch)) {
-                    ScmRepository scmRepository = ScmRepository.of(configuration, cacheRepositoryKey, "displayName", "description", new LinkedHashMap<>(),
-                            repo.id, repo.description, "groupId", (repo.license != null ? repo.license.spdxId : null), repo.htmlUrl);
+                    visitor.accept(cacheRepositoryKey, repo);
+                }
+            }
+        }
+    }
+
+    public void reposToScmRepository(DynamicConfiguration configuration, BiConsumer<CacheRepositoryKey,ScmRepository> visitor) {
+        for (CacheKey cacheKey : repoKeys("Cantara")) {
+            CacheRepositoryKey cacheRepositoryKey = CacheRepositoryKey.of(cacheKey, "groupId", false);
+            for (GitHubRepository repo : repos("Cantara")) {
+                if ((cacheKey.organization+"/"+cacheKey.repoName).equals(repo.fullName) && cacheKey.branch.equals(repo.defaultBranch)) {
+                    ScmRepository scmRepository = createScmRepository(configuration, cacheRepositoryKey, repo);
                     visitor.accept(cacheRepositoryKey, scmRepository);
                 }
             }
         }
+    }
+
+    ScmRepository createScmRepository(DynamicConfiguration configuration, CacheRepositoryKey cacheRepositoryKey, GitHubRepository githubRepository) {
+        return ScmRepository.of(configuration, cacheRepositoryKey, "displayName", "description", new LinkedHashMap<>(),
+                                githubRepository.id, githubRepository.description, "groupId", (githubRepository.license != null ? githubRepository.license.spdxId : null), githubRepository.htmlUrl);
     }
 
     public List<GitHubCommitRevision> commitRevisions(CacheKey cacheKey) {
@@ -186,6 +202,14 @@ public class TestData {
 
     private Path getMavenPOMPath(CacheKey cacheKey) {
         return destDir.resolve(String.format("repos/%s/%s/contents/pom.xml?ref=%s", cacheKey.organization, cacheKey.repoName, cacheKey.branch));
+    }
+
+    public MavenPOM mavenPOM(CacheKey cacheKey) {
+        try {
+            return FetchMavenPOMTask.parse(mavenPOMContent(cacheKey).content);
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 
     public GitHubRepositoryContents mavenPOMContent(CacheKey cacheKey) {
