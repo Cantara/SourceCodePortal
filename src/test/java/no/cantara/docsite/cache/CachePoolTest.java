@@ -183,19 +183,24 @@ public class CachePoolTest {
         }
     }
 
-    @Test
-    public void testGroups() {
+    public Cache<String,ScmGroup> getGroups() {
         Cache<String, ScmGroup> groupCache = (cacheManager.getCache("groups") == null ?
                 cachePool.createCache("groups", ScmGroup.class) :
                 cacheManager.getCache("groups"));
 
+        cachePool.getRepositoryConfigService().getConfig().groups.forEach(group -> {
+            ScmGroup scmGroup = new ScmGroup(group.groupId, group.displayName, group.description, group.defaultEntryRepository);
+            groupCache.putIfAbsent(group.groupId, scmGroup);
+        });
+
         Cache<String, ScmRepository> repositoryCache = getRepositoryCache();
+
         repositoryCache.forEach(entry -> {
             cachePool.getRepositoryConfigService().onGroupMatch(entry.getValue(), visitor -> {
-                if (groupCache.get(visitor.groupId) != null) {
+                if (groupCache.containsKey(visitor.groupId)) {
                     ScmGroup scmGroup = groupCache.get(visitor.groupId);
                     scmGroup.addRepository(entry.getKey());
-                    groupCache.getAndPut(visitor.groupId, scmGroup);
+                    groupCache.replace(visitor.groupId, scmGroup);
                 } else {
                     ScmGroup scmGroup = new ScmGroup(visitor.groupId, visitor.displayName, visitor.description, visitor.defaultEntryRepository);
                     scmGroup.addRepository(entry.getKey());
@@ -203,10 +208,12 @@ public class CachePoolTest {
                 }
             });
         });
+        return groupCache;
+    }
 
-        groupCache.forEach(entry -> {
-            LOG.trace("{} -> {}", entry.getKey(), entry.getValue().repositoryKeys());
-        });
+    @Test
+    public void testGroups() {
+        getGroups().forEach(entry -> LOG.trace("{} -> {}", entry.getKey(), entry.getValue().repositoryKeys()));
     }
 
     /*

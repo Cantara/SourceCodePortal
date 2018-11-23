@@ -64,7 +64,7 @@
       "description": "Bulding blocks to create IOT platforms",
       "default-entry-repository": "github:Cantara/IOT/IoT-Service",
       "repository-selector": [
-        "github:Cantara/IOT*"
+        "github:Cantara/IoT*"
       ]
     },
     {
