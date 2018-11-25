@@ -6,6 +6,7 @@ import no.cantara.docsite.cache.CacheHelper;
 import no.cantara.docsite.cache.CacheStore;
 
 import java.io.StringWriter;
+import java.time.Instant;
 import java.util.Locale;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ public class ThymeleafViewEngineProcessor {
 
         {
             templateVariables.put("connectedRepos", CacheHelper.cacheSize(cacheStore.getRepositories()));
+            templateVariables.put("updatedTime", Instant.now().toString());
         }
 
         ctx.setVariables(templateVariables);
