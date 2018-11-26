@@ -38,7 +38,7 @@ public class ScmRepositoryServiceTest {
         CacheStore cacheStore = cacheStore(configuration);
         RepositoryConfigLoader loader = new RepositoryConfigLoader(configuration, cacheStore);
 
-        cacheStore.getRepositoryConfig().getConfig().repos.forEach((k,v) -> {
+        cacheStore.getOldRepositoryConfig().getConfig().repos.forEach((k, v) -> {
             LOG.trace("configRepo: {}", v);
         });
 

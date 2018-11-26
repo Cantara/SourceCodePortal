@@ -162,7 +162,7 @@ public class HealthController implements HttpHandler {
             builder.add("cache-provider", cacheStore.getCacheManager().getCachingProvider().getDefaultURI().toString());
             cacheBuilder.add("cache-keys", CacheHelper.cacheSize(cacheStore.getCacheKeys()));
             cacheBuilder.add("cache-group-keys", CacheHelper.cacheSize(cacheStore.getCacheRepositoryKeys()));
-            cacheBuilder.add("groups", cacheStore.getRepositoryConfig().getConfig().repos.get(RepoConfig.ScmProvider.GITHUB).size());
+            cacheBuilder.add("groups", cacheStore.getOldRepositoryConfig().getConfig().repos.get(RepoConfig.ScmProvider.GITHUB).size());
             cacheBuilder.add("repositories", CacheHelper.cacheSize(cacheStore.getRepositories()));
             cacheBuilder.add("maven-projects", CacheHelper.cacheSize(cacheStore.getMavenProjects()));
             cacheBuilder.add("contents", CacheHelper.cacheSize(cacheStore.getReadmeContents()));

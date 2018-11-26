@@ -99,7 +99,7 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
     }
 
     private List<RepoConfig.Repo> getGroups() {
-        return cacheStore.getRepositoryConfig().getConfig().repos.get(RepoConfig.ScmProvider.GITHUB);
+        return cacheStore.getOldRepositoryConfig().getConfig().repos.get(RepoConfig.ScmProvider.GITHUB);
     }
 
     private Set<ScmRepository> getRepositoryGroupsByGroupId(String groupId) {

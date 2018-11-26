@@ -7,6 +7,7 @@ import no.cantara.docsite.commands.GetGitHubCommand;
 import no.cantara.docsite.domain.github.repos.GitHubRepository;
 import no.cantara.docsite.domain.github.repos.RepositoryVisibility;
 import no.cantara.docsite.domain.scm.ScmRepository;
+import no.cantara.docsite.domain.scm.ScmRepositoryBuilder;
 import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
@@ -51,9 +52,9 @@ public class RepositoryConfigLoader {
     }
 
 
-    public void load() {
-        List<GitHubRepository> result = getOrganizationRepos(cacheStore.getRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB));
-        for (RepoConfig.Repo repoConfig : cacheStore.getRepositoryConfig().getConfig().repos.get(RepoConfig.ScmProvider.GITHUB)) {
+    public void OldLoad() {
+        List<GitHubRepository> result = getOrganizationRepos(cacheStore.getOldRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB));
+        for (RepoConfig.Repo repoConfig : cacheStore.getOldRepositoryConfig().getConfig().repos.get(RepoConfig.ScmProvider.GITHUB)) {
 
             /*
                 issue: group all repos -- not all repos has defaultGroupRepo. What to do?
@@ -82,7 +83,37 @@ public class RepositoryConfigLoader {
         }
     }
 
-    public void xload() {
+    public void load() {
+        for(RepositoryConfig.Repository repositoryConfig : cacheStore.getRepositoryConfig().getConfig().repositories.get(RepositoryConfig.ScmProvider.GITHUB)) {
+            List<GitHubRepository> result = getOrganizationRepos(repositoryConfig.organization);
+            for (GitHubRepository gitHubRepository : result) {
+                if (cacheStore.getRepositoryConfig().isRepositoryMatch(RepositoryConfig.ScmProvider.GITHUB, gitHubRepository.name)) {
 
+                    ScmRepositoryBuilder scmRepositoryBuilder = ScmRepositoryBuilder.newBuilder();
+                    scmRepositoryBuilder.path(repositoryConfig.organization, gitHubRepository.name, repositoryConfig.branch);
+                    scmRepositoryBuilder.id(gitHubRepository.id);
+                    scmRepositoryBuilder.description(gitHubRepository.description);
+                    scmRepositoryBuilder.licenseSpdxId(gitHubRepository.license != null ? gitHubRepository.license.spdxId : null);
+                    scmRepositoryBuilder.htmlUrl(gitHubRepository.htmlUrl);
+
+                    cacheStore.getRepositoryConfig().onRepositoryOverrideMatch(RepositoryConfig.ScmProvider.GITHUB, repositoryConfig.organization, gitHubRepository.name, repositoryConfig.branch, (visitor) -> {
+                        scmRepositoryBuilder.configDisplayName(visitor.displayName);
+                        scmRepositoryBuilder.configDescription(visitor.description);
+
+                        scmRepositoryBuilder.externalServices(visitor.getExternalServices());
+
+                        visitor.getExternalServices().forEach((k,v) -> {
+                            v.getLinks(configuration, repositoryConfig.organization, gitHubRepository.name, repositoryConfig.branch).forEach(l -> {
+                                scmRepositoryBuilder.externalLink(v.getId(), l);
+                            });
+                        });
+
+                    });
+
+                    cacheStore.getRepositories(RepositoryConfig.ScmProvider.GITHUB).put(CacheStore.asRepositoryPath(repositoryConfig.organization, gitHubRepository.name, repositoryConfig.branch), scmRepositoryBuilder.build(configuration));
+
+                }
+            }
+        }
     }
 }

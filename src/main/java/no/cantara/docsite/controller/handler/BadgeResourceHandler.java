@@ -62,7 +62,7 @@ public class BadgeResourceHandler implements HttpHandler {
         String repoName = resourceContext.getLast().get().resource;
         String branch = resourceContext.getLast().get().id;
 
-        CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB), repoName, branch);
+        CacheKey cacheKey = CacheKey.of(cacheStore.getOldRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB), repoName, branch);
 
         if ("license".equalsIgnoreCase(badgeCategory)) {
             byte[] bytes;

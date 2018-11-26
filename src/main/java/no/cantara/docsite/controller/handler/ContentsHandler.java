@@ -30,7 +30,7 @@ public class ContentsHandler implements WebHandler {
         }
 
         ScmRepositoryContentsService repositoryContentsService = new ScmRepositoryContentsService(cacheStore);
-        CacheKey cacheKey = CacheKey.of(cacheStore.getRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB), resourceContext.getTuples().get(0).id, resourceContext.getTuples().get(1).resource);
+        CacheKey cacheKey = CacheKey.of(cacheStore.getOldRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB), resourceContext.getTuples().get(0).id, resourceContext.getTuples().get(1).resource);
         ScmRepositoryContents contents = repositoryContentsService.get(cacheKey);
 
         if (contents == null) {

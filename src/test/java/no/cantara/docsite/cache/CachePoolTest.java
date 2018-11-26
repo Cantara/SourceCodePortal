@@ -8,6 +8,7 @@ import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.domain.scm.ScmGroup;
 import no.cantara.docsite.domain.scm.ScmRepository;
+import no.cantara.docsite.domain.scm.ScmRepositoryBuilder;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
 import no.cantara.docsite.test.TestData;
 import no.ssb.config.DynamicConfiguration;
@@ -98,7 +99,7 @@ public class CachePoolTest {
 
                     visitor.getExternalServices().forEach((k,v) -> {
                         v.getLinks(configuration, key.organization, key.repoName, key.branch).forEach(l -> {
-                            scmRepositoryBuilder.externalLinks.put(v.getId(), l);
+                            scmRepositoryBuilder.externalLink(v.getId(), l);
                         });
                     });
 

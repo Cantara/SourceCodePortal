@@ -66,12 +66,12 @@ public class CommitsHandler implements WebHandler {
             if (renderAll) {
                 Map<CacheShaKey, ScmCommitRevision> commitRevisions = commitRevisionService.entrySet();
                 templateVariables.put("commitRevisions", new GroupByDateIterator(new ArrayList<>(commitRevisions.values())));
-                templateVariables.put("displayName", String.format("All %s repos", cacheStore.getRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB)));
+                templateVariables.put("displayName", String.format("All %s repos", cacheStore.getOldRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB)));
 
             } else {
                 boolean renderGroupOrRepo = resourceContext.getTuples().size() == 1;
 
-                String organization = cacheStore.getRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB);
+                String organization = cacheStore.getOldRepositoryConfig().getOrganization(RepoConfig.ScmProvider.GITHUB);
                 String groupIdOrRepoName = (renderGroupOrRepo ? resourceContext.getLast().get().id : resourceContext.getFirst().get().id);
                 String branchOrNull = (renderGroupOrRepo ? null : resourceContext.getLast().get().resource);
 

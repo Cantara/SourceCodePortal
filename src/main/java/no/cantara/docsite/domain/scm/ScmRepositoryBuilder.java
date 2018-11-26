@@ -1,8 +1,8 @@
-package no.cantara.docsite.cache;
+package no.cantara.docsite.domain.scm;
 
+import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.domain.config.ExternalService;
 import no.cantara.docsite.domain.links.LinkURL;
-import no.cantara.docsite.domain.scm.ScmRepository;
 import no.ssb.config.DynamicConfiguration;
 
 import java.util.LinkedHashMap;
@@ -54,6 +54,11 @@ public class ScmRepositoryBuilder {
 
     public ScmRepositoryBuilder htmlUrl(String htmlUrl) {
         props.put("htmlUrl", htmlUrl);
+        return this;
+    }
+
+    public ScmRepositoryBuilder externalLink(String key, LinkURL linkURL) {
+        externalLinks.put(key, linkURL);
         return this;
     }
 

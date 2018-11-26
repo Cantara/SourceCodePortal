@@ -74,8 +74,7 @@ public class RepositoryConfigService {
     public void onGroupMatch(ScmRepository repository, Consumer<RepositoryConfig.Group> visitor) {
         for (RepositoryConfig.Group group : repoConfig.groups) {
             for (RepositoryConfig.RepositorySelector repositorySelector : group.repositorySelectors) {
-                if (repositorySelector.repositorySelector.matcher(repository.cacheRepositoryKey.repoName).find()) {
-//                    System.out.println("MATCH: " + group.repositorySelectors);
+                if (repositorySelector.organization.equals(repository.cacheRepositoryKey.organization) && repositorySelector.repositorySelector.matcher(repository.cacheRepositoryKey.repoName).find()) {
                     visitor.accept(group);
                 }
             }

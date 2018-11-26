@@ -2,6 +2,7 @@ package no.cantara.docsite.cache;
 
 import no.cantara.docsite.domain.config.RepoConfig;
 import no.cantara.docsite.domain.config.RepoConfigService;
+import no.cantara.docsite.domain.config.RepositoryConfig;
 import no.cantara.docsite.domain.config.RepositoryConfigService;
 import no.cantara.docsite.domain.github.releases.GitHubCreatedTagEvent;
 import no.cantara.docsite.domain.jenkins.JenkinsBuildStatus;
@@ -64,14 +65,27 @@ public class CacheStore {
         return new RepoConfigService("conf/config.json");
     }
 
-    <V> Cache<String,V> createCache(String cacheName, Class<V> classValue) {
-        MutableConfiguration<String, V> cacheConfig = new MutableConfiguration<>();
-        cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
-        cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
-        return cacheManager.createCache(cacheName, cacheConfig);
+    public static String asRepositoryPath(String organization, String repoName, String branch) {
+        return String.format("/%s/%s/%s", organization, repoName, branch);
+    }
+
+    <V> Cache<String,V> createOrGetCache(String cacheName, Class<V> classValue) {
+        if (cacheManager.getCache(cacheName) == null) {
+            MutableConfiguration<String, V> cacheConfig = new MutableConfiguration<>();
+            cacheConfig.setManagementEnabled(configuration.evaluateToBoolean("cache.management"));
+            cacheConfig.setStatisticsEnabled(configuration.evaluateToBoolean("cache.statistics"));
+            return cacheManager.createCache(cacheName, cacheConfig);
+        } else {
+            return cacheManager.getCache(cacheName);
+        }
     }
 
     void initialize() {
+//        for(RepositoryConfig.ScmProvider scmProvider : RepositoryConfig.ScmProvider.values()) {
+//            createOrGetCache(scmProvider.provider() + "/repository", ScmRepository.class);
+//        }
+
+
         if (cacheManager.getCache(CACHE_KEYS) == null) {
             LOG.info("Creating CacheKeys cache");
             MutableConfiguration<CacheGroupKey, CacheRepositoryKey> cacheConfig = new MutableConfiguration<>();
@@ -185,6 +199,7 @@ public class CacheStore {
         }
     }
 
+    @Deprecated
     public List<ScmRepository> getRepositoryGroupsByGroupId(String groupId) {
         List<ScmRepository> repositories = new ArrayList<>();
         getRepositories().forEach(a -> {
@@ -195,6 +210,7 @@ public class CacheStore {
         return repositories;
     }
 
+    // TODO fix this when groups repos is in place
     public String getConfiguredRepositories() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         for (RepoConfig.Repo repo : repositoryConfig.getConfig().repos.get(RepoConfig.ScmProvider.GITHUB)) {
@@ -213,22 +229,31 @@ public class CacheStore {
         return cacheManager;
     }
 
-    public RepoConfigService getRepositoryConfig() {
+    @Deprecated
+    public RepoConfigService getOldRepositoryConfig() {
         return repositoryConfig;
     }
 
+    public RepositoryConfigService getRepositoryConfig() {
+        return newRepositoryConfig;
+    }
+
+    @Deprecated
     public Cache<CacheKey, CacheRepositoryKey> getCacheKeys() {
         return cacheManager.getCache(CACHE_KEYS);
     }
 
+    @Deprecated
     public Cache<CacheGroupKey, String> getCacheGroupKeys() {
         return cacheManager.getCache(CACHE_GROUP_KEYS);
     }
 
+    @Deprecated
     public Cache<CacheRepositoryKey, CacheKey> getCacheRepositoryKeys() {
         return cacheManager.getCache(CACHE_REPOSITORY_KEYS);
     }
 
+    @Deprecated
     // used by FetchGitHubCommitRevision(s)
     public Set<CacheRepositoryKey> getCacheRepositoryKeys(CacheKey cacheKey) {
         return StreamSupport.stream(getCacheRepositoryKeys().spliterator(), true)
@@ -237,8 +262,13 @@ public class CacheStore {
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    @Deprecated
     public Cache<CacheRepositoryKey, ScmRepository> getRepositories() {
         return cacheManager.getCache(REPOSITORIES);
+    }
+
+    public Cache<String, ScmRepository> getRepositories(RepositoryConfig.ScmProvider scmProvider) {
+        return createOrGetCache(scmProvider.provider() + "/repository", ScmRepository.class);
     }
 
     public Cache<CacheKey, MavenPOM> getMavenProjects() {
