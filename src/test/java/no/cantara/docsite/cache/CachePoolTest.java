@@ -216,19 +216,4 @@ public class CachePoolTest {
         getGroups().forEach(entry -> LOG.trace("{} -> {}", entry.getKey(), entry.getValue().repositoryKeys()));
     }
 
-    /*
-        Cache plan:
-        - Repository (/org/repo/branch) (*)
-        - MavenProjects (/org/repo/branch/(subrepo) (sub modules contains pom and is part of a project. Should this be dealt with with in MavemPom or as subcontexts
-        - Contents (repo/branch)
-        - Commits (org/repo:/commitDate/sha) <- lookups commits per cache and add CacheListener that adds latest commits to Group
-
-
-        Build Groups:
-        - ScmGroup:
-
-     */
-
-
-
 }

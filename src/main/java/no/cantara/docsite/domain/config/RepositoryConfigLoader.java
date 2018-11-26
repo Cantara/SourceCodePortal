@@ -81,4 +81,8 @@ public class RepositoryConfigLoader {
             }
         }
     }
+
+    public void xload() {
+
+    }
 }
