@@ -1,6 +1,5 @@
 package no.cantara.docsite.cache;
 
-import no.cantara.docsite.domain.config.RepoConfig;
 import no.cantara.docsite.domain.config.RepoConfigService;
 import no.cantara.docsite.domain.config.RepositoryConfig;
 import no.cantara.docsite.domain.config.RepositoryConfigService;
@@ -8,6 +7,7 @@ import no.cantara.docsite.domain.github.releases.GitHubCreatedTagEvent;
 import no.cantara.docsite.domain.jenkins.JenkinsBuildStatus;
 import no.cantara.docsite.domain.maven.MavenPOM;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
+import no.cantara.docsite.domain.scm.ScmGroup;
 import no.cantara.docsite.domain.scm.ScmRepository;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
 import no.cantara.docsite.domain.shields.ShieldsStatus;
@@ -23,9 +23,7 @@ import javax.cache.configuration.MutableConfiguration;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -199,28 +197,16 @@ public class CacheStore {
         }
     }
 
-    @Deprecated
-    public List<ScmRepository> getRepositoryGroupsByGroupId(String groupId) {
-        List<ScmRepository> repositories = new ArrayList<>();
-        getRepositories().forEach(a -> {
-            if (a.getKey().compareTo(groupId)) {
-                repositories.add(a.getValue());
-            }
-        });
-        return repositories;
-    }
-
-    // TODO fix this when groups repos is in place
     public String getConfiguredRepositories() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
-        for (RepoConfig.Repo repo : repositoryConfig.getConfig().repos.get(RepoConfig.ScmProvider.GITHUB)) {
+
+        getGroups().forEach(entry -> {
             JsonArrayBuilder groupBuilder = Json.createArrayBuilder();
-            List<ScmRepository> repositories = getRepositoryGroupsByGroupId(repo.groupId);
-            for (ScmRepository repository : repositories) {
-                groupBuilder.add(repository.cacheRepositoryKey.asIdentifier());
-            }
-            builder.add(repo.groupId, groupBuilder);
-        }
+            entry.getValue().repositoryKeys().forEach(m -> groupBuilder.add(m));
+            builder.add(entry.getKey(), groupBuilder);
+
+        });
+
         return JsonbFactory.instance().toJson(builder.build());
     }
 
@@ -269,6 +255,10 @@ public class CacheStore {
 
     public Cache<String, ScmRepository> getRepositories(RepositoryConfig.ScmProvider scmProvider) {
         return createOrGetCache(scmProvider.provider() + "/repository", ScmRepository.class);
+    }
+
+    public Cache<String, ScmGroup> getGroups() {
+        return createOrGetCache("groups", ScmGroup.class);
     }
 
     public Cache<CacheKey, MavenPOM> getMavenProjects() {
