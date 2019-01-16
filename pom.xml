@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.cantara.docsite</groupId>
     <artifactId>source-code-portal</artifactId>
-    <version>0.9.4-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Source Code Portal</name>
@@ -47,7 +47,7 @@
         <module.build.sourceEncoding>UTF-8</module.build.sourceEncoding>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <docker.image>scp</docker.image>
-        <undertow.io.version>2.0.14.Final</undertow.io.version>
+        <undertow.io.version>2.0.17.Final</undertow.io.version>
         <xnio.version>3.6.5.Final</xnio.version>
         <jboss-threads.version>2.3.2.Final</jboss-threads.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
@@ -85,7 +85,6 @@
         <connection>scm:git:git://github.com/Cantara/SourceCodePortal.git</connection>
         <developerConnection>scm:git:git@github.com:Cantara/SourceCodePortal.git</developerConnection>
         <url>https://wiki.cantara.no/</url>
-        <tag>source-code-portal-0.4.17</tag>
     </scm>
 
     <dependencies>
