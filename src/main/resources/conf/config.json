@@ -37,8 +37,8 @@
         "description": "Provision configuration to agents",
         "repo": [
           "ConfigService*",
-          "JAU",
-          "Java-Auto-Update"
+          "JAU*",
+          "Java-Auto-Update*"
         ],
         "branch": "master",
         "default-group-repo": "ConfigService"
@@ -89,8 +89,8 @@
         "description": "Cantara Baseline projects for Java and Docker",
         "repo": [
           "[^\\s]*aseline*",
-          "BaseCommands",
-          "BaseJDBCCommands"
+          "BaseCommands*",
+          "BaseJDBCCommands*"
         ],
         "branch": "master",
         "default-group-repo": "microservice-baseline"
@@ -114,7 +114,7 @@
           "[^\\s]*"
         ],
         "branch": "master",
-        "default-group-repo": "PathWatcher"
+        "default-group-repo": "cantara-all"
       },
       {
         "groupId": "ratpack",
