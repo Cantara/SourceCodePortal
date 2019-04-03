@@ -84,7 +84,7 @@
         "default-group-repo": "FlowLogger"
       },
       {
-        "groupId": "BaselineProjects",
+        "groupId": "Cantara-BaselineProjects",
         "display-name": "Cantara Baseline Codebases",
         "description": "Cantara Baseline projects for Java and Docker",
         "repo": [
@@ -96,7 +96,7 @@
         "default-group-repo": "microservice-baseline"
       },
       {
-        "groupId": "ACS",
+        "groupId": "Cantara-ACS",
         "display-name": "Awesome Competence System",
         "description": "The best competenece system",
         "repo": [
