@@ -44,7 +44,7 @@ public class PreFetchData {
 
         });
         LOG.info("Pre-fetch done queuing tasks - remaining: {}", executorService.countRemainingWorkerTasks());
-        executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
+        executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137493")));
         executorService.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
         executorService.queue(new PreFetchDoneTask(configuration, executorService));
     }

@@ -29,7 +29,7 @@ public class ScheduledFetchData {
 
     public void run() {
         ScheduledWorker confluenceScheduledWorker = new ScheduledWorker("cantara-wiki", 0, configuration.evaluateToInt("scheduled.tasks.interval"), TimeUnit.SECONDS);
-        confluenceScheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137421")));
+        confluenceScheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("xmas-beer", "46137493")));
         confluenceScheduledWorker.queue(new FetchCantaraWikiTask(configuration, executorService, cacheStore, CacheCantaraWikiKey.of("about", "16515095")));
         scheduledExecutorService.queue(confluenceScheduledWorker);
 
