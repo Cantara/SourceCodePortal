@@ -6,12 +6,7 @@ import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -155,7 +150,7 @@ public class RepoConfig {
         public String toString() {
             return "Repo{" +
                     "organization='" + organization + '\'' +
-                    ", repoPatterns='" + repoPatterns + '\'' +
+                    ", repoPatterns='" + Arrays.toString(repoPatterns) + '\'' +
                     ", branchPattern='" + branchPattern + '\'' +
                     ", groupId='" + groupId + '\'' +
                     ", displayName='" + displayName + '\'' +
