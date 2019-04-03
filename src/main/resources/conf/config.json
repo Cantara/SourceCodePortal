@@ -100,8 +100,8 @@
         "display-name": "Awesome Competence System",
         "description": "The best competenece system",
         "repo": [
-          "ACS",
-          "Awesome"
+          "ACS*",
+          "Awesome*"
         ],
         "branch": "master",
         "default-group-repo": "Awesome-Competence-System"
