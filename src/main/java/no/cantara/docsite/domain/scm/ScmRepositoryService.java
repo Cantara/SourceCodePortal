@@ -129,6 +129,7 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
             String description = repo.description;
             if (scmRepository == null) {  // Skipping instead of breaking on config issues of repos
                 LOG.error("Unable to resolve repository from configuration, repo:" + repo);
+                LOG.error("You might want to check that the default-group-repo parameter in the configuration contain the repository name exists and is the one you want to represent the group ");
                 //  throw new RuntimeException("Wrong: " + scmRepository + " => " + cacheRepositoryKey);
             } else {
                 groupedRepositories.put(cacheRepositoryKey, new ScmRepositoryGroup<>(scmRepository, displayName, description, numberOfRepos));
