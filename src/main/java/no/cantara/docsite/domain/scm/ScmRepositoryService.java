@@ -1,26 +1,12 @@
 package no.cantara.docsite.domain.scm;
 
-import no.cantara.docsite.cache.CacheGroupKey;
-import no.cantara.docsite.cache.CacheHelper;
-import no.cantara.docsite.cache.CacheKey;
-import no.cantara.docsite.cache.CacheRepositoryKey;
-import no.cantara.docsite.cache.CacheService;
-import no.cantara.docsite.cache.CacheStore;
+import no.cantara.docsite.cache.*;
 import no.cantara.docsite.domain.config.RepoConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.cache.Cache;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -141,8 +127,11 @@ public class ScmRepositoryService implements CacheService<CacheRepositoryKey, Sc
             int numberOfRepos = getRepositoryGroupsByGroupId(cacheRepositoryKey.groupId).size();
             String displayName = repo.displayName;
             String description = repo.description;
-            if (scmRepository == null) throw new RuntimeException("Wrong: " + scmRepository + " => " + cacheRepositoryKey);
-            groupedRepositories.put(cacheRepositoryKey, new ScmRepositoryGroup<>(scmRepository, displayName, description, numberOfRepos));
+            if (scmRepository == null) {  // Skipping instead of breaking on config issues of repos
+                //  throw new RuntimeException("Wrong: " + scmRepository + " => " + cacheRepositoryKey);
+            } else {
+                groupedRepositories.put(cacheRepositoryKey, new ScmRepositoryGroup<>(scmRepository, displayName, description, numberOfRepos));
+            }
         }
         return groupedRepositories;
     }
