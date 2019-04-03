@@ -104,7 +104,7 @@
           "Awesome*"
         ],
         "branch": "master",
-        "default-group-repo": "Awesome-Competence-System"
+        "default-group-repo": "ratpack"
       },
       {
         "groupId": "Cantara-All",
@@ -114,7 +114,7 @@
           "[^\\s]*"
         ],
         "branch": "master",
-        "default-group-repo": "cantara-all"
+        "default-group-repo": "ratpack"
       },
       {
         "groupId": "ratpack",
