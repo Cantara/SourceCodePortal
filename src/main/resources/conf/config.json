@@ -37,8 +37,8 @@
         "description": "Provision configuration to agents",
         "repo": [
           "ConfigService*",
-          "JAU*",
-          "Java-Auto-Update*"
+          "JAU",
+          "Java-Auto-Update"
         ],
         "branch": "master",
         "default-group-repo": "ConfigService"
@@ -89,31 +89,32 @@
         "description": "Cantara Baseline projects for Java and Docker",
         "repo": [
           "[^\\s]*aseline*",
-          "BaseCommands*",
-          "BaseJDBCCommands*"
+          "BaseCommands",
+          "BaseJDBCCommands"
         ],
         "branch": "master",
-        "default-group-repo": "microservicebaseline"
+        "default-group-repo": "microservice-baseline"
       },
       {
         "groupId": "ACS",
         "display-name": "Awesome Competence System",
         "description": "The best competenece system",
         "repo": [
-          "Awesome*"
+          "ACS",
+          "Awesome"
         ],
         "branch": "master",
-        "default-group-repo": "acs"
+        "default-group-repo": "Awesome-Competence-System-ACS"
       },
       {
-        "groupId": "CantaraAll",
-        "display-name": "Cantara GitHub, complete list of reposositories",
+        "groupId": "Cantara-All",
+        "display-name": "Cantara GitHub, complete list of repositories",
         "description": "All Cantara projects on GitHub",
         "repo": [
           "[^\\s]*"
         ],
         "branch": "master",
-        "default-group-repo": "cantaraall"
+        "default-group-repo": "PathWatcher"
       },
       {
         "groupId": "ratpack",
