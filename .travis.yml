@@ -2,7 +2,7 @@ dist: trusty
 language: java
 # We now cache the Maven dependencies directory for faster builds
 jdk:
-  - zulu11.2.3-jdk11.0.1
+  - zulu-11
 
 cache:
   apt: true
@@ -22,12 +22,7 @@ addons:
     packages:
       - zulu-11
 
- https://github.com/sormuras/sormuras.github.io/blob/master/.travis.yml
-jobs:
-  include:
-  - env: JDK=zulu11.2.3-jdk11.0.1
-    install: source install-jdk.sh --url https://cdn.azul.com/zulu/bin/zulu11.2.3-jdk11.0.1-linux_x64.tar.gz
-
+ 
 before_install:
   - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
   - mvn -B clean package -DskipTests
