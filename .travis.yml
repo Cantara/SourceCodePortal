@@ -34,10 +34,10 @@ before_install:
 matrix:
   fast_finish: true
   include:
-    #   unit test build  tests (zulu-8)
+    #   unit test build  tests (zulu-11)
     - env:
-        - JAVA_HOME=/usr/lib/jvm/zulu-8-amd64
-        - DESC="zulu-8 unit tests"
+        - JAVA_HOME=/usr/lib/jvm/zulu-11-amd64
+        - DESC="zulu-11 unit tests"
         - CMD="mvn clean test -Dcheckstyle.skip=true"
         - LANG=en_US.utf8
 
