@@ -1,76 +1,40 @@
-dist: trusty
 language: java
-# We now cache the Maven dependencies directory for faster builds
-jdk:
-  - OpenJDK11
+sudo: false
+dist: trusty
 
-cache:
-  apt: true
-  directories:
-    - $HOME/.m2
-    - $HOME/.downloads
-sudo: true
+before_script:
+- unset -v _JAVA_OPTIONS
+- wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
 
-matrix:
+jobs:
   include:
-    - name: "OpenJDK8"
-      env:
-        - secure: JuFTmYTsnmzZzWTvf/hNkRDkpQhLrtl8BRLBdxGR79pzGxmoq961pgaYO615DFJUBggmZm1VkLSao3sC8eWfanTng9Qm1r1CUVsHbLiBDrIR2kwUU7DFiPOEkqwuf9YDjlTl1D4bRKwOZXPVMzlbwfWNr5yj2iRS8PSRS/76f3k=
-    - name: "OpenJDK11"
-      install:
-        - "source install-jdk.sh --url https://cdn.azul.com/zulu/bin/zulu11.31.11-ca-jdk11.0.3-linux_x64.tar.gz"
-    - name: "OpenJDK12"
-      install:
-        - "source install-jdk.sh --url https://cdn.azul.com/zulu/bin/zulu12.2.3-ca-jdk12.0.1-linux_x64.tar.gz"
-    - name: "Local rebuild"
-      script: 
-        - "./gradlew --no-daemon -Dmaven.repo.local=maven/target/m2 :biz.aQute.bnd.gradle:build :biz.aQute.bnd.gradle:releaseNeeded"
-        - "./gradlew --no-daemon -Dmaven.repo.local=maven/target/m2 -Pbnd_repourl=./dist/bundles :buildscriptDependencies :build"
-    - name: "Documentation"
-      install:
-        - "rvm --version"
-        - "rvm use 2.4 --install --binary --fuzzy"
-        - "ruby --version"
-        - "gem --version"
-        - "bundle --version"
-      before_script:
-        - "cd docs"
-      script: 
-        - "./build.sh"
-  allow_failures:
-    - env: ALLOW_FAILURE=true
-  fast_finish: true
-  include:
-    #   unit test build  tests (zulu-11)
-    - env:
-        - DESC="zulu-11 unit tests"
-        - CMD="mvn clean test -Dcheckstyle.skip=true"
-        - LANG=en_US.utf8
-  
-
-#notifications:
-#  slack: cantara:Mc0ZrDXc2tFgnWeDd5xwiTGn
-
-addons:
-  apt:
-    sources:
-      - sourceline: 'deb http://repos.azulsystems.com/ubuntu stable main'
-        key_url: 'http://repos.azulsystems.com/RPM-GPG-KEY-azulsystems'
-    packages:
-      - zulu-11
 
  
-before_install:
-  - mvn -B clean package -DskipTests
-  - echo 'MAVEN_OPTS="-Dorg.slf4j.simpleLogger.defaultLogLevel=warn"' >~/.mavenrc
-  - mkdir -p $HOME/.downloads
-  - wget -N -q -O $HOME/.downloads/ZuluJCEPolicies.zip 'https://cdn.azul.com/zcek/bin/ZuluJCEPolicies.zip'
-  #  # The SHA256 checksum for JCE for Azul will break if Azul updates their archive.
-  #  # If so, you will need to update the fingerprint below after verifying the
-  #  # authenticity of the archive.
-#  - echo "8021a28b8cac41b44f1421fd210a0a0822fcaf88d62d2e70a35b2ff628a8675a  $HOME/.downloads/ZuluJCEPolicies.zip" | sha256sum -c
-#  - sudo unzip -o -j $HOME/.downloads/ZuluJCEPolicies.zip ZuluJCEPolicies/local_policy.jar ZuluJCEPolicies/US_export_policy.jar -d /usr/lib/jvm/zulu-8-amd64/jre/lib/security
-#  - sudo unzip -o -j $HOME/.downloads/ZuluJCEPolicies.zip ZuluJCEPolicies/local_policy.jar ZuluJCEPolicies/US_export_policy.jar -d /usr/lib/jvm/zulu-9-amd64/lib/security
+  - # stage: ...
+    env: JDK=11
+    script: source install-jdk.sh -F 11
 
+ 
+  - # stage: ...
+    env: JDK=11
+    script: source install-jdk.sh -F 11 -L BCL
 
-script: echo ${CMD}; ${CMD}
+  - stage: 🍺 adoptopenjdk.net - HotSpot - Eclipse OpenJ9
+    env: JDK=10 + Hotspot
+    script: source install-jdk.sh --url $(curl --silent https://api.adoptopenjdk.net/openjdk10/nightly/x64_linux/ | grep 'binary_link' | grep -Eo '(http|https)://[^"]+' | head -1)
+  - # stage: ...
+    env: JDK=10 + OpenJ9
+    script: source install-jdk.sh --url $(curl --silent https://api.adoptopenjdk.net/openjdk10-openj9/nightly/x64_linux/ | grep 'binary_link' | grep -Eo '(http|https)://[^"]+' | head -1)
+
+  - stage: 🚀 Graal, Zulu, ...
+    env: JDK=graalvm-ce-1.0.0-rc2
+    script: source install-jdk.sh --url https://github.com/oracle/graal/releases/download/vm-1.0.0-rc2/graalvm-ce-1.0.0-rc2-linux-amd64.tar.gz
+  - # stage: ...
+    env: JDK=zulu10.2+3-jdk10.0.1
+    script: source install-jdk.sh --url https://cdn.azul.com/zulu/bin/zulu10.2+3-jdk10.0.1-linux_x64.tar.gz
+
+after_script:
+- echo JAVA_HOME = ${JAVA_HOME}
+- echo PATH = ${PATH}
+- ls ${JAVA_HOME}
+- java -version
