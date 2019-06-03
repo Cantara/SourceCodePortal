@@ -1,6 +1,9 @@
 dist: trusty
 language: java
 # We now cache the Maven dependencies directory for faster builds
+jdk:
+  - oraclejdk11
+
 cache:
   apt: true
   directories:
@@ -19,8 +22,15 @@ addons:
     packages:
       - zulu-8
 
+ https://github.com/sormuras/sormuras.github.io/blob/master/.travis.yml
+jobs:
+  include:
+  - env: JDK=zulu11.2.3-jdk11.0.1
+    install: source install-jdk.sh --url https://cdn.azul.com/zulu/bin/zulu11.2.3-jdk11.0.1-linux_x64.tar.gz
 
 before_install:
+  - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
+  - mvn -B clean package -DskipTests
   - echo 'MAVEN_OPTS="-Dorg.slf4j.simpleLogger.defaultLogLevel=warn"' >~/.mavenrc
   - mkdir -p $HOME/.downloads
   - wget -N -q -O $HOME/.downloads/ZuluJCEPolicies.zip 'https://cdn.azul.com/zcek/bin/ZuluJCEPolicies.zip'
@@ -36,7 +46,6 @@ matrix:
   include:
     #   unit test build  tests (zulu-11)
     - env:
-        - JAVA_HOME=/usr/lib/jvm/zulu-11-amd64
         - DESC="zulu-11 unit tests"
         - CMD="mvn clean test -Dcheckstyle.skip=true"
         - LANG=en_US.utf8
