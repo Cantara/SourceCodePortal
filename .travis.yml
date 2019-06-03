@@ -19,12 +19,6 @@ jobs:
     env: JDK=11
     script: source install-jdk.sh -F 11 -L BCL
 
-  - stage: 🍺 adoptopenjdk.net - HotSpot - Eclipse OpenJ9
-    env: JDK=10 + Hotspot
-    script: source install-jdk.sh --url $(curl --silent https://api.adoptopenjdk.net/openjdk10/nightly/x64_linux/ | grep 'binary_link' | grep -Eo '(http|https)://[^"]+' | head -1)
-  - # stage: ...
-    env: JDK=10 + OpenJ9
-    script: source install-jdk.sh --url $(curl --silent https://api.adoptopenjdk.net/openjdk10-openj9/nightly/x64_linux/ | grep 'binary_link' | grep -Eo '(http|https)://[^"]+' | head -1)
 
   - stage: 🚀 Graal, Zulu, ...
     env: JDK=graalvm-ce-1.0.0-rc2
