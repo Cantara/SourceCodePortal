@@ -39,6 +39,14 @@ matrix:
         - "./build.sh"
   allow_failures:
     - env: ALLOW_FAILURE=true
+  fast_finish: true
+  include:
+    #   unit test build  tests (zulu-11)
+    - env:
+        - DESC="zulu-11 unit tests"
+        - CMD="mvn clean test -Dcheckstyle.skip=true"
+        - LANG=en_US.utf8
+  
 
 #notifications:
 #  slack: cantara:Mc0ZrDXc2tFgnWeDd5xwiTGn
@@ -53,7 +61,6 @@ addons:
 
  
 before_install:
-  - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh -f 11
   - mvn -B clean package -DskipTests
   - echo 'MAVEN_OPTS="-Dorg.slf4j.simpleLogger.defaultLogLevel=warn"' >~/.mavenrc
   - mkdir -p $HOME/.downloads
@@ -65,13 +72,5 @@ before_install:
 #  - sudo unzip -o -j $HOME/.downloads/ZuluJCEPolicies.zip ZuluJCEPolicies/local_policy.jar ZuluJCEPolicies/US_export_policy.jar -d /usr/lib/jvm/zulu-8-amd64/jre/lib/security
 #  - sudo unzip -o -j $HOME/.downloads/ZuluJCEPolicies.zip ZuluJCEPolicies/local_policy.jar ZuluJCEPolicies/US_export_policy.jar -d /usr/lib/jvm/zulu-9-amd64/lib/security
 
-matrix:
-  fast_finish: true
-  include:
-    #   unit test build  tests (zulu-11)
-    - env:
-        - DESC="zulu-11 unit tests"
-        - CMD="mvn clean test -Dcheckstyle.skip=true"
-        - LANG=en_US.utf8
 
 script: echo ${CMD}; ${CMD}
