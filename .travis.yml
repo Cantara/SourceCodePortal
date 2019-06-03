@@ -2,7 +2,7 @@ dist: trusty
 language: java
 # We now cache the Maven dependencies directory for faster builds
 jdk:
-  - zulu-11
+  - OpenJDK11
 
 cache:
   apt: true
