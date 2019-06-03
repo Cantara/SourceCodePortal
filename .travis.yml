@@ -20,7 +20,7 @@ addons:
       - sourceline: 'deb http://repos.azulsystems.com/ubuntu stable main'
         key_url: 'http://repos.azulsystems.com/RPM-GPG-KEY-azulsystems'
     packages:
-      - zulu-8
+      - zulu-11
 
  https://github.com/sormuras/sormuras.github.io/blob/master/.travis.yml
 jobs:
