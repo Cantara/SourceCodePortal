@@ -234,7 +234,7 @@
         <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
-            <version>1.5.7</version>
+            <version>1.6.2</version>
         </dependency>
         <!--
         <dependency>
