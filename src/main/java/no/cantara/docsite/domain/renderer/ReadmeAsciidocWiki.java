@@ -13,7 +13,7 @@ public class ReadmeAsciidocWiki {
     public final String html;
 
     public ReadmeAsciidocWiki(String asciidocWiki) {
-        Asciidoctor asciidoctor = Asciidoctor.Factory.create(ClassLoader.getSystemClassLoader());
+        Asciidoctor asciidoctor = Asciidoctor.Factory.create(); // ClassLoader.getSystemClassLoader()
         byte[] bytes = asciidocWiki.getBytes();
         try (InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream(bytes))) {
             StringWriter writer = new StringWriter();
