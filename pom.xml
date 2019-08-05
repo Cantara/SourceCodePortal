@@ -350,7 +350,7 @@
                                 <phase>generate-resources</phase>
                             </execution>
                             <execution>
-                                <id>npm install</id>
+                                <id>npm install --no-audit</id>
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
