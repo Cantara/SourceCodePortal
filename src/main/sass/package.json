@@ -21,12 +21,12 @@
     "font-awesome": "^4.7.0",
     "gulp-uglifycss": "^1.1.0",
     "jquery": "^3.3.1",
+    "gulp-sass": "^4.12.0",
     "popper.js": "^1.14.4"
   },
   "devDependencies": {
     "browser-sync": "^2.26.3",
     "gulp": "^4.0.0",
-    "gulp-sass": "^4.0.2",
     "gulp-watch": "^5.0.1"
   }
 }
