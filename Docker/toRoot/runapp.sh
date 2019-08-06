@@ -2,7 +2,7 @@
 
 
 APP=source-code-portal.jar
-JAVA_PARAMS="-Dlogback.configurationFile=./config_override/logback-default.xml -Xms64m -Xmx512m --illegal-access=deny -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2 -Djdk.tls.client.protocols=TLSv1,TLSv1.1,TLSv1.2
+JAVA_PARAMS="-Dlogback.configurationFile=./config_override/logback-default.xml -Xms64m -Xmx512m --illegal-access=deny -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2 -Djdk.tls.client.protocols=TLSv1,TLSv1.1,TLSv1.2 "
 #JAVA_PARAMS="-Dlogback.configurationFile=./config_override/logback-default.xml -Djavax.net.debug=ssl:handshake:verbose -Djdk.internal.httpclient.disableHostnameVerification -Xms64m -Xmx512m --illegal-access=deny"
 
 
