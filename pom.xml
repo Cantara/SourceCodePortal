@@ -48,7 +48,7 @@
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <docker.image>scp</docker.image>
         <undertow.io.version>2.0.23.Final</undertow.io.version>
-        <xnio.version>3.6.5.Final</xnio.version>
+        <xnio.version>3.7.3.Final</xnio.version>
         <jboss-threads.version>2.3.2.Final</jboss-threads.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
         <commonmark.version>0.11.0</commonmark.version>
@@ -615,7 +615,7 @@
                                         <Main-Class>no.cantara.docsite.Server</Main-Class>
                                     </manifestEntries>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.handlers</resource>
