@@ -51,7 +51,7 @@
         <xnio.version>3.6.5.Final</xnio.version>
         <jboss-threads.version>2.3.2.Final</jboss-threads.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
-        <commonmark.version>0.11.0</commonmark.version>
+        <commonmark.version>0.13.0</commonmark.version>
         <slf4j.version>1.8.0-beta2</slf4j.version>
         <logback.version>1.3.0-alpha4</logback.version>
         <testng.version>6.14.3</testng.version>
