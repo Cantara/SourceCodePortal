@@ -1,7 +1,9 @@
 = Organizational SourceCode Dashboard Portal (SCP)
 
+
 Codebase status:
 ^^^^^^^^^^^^^^^^
+image:https://img.shields.io/github/v/tag/Cantara/ratpack-freemarker[GitHub tag (latest SemVer)]
 image:https://jenkins.quadim.ai/buildStatus/icon?job=Cantara-SourceCodePortal[Build Status]
 image:https://www.repostatus.org/badges/latest/active.svg[Project Status: Active – The project has not yet reached a stable, usable state but is being actively developed.]
 image:https://snyk.io/test/github/Cantara/SourceCodePortal/badge.svg[Known Vulnerabilities]
