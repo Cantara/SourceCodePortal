@@ -29,6 +29,8 @@ RUN apk add --update \
   && pip install --upgrade awscli \
   && rm -rf /var/cache/apk/*
 
+RUN apk upgrade
+
 ENV USER=sourcecodeportal
 ENV HOME=/home/$USER
 RUN adduser -S $USER
