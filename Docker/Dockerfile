@@ -30,6 +30,7 @@ RUN apk add --update \
   && rm -rf /var/cache/apk/*
 
 RUN apk upgrade
+RUN apk add --update groff python python-dev py-pip bash unzip curl chromium nss chromium-chromedriver && pip install awscli boto3 && pip install --upgrade awscli && rm -rf /var/cache/apk/*
 
 ENV USER=sourcecodeportal
 ENV HOME=/home/$USER
