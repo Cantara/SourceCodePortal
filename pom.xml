@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.cantara.docsite</groupId>
     <artifactId>source-code-portal</artifactId>
@@ -8,6 +9,12 @@
     <name>Source Code Portal</name>
     <description>Organizational SourceCode Dashboard Portal</description>
     <inceptionYear>2018</inceptionYear>
+
+    <parent>
+        <groupId>no.cantara.emi</groupId>
+        <artifactId>parent</artifactId>
+        <version>8</version>
+    </parent>
 
     <repositories>
         <!-- Needed for parent  -->
@@ -26,6 +33,11 @@
             <id>jvnet-nexus-staging</id>
             <url>http://maven.java.net/content/repositories/staging/</url>
             <layout>default</layout>
+        </repository>
+        <repository>
+            <id>mvnrepo</id>
+            <name>mvnrepo</name>
+            <url>https://mvnrepository.com/artifact/</url>
         </repository>
     </repositories>
 
@@ -85,8 +97,8 @@
         <connection>scm:git:git://github.com/Cantara/SourceCodePortal.git</connection>
         <developerConnection>scm:git:git@github.com:Cantara/SourceCodePortal.git</developerConnection>
         <url>https://wiki.cantara.no/</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <dependencies>
         <dependency>
@@ -246,10 +258,11 @@
             <version>1.78</version>
         </dependency>
 
+
         <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
-            <version>2.3.1</version>
+            <version>2.3.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.beust</groupId>
@@ -257,26 +270,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.asciidoctor</groupId>
-            <artifactId>asciidoctorj</artifactId>
-            <version>1.6.0-alpha.7</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jruby</groupId>
-                    <artifactId>jruby</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jruby</groupId>
-            <artifactId>jruby-complete</artifactId>
-            <version>9.2.0.0</version>
-            <type>compile</type>
-        </dependency>
-        -->
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -631,17 +624,21 @@
                                 </filter>
                             </filters>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
                                         <Main-Class>no.cantara.docsite.Server</Main-Class>
                                     </manifestEntries>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.handlers</resource>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.schemas</resource>
                                 </transformer>
                             </transformers>
