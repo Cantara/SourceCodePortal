@@ -61,7 +61,7 @@
         <docker.image>scp</docker.image>
         <undertow.io.version>2.1.3.Final</undertow.io.version>
         <xnio.version>3.8.1.Final</xnio.version>
-        <jboss-threads.version>2.3.6.Final</jboss-threads.version>
+        <jboss-threads.version>2.4.0.Final</jboss-threads.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
         <commonmark.version>0.15.1</commonmark.version>
         <slf4j.version>1.8.0-beta2</slf4j.version>
