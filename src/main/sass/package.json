@@ -28,6 +28,6 @@
     "browser-sync": "2.27.7",
     "gulp": "4.0.2",
     "gulp-watch": "5.0.1",
-    "braces": "2.3.2"
+    "braces": "3.0.2"
   }
 }
