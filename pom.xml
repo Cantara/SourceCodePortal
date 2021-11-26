@@ -425,7 +425,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugin-tools</groupId>
                     <artifactId>maven-plugin-annotations</artifactId>
-                    <version>3.6.1</version>
+                    <version>3.6.2</version>
                 </plugin>
 
                 <plugin>
