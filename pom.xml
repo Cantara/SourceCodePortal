@@ -419,7 +419,7 @@
                 <plugin>
                     <groupId>org.codehaus.plexus</groupId>
                     <artifactId>plexus-archiver</artifactId>
-                    <version>3.7.0</version>
+                    <version>4.2.7</version>
                 </plugin>
 
                 <plugin>
@@ -476,7 +476,7 @@
                     <dependency>
                         <groupId>org.codehaus.plexus</groupId>
                         <artifactId>plexus-archiver</artifactId>
-                        <version>2.11</version>
+                        <version>4.2.7</version>
                     </dependency>
                 </dependencies>
             </plugin>
