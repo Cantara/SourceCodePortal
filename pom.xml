@@ -61,7 +61,7 @@
         <undertow.io.version>2.2.19.Final</undertow.io.version>
         <xnio.version>3.8.7.Final</xnio.version>
         <jboss-threads.version>3.4.2.Final</jboss-threads.version>
-        <thymeleaf.version>3.0.15.RELEASE</thymeleaf.version>
+        <thymeleaf.version>3.1.2.RELEASE</thymeleaf.version>
         <commonmark.version>0.17.0</commonmark.version>
         <slf4j.version>2.0.1</slf4j.version>
         <logback.version>1.4.4</logback.version>
