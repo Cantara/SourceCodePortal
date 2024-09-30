@@ -58,7 +58,7 @@
         <module.build.sourceEncoding>UTF-8</module.build.sourceEncoding>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <docker.image>scp</docker.image>
-        <undertow.io.version>2.2.19.Final</undertow.io.version>
+        <undertow.io.version>2.3.17.Final</undertow.io.version>
         <xnio.version>3.8.7.Final</xnio.version>
         <jboss-threads.version>3.4.2.Final</jboss-threads.version>
         <thymeleaf.version>3.0.15.RELEASE</thymeleaf.version>
