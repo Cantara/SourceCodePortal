@@ -541,7 +541,7 @@
                     <dependency>
                         <groupId>org.ow2.asm</groupId>
                         <artifactId>asm</artifactId>
-                        <version>6.2.1</version> <!-- Use newer version of ASM for JDK 11 support -->
+                        <version>9.9.1</version> <!-- Use newer version of ASM for JDK 11 support -->
                     </dependency>
                 </dependencies>
                 <executions>
