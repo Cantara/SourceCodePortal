@@ -461,7 +461,7 @@
                 <plugin>
                     <groupId>org.apache.maven</groupId>
                     <artifactId>maven-archiver</artifactId>
-                    <version>3.6.0</version>
+                    <version>3.6.6</version>
                 </plugin>
 
                 <plugin>
