@@ -14,7 +14,7 @@
         <div style="margin-top: 1em; background-color: red; color: white" class="alert alert-danger" role="alert">
             <b>Cantara </b> <a href="/wiki/xmas-beer" style="color: white" class="alert-link">Årsmøte 2018</a>.
         </div>
-        <div class="jumbotron">
+        <div class="jumbotron" id="latest-commits" hx-get="/api/commits/latest" hx-trigger="every 30s" hx-swap="innerHTML">
             <h4 class="display-6">Latest commits</h4>
             <div th:each="commitRevision : ${lastCommitRevisions}">
                 <div class="row">
