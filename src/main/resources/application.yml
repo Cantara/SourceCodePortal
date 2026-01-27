@@ -1,0 +1,238 @@
+# Source Code Portal - Spring Boot Configuration
+# Phase 2: Spring Boot Migration
+#
+# This configuration file replaces application-defaults.properties
+# with Spring Boot's modern YAML format and type-safe @ConfigurationProperties
+
+# ===================================================================
+# Spring Boot Configuration
+# ===================================================================
+spring:
+  application:
+    name: source-code-portal
+
+# ===================================================================
+# Server Configuration
+# ===================================================================
+server:
+  port: ${scp.http.port:9090}
+  address: ${scp.http.host:0.0.0.0}
+  undertow:
+    threads:
+      worker: 20
+      io: 4
+
+  # Caching Configuration
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=10000,expireAfterWrite=${scp.cache.ttl-minutes}m
+    cache-names:
+      - repositories
+      - commits
+      - contents
+      - buildStatus
+      - snykStatus
+      - shields
+      - releases
+
+  # Thymeleaf Configuration
+  thymeleaf:
+    cache: false  # Disable cache in development
+    prefix: classpath:/META-INF/views/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+
+  # Static Resource Configuration
+  # Serve CSS, JS, images from META-INF/views (same location as templates)
+  web:
+    resources:
+      static-locations: classpath:/META-INF/views/
+      cache:
+        period: 3600  # Cache static resources for 1 hour
+
+  # JSON Configuration
+  jackson:
+    serialization:
+      indent-output: true
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+
+# ===================================================================
+# Actuator / Management Configuration
+# ===================================================================
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info,metrics,prometheus,caches,scheduledtasks
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+
+# ===================================================================
+# Application-specific Configuration (scp.*)
+# Maps to ApplicationProperties.java
+# ===================================================================
+scp:
+  # Server mode selection
+  server:
+    mode: spring-boot  # 'undertow' (legacy) or 'spring-boot' (new)
+
+  # HTTP Configuration
+  http:
+    host: 0.0.0.0
+    port: 9090
+    cors:
+      allow-origin: "*"
+      allow-header: "Content-Type"
+      allow-origin-test: false
+
+  # Cache Configuration
+  cache:
+    config: conf/config.json
+    prefetch: true
+    management: false
+    statistics: false
+    enabled: true
+    ttl-minutes: 30
+
+  # GitHub Configuration
+  github:
+    organization: ${GITHUB_ORGANIZATION:Cantara}
+    client-id: ${GITHUB_CLIENT_ID:}
+    client-secret: ${GITHUB_CLIENT_SECRET:}
+    access-token: ${GITHUB_ACCESS_TOKEN:}
+    repository:
+      visibility: public  # public, private, or all
+    webhook:
+      security-access-token: ${GITHUB_WEBHOOK_SECRET:}
+
+  # Rendering Configuration
+  render:
+    max-group-commits: 5
+
+  # Scheduled Tasks Configuration
+  scheduled:
+    enabled: true
+    tasks-interval: 60s
+    repository-refresh-minutes: 30
+    commit-fetch-minutes: 15
+    jenkins:
+      interval-minutes: 5
+    snyk:
+      interval-minutes: 15
+    shields:
+      interval-minutes: 15
+
+  # Jenkins Integration
+  jenkins:
+    base-url: https://jenkins.quadim.ai
+
+  # Snyk Integration
+  snyk:
+    api-token: ${SNYK_API_TOKEN:}
+    organization-id: ${SNYK_ORG_ID:}
+
+  # Shields.io Integration
+  shields:
+    base-url: https://img.shields.io
+
+# ===================================================================
+# Logging Configuration
+# ===================================================================
+logging:
+  level:
+    root: INFO
+    no.cantara.docsite: INFO
+    org.springframework: INFO
+    org.springframework.web: INFO
+    org.springframework.cache: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# ===================================================================
+# Development Profile
+# ===================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  # Development-specific settings
+  thymeleaf:
+    cache: false
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+logging:
+  level:
+    no.cantara.docsite: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.cache: DEBUG
+
+# ===================================================================
+# Production Profile
+# ===================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  # Production-specific settings
+  thymeleaf:
+    cache: true
+
+scp:
+  cache:
+    ttl-minutes: 60  # Longer cache in production
+
+logging:
+  level:
+    root: WARN
+    no.cantara.docsite: INFO
+    org.springframework: WARN
+
+# ===================================================================
+# Test Profile
+# ===================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  cache:
+    type: none  # Disable caching in tests
+
+scp:
+  http:
+    port: 0  # Random port for tests
+
+  cache:
+    prefetch: false
+
+  scheduled:
+    enabled: false  # Disable scheduling in tests
+
+logging:
+  level:
+    no.cantara.docsite: DEBUG

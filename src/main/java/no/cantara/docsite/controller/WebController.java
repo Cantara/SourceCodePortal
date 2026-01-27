@@ -18,6 +18,21 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * Legacy Undertow Web Controller
+ *
+ * @deprecated This controller is part of the legacy Undertow mode and will be removed in a future version.
+ * Use Spring Boot mode instead (mvn spring-boot:run). All web page routing is now handled by Spring MVC
+ * @Controller classes:
+ * - DashboardWebController (/dashboard)
+ * - GroupWebController (/group/{groupId})
+ * - CommitsWebController (/commits/*)
+ * - ContentsWebController (/contents/{org}/{repo}/{branch})
+ * - WikiWebController (/wiki/{pageName})
+ *
+ * This class is kept for backward compatibility with Undertow standalone mode only.
+ */
+@Deprecated(since = "0.10.17-SNAPSHOT", forRemoval = true)
 class WebController implements HttpHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebController.class);
