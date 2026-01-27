@@ -8,13 +8,14 @@ import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
 import static java.net.HttpURLConnection.HTTP_OK;
-import static org.testng.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class MavenPOMTest {
 
@@ -37,7 +38,8 @@ public class MavenPOMTest {
         assertNotNull(mavenPom);
     }
 
-    @Test(enabled = false)
+    @Disabled
+    @Test
     public void getMavenPOM() {
         GetGitHubCommand<String> command = new GetGitHubCommand<>("githubRepos", configuration(), Optional.empty(),
                 String.format("https://api.github.com/repos/%s/%s/contents/%s?ref=%s", "Cantara", "SourceCodePortal", "pom.xml", "master"),

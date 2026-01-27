@@ -6,8 +6,8 @@ import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.net.http.HttpResponse;
 import java.util.Optional;
@@ -25,7 +25,7 @@ public class GitHubRateLimitTest {
         return configuration;
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testGitHubApiLimit() {
         DynamicConfiguration configuration = configuration();

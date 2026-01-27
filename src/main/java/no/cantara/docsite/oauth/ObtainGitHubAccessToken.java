@@ -163,25 +163,25 @@ public class ObtainGitHubAccessToken implements Closeable {
     }
 
     public boolean isLoginPage() {
-        return driver.findElementById("login_field") != null; // check location url instead
+        return driver.findElement(By.id("login_field")) != null; // check location url instead
     }
 
     public void loginWithCredentials(String username, String password) {
-        driver.findElementById("login_field").sendKeys(username);
-        driver.findElementById("password").sendKeys(password);
-        driver.findElementByName("commit").click();
+        driver.findElement(By.id("login_field")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
+        driver.findElement(By.name("commit")).click();
     }
 
     private boolean isTwoFactorAuthentication() {
         try {
-            return driver.findElementById("otp") != null;
+            return driver.findElement(By.id("otp")) != null;
         } catch (RuntimeException e) {
             return false;
         }
     }
 
     private void verifyTwoFactorAuthentication(String otp) {
-        driver.findElementById("otp").sendKeys(otp);
+        driver.findElement(By.id("otp")).sendKeys(otp);
         WebElement button = driver.findElement(By.xpath("//*[@id=\"login\"]/div[5]/form/button"));
         while (!button.isEnabled()) {
             try {
@@ -195,7 +195,7 @@ public class ObtainGitHubAccessToken implements Closeable {
 
     public boolean isAuthorizationPage() {
         try {
-            return driver.findElementById("js-oauth-authorize-btn") != null; // check location url instead
+            return driver.findElement(By.id("js-oauth-authorize-btn")) != null; // check location url instead
         } catch (RuntimeException e) {
             return false;
         }

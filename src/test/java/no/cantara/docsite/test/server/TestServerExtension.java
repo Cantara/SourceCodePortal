@@ -6,18 +6,17 @@ import no.cantara.docsite.test.ConfigurationProfile;
 import no.cantara.docsite.test.client.TestClient;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.IInvokedMethod;
-import org.testng.IInvokedMethodListener;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,9 +28,9 @@ import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
 
-public class TestServerListener implements ITestListener, IInvokedMethodListener {
+public class TestServerExtension implements BeforeEachCallback, AfterAllCallback, ParameterResolver {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TestServerListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TestServerExtension.class);
     private static final Map<String, Long> timeStartProfilerMap = new ConcurrentHashMap<>(500);
     private static final Map<String, Long> timeStopProfilerMap = new ConcurrentHashMap<>(500);
 
@@ -62,41 +61,11 @@ public class TestServerListener implements ITestListener, IInvokedMethodListener
         return configurationByProfile.get(profile);
     }
 
-    public TestServerListener() {
+    public TestServerExtension() {
     }
 
     @Override
-    public void onTestStart(ITestResult result) {
-
-    }
-
-    @Override
-    public void onTestSuccess(ITestResult result) {
-
-    }
-
-    @Override
-    public void onTestFailure(ITestResult result) {
-
-    }
-
-    @Override
-    public void onTestSkipped(ITestResult result) {
-
-    }
-
-    @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-
-    }
-
-    @Override
-    public void onStart(ITestContext context) {
-        // server starts on demand
-    }
-
-    @Override
-    public void onFinish(ITestContext context) {
+    public void afterAll(ExtensionContext context) throws Exception {
         DynamicConfiguration configuration = configurationThreadLocal.get();
         if (configuration != null && configuration.evaluateToBoolean("test.time.profiler")) {
             StringBuilder sb = new StringBuilder();
@@ -147,25 +116,31 @@ public class TestServerListener implements ITestListener, IInvokedMethodListener
     }
 
     @Override
-    public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-        LOG.trace("BEGIN {} # {}", method.getTestMethod().getTestClass().getRealClass().getSimpleName(), method.getTestMethod().getMethodName());
+    public void beforeEach(ExtensionContext context) throws Exception {
+        String testClassName = context.getRequiredTestClass().getName();
+        String testMethodName = context.getRequiredTestMethod().getName();
+
+        LOG.trace("BEGIN {} # {}", context.getRequiredTestClass().getSimpleName(), testMethodName);
+
         boolean injectableTestClassFieldsInvalidated = false;
-        if (testclassHistory.remove(method.getTestMethod().getTestClass().getRealClass().getName())) {
+        if (testclassHistory.remove(testClassName)) {
             injectableTestClassFieldsInvalidated = true;
-            LOG.info("Invalidating injected varaibles for: {}.{}", method.getTestMethod().getTestClass().getRealClass().getName(), method.getTestMethod().getMethodName());
+            LOG.info("Invalidating injected varaibles for: {}.{}", testClassName, testMethodName);
         }
+
         String previousTestClazz = currentTestClazz.get();
-        if (!method.getTestMethod().getTestClass().getRealClass().getName().equals(previousTestClazz)) {
+        if (!testClassName.equals(previousTestClazz)) {
             if (previousTestClazz != null) {
                 testclassHistory.add(previousTestClazz);
             }
-            currentTestClazz.set(method.getTestMethod().getTestClass().getRealClass().getName());
+            currentTestClazz.set(testClassName);
         }
-        Method unitTestMethod = method.getTestMethod().getConstructorOrMethod().getMethod();
-        ConfigurationProfile configurationProfile = ofNullable(unitTestMethod)
+
+        ConfigurationProfile configurationProfile = ofNullable(context.getRequiredTestMethod())
                 .map(m -> m.getDeclaredAnnotation(ConfigurationProfile.class)).orElse(null);
-        ConfigurationOverride configurationOverride = ofNullable(unitTestMethod)
+        ConfigurationOverride configurationOverride = ofNullable(context.getRequiredTestMethod())
                 .map(m -> m.getDeclaredAnnotation(ConfigurationOverride.class)).orElse(null);
+
         String profile;
         if (configurationProfile != null) {
             profile = configurationProfile.value();
@@ -189,6 +164,7 @@ public class TestServerListener implements ITestListener, IInvokedMethodListener
             }
             addProfile(profile, builder.build());
         }
+
         DynamicConfiguration configuration = configurationThreadLocal.get();
         if (configuration != null && !configuration.equals(configurationInstance(profile))) {
             // Configuration profile has changed, stop server to avoid using dirty configuration
@@ -204,11 +180,11 @@ public class TestServerListener implements ITestListener, IInvokedMethodListener
         configurationThreadLocal.set(configuration);
 
         if (configuration.evaluateToBoolean("test.time.profiler")) {
-            final String test = testResult.getTestClass().getName() + "." + method.getTestMethod().getMethodName();
+            final String test = testClassName + "." + testMethodName;
             timeStartProfilerMap.put(test, System.currentTimeMillis());
         }
 
-        Object test = method.getTestMethod().getInstance();
+        Object test = context.getRequiredTestInstance();
         Field[] fields = test.getClass().getDeclaredFields();
         for (Field field : fields) {
             // test server
@@ -245,16 +221,36 @@ public class TestServerListener implements ITestListener, IInvokedMethodListener
                 }
             }
         }
+
+        // Store config in extension context for afterEach
+        context.getStore(ExtensionContext.Namespace.create(getClass())).put("configuration", configuration);
+        context.getStore(ExtensionContext.Namespace.create(getClass())).put("testName", testClassName + "." + testMethodName);
     }
 
     @Override
-    public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-        LOG.trace("END {} # {}", method.getTestMethod().getTestClass().getRealClass().getSimpleName(), method.getTestMethod().getMethodName());
-        DynamicConfiguration configuration = configurationThreadLocal.get();
-        if (configuration.evaluateToBoolean("test.time.profiler")) {
-            final String test = testResult.getTestClass().getName() + "." + method.getTestMethod().getMethodName();
-            timeStopProfilerMap.put(test, System.currentTimeMillis() - timeStartProfilerMap.get(test));
-        }
+    public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
+        Class<?> type = parameterContext.getParameter().getType();
+        return TestServer.class.equals(type) ||
+               TestClient.class.equals(type) ||
+               CacheStore.class.equals(type);
     }
 
+    @Override
+    public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
+        DynamicConfiguration configuration = configurationThreadLocal.get();
+        if (configuration == null) {
+            throw new IllegalStateException("Configuration not initialized");
+        }
+
+        Class<?> type = parameterContext.getParameter().getType();
+        if (TestServer.class.equals(type)) {
+            return startOrGetServer(configuration);
+        } else if (TestClient.class.equals(type)) {
+            return TestClient.newClient(startOrGetServer(configuration));
+        } else if (CacheStore.class.equals(type)) {
+            return startOrGetServer(configuration).getCacheStore();
+        }
+
+        throw new IllegalStateException("Unsupported parameter type: " + type);
+    }
 }

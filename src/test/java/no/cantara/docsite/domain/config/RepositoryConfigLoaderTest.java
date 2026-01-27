@@ -9,11 +9,12 @@ import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RepositoryConfigLoaderTest {
 
@@ -32,7 +33,8 @@ public class RepositoryConfigLoaderTest {
     }
 
 
-    @Test(enabled = false)
+    @Disabled
+    @Test
     public void findOrgGitHubRepos() {
         DynamicConfiguration configuration = configuration();
         RepositoryConfigLoader loader = new RepositoryConfigLoader(configuration, cacheStore(configuration));
@@ -40,7 +42,8 @@ public class RepositoryConfigLoaderTest {
         LOG.trace("repos: {}\nsize:{}", result, result.size());
     }
 
-    @Test(enabled = false)
+    @Disabled
+    @Test
     public void testRepositoryConfig() throws Exception {
         ExecutorService executorService = ExecutorService.create();
         executorService.start();

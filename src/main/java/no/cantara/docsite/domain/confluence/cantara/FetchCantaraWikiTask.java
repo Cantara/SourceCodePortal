@@ -42,7 +42,7 @@ public class FetchCantaraWikiTask extends WorkerTask {
         if (response.statusCode() == HTTP_OK) {
             String html = response.body();
             org.jsoup.nodes.Document doc = Jsoup.parse(html);
-            org.jsoup.nodes.Element body = doc.normalise().body();
+            org.jsoup.nodes.Element body = doc.body();
             body.select("a").forEach(el -> {
                 if (el.attributes().hasKey("href") && !"#".equals(el.attributes().get("href")) && !el.attributes().get("href").startsWith("http")) {
                     el.attr("href", "https://wiki.cantara.no" + el.attributes().get("href"));

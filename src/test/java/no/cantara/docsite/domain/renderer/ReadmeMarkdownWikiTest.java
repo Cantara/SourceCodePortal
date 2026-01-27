@@ -29,8 +29,8 @@ import org.commonmark.node.ThematicBreak;
 import org.commonmark.parser.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,7 +40,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.testng.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ReadmeMarkdownWikiTest {
 
@@ -53,7 +53,7 @@ public class ReadmeMarkdownWikiTest {
         }
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testPrintNodes() {
         List<Extension> extensions = Arrays.asList(TablesExtension.create());

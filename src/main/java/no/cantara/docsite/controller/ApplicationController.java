@@ -11,6 +11,22 @@ import no.cantara.docsite.executor.ScheduledExecutorService;
 import no.cantara.docsite.web.ResourceContext;
 import no.ssb.config.DynamicConfiguration;
 
+/**
+ * Legacy Undertow Application Controller
+ *
+ * @deprecated This controller is part of the legacy Undertow mode and will be removed in a future version.
+ * Use Spring Boot mode instead (mvn spring-boot:run). All routing is now handled by Spring MVC @Controller
+ * and @RestController classes in the no.cantara.docsite.controller.spring package.
+ *
+ * Spring Boot Mode (Recommended):
+ * - Declarative routing with @RequestMapping annotations
+ * - Better testability with @WebMvcTest
+ * - Industry-standard patterns
+ * - Integrated with Spring Boot Actuator
+ *
+ * This class is kept for backward compatibility with Undertow standalone mode only.
+ */
+@Deprecated(since = "0.10.17-SNAPSHOT", forRemoval = true)
 public class ApplicationController implements HttpHandler {
 
     private final String corsAllowOrigin;

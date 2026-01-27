@@ -1,7 +1,7 @@
 package no.cantara.docsite.health;
 
 import no.cantara.docsite.json.JsonbFactory;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 public class ThreadInfoTest {
 
