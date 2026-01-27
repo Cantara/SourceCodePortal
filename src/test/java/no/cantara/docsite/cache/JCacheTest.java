@@ -5,8 +5,8 @@ import no.ssb.config.StoreBasedDynamicConfiguration;
 import org.jsr107.ri.RICache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import javax.cache.Cache;
 import javax.cache.CacheManager;
@@ -16,8 +16,8 @@ import javax.cache.spi.CachingProvider;
 import java.util.Random;
 import java.util.Spliterator;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //@Listeners(TestServerListener.class)
 public class JCacheTest {
@@ -48,7 +48,7 @@ public class JCacheTest {
         assertEquals(k1.hashCode(), k2.hashCode());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testName() {
         CachingProvider cachingProvider = Caching.getCachingProvider();

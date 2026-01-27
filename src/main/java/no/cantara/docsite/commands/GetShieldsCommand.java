@@ -1,7 +1,5 @@
 package no.cantara.docsite.commands;
 
-import com.netflix.hystrix.HystrixEventType;
-import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import no.cantara.docsite.client.HttpRequests;
 import no.cantara.docsite.executor.WorkerTask;
 import no.ssb.config.DynamicConfiguration;
@@ -9,12 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.http.HttpResponse;
-import java.util.List;
 import java.util.Optional;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class GetShieldsCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
+public class GetShieldsCommand<R> extends BaseResilientCommand<HttpResponse<R>> {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetShieldsCommand.class);
 
@@ -29,7 +26,6 @@ public class GetShieldsCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
         this.worker = worker;
         this.url = url;
         this.bodyHandler = bodyHandler;
-        HystrixRequestContext.initializeContext();
     }
 
     private HttpResponse<R> get(String url) {
@@ -53,10 +49,10 @@ public class GetShieldsCommand<R> extends BaseHystrixCommand<HttpResponse<R>> {
     }
 
     @Override
-    protected HttpResponse<R> getFallback() {
-        List<HystrixEventType> executionEvents = getExecutionEvents();
-        Throwable failedExecutionException = getFailedExecutionException();
-        LOG.error("{} failed due to {}{}", worker.get().getClass().getSimpleName(), executionEvents, (failedExecutionException != null ? " -> "+failedExecutionException.getMessage() : ""));
+    protected HttpResponse<R> handleFallback(Exception e) {
+        String workerName = worker.map(w -> w.getClass().getSimpleName()).orElse("Unknown");
+        String circuitState = getCircuitBreaker().getState().toString();
+        LOG.error("{} failed. Circuit breaker state: {}. Error: {}", workerName, circuitState, e.getMessage());
         return getNullResponse(url);
     }
 }

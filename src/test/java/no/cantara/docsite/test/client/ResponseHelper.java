@@ -3,8 +3,8 @@ package no.cantara.docsite.test.client;
 import java.net.HttpURLConnection;
 import java.net.http.HttpResponse;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ResponseHelper<T> {
 

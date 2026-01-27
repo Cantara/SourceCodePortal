@@ -5,13 +5,13 @@ import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.domain.scm.ScmRepository;
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LinkURLTest {
 

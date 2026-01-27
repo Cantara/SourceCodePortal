@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.group;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;

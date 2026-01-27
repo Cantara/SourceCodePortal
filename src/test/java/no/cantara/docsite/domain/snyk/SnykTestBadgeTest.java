@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.snyk;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;

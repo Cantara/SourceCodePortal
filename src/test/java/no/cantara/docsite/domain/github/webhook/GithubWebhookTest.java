@@ -1,9 +1,9 @@
 package no.cantara.docsite.domain.github.webhook;
 
 import no.cantara.docsite.test.client.TestClient;
-import no.cantara.docsite.test.server.TestServerListener;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import no.cantara.docsite.test.server.TestServerExtension;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
 import java.io.BufferedReader;
@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
-@Listeners(TestServerListener.class)
+@ExtendWith(TestServerExtension.class)
 public class GithubWebhookTest {
 
     @Inject TestClient client;

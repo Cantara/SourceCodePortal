@@ -2,17 +2,17 @@ package no.cantara.docsite.web;
 
 import no.cantara.docsite.test.client.ResponseHelper;
 import no.cantara.docsite.test.client.TestClient;
-import no.cantara.docsite.test.server.TestServerListener;
+import no.cantara.docsite.test.server.TestServerExtension;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 
-import static org.testng.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Listeners(TestServerListener.class)
+@ExtendWith(TestServerExtension.class)
 public class ThymeleafTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ThymeleafTest.class);

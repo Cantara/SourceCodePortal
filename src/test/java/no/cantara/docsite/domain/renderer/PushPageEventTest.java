@@ -4,12 +4,12 @@ import no.cantara.docsite.domain.github.commits.GitHubPushCommitEvent;
 import no.cantara.docsite.json.JsonbFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PushPageEventTest {
 

@@ -1,6 +1,6 @@
 package no.cantara.docsite.executor;
 
-import com.netflix.hystrix.exception.HystrixRuntimeException;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +28,8 @@ public class WorkerRunner implements Runnable {
             LOG.warn("Re-queue: {} ({})", worker.getTask(), worker.retryCount());
             executor.requeue(worker); // always requeue on failure
 
-            if ((e instanceof HystrixRuntimeException)) {
-                LOG.error("{} -- {}", worker.getTask(), e.getMessage());
+            if ((e instanceof CallNotPermittedException)) {
+                LOG.error("{} -- Circuit breaker open: {}", worker.getTask(), e.getMessage());
 
             } else if (!(e.getCause() instanceof InterruptedException)) {
                 throw new RuntimeException(e);

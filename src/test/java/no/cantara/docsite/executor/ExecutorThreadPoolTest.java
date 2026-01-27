@@ -2,8 +2,8 @@ package no.cantara.docsite.executor;
 
 import no.ssb.config.DynamicConfiguration;
 import no.ssb.config.StoreBasedDynamicConfiguration;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class ExecutorThreadPoolTest {
 
@@ -26,7 +26,7 @@ public class ExecutorThreadPoolTest {
         }
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testName() throws Exception {
         DynamicConfiguration configuration = configuration();

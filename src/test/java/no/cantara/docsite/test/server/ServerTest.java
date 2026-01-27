@@ -1,15 +1,15 @@
 package no.cantara.docsite.test.server;
 
 import io.undertow.Undertow;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Listeners(TestServerListener.class)
+@ExtendWith(TestServerExtension.class)
 public class ServerTest {
 
     @Inject
