@@ -676,7 +676,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.2</version>
+                <version>3.5.4</version>
                 <!-- workaround for: https://issues.jboss.org/browse/UNDERTOW-1355 -->
                 <configuration>
                     <argLine>
