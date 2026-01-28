@@ -180,35 +180,39 @@ mvn spring-boot:run
 
 ## 📖 Documentation
 
+> **Complete Documentation**: See **[docs/README.md](docs/README.md)** for the full documentation hub with 25+ comprehensive guides.
+
 ### Getting Started
 - **[Quick Start Guide](docs/getting-started/quickstart.md)** - Get running in 5 minutes
-- **[Building](docs/getting-started/building.md)** - Build and run instructions
-- **[Configuration](docs/getting-started/configuration.md)** - Configure GitHub, Jenkins, Snyk
-- **[Development Setup](docs/getting-started/development.md)** - Set up dev environment
+- **[Building](docs/getting-started/building.md)** - Maven build commands and frontend compilation
+- **[Running](docs/getting-started/running.md)** - Spring Boot execution modes and profiles
+- **[Configuration](docs/getting-started/configuration.md)** - GitHub authentication and repository groups
 
 ### Architecture
-- **[Overview](docs/architecture/overview.md)** - System architecture
-- **[Spring Boot Setup](docs/architecture/spring-boot.md)** - Spring Boot configuration
-- **[Controllers](docs/architecture/controllers.md)** - Controller patterns
-- **[Caching Strategy](docs/architecture/caching.md)** - Cache configuration
-- **[Scheduled Tasks](docs/architecture/scheduled-tasks.md)** - Background jobs
+- **[Overview](docs/architecture/overview.md)** - System architecture and technology stack
+- **[Spring Boot](docs/architecture/spring-boot.md)** - Application initialization and setup
+- **[Controllers](docs/architecture/controllers.md)** - Request flow and Spring MVC patterns
+- **[Caching](docs/architecture/caching.md)** - Cache strategy with Caffeine
+- **[Packages](docs/architecture/packages.md)** - Package structure and responsibilities
 
 ### Features
-- **[Dashboard](docs/features/dashboard.md)** - Main dashboard features
-- **[Repository Groups](docs/features/repository-groups.md)** - Grouping configuration
-- **[Integrations](docs/features/integrations.md)** - External service integrations
-- **[Webhooks](docs/features/webhooks.md)** - GitHub webhook setup
-- **[Observability](docs/features/observability.md)** - Metrics and monitoring
+- **[Dashboard](docs/features/dashboard.md)** - Dashboard features and repository views
+- **[Repository Groups](docs/features/repository-groups.md)** - Group configuration and patterns
+- **[Integrations](docs/features/integrations.md)** - Jenkins, Snyk, Shields.io
+- **[Webhooks](docs/features/webhooks.md)** - Real-time GitHub updates
+- **[Snyk Integration](docs/features/snyk-integration.md)** - Security scanning details
 
 ### Operations
-- **[Deployment](docs/operations/deployment.md)** - Deploy to production
-- **[Monitoring](docs/operations/monitoring.md)** - Set up monitoring
-- **[Troubleshooting](docs/operations/troubleshooting.md)** - Common issues
+- **[Docker](docs/operations/docker.md)** - Docker build and deployment
+- **[Deployment](docs/operations/deployment.md)** - Production deployment (JAR, Docker, K8s)
+- **[Monitoring](docs/operations/monitoring.md)** - Actuator, Prometheus, Grafana
+- **[Troubleshooting](docs/operations/troubleshooting.md)** - Common issues and solutions
 
-### Development
-- **[Contributing](docs/development/contributing.md)** - Contribution guidelines
-- **[Testing](docs/development/testing.md)** - Testing guide
-- **[Skills](docs/development/skills.md)** - Automation skills for common tasks
+### For Claude Code Users
+- **[CLAUDE.md](CLAUDE.md)** - Comprehensive Claude Code guidance
+- **[CLAUDE_SKILLS.md](CLAUDE_SKILLS.md)** - Automation skills for common tasks
+- **[LEARNINGS.md](LEARNINGS.md)** - Gotchas and best practices
+- **[VERIFICATION_GUIDE.md](VERIFICATION_GUIDE.md)** - Verify Spring Boot setup
 
 ---
 
