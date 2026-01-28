@@ -11,17 +11,6 @@ spring:
   application:
     name: source-code-portal
 
-# ===================================================================
-# Server Configuration
-# ===================================================================
-server:
-  port: ${scp.http.port:9090}
-  address: ${scp.http.host:0.0.0.0}
-  undertow:
-    threads:
-      worker: 20
-      io: 4
-
   # Caching Configuration
   cache:
     type: caffeine
@@ -59,6 +48,17 @@ server:
       write-dates-as-timestamps: false
     deserialization:
       fail-on-unknown-properties: false
+
+# ===================================================================
+# Server Configuration
+# ===================================================================
+server:
+  port: ${scp.http.port:9090}
+  address: ${scp.http.host:0.0.0.0}
+  undertow:
+    threads:
+      worker: 20
+      io: 4
 
 # ===================================================================
 # Actuator / Management Configuration

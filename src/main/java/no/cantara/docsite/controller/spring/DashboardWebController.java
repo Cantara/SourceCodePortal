@@ -5,7 +5,11 @@ import no.cantara.docsite.cache.CacheRepositoryKey;
 import no.cantara.docsite.cache.CacheStore;
 import no.cantara.docsite.config.ApplicationProperties;
 import no.cantara.docsite.domain.config.RepoConfig;
+import no.cantara.docsite.domain.scm.ScmCommitRevision;
+import no.cantara.docsite.domain.scm.ScmCommitRevisionService;
 import no.cantara.docsite.domain.scm.ScmRepository;
+import no.cantara.docsite.domain.scm.ScmRepositoryGroup;
+import no.cantara.docsite.domain.scm.ScmRepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,55 +94,76 @@ public class DashboardWebController {
      * - Repository count
      * - Recent commit count
      * - Build status summary
+     * - Latest 5 commits across all repositories
      *
      * Model attributes:
-     * - groups: List of repository groups
+     * - repositoryGroups: Map of repository groups
+     * - lastCommitRevisions: List of latest 5 commits
      * - organization: GitHub organization name
-     * - totalRepositories: Total repository count
-     * - totalCommits: Total commit count
+     * - connectedRepos: Total repository count
+     * - updatedTime: Current time
      *
      * @param model Spring MVC model for template variables
      * @return View name "index" (resolves to index.html)
      */
-    @GetMapping("/dashboard")
+    @GetMapping({"/dashboard", "/index"})
     public String dashboard(Model model) {
         LOG.debug("Rendering dashboard");
 
         try {
-            // Get all repository groups
-            List<Map<String, Object>> groups = new ArrayList<>();
-            RepoConfig config = cacheStore.getRepositoryConfig().getConfig();
+            // Get latest 5 commits across all repositories
+            ScmCommitRevisionService commitRevisionService = new ScmCommitRevisionService(cacheStore);
+            List<ScmCommitRevision> lastCommitRevisions = commitRevisionService.entrySet().values().stream()
+                .limit(5)
+                .toList();
+            model.addAttribute("lastCommitRevisions", lastCommitRevisions);
 
-            for (RepoConfig.Repo repo : config.repos.get(RepoConfig.ScmProvider.GITHUB)) {
-                Map<String, Object> group = new HashMap<>();
-                group.put("groupId", repo.groupId);
-                group.put("displayName", repo.displayName);
-                group.put("description", repo.description);
+            // Get repository groups
+            ScmRepositoryService scmRepositoryService = new ScmRepositoryService(cacheStore);
+            Map<CacheRepositoryKey, ScmRepositoryGroup<ScmRepository>> repositoryGroups =
+                scmRepositoryService.defaultRepositoryGroups();
+            model.addAttribute("repositoryGroups", repositoryGroups);
 
-                // Get repositories for this group
-                List<ScmRepository> repositories = getRepositoryGroupsByGroupId(repo.groupId);
-                group.put("repositoryCount", repositories.size());
-                group.put("repositories", repositories);
-
-                // Calculate statistics
-                long totalCommits = repositories.stream()
-                    .mapToLong(r -> getCommitCount(r.cacheRepositoryKey))
-                    .sum();
-                group.put("commitCount", totalCommits);
-
-                groups.add(group);
-            }
-
-            model.addAttribute("groups", groups);
-            model.addAttribute("organization", properties.getGithub().getOrganization());
-            model.addAttribute("totalRepositories", groups.stream().mapToInt(g -> (Integer) g.get("repositoryCount")).sum());
-            model.addAttribute("totalCommits", groups.stream().mapToLong(g -> (Long) g.get("commitCount")).sum());
+            // Add metadata for template
+            model.addAttribute("updatedTime", java.time.LocalDateTime.now().format(
+                java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+            model.addAttribute("connectedRepos", repositoryGroups.size());
 
             return "index"; // Resolves to META-INF/views/index.html
         } catch (Exception e) {
             LOG.error("Error rendering dashboard", e);
             model.addAttribute("error", "Failed to load dashboard: " + e.getMessage());
             return "error"; // Resolves to META-INF/views/error.html
+        }
+    }
+
+    /**
+     * HTMX endpoint for latest commits fragment
+     *
+     * GET /api/commits/latest
+     *
+     * Returns HTML fragment with latest 5 commits for HTMX polling.
+     * This endpoint is called every 30 seconds by HTMX to update
+     * the commits section without full page refresh.
+     *
+     * @param model Spring MVC model for template variables
+     * @return View name "fragments/commits-latest" (partial HTML)
+     */
+    @GetMapping("/api/commits/latest")
+    public String latestCommitsFragment(Model model) {
+        LOG.debug("Fetching latest commits fragment for HTMX");
+
+        try {
+            ScmCommitRevisionService commitRevisionService = new ScmCommitRevisionService(cacheStore);
+            List<ScmCommitRevision> lastCommitRevisions = commitRevisionService.entrySet().values().stream()
+                .limit(5)
+                .toList();
+            model.addAttribute("lastCommitRevisions", lastCommitRevisions);
+
+            return "fragments/commits-latest"; // Resolves to META-INF/views/fragments/commits-latest.html
+        } catch (Exception e) {
+            LOG.error("Error fetching latest commits fragment", e);
+            return "fragments/error"; // Return error fragment
         }
     }
 
