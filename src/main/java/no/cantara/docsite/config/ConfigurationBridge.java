@@ -38,7 +38,6 @@ import java.util.Map;
  * @since Phase 2 - Spring Boot Migration - Task 3
  */
 @Component
-@Profile("!test") // Don't activate in test profile to avoid conflicts
 public class ConfigurationBridge {
 
     private final ApplicationProperties properties;

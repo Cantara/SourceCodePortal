@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Configuration
 @EnableCaching
-@Profile("!test") // Don't enable in test profile
+@Profile("xxx-disabled") // Don't enable in test profile
 public class CacheConfiguration {
 
     private final ApplicationProperties properties;

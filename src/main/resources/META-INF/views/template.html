@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" data-bs-theme="light" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Cantara - SourceCode Dashboard Portal</title>
@@ -37,6 +37,11 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/wiki/about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-link nav-link" id="theme-toggle" aria-label="Toggle theme">
+                                <i class="fas fa-moon" id="theme-icon"></i>
+                            </button>
                         </li>
                     </ul>
                 </div>

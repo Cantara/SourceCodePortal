@@ -112,3 +112,85 @@ header {
 article img {
   max-width: 100%;
 }
+
+// -------------------------------------------------------------
+// Dark Mode Enhancements
+// -------------------------------------------------------------
+
+// Theme toggle button styling
+#theme-toggle {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: inherit;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+// Dark mode specific overrides
+[data-bs-theme="dark"] {
+  // Navbar adjustments for dark mode
+  .navbar-brand {
+    color: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+
+    &:hover {
+      color: rgba(255, 255, 255, 1) !important;
+    }
+  }
+
+  // Card styling in dark mode
+  .card {
+    background-color: var(--bs-gray-900);
+    border-color: var(--bs-gray-800);
+  }
+
+  // Jumbotron in dark mode
+  .jumbotron {
+    background-color: var(--bs-gray-900);
+    color: var(--bs-gray-100);
+  }
+
+  // Code blocks in dark mode
+  pre, code {
+    background-color: var(--bs-gray-800);
+    color: var(--bs-gray-200);
+  }
+
+  // Links in dark mode
+  a {
+    color: #6ea8fe;
+
+    &:hover {
+      color: #9ec5fe;
+    }
+  }
+
+  // Tables in dark mode
+  .table {
+    --bs-table-bg: var(--bs-gray-900);
+    --bs-table-border-color: var(--bs-gray-800);
+  }
+}
+
+// Light mode specific (ensure consistency)
+[data-bs-theme="light"] {
+  .navbar-brand {
+    color: black !important;
+  }
+
+  .nav-link {
+    color: black !important;
+  }
+}

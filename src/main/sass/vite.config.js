@@ -4,7 +4,7 @@ import { resolve } from 'path';
 export default defineConfig({
   root: './',
   build: {
-    outDir: '../../resources/META-INF/views',
+    outDir: '../resources/META-INF/views',
     emptyOutDir: false,
     rollupOptions: {
       input: {
