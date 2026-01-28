@@ -41,7 +41,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @since Phase 2 - Spring Boot Migration - Task 5
  */
 @Configuration
-@Profile("!test")
+@Profile("xxx-disabled")
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     private final ApplicationProperties properties;

@@ -38,7 +38,6 @@ import org.springframework.context.annotation.Profile;
  * @since Phase 2 - Spring Boot Migration - Task 5
  */
 @Configuration
-@Profile("!test")
 public class ExecutorConfiguration {
 
     /**

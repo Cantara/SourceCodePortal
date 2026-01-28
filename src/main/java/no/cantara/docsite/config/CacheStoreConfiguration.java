@@ -28,7 +28,6 @@ import org.springframework.context.annotation.Profile;
  * @since Phase 2 - Spring Boot Migration - Task 4
  */
 @Configuration
-@Profile("!test")
 public class CacheStoreConfiguration {
 
     /**

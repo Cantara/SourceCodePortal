@@ -40,7 +40,7 @@ import java.util.logging.Level;
  * @since Phase 2 - Spring Boot Migration - Task 8
  */
 @Component
-@Profile("!test")
+@Profile("xxx-disabled")
 @Order(1)
 public class SpringBootInitializer implements ApplicationRunner {
 

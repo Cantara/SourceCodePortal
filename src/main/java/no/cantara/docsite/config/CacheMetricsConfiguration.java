@@ -35,7 +35,7 @@ import jakarta.annotation.PostConstruct;
  * @since Phase 2 - Spring Boot Migration - Task 4
  */
 @Configuration
-@Profile("!test")
+@Profile("xxx-disabled")
 public class CacheMetricsConfiguration {
 
     private final CacheManager cacheManager;
