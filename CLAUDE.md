@@ -25,7 +25,27 @@ Source Code Portal (SCP) is an organizational dashboard that aggregates and disp
 - Sass/SCSS (frontend styling)
 - Maven (build system)
 
+## Documentation Structure
+
+This file provides comprehensive guidance for Claude Code. For detailed guides organized by topic, see the **[docs/ directory](docs/README.md)**:
+
+- **[Getting Started](docs/getting-started/)** - Quick start, building, running, configuration
+- **[Architecture](docs/architecture/)** - System design, Spring Boot, controllers, caching, packages
+- **[Features](docs/features/)** - Dashboard, repository groups, integrations, webhooks
+- **[Operations](docs/operations/)** - Docker, deployment, monitoring, troubleshooting
+- **[Development](docs/development/)** - Contributing, testing, skills
+
+**Quick links**:
+- 📖 [Documentation Hub](docs/README.md) - Complete documentation index
+- 🚀 [Quick Start Guide](docs/getting-started/quickstart.md) - Get running in 5 minutes
+- 🏗️ [Architecture Overview](docs/architecture/overview.md) - System architecture
+- 🔧 [Troubleshooting Guide](docs/operations/troubleshooting.md) - Common issues
+
+---
+
 ## Build Commands
+
+📖 **For detailed build guide, see [docs/getting-started/building.md](docs/getting-started/building.md)**
 
 ```bash
 # Full clean build with tests
@@ -48,6 +68,8 @@ mvn test -Dtest=TestClassName#methodName
 ```
 
 ## Running the Application
+
+📖 **For detailed running guide, see [docs/getting-started/running.md](docs/getting-started/running.md)**
 
 ### Spring Boot Mode (Recommended)
 
@@ -114,6 +136,8 @@ java -cp target/source-code-portal-*.jar no.cantara.docsite.Server
 
 ## Configuration
 
+📖 **For detailed configuration guide, see [docs/getting-started/configuration.md](docs/getting-started/configuration.md)**
+
 **Configuration files are loaded in this order (later overrides earlier):**
 1. `src/main/resources/application-defaults.properties` (defaults)
 2. `application.properties` (custom overrides)
@@ -144,6 +168,13 @@ docker run -it -e SCP_github.oauth2.client.clientId=CLIENT_ID \
 ```
 
 ## Architecture
+
+📖 **For detailed architecture documentation, see [docs/architecture/](docs/architecture/)**:
+- [Overview](docs/architecture/overview.md) - System architecture and technology stack
+- [Spring Boot](docs/architecture/spring-boot.md) - Application initialization details
+- [Controllers](docs/architecture/controllers.md) - Request flow and Spring MVC
+- [Caching](docs/architecture/caching.md) - Cache strategy and implementation
+- [Packages](docs/architecture/packages.md) - Package structure and responsibilities
 
 ### Core Components
 
@@ -295,6 +326,8 @@ Thymeleaf templates are in `src/main/resources/META-INF/views/`:
 
 ## Docker
 
+📖 **For detailed Docker guide, see [docs/operations/docker.md](docs/operations/docker.md)**
+
 **Build Docker image:**
 ```bash
 # Build specific version
@@ -317,6 +350,8 @@ sudo cp config.json /var/lib/docker/aufs/mnt/CONTAINER_ID/home/sourcecodeportal/
 ```
 
 ## GitHub Webhooks
+
+📖 **For detailed webhook guide, see [docs/features/webhooks.md](docs/features/webhooks.md)**
 
 To receive real-time updates from GitHub:
 
@@ -678,11 +713,15 @@ public class MyRestController {
 
 When starting work on this project:
 
-1. **Read this file first** (`CLAUDE.md`)
-2. **Read project overview** (`README.md`) - User-facing overview
+1. **Read this file first** (`CLAUDE.md`) - Comprehensive overview for Claude Code
+2. **Browse documentation hub** ([docs/README.md](docs/README.md)) - Complete documentation index
 3. **Review learnings** (`LEARNINGS.md`) - All gotchas and best practices
 4. **Check skills** (`CLAUDE_SKILLS.md`) - Automation skills available
-5. **Verification** (`VERIFICATION_GUIDE.md`) - How to verify Spring Boot works
+5. **For specific tasks, see**:
+   - [Getting Started](docs/getting-started/) - Setup, building, running, configuration
+   - [Architecture](docs/architecture/) - System design and patterns
+   - [Features](docs/features/) - Capabilities and integrations
+   - [Operations](docs/operations/) - Deployment, monitoring, troubleshooting
 6. **Use skills** for common tasks:
    - `/migrate-controller` - Convert Undertow → Spring MVC
    - `/add-scheduled-task` - Create @Scheduled tasks
@@ -692,22 +731,32 @@ When starting work on this project:
 ### Documentation Structure
 
 ```
-Root Level (quick access):
+Root Level (essential files, 7 total):
 - README.md              - Project overview
+- CLAUDE.md              - This file (Claude Code guide)
 - CHANGELOG.md           - Version history
 - LEARNINGS.md           - All gotchas & learnings
-- CLAUDE.md              - This file (Claude Code guide)
+- VERIFICATION_GUIDE.md  - Verify Spring Boot works
 - CLAUDE_SKILLS.md       - Automation skills
-- VERIFICATION_GUIDE.md  - Verify Spring Boot
-- PHASE2_PROGRESS.md     - Phase 2 reference
+- TODO.md                - Current work tracking
 
-docs/ (detailed guides):
-- getting-started/       - Quick start, building, config
-- architecture/          - System design, patterns
-- features/              - Feature documentation
-- operations/            - Deployment, monitoring
-- development/           - Contributing, testing
-- history/               - Archived docs (Phase 1 & 2)
+docs/ (organized detailed guides, 25+ files):
+├── README.md            - Documentation hub (START HERE)
+├── getting-started/     - Quick start, building, running, config (5 files)
+├── architecture/        - System design, Spring Boot, caching, packages (6 files)
+├── features/            - Dashboard, groups, integrations, webhooks (6 files)
+├── operations/          - Docker, deployment, monitoring, troubleshooting (5 files)
+├── development/         - Contributing, testing, skills (3 files)
+└── history/             - Archived docs from Phase 1, 2, 3 (22 files)
+    ├── phase1/          - Java 21, JUnit 5 migration
+    ├── phase2/          - Spring Boot migration
+    ├── phase3/          - Frontend improvements
+    ├── testing/         - Test completion reports
+    ├── sessions/        - Session summaries
+    ├── planning/        - Historical planning
+    ├── skills/          - Skills proposals
+    ├── deprecated/      - Deprecation guides
+    └── migration-notes/ - Gotchas and notes
 ```
 
 ### Important References
