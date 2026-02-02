@@ -59,7 +59,7 @@
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <docker.image>scp</docker.image>
         <spring-boot.version>3.2.2</spring-boot.version>
-        <undertow.io.version>2.3.17.Final</undertow.io.version>
+        <undertow.io.version>2.3.21.Final</undertow.io.version>
         <xnio.version>3.8.16.Final</xnio.version>
         <jboss-threads.version>3.6.1.Final</jboss-threads.version>
         <thymeleaf.version>3.1.2.RELEASE</thymeleaf.version>
