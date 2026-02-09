@@ -61,7 +61,7 @@
         <spring-boot.version>3.2.2</spring-boot.version>
         <undertow.io.version>2.3.17.Final</undertow.io.version>
         <xnio.version>3.8.16.Final</xnio.version>
-        <jboss-threads.version>3.6.1.Final</jboss-threads.version>
+        <jboss-threads.version>3.9.2</jboss-threads.version>
         <thymeleaf.version>3.1.2.RELEASE</thymeleaf.version>
         <commonmark.version>0.22.0</commonmark.version>
         <slf4j.version>2.0.16</slf4j.version>
