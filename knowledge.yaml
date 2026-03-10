@@ -1,0 +1,29 @@
+id: source-code-portal
+name: Source Code Portal
+version: 0.10.17-SNAPSHOT
+description: |
+  Unified dashboard for GitHub organisations. Aggregates repositories, commits,
+  build status, and documentation across multiple GitHub organisations into
+  logical system groups. Built on Java 21 with a Jetty/Jersey backend.
+units:
+  - id: portal-app
+    name: Portal Application
+    type: webapp
+    description: Dashboard web application — aggregated repository and build status view.
+    path: src/main/java/no/cantara/docsite
+  - id: github-client
+    name: GitHub Client
+    type: component
+    description: GitHub API integration for fetching repo metadata, commits, and CI status.
+  - id: repo-aggregator
+    name: Repository Aggregator
+    type: component
+    description: Cross-organisation repository grouping into logical system and product views.
+  - id: build-status
+    name: Build Status
+    type: component
+    description: CI build status integration — displays pass/fail badges per repository.
+  - id: cache
+    name: Cache
+    type: component
+    description: In-memory caching layer to reduce GitHub API rate-limit pressure.
