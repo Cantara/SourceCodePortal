@@ -63,7 +63,7 @@
         <xnio.version>3.8.16.Final</xnio.version>
         <jboss-threads.version>3.6.1.Final</jboss-threads.version>
         <thymeleaf.version>3.1.2.RELEASE</thymeleaf.version>
-        <commonmark.version>0.22.0</commonmark.version>
+        <commonmark.version>0.27.1</commonmark.version>
         <slf4j.version>2.0.16</slf4j.version>
         <logback.version>1.5.26</logback.version>
         <testng.version>7.7.0</testng.version>
