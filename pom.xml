@@ -68,7 +68,7 @@
         <logback.version>1.5.32</logback.version>
         <testng.version>7.7.0</testng.version>
         <junit.version>5.14.3</junit.version>
-        <resilience4j.version>2.2.0</resilience4j.version>
+        <resilience4j.version>2.4.0</resilience4j.version>
         <caffeine.version>3.2.3</caffeine.version>
     </properties>
 
