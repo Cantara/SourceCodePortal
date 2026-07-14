@@ -1,4 +1,4 @@
-kcp_version: "0.21"
+kcp_version: "0.26"
 updated: "2026-06-20"
 language: en
 license: "Apache-2.0"
@@ -25,34 +25,27 @@ units:
     type: webapp
     description: Dashboard web application — aggregated repository and build status view.
     path: src/main/java/no/cantara/docsite
-      content_hash:
-        algorithm: sha256
-        value: ""
   - id: github-client
     name: GitHub Client
     type: component
     description: GitHub API integration for fetching repo metadata, commits, and CI status.
-      content_hash:
-        algorithm: sha256
-        value: ""
   - id: repo-aggregator
     name: Repository Aggregator
     type: component
     description: Cross-organisation repository grouping into logical system and product views.
-      content_hash:
-        algorithm: sha256
-        value: ""
   - id: build-status
     name: Build Status
     type: component
     description: CI build status integration — displays pass/fail badges per repository.
-      content_hash:
-        algorithm: sha256
-        value: ""
   - id: cache
     name: Cache
     type: component
     description: In-memory caching layer to reduce GitHub API rate-limit pressure.
-      content_hash:
-        algorithm: sha256
-        value: ""
+
+# Serving Endpoint Binding (KCP SPEC v0.26 §3.12): authoritative manifest URL
+# and authorized MCP representative. Ignored by pre-0.26 verifiers.
+serving:
+  manifest:
+    - https://raw.githubusercontent.com/Cantara/SourceCodePortal/master/knowledge.yaml
+  mcp:
+    - https://mcp.cantara.no/mcp
