@@ -32,7 +32,7 @@ public class MavenPOMTest {
 
     @Test
     public void testMavenPOM() {
-        HttpResponse<String> response = HttpRequests.get("https://raw.githubusercontent.com/statisticsnorway/distributed-saga/master/pom.xml");
+        HttpResponse<String> response = HttpRequests.get("https://raw.githubusercontent.com/Cantara/distributed-saga/master/pom.xml");
 
         MavenPOM mavenPom = FetchMavenPOMTask.parse(response.body());
         assertNotNull(mavenPom);
