@@ -2,10 +2,10 @@ package no.cantara.docsite.domain.links;
 
 import no.cantara.docsite.json.JsonbFactory;
 
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
-import javax.json.bind.annotation.JsonbProperty;
-import javax.json.bind.annotation.JsonbTransient;
+import jakarta.json.Json;
+import jakarta.json.JsonObjectBuilder;
+import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
