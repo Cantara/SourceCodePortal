@@ -19,7 +19,7 @@ import no.cantara.docsite.domain.links.SnykIOTestURL;
 import no.cantara.docsite.json.JsonbFactory;
 import no.ssb.config.DynamicConfiguration;
 
-import javax.json.bind.annotation.JsonbTransient;
+import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;

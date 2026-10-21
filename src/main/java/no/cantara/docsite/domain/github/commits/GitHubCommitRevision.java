@@ -5,8 +5,8 @@ import no.cantara.docsite.cache.CacheShaKey;
 import no.cantara.docsite.domain.scm.ScmCommitRevision;
 import no.cantara.docsite.json.JsonbFactory;
 
-import javax.json.bind.annotation.JsonbProperty;
-import javax.json.bind.annotation.JsonbTransient;
+import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbTransient;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;

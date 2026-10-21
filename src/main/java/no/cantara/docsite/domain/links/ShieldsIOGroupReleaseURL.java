@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.links;
 
 import no.cantara.docsite.domain.scm.ScmRepository;
 
-import javax.json.bind.annotation.JsonbTransient;
+import jakarta.json.bind.annotation.JsonbTransient;
 import java.util.Objects;
 
 public class ShieldsIOGroupReleaseURL extends LinkURL<ScmRepository> {

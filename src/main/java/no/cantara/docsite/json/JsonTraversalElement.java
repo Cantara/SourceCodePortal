@@ -1,6 +1,6 @@
 package no.cantara.docsite.json;
 
-import javax.json.JsonValue;
+import jakarta.json.JsonValue;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;

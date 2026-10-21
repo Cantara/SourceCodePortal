@@ -3,8 +3,8 @@ package no.cantara.docsite.health;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
+import jakarta.json.Json;
+import jakarta.json.JsonObjectBuilder;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
