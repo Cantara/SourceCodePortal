@@ -3,7 +3,7 @@ package no.cantara.docsite.domain.github.contents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.json.bind.adapter.JsonbAdapter;
+import jakarta.json.bind.adapter.JsonbAdapter;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 

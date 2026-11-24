@@ -186,14 +186,11 @@
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>2.3.3</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/javax.json.bind/javax.json.bind-api -->
         <dependency>
-            <groupId>javax.json.bind</groupId>
-            <artifactId>javax.json.bind-api</artifactId>
-            <version>1.0</version>
+            <groupId>jakarta.json.bind</groupId>
+            <artifactId>jakarta.json.bind-api</artifactId>
         </dependency>
 
 
@@ -250,28 +247,36 @@
         </dependency>
 
         <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
-            <version>1.1.4</version>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- The JSON-P implementation. org.glassfish:javax.json bundled the API and
+             the implementation in one jar; under jakarta they are separate, and
+             Parsson is that same implementation renamed. Not managed by the Spring
+             Boot BOM, so it carries a version. -->
+        <dependency>
+            <groupId>org.eclipse.parsson</groupId>
+            <artifactId>parsson</artifactId>
+            <version>1.1.9</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse</groupId>
-            <!-- Must stay on the 1.0.x line. Yasson 1.0.x implements javax.json.bind;
-                 2.x implements jakarta.json.bind. This project uses the javax API
-                 (javax.json.bind-api 1.0 + org.glassfish:javax.json 1.1.4), so a 2.x
-                 yasson registers a provider that cannot be cast to
-                 javax.json.bind.spi.JsonbProvider, and every JSON-B call fails at
-                 runtime with ClassCastException. Do not let a bot bump this across
-                 the major. -->
+            <!-- Version comes from the Spring Boot BOM (3.0.3), deliberately. Yasson
+                 declares the JSON-B and JSON-P API coordinates itself, and the BOM
+                 manages them, so a hand-pinned yasson does not pin its own API: 1.0.11
+                 asked for jakarta.json.bind-api 1.0.2 and resolved 3.0.0. Keeping the
+                 implementation and the API on one line is what the BOM is for. -->
             <artifactId>yasson</artifactId>
-            <version>1.0.11</version>
             <scope>compile</scope>
             <exclusions>
+                <!-- Same intent as before, at the jakarta coordinate yasson 3 declares. -->
                 <exclusion>
-                    <groupId>javax.enterprise</groupId>
-                    <artifactId>cdi-api</artifactId>
+                    <groupId>jakarta.enterprise</groupId>
+                    <artifactId>jakarta.enterprise.cdi-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -296,11 +301,11 @@
             </exclusions>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
+        <!-- Version from the Spring Boot BOM's nested jaxb-bom (4.0.4). The old pin
+             was a 2018 milestone that pulled javax.xml.bind:jaxb-api back in. -->
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>2.4.0-b180830.0438</version>
         </dependency>
 
         <dependency>
@@ -450,9 +455,9 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>1</version>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>2.0.1</version>
             <scope>test</scope>
         </dependency>
 

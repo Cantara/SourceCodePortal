@@ -3,10 +3,10 @@ package no.cantara.docsite.domain.config;
 import no.cantara.docsite.json.JsonDocumentTraversal;
 import no.cantara.docsite.json.JsonTraversalElement;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonString;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+import jakarta.json.JsonString;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

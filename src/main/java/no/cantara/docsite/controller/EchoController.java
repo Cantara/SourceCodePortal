@@ -6,8 +6,8 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import no.cantara.docsite.json.JsonbFactory;
 
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
+import jakarta.json.Json;
+import jakarta.json.JsonObjectBuilder;
 
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;

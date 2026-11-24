@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.github.repos;
 
 import no.cantara.docsite.json.JsonbFactory;
 
-import javax.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbProperty;
 import java.util.Date;
 
 // https://api.github.com/orgs/Cantara/repos?type=master&per_page=500

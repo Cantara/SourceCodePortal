@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.links;
 
-import javax.json.bind.annotation.JsonbTransient;
+import jakarta.json.bind.annotation.JsonbTransient;
 
 public class ShieldsIOReposURL extends LinkURL<String> {
 

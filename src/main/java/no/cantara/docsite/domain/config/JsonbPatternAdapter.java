@@ -1,6 +1,6 @@
 package no.cantara.docsite.domain.config;
 
-import javax.json.bind.adapter.JsonbAdapter;
+import jakarta.json.bind.adapter.JsonbAdapter;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;

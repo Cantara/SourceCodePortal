@@ -17,8 +17,8 @@ import no.ssb.config.DynamicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
+import jakarta.json.Json;
+import jakarta.json.JsonObjectBuilder;
 import java.net.http.HttpResponse;
 import java.time.Instant;
 import java.util.Optional;

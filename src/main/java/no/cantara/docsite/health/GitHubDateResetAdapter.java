@@ -1,6 +1,6 @@
 package no.cantara.docsite.health;
 
-import javax.json.bind.adapter.JsonbAdapter;
+import jakarta.json.bind.adapter.JsonbAdapter;
 import java.util.Date;
 
 public class GitHubDateResetAdapter implements JsonbAdapter<Date,String> {

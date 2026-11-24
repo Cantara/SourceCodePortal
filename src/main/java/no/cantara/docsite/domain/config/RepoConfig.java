@@ -2,8 +2,8 @@ package no.cantara.docsite.domain.config;
 
 import no.cantara.docsite.json.JsonbFactory;
 
-import javax.json.bind.annotation.JsonbTransient;
-import javax.json.bind.annotation.JsonbTypeAdapter;
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;

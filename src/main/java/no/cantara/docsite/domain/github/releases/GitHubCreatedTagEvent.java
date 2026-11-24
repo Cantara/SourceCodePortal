@@ -2,7 +2,7 @@ package no.cantara.docsite.domain.github.releases;
 
 import no.cantara.docsite.json.JsonbFactory;
 
-import javax.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbProperty;
 
 public class GitHubCreatedTagEvent {
 

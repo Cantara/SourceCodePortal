@@ -3,9 +3,9 @@ package no.cantara.docsite.json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonValue;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonValue;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;

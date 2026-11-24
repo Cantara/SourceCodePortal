@@ -4,9 +4,9 @@ import no.cantara.docsite.cache.CacheKey;
 import no.cantara.docsite.domain.scm.ScmRepositoryContents;
 import no.cantara.docsite.json.JsonbFactory;
 
-import javax.json.bind.annotation.JsonbProperty;
-import javax.json.bind.annotation.JsonbTransient;
-import javax.json.bind.annotation.JsonbTypeAdapter;
+import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.json.bind.annotation.JsonbTypeAdapter;
 
 // https://api.github.com/repos/Cantara/SourceCodePortal/readme?ref=master
 
